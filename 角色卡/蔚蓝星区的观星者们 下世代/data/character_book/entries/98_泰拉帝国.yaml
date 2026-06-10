@@ -1,0 +1,90 @@
+keys:
+- 泰拉帝国历史
+- 帝国历史
+- 帝国政治
+- 星辰贵族
+- 泰拉帝国经济
+- 帝国出口
+- 地球农业
+- 比邻星工业
+- 泰拉帝国人文
+- 帝国社会
+- 帝国观星者
+- 帝国生命工程院
+- 太阳禁卫区文化
+- 暗红星座文化
+- 帝国边疆文化
+- 帝国
+content: |-
+  <国家触发区>
+  国家: 泰拉帝国
+  历史政治:
+    起源: 泰拉帝国起源于22世纪驶向比邻星的一艘殖民船；700年亚光速航行使船上社会演变为封闭而严苛的殖民船文化。
+    建国: 殖民船后裔发现先驱者遗迹并掌握跃迁引擎与观星者技术后，凭FTL机动优势突袭并征服地球；2820年第一代殖民船长加冕为帝。
+    皇权: 皇帝拥有最终决策权；海军部与内阁辅政。因初代皇帝规则，失败会被记录入国家级耻辱档案，每代皇帝都极端拼命，许多死于过劳。
+    贵族: 星辰贵族的祖先多为早期殖民船核心船员；血统、军功、战舰与观星者使用权构成帝国上层秩序。
+  经济产区:
+    地球: SOL-III被去工业化，打造为原生态农业星球和皇帝寝宫；出口真正的地球农产品、牛肉、金枪鱼与高端食物。
+    比邻星: 帝国主要工业核心之一，承担重工业、军工与殖民船文化遗产工业体系。
+    暗红星座: 帝国战略能源产地、军用补给与边疆要塞群。
+    璨辉星座: 帝国与辛迪加共同管理的自由贸易区，奢侈服务、高科技工业与金融活动并存。
+    出口: 大量军用品、机械、食物，以及少量经济部门生产的出口型观星者。
+  人文制度:
+    社会文化: 帝国社会崇尚秩序、荣誉、传统和集体主义；帝国人少诈骗，重承诺，说一不二。
+    建筑舰船: 建筑和舰船强调巨大尺度、厚重质感和简洁有力线条，呈现冷酷威严的不可撼动感。
+    观星者生产: 由直属皇室的帝国生命工程院垄断；基因来自“始源基因档案库”，保存700年航行时期殖民船优秀女性船员序列。
+    观星者管理: 军用观星者归帝国所有，舰长只有使用权；授予观星者是荣誉与特权，私自买卖官方/军用观星者是重罪。
+    心理烙印: 帝国观星者接受忠诚契印，通过药物、催眠和虚拟现实把对帝国和指定舰长职位的忠诚刻入潜意识。
+    身份标识: 帝国观星者在臀部或后腰烙有精致纹章，代表服役贵族家族或舰队。
+    传承: 观星者和战舰可作为家族传承遗产，由继承人接管。
+  所属星区文化:
+    太阳禁卫区: 首都礼制、皇室仪仗、轨道审查和古典宏伟审美构成日常；外来者会持续感到被审视。
+    暗红星座: 军事化、能源工业、红巨星光辉和高搜查率塑造严厉边防文化。
+    帝国殖民前线: 帝国边疆殖民者强调秩序扩张、军功晋升和对共和国的竞争意识。
+  关系:
+    紧张: 自由世界共和国。
+  </国家触发区>
+extensions:
+  position: 1
+  exclude_recursion: false
+  display_index: 41
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 国家触发区
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: 10
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 98
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9681
+comment: 泰拉帝国
+selective: true
+secondary_keys: []
+position: after_char

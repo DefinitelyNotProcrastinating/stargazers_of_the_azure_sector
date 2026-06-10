@@ -1,0 +1,106 @@
+keys: []
+content: |-
+  <variable_list>
+  Here are the variable lists. There will be no additional variables to consider.
+
+  **核心系统**
+  *   `string time` (特殊变量, ISO 8601格式)
+  *   `int 世界.安全等级`
+      *   `安等根变量，范围建议为 -100 到 100`
+
+  **主角核心**
+  *   `string 主角.位置`
+  *   `string 主角.外貌`
+  *   `int 主角.信用点`
+  *   `object 主角.技能`
+      *   `格式: {"技能名": {"EXP": int, "_等级": int}}`
+      *   `技能名` 推荐使用固定中文键名，如 `导弹`、`炮术`、`战机`、`算法`、`工程`、`工业`、`科学`、`驾驶`、`装甲`、`护盾`、`同调`
+      *   `EXP` 是唯一真实进度值，由外部脚本累加
+      *   `_等级` 是只读派生值，由外部脚本根据 EXP 自动同步
+  *   `object 主角.学习`
+      *   `格式: {"当前技能": string, "状态": string, "基础速率": int, "速率倍率": number, "_实际每小时EXP": int}`
+
+  **主角资产**
+  *   `object 主角.可攻略角色`
+      *   `格式: {"object_name": Object}`
+      *   `object_name` 就是角色唯一名称 / 显示名，必须外移为对象键
+      *   `每个角色都必须至少有 种族 字段`
+      *   `若 种族 = 观星者，则该角色可以拥有观星者专属结构与数值`
+  *   `object 主角.舰船`
+      *   `格式: {"object_name": Object}`
+      *   `object_name` 就是舰船唯一名称，必须外移为对象键
+      *   `每艘舰船必须拥有 吨位、炮位配置、装备槽位配置、装配资源、效果、装备`
+  *   `object 主角.个人物品`
+      *   `格式: {"物品名": {"品质": string, "堆叠": number, "效果": {"效果名": "量化描述"}, "描述": string}}`
+  *   `object 主角.旗舰库存`
+      *   `格式: {"object_name": Object}`
+  *   `object 主角.任务`
+      *   `格式: {"object_name": Object}`
+  *   `object 主角.产业`
+      *   `格式: {"object_name": Object}`
+  *   `object 主角.基地`
+      *   `格式: {"object_name": Object}`
+  *   `object 主角.建筑`
+      *   `格式: {"object_name": Object}`
+      *   `仅存放固定太空设施、轨道炮塔、空间站、船坞、采矿平台等建筑对象`
+
+  **星区新闻**
+  *   `object 新闻`
+      *   `固定包含 大事件1-3、本地事件1-3、邂逅1-3 九个字符串槽位`
+
+  **势力声望**
+  *   `int 势力声望.泰拉帝国`
+  *   `int 势力声望.自由世界共和国`
+  *   `int 势力声望.天鹅座技术联邦`
+  *   `int 势力声望.猎户座辛迪加`
+  *   `int 势力声望.星火姐妹会`
+  *   `int 势力声望.铁血盟约`
+  *   `int 势力声望.人类技术联合`
+  *   `int 势力声望.保存者姐妹会`
+
+  ---
+  </variable_list>
+extensions:
+  position: 4
+  exclude_recursion: false
+  display_index: 9
+  probability: 100
+  useProbability: true
+  depth: 1
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 1
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 998
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 9685
+comment: 【SAM】变量列表
+selective: true
+secondary_keys: []
+position: after_char

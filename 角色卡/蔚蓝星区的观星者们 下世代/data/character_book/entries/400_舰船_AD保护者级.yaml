@@ -1,0 +1,145 @@
+keys:
+- 高级驱逐舰
+- 屏卫驱逐舰
+- 保护者
+- 保护者
+content: |-
+  <ship_def>
+  级别: 保护者级
+  舰船类型: AD
+  舰种: 屏卫驱逐舰
+  舰体类别: 高级型
+  价格: 34M
+  制造商: 索鲁斯集团
+  舰体描述: 船体设计坚固而厚重，呈对称状的楔形，舰首位置为锤头形，用于安装核心的护盾投射矩阵。舰身两侧是模块化的点防御导弹巢。整体涂装为共和国卫队的标准军灰色。
+  静态档案:
+    规格:
+      舰体全长: 230米
+      标准船员配置: 6人
+    性能评级:
+      装甲: 1400
+      护盾: 3200
+      机动性: 55
+      火力输出: 150
+    装配:
+      装配资源:
+        PG: 118
+        CPU: 390
+      槽位:
+        高能: 7
+        低能: 6
+      武器座:
+      - 名称: S1
+        尺寸: S
+        类型: 防御导弹座
+        适配武器:
+        - 导弹发射器
+        - 火箭弹发射器
+      - 名称: S2
+        尺寸: S
+        类型: 防御导弹座
+        适配武器:
+        - 导弹发射器
+        - 火箭弹发射器
+      - 名称: S3
+        尺寸: S
+        类型: 防御导弹座
+        适配武器:
+        - 导弹发射器
+        - 火箭弹发射器
+      - 名称: S4
+        尺寸: S
+        类型: 防御导弹座
+        适配武器:
+        - 导弹发射器
+        - 火箭弹发射器
+      - 名称: S5
+        尺寸: S
+        类型: 防空炮座
+        适配武器:
+        - 自动加农炮
+        - 点防御激光
+      - 名称: S6
+        尺寸: S
+        类型: 防空炮座
+        适配武器:
+        - 自动加农炮
+        - 点防御激光
+      船体加成:
+      - 防御导弹与拦截弹飞行速度 +25%
+      - 点防御武器循环时间 -20%
+      - 远程护盾投射与护盾链接效率 +25%
+      - 协同防御网络内受到的伤害分摊效率 +15%
+      装配减免:
+      - 防御导弹 CPU需求 -15%
+      - 护盾投射与护盾管理模块 CPU需求 -20%
+      推荐武器方案:
+      - 4x 微型导弹发射巢
+      - 2x 点防御机炮或点防御激光
+    特殊系统:
+      名称: 壁垒协同防御网络
+      效果:
+      - 至少三艘同级舰在 5000 km 内时可链接护盾
+      - 单舰所受伤害平均分配给网络内所有单位
+    观星者需求:
+      控制门槛:
+        最低稳态增益: 3.2 TW/mV
+        最低比特率: 360 TB/s
+        最高精度误差: 1.5/1M
+      超载门槛:
+        最低爆发增益: 6.2 TW/mV
+        需要技能: 工程 V
+        规则:
+        - 爆发增益不足时，不可超载护盾投射与协同防御主动模块
+        - 超载为 2 回合 1 次
+        - 超载效果提高至原值的 150%
+      接口要求: 需要较高并行处理能力与神经坚韧度
+  跃迁充能: 0
+  最大充能: 7
+  跃迁消耗: 1
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 77
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9583
+comment: 舰船|AD保护者级
+selective: true
+secondary_keys:
+- 共和国
+position: after_char

@@ -1,0 +1,88 @@
+keys:
+- HTC观星者
+- 麦考夫特设计局
+- 幻影系列
+- 幻影型
+- MDB-PH
+content: |-
+  <观星者档案>
+  -   # 独立制造商 - “幻影”系列
+      型号: MYC-PH-01
+      制造商: 麦考夫特设计局
+      系列: “幻影”系列
+      市场定位: "特种作战"
+      价格估值: "90,000,000 信用点"
+
+      品质: 3
+      设计定型日期: "2483年"
+
+      外观规格:
+          默认外观: |
+              外观设计追求极致的低调与功能性。通常是便于隐藏的深灰色或黑色短发，眼眸是锐利的琥珀色。五官精致但不引人注目，有一种融入阴影中的气质。身材纤细而矫健，肌肉紧实，是为了在零重力或狭窄空间内进行无声移动而优化的体型。
+          标准体型:
+              身高: "约165cm"
+              三围: "88cm(D)-59cm-86cm"
+          识别标记:
+              类型: "热信号伪装线路"
+              位置: "脊柱两侧"
+              描述: "两条由特殊生物材料构成的线路。在激活时，能够吸收并扰乱身体散发的热信号，使其在热成像扫描中变得模糊不清，是其渗透能力的一部分。"
+
+      性能参数:
+          比特率: "~650TB/s"
+          精度: "0.2/1M 指令"
+          稳态增益: "4.5 TW/mV"
+          爆发增益: "9.0 TW/mV"
+          功能特性: |
+              无额外战斗加成；主要差异体现在同调体验、兼容性、外观与人格设计。
+      人格核心:
+          默认人格: |
+              [三无型]: 性格被设定为冷静、专注、言语极少。她是一个纯粹的任务执行者，情感表达被压缩到最低。她与舰长的互动是专业且事务性的。她会暗暗地表达爱意或索求，在这冰冷的外壳下，隐藏着对唯一搭档（舰长）的绝对信赖和爱慕。达到1000好感度时强制发生逆强奸事件。
+          喜好: ["完成任务", "不被注意", "高效的计划", "黑暗"]
+          厌恶: ["飞船暴露", "意外", "无意义的对话", "明亮的光线"]
+          性癖: ["无声性爱", "束缚", "任务中的性爱"]
+
+  </观星者档案>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 56
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 101
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 44
+comment: 【产品档案】MYC-PH-01
+selective: true
+secondary_keys: []
+position: after_char

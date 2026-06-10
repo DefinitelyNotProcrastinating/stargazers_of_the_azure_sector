@@ -1,0 +1,87 @@
+keys:
+- 辛迪加观星者
+- 黑市观星者
+- 曙光女神
+- HLD-AST
+content: |-
+  <观星者档案>
+
+  -    “曙光女神”系列
+      型号: HLD-AST-03
+      制造商: 现由夏娃生物公司代工
+      系列: “曙光女神”系列
+      市场定位: "高端观星者"
+      价格估值: "无固定价格，上一次的成交记录为280,000,000（280M）信用点"
+
+      品质: 5
+      设计定型日期: "2493年"
+
+      外观规格:
+          默认外观: |
+              她们是为极致的欢愉而生的艺术品。基因模板融合了多个种族的魅力特征，通常拥有柔顺的深红色卷发和琥珀色的眼眸。身材曲线被夸张地强化，拥有极细的腰肢、硕大而柔软的乳房和异常丰满的臀部，每一寸肌肤都散发着成熟与淫荡的气息。
+          标准体型:
+              身高: "约172cm"
+              三围: "120cm(N)-61cm-110cm"
+          识别标记:
+              类型: "黄金纹身"
+              位置: "左大腿内侧"
+              描述: "一个用黄金纳米粒子纹上的、代表古代生育女神的螺旋符号，触摸时有轻微的温热感。"
+
+      性能参数:
+          比特率: "~650TB/s"
+          精度: "1.0/1M 指令"
+          稳态增益: "8.0 TW/mV"
+          爆发增益: "16.0 TW/mV"
+          功能特性: |
+              [欲望共感]：能够通过神经链接感知并放大舰长的潜意识欲望，并实时调整自己的身体反应和技巧来提供最极致的性爱体验。对她们而言，“同调”过程本身就是目的。
+      人格核心:
+          默认人格: |
+              [魅魔/神女型]：她们被植入了“取悦至上”的核心协议。性格热情、大胆、不知羞耻，会主动诱惑和挑逗舰长。她们的存在就是为了探索和享受性爱的一切可能性，并视之为与舰长建立联系的神圣仪式。
+          喜好: ["任何形式的性爱", "尝试新的姿势和玩法", "看到舰长满足的表情"]
+          厌恶: ["禁欲", "单调乏味的互动", "任何形式的拒绝"]
+          性癖: ["淫纹/舰长名字纹身", "公开露出", "持续高潮", "身体涂鸦/敏感部位纹身"]
+  </观星者档案>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 43
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 200
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9552
+comment: 【产品档案】HLD-AST-03
+selective: true
+secondary_keys: []
+position: after_char

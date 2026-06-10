@@ -1,0 +1,76 @@
+keys:
+- 猎户座辛迪加
+- 辛迪加
+- 贸易风走廊
+- 黄金阶梯
+- Orion Syndicate
+content: |-
+  <国家简介>
+  国家: 猎户座辛迪加
+  英文名: The Orion Syndicate
+  定位: 由巨型商业行会和企业联合体演变而来的企业制国家。
+  核心气质: 契约、利润、品牌、消费主义、冷酷成本收益分析；公民身份更像会员资格。
+  政治速览: 寡头制企业国家，最高权力机构为董事会，由最大巨企CEO组成。
+  社会速览: 个人价值常以财富和消费能力衡量，法律核心是保护私产和执行商业合同。
+  美学速览: 品牌化实用主义，光滑、模块化、商业化；银白、金色和企业品牌色常见。
+  核心星区:
+    - 贸易风走廊: 辛迪加商业核心，黄金航道和最大财富流。
+    - 黄金阶梯: 正在建设的经济特区，试图成为第二贸易风走廊。
+    - 钴蓝边境: 名义辛迪加势力范围，实际军阀和海盗割据。
+    - 璨辉星座: 与帝国共同管理的自由贸易和奢华度假区。
+  舰队设定:
+    设计哲学: 品牌化实用主义、模块化设计、商业美学；强调高机动、无人机、多功能与性价比。
+    小型舰: 猛禽级FF、保镖级FF、封锁者级DD、福尔克级DD、阿波罗级DD。
+    中型舰: 龙马级CA、独角兽级CA、噪鹃级CA、狮鹫级CA、仲裁者级BC。
+    大型与旗舰: 支配者级BB、蛇怪级CVL、执行官级CV、克拉肯级CV、自由贸易级TT。
+    工业舰: 掘金级采矿驳船、炼金术士级工业指挥舰、巨鲸级超级货舰。
+  触发区:
+    历史政治: 猎户座辛迪加历史、辛迪加董事会、辛迪加政治
+    经济产区: 辛迪加经济、贸易风走廊商业、黄金阶梯经济特区、奇戎基因、夏娃生物
+    人文制度: 辛迪加社会、辛迪加观星者、辛迪加消费主义
+    星区文化: 贸易风走廊文化、黄金阶梯文化、钴蓝边境文化、璨辉星座辛迪加文化
+  </国家简介>
+extensions:
+  position: 1
+  exclude_recursion: false
+  display_index: 7
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 国家简介
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 98
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 9676
+comment: 国家简介：猎户座辛迪加
+selective: true
+secondary_keys: []
+position: after_char

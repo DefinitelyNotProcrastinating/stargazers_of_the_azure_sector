@@ -1,0 +1,73 @@
+keys:
+- 塔伯里斯宪制帝国
+- 塔伯里斯帝国
+- 塔伯里斯
+- Tiberis Constitutional Empire
+content: |-
+  <国家简介>
+  国家: 塔伯里斯宪制帝国
+  英文名: The Tiberis Constitutional Empire
+  定位: 由逃亡观星者和各类人造人建立的合成人文明国家，以严密监管、公民植入体网络和极端生存主义维系国家延续。
+  核心气质: 冷静、克制、洁净、高度自律、危机意识强；平时像守法议会国家，战时像瞬间合拢的钢铁蜂群。
+  政治速览: 半议会制宪政国家；平时由公民议会、执行院和专业委员会共治，极端情况下可启动紧急条例，临时接管全体公民植入体并实施群体协调。
+  社会速览: 99%人口为人造人公民；公民普遍接受基因编辑、身份植入和职业引导，把这些视为生存所需而非压迫本身。
+  美学速览: 冷白、深海蓝、银灰与少量琥珀警示色；舰体和城市强调流线、洁净、可维护性与高密度接口结构。
+  核心星区:
+    - 塔伯里斯星座: 位于闪光星云深处的国家核心，先驱者不稳定通道尽头的封闭文明腹地。
+  舰队设定:
+    舰队名: 宪制防卫舰队
+    设计哲学: 以辛迪加系成熟军工技术为底，强调标准化复制、快速扩军、低训练周期和稳定补充；优先保证舰队数量、后勤连续性和协同作战，而非单舰极限性能。
+    小型舰: 维持现有设计，后续重构。
+    中型舰: 维持现有设计，后续重构。
+    大型与旗舰: 维持现有设计，后续重构。
+    工业舰: 维持现有设计，后续重构。
+  触发区:
+    历史政治: 塔伯里斯宪制帝国历史、塔伯里斯帝国历史、塔伯里斯议会、塔伯里斯政治、紧急条例
+    经济外贸: 塔伯里斯经济、塔伯里斯外贸、塔伯里斯观星者出口、塔伯里斯基因工业、公民植入体网络
+    人文制度: 塔伯里斯社会、塔伯里斯公民、塔伯里斯观星者、塔伯里斯移民条例、标签植入体
+    军事安全: 塔伯里斯舰队、塔伯里斯防御、塔伯里斯边境、塔伯里斯通道战争、塔伯里斯安全政策
+  </国家简介>
+extensions:
+  position: 4
+  exclude_recursion: false
+  display_index: 8
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 国家简介
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 98
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 8
+comment: 国家简介：塔伯里斯宪制帝国
+selective: true
+secondary_keys: []
+position: after_char

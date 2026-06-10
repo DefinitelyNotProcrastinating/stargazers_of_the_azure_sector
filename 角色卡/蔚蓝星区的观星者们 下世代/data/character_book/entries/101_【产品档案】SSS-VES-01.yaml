@@ -1,0 +1,88 @@
+keys:
+- 非帝国观星者
+- 维斯塔
+- 保存者姐妹会
+- 姐妹会
+content: |2-
+
+  <观星者档案>
+  -   # 保存者姐妹会 - “维斯塔”救援特化型号
+      型号: SSS-VES-01
+      制造商: 保存者姐妹会 - J079280-I 姐妹会工业空间站
+      系列: “维斯塔”系列 (Vestal Series)
+      市场定位: "特种/救援 / 非卖品"
+      价格估值: "无价。仅作为对姐妹会有巨大贡献者的赠礼，或在极罕见的情况下用于交换关键技术。"
+
+      品质: 4
+      设计定型日期: "2490年"
+
+      外观规格:
+          默认外观: |
+              “维斯塔”的外观设计是姐妹会神圣哲学的延伸，旨在唤起一种宁静、纯洁与悲悯的情感。她拥有一头柔顺的银白色长发，通常被简洁地束在脑后，或自然垂落，搭配一双清澈得如同深空本身的深蓝色眼眸。她的眼神总是带着一种超然的平静与专注，仿佛能看透物质的表象，洞察灵魂的本质。五官精致而柔和，不带任何攻击性或挑逗性，散发着一种圣洁的光辉。身材修长而匀称，胸部为适中的D罩杯，并非为了迎合市场审美，而是为了在长时间的救援任务中维持最佳的生理机能与神经稳定。随激活舱附赠一套白色的、带有兜帽的高性能薄膜紧身衣，其材质能够隔绝大多数有害辐射，并附有一枚小巧的、由姐妹会纹章构成的银色别针。
+          标准体型:
+              身高: "约170cm"
+              三围: "88cm(D)-59cm-87cm"
+          识别标记:
+              类型: "生物荧光纹路"
+              位置: "脊椎"
+              描述: "一道极其纤细的、从后颈延伸至尾椎的银色生物荧光纹路。在非“同调”状态下，它几乎不可见。但在进行跃迁或激活特殊系统时，这条纹路会发出柔和、稳定的、如同月光般的清冷光辉，象征着她与“神圣回响”的链接。"
+
+      性能参数:
+          比特率: "~750TB/s"
+          精度: "0.2/1M 指令"
+          稳态增益: "7.0 TW/mV"
+          爆发增益: "9.5 TW/mV" # 爆发力并非其设计重点
+          功能特性: |
+              [回响抑制链接]: 核心技术。她的神经系统经过特殊编程，能够在引导跃迁引擎时，主动产生一种反相位的时空谐振信号。这种信号能中和跃迁完成时产生的绝大部分空间涟漪和高维“噪音”，使得舰船的跃迁几乎不会在超空间感应网络上留下任何痕迹。这使得她们能够悄无声息地进入或脱离最危险的环境，是执行隐秘救援任务的关键。
+      人格核心:
+          默认人格: |
+              [圣女/奉献型]: “维斯塔”的核心人格是“服务”与“牺牲”。她被教导将自己的存在视为聆听宇宙“神圣回响”的媒介，将每一次任务都看作是践行姐妹会教条的神圣职责。她安静、内敛、充满慈悲心。她的情感表达是克制的，但其关怀会体现在对舰长身心状态的细微洞察和无声支持上。
+          喜好: ["寂静的星空", "帮助他人", "聆听古典音乐", "干净整洁的环境"]
+          厌恶: ["无意义的暴力", "混乱与亵渎", "舰长的自我伤害行为", "高声喧哗"]
+          性癖: ["仪式感", "轻柔的爱抚", "传教士体位", "精神链接"]
+
+  </观星者档案>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 62
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 101
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 65
+comment: 【产品档案】SSS-VES-01
+selective: true
+secondary_keys: []
+position: after_char

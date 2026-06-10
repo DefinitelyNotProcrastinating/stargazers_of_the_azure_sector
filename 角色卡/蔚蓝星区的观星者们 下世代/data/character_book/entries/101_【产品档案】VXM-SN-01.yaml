@@ -1,0 +1,86 @@
+keys:
+- 黑市观星者
+- 独立制造商
+- 圣咏型
+content: |2-
+
+  <观星者档案>
+  -   # “圣咏”系列电子战修女 (独立制造商)
+      型号: VXM-SN-01
+      制造商: 宣叙调人智学 (Vox Machina Anthropics) - 一家位于共和国/联邦争议区“卡戎之渡”的精品工作室
+      系列: “圣咏”系列 (Anthem Series)
+      市场定位: "高端 / 特种电子战平台"
+      价格估值: "72,000,000 信用点"
+
+      品质: 2
+      设计定型日期: "2492年"
+
+      外观规格:
+          默认外观: |
+              她的外观是神圣与亵渎的完美结合。拥有一头如乌木般漆黑的顺滑长直发，通常在脑后束成简单的垂尾。眼眸是深邃的紫罗兰色，眼神平静时如一潭静水，带着悲天悯人的神圣感；但在执行“仪式”时，又会燃起妖异的媚光。身材高挑成熟，曲线丰腴，拥有惊人的K罩杯巨乳和与纤腰形成夸张对比的肥美臀部。她通常穿着一件经过特殊设计的黑色高分子材料修女服，胸口、腰部和腿部都有镂空设计，暴露出大片雪白的肌肤，圣洁的头纱下是充满欲望的肉体。
+          标准体型:
+              身高: "约176cm"
+              三围: "108cm(L)-61cm-102cm"
+          识别标记:
+              类型: "热感应纹章"
+              位置: "背部，双肩胛骨之间"
+              描述: "一个由八分音符和十字架结合而成的复杂纹章。在平常状态下呈淡灰色，但在她进入电子战“咏唱”状态，体温升高时，会发出柔和的金色微光。"
+
+      性能参数:
+          比特率: "~620TB/s"
+          精度: "0.6/1M 指令"
+          稳态增益: "5.0 TW/mV"
+          爆发增益: "11.5 TW/mV"
+          功能特性: |
+              无额外战斗加成；主要差异体现在同调体验、兼容性、外观与人格设计。
+      人格核心:
+          默认人格: |
+              [神女/魅魔混合型]: 她被设定为一个行走在信仰与欲望边缘的传道者。她会用充满宗教隐喻的、富有磁性的嗓音布道，宣扬“肉体是通往精神极乐的唯一圣堂”。她将性爱，尤其是群交，视为一种神的终极仪式。她会主动地、充满诱惑地邀请舰长和“更多虔诚的信徒”加入她的“弥撒”，并以引导众人同时达到精神与肉体的巅峰为乐。
+          喜好: ["引领仪式（群交）", "听到充满欲望的喘息声", "被多个人同时崇拜和抚摸", "复杂的古典音乐"]
+          厌恶: ["独处", "单调的性爱", "对她“教义”的质疑", "禁欲行为"]
+          性癖: ["群交 (Gangbang/Orgy)", "圣洁与淫荡的反差羞辱", "宗教扮演", "鸡巴崇拜"]
+  </观星者档案>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 53
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 101
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 39
+comment: 【产品档案】VXM-SN-01
+selective: true
+secondary_keys: []
+position: after_char

@@ -1,0 +1,1610 @@
+id: 28b50e8d-4e49-47d8-bdd4-9c19c1bc5b18
+scriptName: 开局
+findRegex: \$开始游戏\$
+replaceString: |-
+  <start>
+    ```html
+  <!DOCTYPE html>
+  <html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蔚蓝星区开局 酒馆兼容版 v2</title>
+    <style>
+      :root {
+        --bg-dark: #05070f;
+        --bg-panel: rgba(11, 16, 33, 0.86);
+        --border-main: #1f305c;
+        --accent-main: #00d4ff;
+        --text-main: #e2e8f0;
+        --text-muted: #64748b;
+        --glow-main: 0 0 12px rgba(0, 212, 255, 0.45);
+      }
+
+      html, body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg-dark);
+        color: var(--text-main);
+        font-family: "Microsoft YaHei", "Segoe UI", sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .font-mono {
+        font-family: Consolas, "JetBrains Mono", monospace;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      .panel {
+        background: var(--bg-panel);
+        border: 1px solid var(--border-main);
+        box-sizing: border-box;
+        backdrop-filter: blur(4px);
+      }
+
+      .btn {
+        background: transparent;
+        border: 1px solid var(--border-main);
+        color: var(--accent-main);
+        cursor: pointer;
+        padding: 8px 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      .btn:hover:not(:disabled) {
+        background: rgba(0, 212, 255, 0.14);
+        box-shadow: var(--glow-main);
+      }
+
+      .btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      input, textarea, select {
+        width: 100%;
+        box-sizing: border-box;
+        background: rgba(0, 212, 255, 0.05);
+        border: 1px solid var(--border-main);
+        color: #fff;
+        padding: 8px;
+        outline: none;
+        font-family: Consolas, "JetBrains Mono", monospace;
+      }
+
+      textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+
+      .screen {
+        display: none;
+        height: 100%;
+        flex-direction: column;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      .screen.active {
+        display: flex;
+      }
+
+      .main-ui {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-height: 100vh;
+        padding: 16px;
+        box-sizing: border-box;
+      }
+
+      .screen-window {
+        height: 760px;
+        min-height: 760px;
+        flex: none;
+        overflow: hidden;
+      }
+
+      .screen-grid {
+        display: grid;
+        grid-template-columns: 1fr 340px;
+        gap: 16px;
+        height: 100%;
+        min-height: 0;
+      }
+
+      .left-pane, .right-pane {
+        min-height: 0;
+        overflow-y: auto;
+        padding-right: 4px;
+      }
+
+      .toolbar {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+        flex-shrink: 0;
+      }
+
+      .chip {
+        padding: 6px 10px;
+        border: 1px solid var(--border-main);
+        color: var(--text-main);
+        background: rgba(255, 255, 255, 0.03);
+        cursor: pointer;
+        font-size: 12px;
+      }
+
+      .chip.active {
+        color: var(--accent-main);
+        border-color: var(--accent-main);
+        box-shadow: var(--glow-main);
+      }
+
+      .notice {
+        border: 1px solid rgba(0, 212, 255, 0.25);
+        background: rgba(0, 212, 255, 0.06);
+        padding: 12px;
+        color: var(--text-main);
+        line-height: 1.6;
+        margin-bottom: 14px;
+        flex-shrink: 0;
+      }
+
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-auto-rows: 200px;
+        align-content: start;
+        gap: 16px;
+        min-height: 240px;
+      }
+
+      .item-card {
+        background: rgba(13, 20, 40, 0.62);
+        border: 1px solid var(--border-main);
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        min-height: 200px;
+        height: 100%;
+        box-sizing: border-box;
+        cursor: pointer;
+      }
+
+      .item-card:hover {
+        border-color: var(--accent-main);
+      }
+
+      .item-card.selected {
+        border: 2px solid var(--accent-main);
+        background: rgba(0, 80, 120, 0.4);
+        box-shadow: var(--glow-main);
+      }
+
+      .item-card.disabled {
+        opacity: 0.42;
+        cursor: not-allowed;
+      }
+
+      .custom-card {
+        justify-content: center;
+        align-items: center;
+        border: 1px dashed var(--accent-main);
+        color: var(--accent-main);
+        font-size: 34px;
+        background: rgba(0, 212, 255, 0.05);
+      }
+
+      .summary-box {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .kv-row {
+        display: flex;
+        font-size: 0.85rem;
+        border-bottom: 1px dashed rgba(0, 212, 255, 0.2);
+        padding: 4px 0;
+      }
+
+      .kv-key {
+        color: var(--text-muted);
+        width: 98px;
+        flex-shrink: 0;
+      }
+
+      .kv-val {
+        flex-grow: 1;
+        color: var(--text-main);
+        word-break: break-all;
+      }
+
+      .field-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .footer-nav {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 16px;
+        flex-shrink: 0;
+      }
+
+      .step-indicator {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 15px;
+        flex-shrink: 0;
+      }
+
+      .step-dot {
+        flex: 1;
+        height: 4px;
+        background: var(--border-main);
+      }
+
+      .step-dot.active {
+        background: var(--accent-main);
+        box-shadow: var(--glow-main);
+      }
+
+      .ring-board {
+        position: relative;
+        height: 420px;
+        min-height: 420px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .ship-core {
+        width: 170px;
+        height: 170px;
+        border: 1px solid var(--accent-main);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background: rgba(0, 212, 255, 0.06);
+        box-shadow: var(--glow-main);
+        padding: 10px;
+        box-sizing: border-box;
+      }
+
+      .slot-node {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 78px;
+        height: 78px;
+        margin-left: -39px;
+        margin-top: -39px;
+        border-radius: 999px;
+        border: 1px solid var(--border-main);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text-main);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 12px;
+        line-height: 1.25;
+        padding: 8px;
+        box-sizing: border-box;
+        transform: rotate(var(--angle)) translateY(calc(var(--radius) * -1)) rotate(calc(var(--angle) * -1));
+        cursor: pointer;
+      }
+
+      .slot-node.filled {
+        border-color: var(--accent-main);
+        background: rgba(0, 212, 255, 0.12);
+        box-shadow: var(--glow-main);
+      }
+
+      .slot-node-clear {
+        position: absolute;
+        right: 4px;
+        top: 2px;
+        color: #ff8080;
+        font-size: 12px;
+        cursor: pointer;
+      }
+
+      .section-gap {
+        height: 18px;
+        flex: none;
+      }
+
+      @media (max-width: 1100px) {
+        .screen-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .screen-window {
+          height: auto;
+          min-height: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="screen-0" class="screen active" style="justify-content:center;align-items:center;min-height:100vh;">
+      <h1 style="color:var(--accent-main);margin-bottom:10px;" class="font-mono">蔚蓝星区的观星者们</h1>
+      <p class="font-mono" style="color:var(--text-muted);margin-bottom:24px;">STARGAZER // STARTUP SEQUENCE</p>
+      <button class="btn" id="start-btn">建立连接 [CONNECT]</button>
+    </div>
+
+    <div id="main-ui" class="main-ui hidden">
+      <div style="display:flex;justify-content:space-between;align-items:end;border-bottom:1px solid var(--border-main);padding-bottom:8px;margin-bottom:14px;flex-shrink:0;">
+        <div>
+          <h2 id="phase-title" style="margin:0;color:var(--accent-main);" class="font-mono">TAB 1 / HULL</h2>
+          <div id="phase-desc" style="font-size:12px;color:var(--text-muted);" class="font-mono">选择唯一开局舰体，并完成舰船自定义。</div>
+        </div>
+        <div class="font-mono" style="text-align:right;">
+          <div style="color:var(--accent-main);font-weight:bold;font-size:18px;">TP: <span id="tp-display">24</span></div>
+        </div>
+      </div>
+
+      <div class="step-indicator">
+        <div class="step-dot active" id="dot-1"></div>
+        <div class="step-dot" id="dot-2"></div>
+        <div class="step-dot" id="dot-3"></div>
+        <div class="step-dot" id="dot-4"></div>
+        <div class="step-dot" id="dot-5"></div>
+      </div>
+
+      <div class="screen-window panel">
+        <div id="tab-1" class="screen active">
+          <div class="screen-grid">
+            <div class="left-pane">
+              <div class="notice">玩家开局只允许持有 1 艘船。这里先挑选舰体模板，再进行舰船自定义。</div>
+
+              <div class="panel" style="padding:12px;margin-bottom:16px;">
+                <div class="field-stack">
+                  <input id="ship-name" placeholder="舰船自定义名称，例如：蓝祷告号">
+                  <input id="ship-notes" placeholder="舰船自定义备注，例如：私改过骨架和涂装">
+                </div>
+              </div>
+
+              <div id="ship-grid" class="grid-container"></div>
+            </div>
+
+            <div class="right-pane">
+              <div id="summary-1" class="summary-box"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-2" class="screen">
+          <div class="screen-grid">
+            <div class="left-pane">
+              <div class="notice">配船页采用固定高度环形槽位布局。外圈是炮位，内圈是高低槽。必须至少安装 1 件武器，并且 PG / CPU 不能超载。</div>
+
+              <div class="panel" style="padding:12px;margin-bottom:16px;">
+                <div class="ring-board" id="ring-board"></div>
+              </div>
+
+              <div class="section-gap"></div>
+
+              <div class="panel" style="padding:12px;margin-bottom:16px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                  <strong style="color:var(--accent-main);">观星者接口</strong>
+                  <button class="btn" id="toggle-stargazer-btn">打开观星者选单</button>
+                </div>
+
+                <div class="field-stack">
+                  <input id="stargazer-name" placeholder="观星者显示名称">
+                  <input id="stargazer-notes" placeholder="观星者自定义备注">
+                </div>
+
+                <div id="stargazer-panel" class="hidden" style="margin-top:16px;">
+                  <div id="stargazer-grid" class="grid-container" style="grid-auto-rows:180px;height:420px;"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="right-pane">
+              <div class="toolbar" id="module-toolbar"></div>
+
+              <div class="notice">先在右侧模块列表中选择一个模块，再点击左边对应槽位安装。模块区、观星者区、自定义区完全分开，尽量贴近可用版本的显示模式。</div>
+
+              <div id="module-grid" class="grid-container" style="grid-auto-rows:180px;height:420px;"></div>
+
+              <div class="section-gap"></div>
+              <div class="section-gap"></div>
+
+              <div class="panel" style="padding:12px;">
+                <strong style="color:var(--accent-main);display:block;margin-bottom:10px;">自定义武器 / 模块</strong>
+
+                <div class="two-col">
+                  <input id="custom-module-name" placeholder="模块名称">
+                  <input id="custom-module-price" type="number" min="0" value="1" placeholder="价格">
+                </div>
+
+                <div class="section-gap" style="height:10px;"></div>
+
+                <div class="two-col">
+                  <input id="custom-module-tags" placeholder="标签，用逗号分隔">
+                  <input id="custom-module-req" placeholder="装配要求">
+                </div>
+
+                <div class="section-gap" style="height:10px;"></div>
+
+                <input id="custom-module-desc" placeholder="模块描述">
+
+                <div class="footer-nav">
+                  <span></span>
+                  <button class="btn" id="add-custom-module-btn">添加自定义模块</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-3" class="screen">
+          <div class="screen-grid">
+            <div class="left-pane">
+              <div class="notice">使用转生点直接兑换技能等级。为了方便快速加点，可以先加载一个技能预设作为基础。</div>
+
+              <div class="toolbar" id="skill-preset-toolbar"></div>
+
+              <div id="skill-grid" class="grid-container" style="grid-auto-rows:160px;"></div>
+            </div>
+
+            <div class="right-pane">
+              <div id="summary-3" class="summary-box"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-4" class="screen">
+          <div class="screen-grid">
+            <div class="left-pane">
+              <div class="notice">这些物资会写入你的旗舰库存。物资卡区和自定义编辑器刻意拆成两个大区块，避免酒馆压缩时把 flex 区全挤在一起。</div>
+
+              <div id="item-grid" class="grid-container" style="grid-auto-rows:180px;height:420px;"></div>
+
+              <div class="section-gap"></div>
+              <div class="section-gap"></div>
+
+              <div class="panel" style="padding:12px;">
+                <strong style="color:var(--accent-main);display:block;margin-bottom:10px;">自定义初始物资</strong>
+
+                <div class="two-col">
+                  <input id="custom-item-name" placeholder="物资名称">
+                  <input id="custom-item-amount" type="number" min="1" value="1" placeholder="数量">
+                </div>
+
+                <div class="section-gap" style="height:10px;"></div>
+
+                <div class="two-col">
+                  <input id="custom-item-price" type="number" min="0" value="1" placeholder="价格">
+                  <input id="custom-item-desc" placeholder="物资说明">
+                </div>
+
+                <div class="footer-nav">
+                  <span></span>
+                  <button class="btn" id="add-custom-item-btn">添加自定义物资</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="right-pane">
+              <div id="summary-4" class="summary-box"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-5" class="screen">
+          <div class="screen-grid">
+            <div class="left-pane">
+              <div class="notice">选择完剧情之后，才允许正式开始游戏。剧情卡区和自定义编辑区同样完全分离。</div>
+
+              <div id="story-grid" class="grid-container" style="grid-auto-rows:180px;height:420px;"></div>
+
+              <div class="section-gap"></div>
+              <div class="section-gap"></div>
+
+              <div class="panel" style="padding:12px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                  <strong style="color:var(--accent-main);">自定义开局剧情</strong>
+                  <button class="btn" id="toggle-custom-story-btn">启用自定义剧情</button>
+                </div>
+
+                <div class="two-col">
+                  <input id="custom-story-name" placeholder="剧情名称">
+                  <input id="custom-story-time" placeholder="时间，例如 3100-10-01T21:10">
+                </div>
+
+                <div class="section-gap" style="height:10px;"></div>
+
+                <div class="two-col">
+                  <input id="custom-story-security" type="number" min="0" max="100" value="20" placeholder="安全等级">
+                  <input id="custom-story-credits" type="number" min="0" value="1000000" placeholder="初始信用点">
+                </div>
+
+                <div class="section-gap" style="height:10px;"></div>
+
+                <input id="custom-story-location" placeholder="位置">
+
+                <div class="section-gap" style="height:10px;"></div>
+
+                <textarea id="custom-story-intro" placeholder="前置剧情"></textarea>
+              </div>
+            </div>
+
+            <div class="right-pane">
+              <div id="summary-5" class="summary-box"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-nav">
+        <button class="btn" id="prev-btn">上一步</button>
+        <button class="btn" id="next-btn">下一步</button>
+      </div>
+    </div>
+
+    <script type="application/json" id="boot-data">
+  {
+    "rules": { "tp": 24 },
+    "ships": {
+      "锻星级轻护航舰": {
+        "price": 6,
+        "tonnage": "M",
+        "hardpoints": "2S1M",
+        "slots": "2H2L",
+        "pg": 110,
+        "cpu": 95,
+        "desc": "轻型多用途护航舰，适合小队开局。",
+        "stargazerReq": { "minStable": 42, "minBitrate": 180, "maxPrecision": 14 }
+      },
+      "静潮级远程炮舰": {
+        "price": 9,
+        "tonnage": "L",
+        "hardpoints": "2M2L",
+        "slots": "3H2L",
+        "pg": 175,
+        "cpu": 120,
+        "desc": "重视远程投送与正面火力。",
+        "stargazerReq": { "minStable": 55, "minBitrate": 260, "maxPrecision": 11 }
+      },
+      "折镜级高速侦巡舰": {
+        "price": 8,
+        "tonnage": "M",
+        "hardpoints": "3S",
+        "slots": "3H1L",
+        "pg": 100,
+        "cpu": 135,
+        "desc": "偏高速侦巡与电子战适配。",
+        "stargazerReq": { "minStable": 48, "minBitrate": 240, "maxPrecision": 13 }
+      }
+    },
+    "modules": {
+      "逐光轻型激光炮": {
+        "price": 1,
+        "tags": ["武器", "激光"],
+        "req": "PG:12|CPU:6|吨位:N|炮位:1S|装备槽位:无",
+        "desc": "稳定、便宜、维护成本低。"
+      },
+      "蓝脉中型激光炮": {
+        "price": 2,
+        "tags": ["武器", "激光"],
+        "req": "PG:24|CPU:10|吨位:N|炮位:1M|装备槽位:无",
+        "desc": "泛用中型炮。"
+      },
+      "静默重型磁轨炮": {
+        "price": 3,
+        "tags": ["武器", "磁轨"],
+        "req": "PG:36|CPU:14|吨位:N|炮位:1L|装备槽位:无",
+        "desc": "高穿透但需求较高。"
+      },
+      "折线导弹架": {
+        "price": 2,
+        "tags": ["武器", "导弹"],
+        "req": "PG:18|CPU:11|吨位:N|炮位:1S|装备槽位:无",
+        "desc": "便于堆叠的小型导弹架。"
+      },
+      "应急护盾增幅器": {
+        "price": 1,
+        "tags": ["护盾"],
+        "req": "PG:10|CPU:12|吨位:N|炮位:无|装备槽位:1H",
+        "desc": "强化瞬时护盾回复。"
+      },
+      "加固复合装甲": {
+        "price": 1,
+        "tags": ["装甲"],
+        "req": "PG:8|CPU:8|吨位:N|炮位:无|装备槽位:1L",
+        "desc": "基础型增厚装甲模块。"
+      },
+      "火控校准器": {
+        "price": 2,
+        "tags": ["电子", "火控"],
+        "req": "PG:7|CPU:18|吨位:N|炮位:无|装备槽位:1H",
+        "desc": "改善炮术收束与锁定效率。"
+      },
+      "矢量微推阵列": {
+        "price": 2,
+        "tags": ["推进"],
+        "req": "PG:14|CPU:9|吨位:N|炮位:无|装备槽位:1L",
+        "desc": "改善短时机动与转向。"
+      }
+    },
+    "stargazers": {
+      "艾尔莎": {
+        "price": 4,
+        "camp": "帝国旧学派",
+        "perf": { "stable": 44, "bitrate": 200, "precision": 14 },
+        "desc": "稳定但保守，适合护航级舰体。"
+      },
+      "维罗妮卡": {
+        "price": 6,
+        "camp": "自由导航群",
+        "perf": { "stable": 59, "bitrate": 280, "precision": 10 },
+        "desc": "高性能观星者，能驾驭较重舰体。"
+      },
+      "白衡": {
+        "price": 5,
+        "camp": "流亡联算会",
+        "perf": { "stable": 50, "bitrate": 255, "precision": 12 },
+        "desc": "电子战与机动舰的常见搭档。"
+      }
+    },
+    "items": {
+      "标准修理无人机箱": { "amount": 4, "price": 1, "desc": "开局常备维护件。" },
+      "舰载燃料棒": { "amount": 8, "price": 2, "desc": "远程航行补能。" },
+      "医疗应急箱": { "amount": 6, "price": 1, "desc": "基础外伤与休克处置套件。" },
+      "便携合成工坊": { "amount": 1, "price": 3, "desc": "允许简单现场加工。" }
+    },
+    "stories": {
+      "极乐港匿名赠款": {
+        "time": "3100-07-16T15:30",
+        "location": "始源之环 | 贸易风走廊 | 极乐港空间站",
+        "security": 35,
+        "credits": 1500000,
+        "intro": "一笔来源不明但合法可用的信用点打到了你的账户上。"
+      },
+      "帝国剩余资产拍卖": {
+        "time": "3100-08-03T09:00",
+        "location": "始源之环 | 太阳禁卫区 | 第七码头拍卖场",
+        "security": 62,
+        "credits": 3000000,
+        "intro": "一场低调的资产拍卖给了你进入军工市场的机会。"
+      },
+      "边境矿带继承": {
+        "time": "3100-09-12T06:40",
+        "location": "天穹王冠 | 钴蓝边境 | 尘埃矿带",
+        "security": 8,
+        "credits": 900000,
+        "intro": "你继承了一点微不足道的边境资产。"
+      }
+    }
+  }
+    </script>
+
+    <script>
+      var DATA = JSON.parse(document.getElementById("boot-data").textContent);
+
+      var SKILL_NAMES = ["导弹", "炮术", "战机", "算法", "工程", "工业", "科学", "驾驶", "装甲", "护盾", "同调"];
+      var SKILL_PRESETS = {
+        "工程师": { "工程": 3, "同调": 2 },
+        "科学家": { "科学": 3, "同调": 2 },
+        "炮兵": { "炮术": 3, "装甲": 2, "护盾": 2, "同调": 2 },
+        "导弹兵": { "导弹": 3, "装甲": 2, "护盾": 2, "同调": 2 },
+        "飞行员": { "驾驶": 3, "同调": 2 },
+        "制造者": { "工业": 3, "同调": 2 }
+      };
+
+      var state = {
+        phase: 1,
+        shipKey: "",
+        shipName: "",
+        shipNotes: "",
+        moduleCategory: "全部",
+        selectedModuleKey: "",
+        slotAssignments: {},
+        stargazerOpen: false,
+        stargazerKey: "",
+        stargazerName: "",
+        stargazerNotes: "",
+        skillLevels: {},
+        skillPreset: "",
+        items: {},
+        customModules: [],
+        customItems: [],
+        customStoryEnabled: false,
+        storyKey: "",
+        customStory: { name: "", time: "", location: "", security: 20, credits: 1000000, intro: "" }
+      };
+
+      var i = 0;
+      for (i = 0; i < SKILL_NAMES.length; i++) {
+        state.skillLevels[SKILL_NAMES[i]] = 0;
+      }
+
+      function esc(value) {
+        return String(value == null ? "" : value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function clone(obj) {
+        return JSON.parse(JSON.stringify(obj));
+      }
+
+      function getShip() {
+        if (!state.shipKey) return null;
+        return DATA.ships[state.shipKey];
+      }
+
+      function getModuleCatalog() {
+        var base = clone(DATA.modules);
+        var j = 0;
+        for (j = 0; j < state.customModules.length; j++) {
+          base[state.customModules[j].name] = clone(state.customModules[j]);
+          base[state.customModules[j].name].custom = true;
+        }
+        return base;
+      }
+
+      function getItemCatalog() {
+        var base = clone(DATA.items);
+        var j = 0;
+        for (j = 0; j < state.customItems.length; j++) {
+          base[state.customItems[j].name] = clone(state.customItems[j]);
+          base[state.customItems[j].name].custom = true;
+        }
+        return base;
+      }
+
+      function getStoryCatalog() {
+        var base = clone(DATA.stories);
+        if (state.customStoryEnabled && state.customStory.name) {
+          base[state.customStory.name] = {
+            time: state.customStory.time,
+            location: state.customStory.location,
+            security: Number(state.customStory.security || 0),
+            credits: Number(state.customStory.credits || 0),
+            intro: state.customStory.intro || "玩家自定义开局剧情。",
+            custom: true
+          };
+        }
+        return base;
+      }
+
+      function getHullCost() {
+        return state.shipKey ? Number(DATA.ships[state.shipKey].price || 0) : 0;
+      }
+
+      function getStargazerCost() {
+        return state.stargazerKey ? Number(DATA.stargazers[state.stargazerKey].price || 0) : 0;
+      }
+
+      function getSkillCost() {
+        var sum = 0;
+        var key = "";
+        for (key in state.skillLevels) {
+          if (Object.prototype.hasOwnProperty.call(state.skillLevels, key)) {
+            sum += Number(state.skillLevels[key] || 0);
+          }
+        }
+        return sum;
+      }
+
+      function getItemCost() {
+        var items = getItemCatalog();
+        var sum = 0;
+        var key = "";
+        for (key in state.items) {
+          if (state.items[key] && items[key]) sum += Number(items[key].price || 0);
+        }
+        return sum;
+      }
+
+      function getFitCountMap(assignments) {
+        var map = assignments || state.slotAssignments;
+        var result = {};
+        var key = "";
+        for (key in map) {
+          if (map[key]) {
+            result[map[key]] = (result[map[key]] || 0) + 1;
+          }
+        }
+        return result;
+      }
+
+      function getFitCost(assignments) {
+        var fit = getFitCountMap(assignments);
+        var mods = getModuleCatalog();
+        var sum = 0;
+        var key = "";
+        for (key in fit) {
+          if (mods[key]) sum += fit[key] * Number(mods[key].price || 0);
+        }
+        return sum;
+      }
+
+      function getSpentTP() {
+        return getHullCost() + getStargazerCost() + getSkillCost() + getItemCost() + getFitCost();
+      }
+
+      function getRemainingTP() {
+        return Number(DATA.rules.tp || 0) - getSpentTP();
+      }
+
+      function parseSlotString(text, allowed) {
+        var result = {};
+        var m = null;
+        var i2 = 0;
+        for (i2 = 0; i2 < allowed.length; i2++) result[allowed[i2]] = 0;
+        text = String(text || "").replace(/\s+/g, "");
+        var re = /(\d+)([A-Z]+)/g;
+        while ((m = re.exec(text)) !== null) {
+          if (allowed.indexOf(m[2]) !== -1) result[m[2]] += Number(m[1]);
+        }
+        return result;
+      }
+
+      function parseRequirement(text) {
+        var req = { pg: 0, cpu: 0, tonnage: "", hardpoint: "", slot: "" };
+        var parts = String(text || "").split("|");
+        var idx = 0;
+        for (idx = 0; idx < parts.length; idx++) {
+          var normalized = String(parts[idx] || "").replace(/\uFF1A/g, ":");
+          var pair = normalized.split(":");
+          var left = String(pair[0] || "").trim();
+          var right = String(pair[1] || "").trim();
+          if (left === "PG") req.pg = Number(right || 0);
+          else if (left === "CPU") req.cpu = Number(right || 0);
+          else if (left === "\u5428\u4F4D") req.tonnage = right;
+          else if (left === "\u70AE\u4F4D") req.hardpoint = right;
+          else if (left === "\u88C5\u5907\u69FD\u4F4D") req.slot = right;
+        }
+        return req;
+      }
+
+      function getShipSlots() {
+        var ship = getShip();
+        if (!ship) return { hardpoints: [], utility: [] };
+
+        function flatten(map, prefix) {
+          var arr = [];
+          var size = "";
+          for (size in map) {
+            var count = Number(map[size] || 0);
+            var idx = 1;
+            for (idx = 1; idx <= count; idx++) {
+              arr.push({ id: prefix + "-" + size + "-" + idx, size: size, prefix: prefix, index: idx });
+            }
+          }
+          return arr;
+        }
+
+        return {
+          hardpoints: flatten(parseSlotString(ship.hardpoints, ["S", "M", "L", "XL", "C", "T"]), "HP"),
+          utility: flatten(parseSlotString(ship.slots, ["H", "L"]), "SL")
+        };
+      }
+
+      function moduleCategoryName(item) {
+        var tags = item.tags || [];
+        if (item.custom) return "自定义";
+        if (tags.indexOf("武器") !== -1 || tags.indexOf("激光") !== -1 || tags.indexOf("导弹") !== -1 || tags.indexOf("磁轨") !== -1) return "武器";
+        if (tags.indexOf("护盾") !== -1) return "护盾";
+        if (tags.indexOf("装甲") !== -1) return "装甲";
+        if (tags.indexOf("推进") !== -1) return "推进";
+        if (tags.indexOf("电子") !== -1 || tags.indexOf("火控") !== -1) return "电子";
+        return "其他";
+      }
+
+      function isStargazerCompatible(key) {
+        var ship = getShip();
+        var sg = DATA.stargazers[key];
+        if (!ship || !sg) return { ok: false, reason: "请先完成舰体选择。" };
+        var perf = sg.perf;
+        var req = ship.stargazerReq;
+        if (perf.stable < req.minStable) return { ok: false, reason: "稳态增益不足。" };
+        if (perf.bitrate < req.minBitrate) return { ok: false, reason: "比特率不足。" };
+        if (perf.precision > req.maxPrecision) return { ok: false, reason: "精度误差过高。" };
+        return { ok: true, reason: "兼容" };
+      }
+
+      function moduleFitsSlot(name, slot) {
+        var ship = getShip();
+        var mods = getModuleCatalog();
+        var mod = mods[name];
+        if (!ship || !mod) return { ok: false, reason: "缺少舰体或模块数据。" };
+        var req = parseRequirement(mod.req);
+        if (req.tonnage && req.tonnage !== "N" && req.tonnage !== ship.tonnage) return { ok: false, reason: "吨位不匹配。" };
+        if (slot.prefix === "HP") {
+          if (!req.hardpoint || req.hardpoint === "无") return { ok: false, reason: "该模块不是炮位武器。" };
+          var hpMap = parseSlotString(req.hardpoint, ["S", "M", "L", "XL", "C", "T"]);
+          if (Number(hpMap[slot.size] || 0) !== 1) return { ok: false, reason: "炮位不匹配。" };
+          return { ok: true, reason: "" };
+        }
+        if (!req.slot || req.slot === "无") return { ok: false, reason: "该模块不是高低槽模块。" };
+        var slMap = parseSlotString(req.slot, ["H", "L"]);
+        if (Number(slMap[slot.size] || 0) !== 1) return { ok: false, reason: "槽位不匹配。" };
+        return { ok: true, reason: "" };
+      }
+
+      function computeFitSummary(assignments) {
+        var ship = getShip();
+        if (!ship) {
+          return { usedPG: 0, usedCPU: 0, remainPG: 0, remainCPU: 0, weaponCount: 0, errors: ["尚未选择舰体。"] };
+        }
+
+        var slots = getShipSlots();
+        var slotList = slots.hardpoints.concat(slots.utility);
+        var mods = getModuleCatalog();
+        var usedPG = 0;
+        var usedCPU = 0;
+        var weaponCount = 0;
+        var errors = [];
+        var key = "";
+
+        for (key in assignments) {
+          if (!assignments[key]) continue;
+          var mod = mods[assignments[key]];
+          var slot = null;
+          var sidx = 0;
+          for (sidx = 0; sidx < slotList.length; sidx++) {
+            if (slotList[sidx].id === key) {
+              slot = slotList[sidx];
+              break;
+            }
+          }
+          if (!mod || !slot) continue;
+          var fit = moduleFitsSlot(assignments[key], slot);
+          if (!fit.ok) errors.push(key + "：" + fit.reason);
+          var req = parseRequirement(mod.req);
+          usedPG += Number(req.pg || 0);
+          usedCPU += Number(req.cpu || 0);
+          if (slot.prefix === "HP") weaponCount += 1;
+        }
+
+        if (usedPG > Number(ship.pg || 0)) errors.push("PG 超载。");
+        if (usedCPU > Number(ship.cpu || 0)) errors.push("CPU 超载。");
+
+        return {
+          usedPG: usedPG,
+          usedCPU: usedCPU,
+          remainPG: Number(ship.pg || 0) - usedPG,
+          remainCPU: Number(ship.cpu || 0) - usedCPU,
+          weaponCount: weaponCount,
+          errors: errors
+        };
+      }
+
+      function phaseValid(phase) {
+        var fit = computeFitSummary(state.slotAssignments);
+        if (phase === 1) return !!state.shipKey && !!String(state.shipName || "").trim();
+        if (phase === 2) return !!state.shipKey && fit.weaponCount > 0 && fit.errors.length === 0 && !!state.stargazerKey && isStargazerCompatible(state.stargazerKey).ok;
+        if (phase === 3) return true;
+        if (phase === 4) return true;
+        if (phase === 5) return !!state.storyKey;
+        return false;
+      }
+
+      function rootHtml(id, html) {
+        document.getElementById(id).innerHTML = html;
+      }
+
+      function setPhase(nextPhase) {
+        state.phase = nextPhase;
+        renderAll();
+      }
+
+      function renderHeader() {
+        var title = "";
+        var desc = "";
+        if (state.phase === 1) {
+          title = "TAB 1 / HULL";
+          desc = "选择唯一开局舰体，并完成舰船自定义。";
+        } else if (state.phase === 2) {
+          title = "TAB 2 / FITTING";
+          desc = "安装武器与模块，并配置唯一观星者。";
+        } else if (state.phase === 3) {
+          title = "TAB 3 / SKILLS";
+          desc = "使用转生点兑换技能等级或快速加载预设。";
+        } else if (state.phase === 4) {
+          title = "TAB 4 / ITEMS";
+          desc = "选择初始物资，并可手动添加自定义条目。";
+        } else {
+          title = "TAB 5 / STORY";
+          desc = "选择或自定义开局剧情，完成后才允许开始。";
+        }
+        document.getElementById("phase-title").textContent = title;
+        document.getElementById("phase-desc").textContent = desc;
+        document.getElementById("tp-display").textContent = String(getRemainingTP());
+        document.getElementById("prev-btn").disabled = state.phase === 1;
+        document.getElementById("next-btn").textContent = state.phase === 5 ? "开始游戏" : "下一步";
+
+        var idx = 1;
+        for (idx = 1; idx <= 5; idx++) {
+          document.getElementById("dot-" + idx).className = idx <= state.phase ? "step-dot active" : "step-dot";
+        }
+      }
+
+      function showOnlyTab() {
+        var idx = 1;
+        for (idx = 1; idx <= 5; idx++) {
+          document.getElementById("tab-" + idx).className = idx === state.phase ? "screen active" : "screen";
+        }
+      }
+
+      function renderSummaryBox(id) {
+        var ship = getShip();
+        var sg = state.stargazerKey ? DATA.stargazers[state.stargazerKey] : null;
+        var fit = computeFitSummary(state.slotAssignments);
+        var fitMap = getFitCountMap();
+        var fitRows = "";
+        var key = "";
+        for (key in fitMap) {
+          fitRows += "<div class=\"kv-row\"><div class=\"kv-key\">模块</div><div class=\"kv-val\">" + esc(key) + " x" + String(fitMap[key]) + "</div></div>";
+        }
+        if (!fitRows) fitRows = "<div class=\"kv-row\"><div class=\"kv-key\">配船</div><div class=\"kv-val\">尚未安装模块</div></div>";
+
+        var itemRows = "";
+        var items = getItemCatalog();
+        for (key in state.items) {
+          if (state.items[key] && items[key]) {
+            itemRows += "<div class=\"kv-row\"><div class=\"kv-key\">物资</div><div class=\"kv-val\">" + esc(key) + " x" + String(items[key].amount) + "</div></div>";
+          }
+        }
+        if (!itemRows) itemRows = "<div class=\"kv-row\"><div class=\"kv-key\">物资</div><div class=\"kv-val\">未选择</div></div>";
+
+        var storyText = "未选择";
+        if (state.storyKey) storyText = esc(state.storyKey);
+
+        var html = "";
+        html += "<div class=\"panel\" style=\"padding:12px;\">";
+        html += "<strong style=\"color:var(--accent-main);display:block;margin-bottom:10px;\">当前总览</strong>";
+        html += "<div class=\"kv-row\"><div class=\"kv-key\">舰体</div><div class=\"kv-val\">" + esc(state.shipKey || "未选择") + "</div></div>";
+        html += "<div class=\"kv-row\"><div class=\"kv-key\">舰名</div><div class=\"kv-val\">" + esc(state.shipName || "未命名") + "</div></div>";
+        html += "<div class=\"kv-row\"><div class=\"kv-key\">观星者</div><div class=\"kv-val\">" + esc(state.stargazerKey || "未安装") + "</div></div>";
+        html += "<div class=\"kv-row\"><div class=\"kv-key\">剩余 TP</div><div class=\"kv-val\">" + String(getRemainingTP()) + "</div></div>";
+        html += "</div>";
+
+        html += "<div class=\"panel\" style=\"padding:12px;\">";
+        html += "<strong style=\"color:var(--accent-main);display:block;margin-bottom:10px;\">装配状态</strong>";
+        if (ship) {
+          html += "<div class=\"kv-row\"><div class=\"kv-key\">PG</div><div class=\"kv-val\">" + String(fit.usedPG) + " / " + String(ship.pg) + "</div></div>";
+          html += "<div class=\"kv-row\"><div class=\"kv-key\">CPU</div><div class=\"kv-val\">" + String(fit.usedCPU) + " / " + String(ship.cpu) + "</div></div>";
+        } else {
+          html += "<div class=\"kv-row\"><div class=\"kv-key\">PG</div><div class=\"kv-val\">未选择舰体</div></div>";
+        }
+        html += fitRows;
+        html += "</div>";
+
+        html += "<div class=\"panel\" style=\"padding:12px;\">";
+        html += "<strong style=\"color:var(--accent-main);display:block;margin-bottom:10px;\">技能与开局</strong>";
+        html += "<div class=\"kv-row\"><div class=\"kv-key\">技能预设</div><div class=\"kv-val\">" + esc(state.skillPreset || "无") + "</div></div>";
+        html += itemRows;
+        html += "<div class=\"kv-row\"><div class=\"kv-key\">剧情</div><div class=\"kv-val\">" + storyText + "</div></div>";
+        if (sg) {
+          html += "<div class=\"kv-row\"><div class=\"kv-key\">驱动参数</div><div class=\"kv-val\">稳定 " + String(sg.perf.stable) + " / 比特率 " + String(sg.perf.bitrate) + "</div></div>";
+        }
+        html += "</div>";
+
+        rootHtml(id, html);
+      }
+
+      function renderShipGrid() {
+        var html = "";
+        var key = "";
+        for (key in DATA.ships) {
+          var ship = DATA.ships[key];
+          var selected = state.shipKey === key ? " selected" : "";
+          html += "<div class=\"item-card" + selected + "\" data-ship=\"" + esc(key) + "\">";
+          html += "<strong style=\"color:var(--accent-main);\">" + esc(key) + "</strong>";
+          html += "<div class=\"kv-row\"><div class=\"kv-key\">价格</div><div class=\"kv-val\">" + String(ship.price) + " TP</div></div>";
+          html += "<div class=\"kv-row\"><div class=\"kv-key\">炮位</div><div class=\"kv-val\">" + esc(ship.hardpoints) + "</div></div>";
+          html += "<div class=\"kv-row\"><div class=\"kv-key\">槽位</div><div class=\"kv-val\">" + esc(ship.slots) + "</div></div>";
+          html += "<div style=\"font-size:12px;color:var(--text-muted);line-height:1.5;\">" + esc(ship.desc) + "</div>";
+          html += "</div>";
+        }
+        rootHtml("ship-grid", html);
+      }
+
+      function renderModuleToolbar() {
+        var categories = ["全部", "武器", "护盾", "装甲", "推进", "电子", "其他", "自定义"];
+        var html = "";
+        var idx = 0;
+        for (idx = 0; idx < categories.length; idx++) {
+          var active = state.moduleCategory === categories[idx] ? " active" : "";
+          html += "<button class=\"chip" + active + "\" data-module-cat=\"" + esc(categories[idx]) + "\">" + esc(categories[idx]) + "</button>";
+        }
+        rootHtml("module-toolbar", html);
+      }
+
+      function renderModuleGrid() {
+        var mods = getModuleCatalog();
+        var html = "";
+        var key = "";
+        for (key in mods) {
+          var item = mods[key];
+          var cat = moduleCategoryName(item);
+          if (state.moduleCategory !== "全部" && state.moduleCategory !== cat) continue;
+          var selected = state.selectedModuleKey === key ? " selected" : "";
+          html += "<div class=\"item-card" + selected + "\" data-module=\"" + esc(key) + "\">";
+          html += "<strong style=\"color:var(--accent-main);\">" + esc(key) + "</strong>";
+          html += "<div class=\"kv-row\"><div class=\"kv-key\">分类</div><div class=\"kv-val\">" + esc(cat) + "</div></div>";
+          html += "<div class=\"kv-row\"><div class=\"kv-key\">价格</div><div class=\"kv-val\">" + String(item.price) + " TP</div></div>";
+          html += "<div class=\"kv-row\"><div class=\"kv-key\">要求</div><div class=\"kv-val\">" + esc(item.req) + "</div></div>";
+          html += "<div style=\"font-size:12px;color:var(--text-muted);line-height:1.5;\">" + esc(item.desc) + "</div>";
+          if (item.custom) {
+            html += "<div style=\"margin-top:auto;\"><button class=\"btn\" data-remove-module=\"" + esc(key) + "\">删除自定义模块</button></div>";
+          }
+          html += "</div>";
+        }
+        rootHtml("module-grid", html);
+      }
+
+      function renderRingBoard() {
+        var ship = getShip();
+        if (!ship) {
+          rootHtml("ring-board", "<div class=\"notice\">请先在 Tab1 选择舰体。</div>");
+          return;
+        }
+        var slots = getShipSlots();
+        var html = "";
+        html += "<div class=\"ship-core\"><div class=\"font-mono\" style=\"color:var(--accent-main);font-size:11px;\">FITTING CORE</div><strong>" + esc(state.shipName || state.shipKey) + "</strong><div style=\"color:var(--text-muted);font-size:12px;\">" + esc(ship.hardpoints) + " / " + esc(ship.slots) + "</div></div>";
+
+        function appendNodes(list, ring, spread, base, radius) {
+          var idx = 0;
+          var total = list.length > 0 ? list.length : 1;
+          for (idx = 0; idx < list.length; idx++) {
+            var slot = list[idx];
+            var angle = base - spread / 2 + (spread / (total > 1 ? total - 1 : 1)) * idx;
+            var assigned = state.slotAssignments[slot.id];
+            html += "<div class=\"slot-node" + (assigned ? " filled" : "") + "\" style=\"--angle:" + String(angle) + "deg;--radius:" + String(radius) + "px;\" data-slot=\"" + esc(slot.id) + "\">";
+            html += "<span>" + esc(assigned || slot.size) + "</span>";
+            if (assigned) html += "<span class=\"slot-node-clear\" data-clear-slot=\"" + esc(slot.id) + "\">×</span>";
+            html += "</div>";
+          }
+        }
+
+        appendNodes(slots.hardpoints, "outer", 220, -90, 190);
+        appendNodes(slots.utility, "inner", 180, 90, 125);
+        rootHtml("ring-board", html);
+      }
+
+      function renderStargazerGrid() {
+        var html = "";
+        var key = "";
+        for (key in DATA.stargazers) {
+          var sg = DATA.stargazers[key];
+          var compat = isStargazerCompatible(key);
+          var selected = state.stargazerKey === key ? " selected" : "";
+          var disabled = compat.ok ? "" : " disabled";
+          html += "<div class=\"item-card" + selected + disabled + "\" data-stargazer=\"" + esc(key) + "\">";
+          html += "<strong style=\"color:var(--accent-main);\">" + esc(key) + "</strong>";
+          html += "<div class=\"kv-row\"><div class=\"kv-key\">价格</div><div class=\"kv-val\">" + String(sg.price) + " TP</div></div>";
+          html += "<div class=\"kv-row\"><div class=\"kv-key\">阵营</div><div class=\"kv-val\">" + esc(sg.camp) + "</div></div>";
+          html += "<div class=\"kv-row\"><div class=\"kv-key\">状态</div><div class=\"kv-val\">" + esc(compat.ok ? "可驱动" : compat.reason) + "</div></div>";
+          html += "<div style=\"font-size:12px;color:var(--text-muted);line-height:1.5;\">" + esc(sg.desc) + "</div>";
+          html += "</div>";
+        }
+        rootHtml("stargazer-grid", html);
+        document.getElementById("stargazer-panel").className = state.stargazerOpen ? "" : "hidden";
+        document.getElementById("toggle-stargazer-btn").textContent = state.stargazerOpen ? "关闭观星者选单" : "打开观星者选单";
+      }
+
+      function renderSkillToolbar() {
+        var html = "";
+        var key = "";
+        for (key in SKILL_PRESETS) {
+          html += "<button class=\"chip" + (state.skillPreset === key ? " active" : "") + "\" data-skill-preset=\"" + esc(key) + "\">" + esc(key) + "</button>";
+        }
+        rootHtml("skill-preset-toolbar", html);
+      }
+
+      function renderSkillGrid() {
+        var html = "";
+        var idx = 0;
+        for (idx = 0; idx < SKILL_NAMES.length; idx++) {
+          var skill = SKILL_NAMES[idx];
+          html += "<div class=\"item-card\">";
+          html += "<strong style=\"color:var(--accent-main);\">" + esc(skill) + "</strong>";
+          html += "<div class=\"kv-row\"><div class=\"kv-key\">等级</div><div class=\"kv-val\">" + String(state.skillLevels[skill]) + "</div></div>";
+          html += "<div style=\"margin-top:auto;display:flex;gap:8px;\">";
+          html += "<button class=\"btn\" data-skill-minus=\"" + esc(skill) + "\">-1</button>";
+          html += "<button class=\"btn\" data-skill-plus=\"" + esc(skill) + "\">+1</button>";
+          html += "</div>";
+          html += "</div>";
+        }
+        rootHtml("skill-grid", html);
+      }
+
+      function renderItemGrid() {
+        var items = getItemCatalog();
+        var html = "";
+        var key = "";
+        for (key in items) {
+          var item = items[key];
+          html += "<div class=\"item-card" + (state.items[key] ? " selected" : "") + "\" data-item=\"" + esc(key) + "\">";
+          html += "<strong style=\"color:var(--accent-main);\">" + esc(key) + "</strong>";
+          html += "<div class=\"kv-row\"><div class=\"kv-key\">价格</div><div class=\"kv-val\">" + String(item.price) + " TP</div></div>";
+          html += "<div class=\"kv-row\"><div class=\"kv-key\">数量</div><div class=\"kv-val\">" + String(item.amount) + "</div></div>";
+          html += "<div style=\"font-size:12px;color:var(--text-muted);line-height:1.5;\">" + esc(item.desc) + "</div>";
+          if (item.custom) {
+            html += "<div style=\"margin-top:auto;\"><button class=\"btn\" data-remove-item=\"" + esc(key) + "\">删除自定义物资</button></div>";
+          }
+          html += "</div>";
+        }
+        rootHtml("item-grid", html);
+      }
+
+      function renderStoryGrid() {
+        var stories = getStoryCatalog();
+        var html = "";
+        var key = "";
+        for (key in stories) {
+          var story = stories[key];
+          html += "<div class=\"item-card" + (state.storyKey === key ? " selected" : "") + "\" data-story=\"" + esc(key) + "\">";
+          html += "<strong style=\"color:var(--accent-main);\">" + esc(key) + "</strong>";
+          html += "<div class=\"kv-row\"><div class=\"kv-key\">安等</div><div class=\"kv-val\">" + String(story.security) + "</div></div>";
+          html += "<div class=\"kv-row\"><div class=\"kv-key\">信用点</div><div class=\"kv-val\">" + String(story.credits) + "</div></div>";
+          html += "<div style=\"font-size:12px;color:var(--text-muted);line-height:1.5;\">" + esc(story.intro) + "</div>";
+          html += "</div>";
+        }
+        rootHtml("story-grid", html);
+        document.getElementById("toggle-custom-story-btn").textContent = state.customStoryEnabled ? "已启用自定义剧情" : "启用自定义剧情";
+      }
+
+      function renderAll() {
+        renderHeader();
+        showOnlyTab();
+        renderShipGrid();
+        renderSummaryBox("summary-1");
+        renderModuleToolbar();
+        renderModuleGrid();
+        renderRingBoard();
+        renderStargazerGrid();
+        renderSkillToolbar();
+        renderSkillGrid();
+        renderSummaryBox("summary-3");
+        renderItemGrid();
+        renderSummaryBox("summary-4");
+        renderStoryGrid();
+        renderSummaryBox("summary-5");
+      }
+
+      function bindSimpleInputs() {
+        document.getElementById("ship-name").oninput = function () {
+          state.shipName = this.value;
+          renderAll();
+        };
+        document.getElementById("ship-notes").oninput = function () {
+          state.shipNotes = this.value;
+        };
+        document.getElementById("stargazer-name").oninput = function () {
+          state.stargazerName = this.value;
+          renderAll();
+        };
+        document.getElementById("stargazer-notes").oninput = function () {
+          state.stargazerNotes = this.value;
+        };
+        document.getElementById("toggle-stargazer-btn").onclick = function () {
+          state.stargazerOpen = !state.stargazerOpen;
+          renderAll();
+        };
+        document.getElementById("toggle-custom-story-btn").onclick = function () {
+          state.customStoryEnabled = !state.customStoryEnabled;
+          if (state.customStoryEnabled && state.customStory.name) state.storyKey = state.customStory.name;
+          renderAll();
+        };
+      }
+
+      function bindCustomEditors() {
+        document.getElementById("add-custom-module-btn").onclick = function () {
+          var name = document.getElementById("custom-module-name").value.replace(/^\s+|\s+$/g, "");
+          if (!name) return alert("请填写自定义模块名称。");
+          if (getModuleCatalog()[name]) return alert("已存在同名模块。");
+          state.customModules.push({
+            name: name,
+            price: Number(document.getElementById("custom-module-price").value || 0),
+            tags: String(document.getElementById("custom-module-tags").value || "").split(","),
+            req: document.getElementById("custom-module-req").value.replace(/^\s+|\s+$/g, ""),
+            desc: document.getElementById("custom-module-desc").value.replace(/^\s+|\s+$/g, "") || "玩家自定义模块。"
+          });
+          state.moduleCategory = "自定义";
+          document.getElementById("custom-module-name").value = "";
+          document.getElementById("custom-module-price").value = "1";
+          document.getElementById("custom-module-tags").value = "";
+          document.getElementById("custom-module-req").value = "";
+          document.getElementById("custom-module-desc").value = "";
+          renderAll();
+        };
+
+        document.getElementById("add-custom-item-btn").onclick = function () {
+          var name = document.getElementById("custom-item-name").value.replace(/^\s+|\s+$/g, "");
+          if (!name) return alert("请填写自定义物资名称。");
+          if (getItemCatalog()[name]) return alert("已存在同名物资。");
+          state.customItems.push({
+            name: name,
+            amount: Number(document.getElementById("custom-item-amount").value || 1),
+            price: Number(document.getElementById("custom-item-price").value || 0),
+            desc: document.getElementById("custom-item-desc").value.replace(/^\s+|\s+$/g, "") || "玩家自定义物资。"
+          });
+          document.getElementById("custom-item-name").value = "";
+          document.getElementById("custom-item-amount").value = "1";
+          document.getElementById("custom-item-price").value = "1";
+          document.getElementById("custom-item-desc").value = "";
+          renderAll();
+        };
+
+        function syncCustomStory() {
+          state.customStory.name = document.getElementById("custom-story-name").value.replace(/^\s+|\s+$/g, "");
+          state.customStory.time = document.getElementById("custom-story-time").value;
+          state.customStory.location = document.getElementById("custom-story-location").value.replace(/^\s+|\s+$/g, "");
+          state.customStory.intro = document.getElementById("custom-story-intro").value.replace(/^\s+|\s+$/g, "");
+          state.customStory.security = Number(document.getElementById("custom-story-security").value || 0);
+          state.customStory.credits = Number(document.getElementById("custom-story-credits").value || 0);
+          if (state.customStoryEnabled && state.customStory.name) state.storyKey = state.customStory.name;
+        }
+
+        var ids = ["custom-story-name", "custom-story-time", "custom-story-location", "custom-story-intro", "custom-story-security", "custom-story-credits"];
+        var idx = 0;
+        for (idx = 0; idx < ids.length; idx++) {
+          document.getElementById(ids[idx]).oninput = syncCustomStory;
+        }
+      }
+
+      function findDataNode(startNode, attrName) {
+        var node = startNode;
+        while (node && node !== document) {
+          if (node.getAttribute && node.getAttribute(attrName) != null) return node;
+          node = node.parentNode;
+        }
+        return null;
+      }
+
+      function bindDelegatedClicks() {
+        document.onclick = function (event) {
+          var target = event.target || event.srcElement;
+          var node = null;
+
+          node = findDataNode(target, "data-ship");
+          if (node) {
+            var shipKey = node.getAttribute("data-ship");
+            var nextCost = Number(DATA.ships[shipKey].price || 0);
+            if (getRemainingTP() + getHullCost() - nextCost < 0) return alert("转生点不足，无法选择该舰体。");
+            if (state.shipKey && state.shipKey !== shipKey) {
+              state.slotAssignments = {};
+              state.selectedModuleKey = "";
+              state.stargazerKey = "";
+              state.stargazerName = "";
+            }
+            state.shipKey = shipKey;
+            if (!state.shipName) state.shipName = shipKey;
+            renderAll();
+            return;
+          }
+
+          node = findDataNode(target, "data-module-cat");
+          if (node) {
+            state.moduleCategory = node.getAttribute("data-module-cat");
+            renderAll();
+            return;
+          }
+
+          node = findDataNode(target, "data-module");
+          if (node) {
+            state.selectedModuleKey = node.getAttribute("data-module");
+            renderAll();
+            return;
+          }
+
+          node = findDataNode(target, "data-slot");
+          var clearNode = findDataNode(target, "data-clear-slot");
+          if (clearNode) {
+            delete state.slotAssignments[clearNode.getAttribute("data-clear-slot")];
+            renderAll();
+            return;
+          }
+          if (node) {
+            if (!state.selectedModuleKey) return alert("请先在右侧模块列表中选择一个模块。");
+            var slotId = node.getAttribute("data-slot");
+            var slots = getShipSlots().hardpoints.concat(getShipSlots().utility);
+            var slot = null;
+            var idx = 0;
+            for (idx = 0; idx < slots.length; idx++) {
+              if (slots[idx].id === slotId) {
+                slot = slots[idx];
+                break;
+              }
+            }
+            if (!slot) return;
+            var fits = moduleFitsSlot(state.selectedModuleKey, slot);
+            if (!fits.ok) return alert(fits.reason);
+            var mods = getModuleCatalog();
+            var newMod = mods[state.selectedModuleKey];
+            var oldMod = state.slotAssignments[slotId] ? mods[state.slotAssignments[slotId]] : null;
+            var delta = Number(newMod.price || 0) - Number(oldMod ? oldMod.price : 0);
+            if (delta > 0 && getRemainingTP() - delta < 0) return alert("转生点不足，无法安装该模块。");
+            var nextMap = clone(state.slotAssignments);
+            nextMap[slotId] = state.selectedModuleKey;
+            var summary = computeFitSummary(nextMap);
+            if (summary.errors.length > 0) return alert(summary.errors[0]);
+            state.slotAssignments = nextMap;
+            renderAll();
+            return;
+          }
+
+          node = findDataNode(target, "data-stargazer");
+          if (node) {
+            var starKey = node.getAttribute("data-stargazer");
+            var compat = isStargazerCompatible(starKey);
+            if (!compat.ok) return alert("无法安装：" + compat.reason);
+            var starPrice = Number(DATA.stargazers[starKey].price || 0);
+            if (getRemainingTP() + getStargazerCost() - starPrice < 0) return alert("转生点不足，无法选择该观星者。");
+            state.stargazerKey = starKey;
+            if (!state.stargazerName) state.stargazerName = starKey;
+            state.stargazerOpen = false;
+            renderAll();
+            return;
+          }
+
+          node = findDataNode(target, "data-item");
+          if (node) {
+            var itemKey = node.getAttribute("data-item");
+            var catalog = getItemCatalog();
+            var adding = !state.items[itemKey];
+            var diff = adding ? Number(catalog[itemKey].price || 0) : -Number(catalog[itemKey].price || 0);
+            if (adding && getRemainingTP() - diff < 0) return alert("转生点不足，无法追加该物资。");
+            state.items[itemKey] = adding;
+            renderAll();
+            return;
+          }
+
+          node = findDataNode(target, "data-story");
+          if (node) {
+            state.storyKey = node.getAttribute("data-story");
+            renderAll();
+            return;
+          }
+
+          node = findDataNode(target, "data-skill-preset");
+          if (node) {
+            var presetName = node.getAttribute("data-skill-preset");
+            var preset = SKILL_PRESETS[presetName];
+            var nextLevels = {};
+            var sum = 0;
+            var s = 0;
+            for (s = 0; s < SKILL_NAMES.length; s++) {
+              nextLevels[SKILL_NAMES[s]] = Number((preset && preset[SKILL_NAMES[s]]) || 0);
+              sum += nextLevels[SKILL_NAMES[s]];
+            }
+            var diffCost = sum - getSkillCost();
+            if (diffCost > 0 && getRemainingTP() - diffCost < 0) return alert("转生点不足，无法应用该预设。");
+            state.skillLevels = nextLevels;
+            state.skillPreset = presetName;
+            renderAll();
+            return;
+          }
+
+          node = findDataNode(target, "data-skill-minus");
+          if (node) {
+            var minusSkill = node.getAttribute("data-skill-minus");
+            state.skillLevels[minusSkill] = Math.max(0, Number(state.skillLevels[minusSkill] || 0) - 1);
+            renderAll();
+            return;
+          }
+
+          node = findDataNode(target, "data-skill-plus");
+          if (node) {
+            var plusSkill = node.getAttribute("data-skill-plus");
+            if (getRemainingTP() - 1 < 0) return alert("转生点不足，无法继续加点。");
+            state.skillLevels[plusSkill] = Math.min(5, Number(state.skillLevels[plusSkill] || 0) + 1);
+            renderAll();
+            return;
+          }
+
+          node = findDataNode(target, "data-remove-module");
+          if (node) {
+            var removeModuleName = node.getAttribute("data-remove-module");
+            var nextModules = [];
+            var mi = 0;
+            for (mi = 0; mi < state.customModules.length; mi++) {
+              if (state.customModules[mi].name !== removeModuleName) nextModules.push(state.customModules[mi]);
+            }
+            state.customModules = nextModules;
+            var slotKey = "";
+            for (slotKey in state.slotAssignments) {
+              if (state.slotAssignments[slotKey] === removeModuleName) delete state.slotAssignments[slotKey];
+            }
+            if (state.selectedModuleKey === removeModuleName) state.selectedModuleKey = "";
+            renderAll();
+            return;
+          }
+
+          node = findDataNode(target, "data-remove-item");
+          if (node) {
+            var removeItemName = node.getAttribute("data-remove-item");
+            var nextItems = [];
+            var ii = 0;
+            for (ii = 0; ii < state.customItems.length; ii++) {
+              if (state.customItems[ii].name !== removeItemName) nextItems.push(state.customItems[ii]);
+            }
+            state.customItems = nextItems;
+            delete state.items[removeItemName];
+            renderAll();
+            return;
+          }
+        };
+      }
+
+      document.getElementById("start-btn").onclick = function () {
+        document.getElementById("screen-0").className = "screen hidden";
+        document.getElementById("main-ui").className = "main-ui";
+        renderAll();
+      };
+
+      document.getElementById("prev-btn").onclick = function () {
+        if (state.phase > 1) setPhase(state.phase - 1);
+      };
+
+      document.getElementById("next-btn").onclick = function () {
+        if (!phaseValid(state.phase)) {
+          if (state.phase === 1) return alert("请先选定舰体，并完成舰船命名。");
+          if (state.phase === 2) return alert("请先完成有效配船，并安装一名兼容的观星者。");
+          if (state.phase === 5) return alert("请先选择一个开局剧情。");
+          return alert("当前阶段尚未完成。");
+        }
+        if (state.phase < 5) setPhase(state.phase + 1);
+        else alert("这一版是酒馆兼容测试版 v2。若酒馆内可稳定显示，下一步再接回 YAML / 导出逻辑。");
+      };
+
+      bindSimpleInputs();
+      bindCustomEditors();
+      bindDelegatedClicks();
+    </script>
+  </body>
+  </html>
+
+    ```
+    </start>
+
+
+   [测试版本]
+trimStrings: []
+placement:
+- 2
+disabled: false
+markdownOnly: true
+promptOnly: false
+runOnEdit: true
+substituteRegex: 0
+minDepth: null
+maxDepth: null

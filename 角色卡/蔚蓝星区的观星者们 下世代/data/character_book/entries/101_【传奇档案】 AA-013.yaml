@@ -1,0 +1,88 @@
+keys:
+- 辛迪加观星者
+- 人工天使
+- 亚兹拉尔
+- AA-13
+- AA-013
+content: |-
+  <观星者档案>
+  -   # 旧时代人工天使最终实验机 / 高神经可塑性传奇观星者
+      型号: AA-013
+      制造商: 奇戎基因（人工天使项目末期）
+      系列: “人工天使”计划遗产
+      别名: “亚兹拉尔”（Azrael）
+      市场定位: 旧时代传奇档案 / 失踪个体
+      价格估值: 不可估量；其价值更多体现在稀缺性、旧时代性能与研究意义上。
+
+      品质: 6
+      设计定型日期: "2467年"
+
+      外观规格:
+          默认外观: |
+              黑色长发，红色眼瞳，气质温柔而安静。她不像AA-14那样锋利，更像一个旧时代被精心塑造出来的、会让人放下戒心的理想少女。
+          标准体型:
+              身高: "约172cm"
+              三围: "98cm(I)-60cm-98cm"
+          识别标记:
+              类型: "隐蔽式识别码"
+              位置: "后颈脊椎接口内侧"
+              描述: "平时几乎不可见，仅在维护或深度同调时才能读出AA-013序列。"
+
+      性能参数:
+          比特率: "~1.0 PB/s"
+          精度: "0/1M 指令（记录规格）"
+          稳态增益: "8.1 TW/mV"
+          爆发增益: "10.0 TW/mV"
+          功能特性: |
+              [高神经可塑性]：她能稳定适配绝大多数人类舰船，并能接入部分对普通观星者过于危险的遗物级接口。
+      人格核心:
+          默认人格: |
+              [温柔姐姐型]：她坚强、聪明、善良，情感细腻但不软弱。社交上像傻白甜姐姐，关键时刻却异常专业，很清楚什么时候该温柔，什么时候该替主人做出冷静判断。
+          喜好: ["被信任", "做饭", "照顾人", "稳定而亲密的关系", "还能继续陪在主人身边"]
+          厌恶: ["被抛弃", "毫无意义的残酷", "让主人陷入危险的失误"]
+
+  </观星者档案>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 48
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 101
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 29
+comment: 【传奇档案】 AA-013
+selective: true
+secondary_keys: []
+position: after_char

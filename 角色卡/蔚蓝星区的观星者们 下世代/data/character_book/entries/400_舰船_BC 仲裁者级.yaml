@@ -1,0 +1,111 @@
+keys:
+- 战列巡洋舰
+- 仲裁者
+- 仲裁者级
+content: |-
+  <ship_def>
+  级别: 仲裁者级
+  别名: Arbiter-class
+  舰船类型: BC
+  舰种: 战列巡洋舰 BC
+  价格: 480M
+  制造商: 泰坦重工
+  描述: 上方是巨大的高能粒子加速轨道，下方则是舰桥和动力系统。这种激进的设计是为了最大化单一方向的火力投射。
+  舰船单位模板:
+    舰船类型: BC
+    吨位: XL
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 5
+    跃迁消耗: 2
+    制造商: 泰坦重工
+    描述: 上方是巨大的高能粒子加速轨道，下方则是舰桥和动力系统。这种激进的设计是为了最大化单一方向的火力投射。
+    炮位配置: 8L4S
+    装备槽位配置: 7H5L
+    装配资源:
+      PG: 360
+      CPU: 760
+    效果:
+      船体加成:
+      - 依据舰级定位应用：战列巡洋舰 BC。
+      装配减免: []
+      内置电子系统:
+        基础CPU: 内置战巡级舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置战巡级多谱段侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+      - 名称: 粒子过载循环
+        描述: 允许主武器进行一次极高功率的齐射，随后需要长达5分钟的散热冷却（期间无法射击）。
+    装备: {}
+  静态档案:
+    观星者需求: 最低需求：稳态增益 4.0 TW/mV，爆发增益需 > 8.0 TW/mV。
+    旧版描述: |-
+      “时间就是金钱，所以我们要让战斗在发票打印出来之前结束。”
+      -   级别: 仲裁者级 (Arbiter-class)
+      -   类型: 战列巡洋舰 BC
+      -   价格: 480M
+      -   形态: 上方是巨大的高能粒子加速轨道，下方则是舰桥和动力系统。这种激进的设计是为了最大化单一方向的火力投射。
+      -   制造商: 泰坦重工
+      -   静态配置文件:
+          -   舰体全长: 880米
+          -   标准船员配置: 280人
+          -   性能评级:
+              -   装甲: 18000
+              -   护盾: 15000
+              -   机动性: 45
+              -   火力输出: 4200
+          -   武器系统:
+              -   主要系统: 8x 高能粒子发射器
+              -   次要系统: 4x 拦截弹发射架
+              -   攻击射程: 120000 km
+          -   特殊系统:
+              -   名称: 粒子过载循环
+              -   描述: 允许主武器进行一次极高功率的齐射，随后需要长达5分钟的散热冷却（期间无法射击）。
+          -   观星者需求: 最低需求：稳态增益 4.0 TW/mV，爆发增益需 > 8.0 TW/mV。
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 127
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9596
+comment: 舰船|BC 仲裁者级
+selective: true
+secondary_keys:
+- 辛迪加
+position: after_char

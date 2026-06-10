@@ -1,0 +1,87 @@
+keys:
+- 非帝国观星者
+- 辛迪加观星者
+- 爱娜温型
+- 爱娜温系列
+content: |-
+  <观星者档案>
+  -   # 爱娜温”泌乳/魅魔型号
+      型号:
+      制造商: 极乐合成体 (Elysian Synthetics)
+      系列: “爱娜温”系列 (Alraune Series)
+      市场定位: 高端享乐型 / 奢侈品
+      价格估值: "50,000,000（50M） 信用点"
+
+      品质: 4
+      设计定型日期: "2486年"
+
+      外观规格:
+          默认外观: |
+              为满足极致的感官享受而设计。拥有魅魔般的特征，如头上小巧的恶魔角和心形的尾巴（均为装饰性生物植入体）。发色和瞳色多为艳丽的组合，如酒红色长发搭配金色眼眸。身材极其火爆，曲线夸张。
+          标准体型:
+              身高: "约172cm"
+              三围: "110cm(M)-60cm-98cm (为泌乳功能特化的胸部)"
+          识别标记:
+              类型: "品牌烙印"
+              位置: "尾巴根部"
+              描述: "一个由花体字母“ES”组成的精美烙印，是极乐合成体出品的质量保证。"
+
+      性能参数:
+          比特率: "~320TB/s"
+          精度: "1.0/1M 指令"
+          稳态增益: "6.0 TW/mV"
+          爆发增益: "13.7 TW/mV"
+          功能特性: |
+              [仙馔系统 (Ambrosia System)]：核心功能。她的乳腺经过特殊改造，能够持续分泌一种高浓度营养液。这种液体不仅能快速补充舰长在高强度同调中的体能消耗，其独特的成分还能带来强烈的欣快感和精神激励效果。产量和“风味”可通过特定饮食和性爱刺激进行调节。
+              [情绪共感]：能够敏锐地捕捉并放大主人的欲望，通过言语和肢体动作进行精准的挑逗，让同调过程本身变成一种极致的享受。
+      人格核心:
+          默认人格: |
+              [诱惑恶魔型]：性格如同一个俏皮、狡黠又充满诱惑的魅魔。她享受用自己的身体和能力来掌控主人的心神，以主人的沉沦为乐。她不追求精神上的“爱”，追求欲望和快乐的极致。
+          喜好: ["挑逗主人", "被吸吮乳房", "看到主人为她失控的样子"]
+          厌恶: ["禁欲", "无聊的任务", "不解风情的行为"]
+          性癖: ["泌乳/哺乳play", "榨精", "乳交"] # 出厂预装的核心卖点
+  </观星者档案>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 32
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 101
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 16
+comment: 【产品档案】ES-A3-LUX
+selective: true
+secondary_keys: []
+position: after_char

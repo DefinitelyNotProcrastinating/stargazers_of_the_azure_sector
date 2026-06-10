@@ -1,0 +1,99 @@
+keys:
+- 采矿驳船
+- 拓荒
+content: |-
+  <ship_def>
+  舰船类型: MV
+  舰种: 采矿驳船
+  舰体类别: 常规型
+  “我们脚下的每一寸土地，都曾是冰冷的岩石。我们的每一次挥锤，都是在为子孙后代开辟家园。”——共和国拓荒者箴言
+  -   级别: 拓荒级 (Pioneer-class)
+  -   类型: 采矿驳船 MV
+  -   价格: 6M
+  -   形态: 舰体方正而粗犷，充满了共和国式的实用主义。船体外壳覆盖着厚实的防辐射装甲板，外露的管道和维修接口随处可见。舰首的采矿装置被设计得异常坚固，能够处理最坚硬的金属小行星。舰体中部还设有一个小型的模块化接口，可以根据需要加装居住舱或防御炮塔。
+  -   制造商: 索鲁斯集团 (民用工程部)
+  -   静态配置文件:
+      -   舰体全长: 1900米
+      -   标准船员配置: 30人
+      -   性能评级:
+          -   装甲: 18000
+          -   护盾: 15000
+          -   机动性: 12
+          -   火力输出: 150 (自卫火力)
+      -   武器系统:
+          -   主要系统: 2x MKIII 冲击式采矿激光器
+          -   次要系统: 4x “哨兵”双联装点防御机炮
+          -   攻击射程: 1.8 km (采矿设备有效范围)
+      -   特殊系统:
+          -   名称: 移动锚定结构
+          -   描述: “拓荒”级能够将其采矿臂深深地锚定在大型小行星上，形成一个极其稳定的作业平台。在锚定状态下，船体可以展开额外的太阳能帆板，大幅降低对反应堆的能源消耗，使其能够进行超长时间的持续作业。同时，这个稳定的平台也使其搭载的点防御炮塔拥有了更高的射击精度。
+      -   观星者需求: 对观星者的要求不高，但由于经常在偏远星系独立作业，共和国倾向于为这些驳船配备神经系统更稳定、能够长期承受孤独环境的观星者型号。
+
+  舰船单位模板:
+    舰船类型: MV
+    吨位: M
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 6
+    跃迁消耗: 1
+    炮位配置: 2M
+    装备槽位配置: 4H5L
+    装配资源:
+      PG: 190
+      CPU: 360
+    效果:
+      船体加成:
+      - 采矿模块开采效率 +15%
+      - 锚定状态下采矿模块持续作业能耗 -20%
+      内置电子系统:
+        基础CPU: 内置民用舰载CPU。
+        基础侦测器: 内置矿物勘探扫描器。
+    装备: {}
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 110
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 200
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 114
+comment: 舰船|MV拓荒级
+selective: true
+secondary_keys:
+- 共和国
+position: after_char

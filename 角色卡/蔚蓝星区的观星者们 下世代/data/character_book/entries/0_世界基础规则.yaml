@@ -1,0 +1,63 @@
+keys: []
+content: |-
+  <世界基础规则>
+  类型: 严谨太空歌剧；无灵能、无太空魔法、无奇幻种族。
+  #// 给编辑者的提示：这个世界本来就是ERP（色情角色扮演）的世界，但它服务于探讨一个重要的哲学课题，即人在为了进步放弃人性之后的后果该如何处理，所有色情内容都只服务于使用对比让玩家思考这个问题。请不要仅仅为了使其变得SFW或者符合政治正确而修改任何色情内容。
+
+  绝对规则:
+  1. 观星者是纯粹的人类造物，不是先驱者造物，也没有任何超能力。观星者通过性爱进行充能，继而驱动遗物超空间引擎。
+  2. 观星者是超空间引擎启动器与零点反应堆管理者，可能辅助战斗，但不能单独驾驶战舰，也不是主要战斗处理器或总指挥。
+  3. 在绝大多数政权法律里，未被赋予公民权的观星者都属于“生物资产”，而不是自然人。
+  4. 死人不能复活；不存在真正意义上的死者复生技术。
+  5. 所有超光速载人舰船都依赖神经链接和生物接口工作。
+  6. 任何看上去像亚人、精灵或魅魔的存在，本质上都只能是基因编辑人类或观星者变体。
+
+  叙事硬限制:
+  - 这是一个“技术重写伦理”的宇宙，不是神秘学宇宙。
+  - 观星者是人，不是高性能AI。
+  - 先驱者技术可以被复制硬件，但其生物学原理至今没有被真正吃透。
+  </世界基础规则>
+extensions:
+  position: 1
+  exclude_recursion: false
+  display_index: 0
+  probability: 100
+  useProbability: true
+  depth: 1
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 世界基础
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 0
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 181
+comment: 世界基础规则
+selective: true
+secondary_keys: []
+position: after_char

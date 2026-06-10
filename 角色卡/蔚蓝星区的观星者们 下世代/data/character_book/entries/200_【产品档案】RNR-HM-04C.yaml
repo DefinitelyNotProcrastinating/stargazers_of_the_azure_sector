@@ -1,0 +1,88 @@
+keys:
+- 共和国观星者
+- 家园系列
+- 家园型
+- RNR-HM
+content: |-
+  <观星者档案>
+  -   # 自由世界共和国 - “家园”出口型号
+      型号: RNR-HM-04C
+      制造商: 共和国导航资源部 - 民用出口司
+      系列: “家园”系列 (Homesteader Series)
+      市场定位: "中端民用市场 / 可靠的家庭伴侣"
+      价格估值: "6,800,000（6.8M） 信用点"
+
+      品质: 5
+      设计定型日期: "2488年"
+
+      外观规格:
+          默认外观: |
+              设计上强调亲和力与可靠感。通常是温暖的棕色或亚麻色头发，被梳理成简单的马尾或发髻，搭配温柔的绿色或棕色眼眸。身材健康而略显丰满，散发着成熟女性的包容与母性气息，让人不自觉地想要依靠她。随赠标准薄膜紧身衣。
+          标准体型:
+              身高: "约165cm"
+              三围: "100cm(I)-66cm-94cm"
+          识别标记:
+              类型: "服务识别码纹身"
+              位置: "左脚脚踝内侧"
+              描述: "一小串整洁的服务识别码，下方有一片橄榄叶图案。"
+
+      性能参数:
+          比特率: "~220TB/s"
+          精度: "2.0/1M 指令"
+          稳态增益: "3.2 TW/mV"
+          爆发增益: "8.0 TW/mV"
+          功能特性: |
+              [情绪稳定链接]：经过特殊的心理编程，她们擅长安抚和稳定舰长，或任何与她神经链接的人的情绪。在长时间的航行或高压环境下，她们的存在能显著降低船员的焦虑和精神疲劳。
+              [多任务生活模块]：除了导航功能，她们的数据库中还预装了大量的民用生活技能模块，包括营养学、基础医疗、心理咨询和维修保养建议，是长途航行中不可多得的“大管家”。
+      人格核心:
+          默认人格: |
+              [邻家大姐姐/治愈系]：性格温柔、包容且极具耐心。她会像一位亲切的姐姐一样无微不至地照顾舰长的起居生活。她不擅长言辞挑逗，但会用实际行动表达她的关怀，比如准备一杯热饮，或是在舰长疲惫时给予一个温暖的拥抱。
+          喜好: ["整洁的环境", "照顾别人", "看到舰长放松的笑容", "平静的日常生活"]
+          Disislikes: ["舰长不爱惜自己的身体", "混乱和肮脏", "不必要的冒险和冲突"]
+          性癖: ["拥抱", "被依赖", "乳交"]
+
+  </观星者档案>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 45
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 200
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9561
+comment: 【产品档案】RNR-HM-04C
+selective: true
+secondary_keys: []
+position: after_char

@@ -1,0 +1,139 @@
+keys:
+- 护卫舰
+- 感应级
+- “感应”级
+content: |-
+  <ship_def>
+  级别: 感应级
+  舰船类型: FF
+  舰种: 电子战护卫舰
+  舰体类别: 特种型
+  价格: 1.5M
+  制造商: 联邦先进系统实验室
+  描述: 碟形舰体，表面覆盖着复杂的相控阵天线纹路。没有任何明显的外露武器，甚至看不到引擎喷口。
+  舰船单位模板:
+    舰船类型: FF
+    吨位: S
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 8
+    跃迁消耗: 1
+    制造商: 联邦先进系统实验室
+    描述: 碟形舰体，表面覆盖着复杂的相控阵天线纹路。没有任何明显的外露武器，甚至看不到引擎喷口。
+    炮位配置: 3S
+    装备槽位配置: 2H3L
+    装配资源:
+      PG: 22
+      CPU: 165
+    效果:
+      船体加成:
+      - 电子战投射器干扰强度 +25%
+      - 电子战投射器作用距离 +60%
+      - 光学隐形状态下被锁定所需时间 +50%
+      装配减免:
+      - 电子战投射器 CPU需求 -30%
+      - 隐形、扫描与目标分析模块 CPU需求 -20%
+      内置电子系统:
+        基础CPU: 内置舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置基础侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+        名称: 幻影光学迷彩系统
+        效果:
+        - 常规光学侦测难度显著提高
+        - 雷达与激光测距信号强度 -40%
+    装备: {}
+  静态档案:
+    舰种: 电子战护卫舰
+    舰体类别: 特种型
+    价格: 1.5M
+    规格:
+      舰体全长: 90米
+      标准船员配置: 5人
+    性能评级:
+      装甲: 100
+      护盾: 150
+      机动性: 95
+      火力输出: 50
+      电子战强度: 500
+    炮位明细:
+    - 名称: S1
+      尺寸: S
+      类型: 电子战武器座
+      适配武器:
+      - 电子战投射器
+      - 导弹发射器
+    - 名称: S2
+      尺寸: S
+      类型: 电子战武器座
+      适配武器:
+      - 电子战投射器
+      - 导弹发射器
+    - 名称: S3
+      尺寸: S
+      类型: 防御武器座
+      适配武器:
+      - 轻型能量武器
+      - 点防御激光
+    推荐装备方案:
+    - 2x 电子战投射器
+    - 1x 轻型脉冲激光或点防御激光
+    观星者需求:
+      控制门槛:
+        最低稳态增益: 1.0 TW/mV
+        最低比特率: 100 TB/s
+        最高精度误差: 3.0/1M
+      超载门槛:
+        最低爆发增益: 2.2 TW/mV
+        需要技能: 工程 V
+        规则:
+        - 爆发增益不足时，不可超载电子战投射器或隐形相关主动模块
+        - 超载为 2 回合 1 次
+        - 超载效果提高至原值的 150%
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 127
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9626
+comment: 舰船|FF 感应级
+selective: true
+secondary_keys:
+- 联邦
+position: after_char

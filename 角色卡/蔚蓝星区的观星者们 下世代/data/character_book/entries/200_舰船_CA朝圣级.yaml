@@ -1,0 +1,111 @@
+keys:
+- 朝圣者级
+- 重型巡洋舰
+- 巡洋舰
+- 舰队
+content: |-
+  <ship_def>
+  级别: 朝圣者级
+  别名: Pilgrim-class
+  舰船类型: CA
+  舰种: 重型巡洋舰  CA
+  价格: 165M (黑市/打捞修复版价格)
+  制造商: 塔伯里斯大回廊 (宪制帝国自动化船坞)
+  描述: 舰体明显继承了辛迪加商用与军用混血设计思路，整体呈低阻流线型，但外壳不再追求复杂的仿生鳞片，而是采用易更换的标准化装甲段和外露维护接口。它看起来像一条被压缩、加厚并武装化的高速货运鱼雷艇，审美简洁，维护友好。
+  舰船单位模板:
+    舰船类型: CA
+    吨位: L
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 6
+    跃迁消耗: 2
+    制造商: 塔伯里斯大回廊 (宪制帝国自动化船坞)
+    描述: 舰体明显继承了辛迪加商用与军用混血设计思路，整体呈低阻流线型，但外壳不再追求复杂的仿生鳞片，而是采用易更换的标准化装甲段和外露维护接口。它看起来像一条被压缩、加厚并武装化的高速货运鱼雷艇，审美简洁，维护友好。
+    炮位配置: 6M6S
+    装备槽位配置: 5H4L
+    装配资源:
+      PG: 180
+      CPU: 380
+    效果:
+      船体加成:
+      - 依据舰级定位应用：重型巡洋舰  CA。
+      装配减免: []
+      内置电子系统:
+        基础CPU: 内置巡洋舰级舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置巡洋舰级多谱段侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+        名称: 快速换装任务舱
+        描述: 舰体腹部保留大尺寸标准化任务舱接口，可在数小时内于“运兵 / 撤离 / 电子战支援 / 武装登临 / 临时货运”之间切换。它没有夸张的单项特化性能，但极其适合塔伯里斯在短时间内大量投放到不同战区。
+    装备: {}
+  静态档案:
+    观星者需求: 中等偏高。朝圣者级故意压低了系统复杂度，以便年轻公民观星者和短训船员快速上手；外来观星者只需安装常规神经转译插件即可稳定使用。
+    旧版描述: |-
+      -   级别: 朝圣者级 (Pilgrim-class)
+      -   类型: 重型巡洋舰  CA
+      -   价格: 165M (黑市/打捞修复版价格)
+      -   形态: 舰体明显继承了辛迪加商用与军用混血设计思路，整体呈低阻流线型，但外壳不再追求复杂的仿生鳞片，而是采用易更换的标准化装甲段和外露维护接口。它看起来像一条被压缩、加厚并武装化的高速货运鱼雷艇，审美简洁，维护友好。
+      -   制造商: 塔伯里斯大回廊 (宪制帝国自动化船坞)
+      -   静态配置文件:
+          -   舰体全长: 565米
+          -   标准船员配置: 3人 (1名公民指挥官 + 1名公民观星者 + 1名同调支援员) + 大量自动化维护单元 / 改造后可由标准雇佣兵团队操作
+          -   性能评级:
+              -   装甲: 22000
+              -   护盾: 15000
+              -   机动性: 62
+              -   火力输出: 2100
+          -   武器系统:
+              -   主要系统: 4x 中型脉冲激光阵列，2x 多用途导弹/鱼雷发射器
+              -   次要系统: 6x “灼烧” MKII 激光点防御系统
+              -   攻击射程: 70000 km (导弹优先交战距离)
+          -   特殊系统:
+              -   名称: 快速换装任务舱
+              -   描述: 舰体腹部保留大尺寸标准化任务舱接口，可在数小时内于“运兵 / 撤离 / 电子战支援 / 武装登临 / 临时货运”之间切换。它没有夸张的单项特化性能，但极其适合塔伯里斯在短时间内大量投放到不同战区。
+          -   观星者需求: 中等偏高。朝圣者级故意压低了系统复杂度，以便年轻公民观星者和短训船员快速上手；外来观星者只需安装常规神经转译插件即可稳定使用。
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 116
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 200
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 125
+comment: 舰船|CA朝圣级
+selective: true
+secondary_keys:
+- 塔伯里斯宪制帝国
+position: after_char

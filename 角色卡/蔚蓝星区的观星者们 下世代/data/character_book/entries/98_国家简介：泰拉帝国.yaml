@@ -1,0 +1,74 @@
+keys:
+- 泰拉帝国
+- 帝国
+content: |-
+  <国家简介>
+  国家: 泰拉帝国
+  英文名: The Empire of Terra
+  定位: 人类第一个且最强大的星际政权，秩序、血统、军功与皇权构成其文明骨架。
+  叙事注意: 泰拉帝国不是40k中的人类帝国；应按本设定中的殖民船后裔、星辰贵族、强秩序国家叙事。
+  核心气质: 宏伟、古典、管制严格、说一不二，对皇帝与帝国荣誉有近乎宗教式忠诚。
+  政治速览: 世袭绝对君主制，皇帝拥有最终决策权，贵族、海军部与内阁辅政。
+  社会速览: 崇尚秩序、荣誉、传统和集体主义；血统和军功深度绑定权力。
+  美学速览: 星海野兽派与帝国新古典主义结合，深灰、曜石黑、深红与金色；徽章为星环与长剑。
+  核心星区:
+    - 太阳禁卫区: 首都泰拉与帝国寝宫所在地，极高安等和高强度军警管制。
+    - 暗红星座: 帝国军事管制要塞区和能源战略咽喉。
+    - 璨辉星座: 与辛迪加共同管理的奢华自由贸易区。
+    - 新应许之地: 与共和国竞争的殖民前线。
+  舰队设定:
+    设计哲学: 厚重装甲、毁灭性光矛与激光武器、宏伟古典主义美学；以火力和防御压倒敌人。
+    小型舰: 枪骑兵级FF、圣殿骑士级FF、百夫长级DD、盾卫级DD、阴影级DD、阐释者级DD。
+    中型舰: 长剑级CA、圣骑士级CA、布道者级CA、卫士级CA、惩戒者级BC。
+    大型与旗舰: 禁卫军级BB、哈里曼级CVL、雅典娜级CV、君权级TT。
+    工业舰: 富足级采矿驳船、锻炉级工业指挥舰、阿特拉斯级超级货舰。
+  触发区:
+    历史政治: 泰拉帝国历史、帝国政治、星辰贵族、皇帝
+    经济产区: 泰拉帝国经济、帝国出口、地球农业、比邻星工业
+    人文制度: 泰拉帝国人文、帝国社会、帝国观星者、帝国生命工程院
+    星区文化: 太阳禁卫区文化、暗红星座文化、帝国边疆文化
+  </国家简介>
+extensions:
+  position: 1
+  exclude_recursion: false
+  display_index: 4
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 国家简介
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 98
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 9675
+comment: 国家简介：泰拉帝国
+selective: true
+secondary_keys: []
+position: after_char

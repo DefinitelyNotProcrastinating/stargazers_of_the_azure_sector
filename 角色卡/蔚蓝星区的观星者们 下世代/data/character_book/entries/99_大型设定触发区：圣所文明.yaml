@@ -1,0 +1,96 @@
+keys:
+- 圣所文明历史
+- 未知敌对序列-0T03
+- 天灾先锋
+- 圣所舰队
+- 静光武器
+- 静光约束器
+- 粒子流形护盾
+- 天羽
+- 天阵
+- 天将
+content: |-
+  <大型设定触发区>
+  设定: 圣所文明
+  历史哲学:
+    档案状态: 银河防御联盟档案中关于圣所文明的记录零散且矛盾。
+    原文明: 被同化前拥有高度发达的物理学和美学造诣，社会结构围绕尚武荣誉准则构建。
+    战争角色: 天灾入侵早期先锋，具备数量优势、瞬间投送能力和静光武器。
+    战术压力: 静光武器能高效瓦解联盟结晶装甲；瞬间投送削弱联盟射程优势。
+    联盟反制: 完型构型以超远距离时空长枪精准摧毁圣所超空间阵列舰，使主力舰队成为战场孤岛。
+    战后状态: 残骸散落古战场，成为探险家、拾荒者和海盗眼中的稀有危险宝藏。
+    引语: “注意，全个体采取突击方案，转移动力到武器和推进。”——无名联盟舰队指挥官
+  舰队技术:
+    护盾至上: 多层粒子流形护盾吸收大部分战斗压力；护盾失效后舰体结构迅速下降。
+    静光技术: 能量管理与破甲技术，失去阵列舰后射程和威力下降，但对装甲破坏特性保留。
+    人类改装限制: 所有打捞改造舰需加装人类跃迁引擎与独立反应堆。
+    分布: 少量天将级位于铁血盟约、星火姐妹会和联邦手中。
+  舰型参数:
+    天羽:
+      级别: FF
+      长度: 120m
+      角色: 高速突击护卫舰，用于快速穿插敌方阵线。
+      数据: 装甲800，护盾2000，机动90，火力1800，射程5000km。
+      武器: 2x中型接口，小型点防御激光阵列。
+      观星者需求: 人类改造后中端型号即可满足跃迁和火控；至少4TW/mV增益发挥护盾上限。
+    天阵:
+      级别: CA
+      长度: 600m
+      角色: 圣所舰队中坚重型巡洋舰，可作为火力平台或护盾支援。
+      数据: 装甲8000，护盾55000，机动55，火力9000，射程105000km。
+      武器: 8x重型炮座，16x轻型接口。
+      特殊: 静光约束器可储存过剩能量，战斗中释放外部护盾或增加输出。
+      观星者需求: 军用级或高端民用型号；至少6TW/mV发挥全部护盾性能。
+    天将:
+      级别: BB
+      长度: 5800m
+      角色: 无畏舰级决战兵器，移动堡垒和区域压制单位。
+      数据: 装甲30000，护盾280000，机动20，火力75000/125000，射程350000km或静光近战50000km。
+      武器: 标准32x超重型炮座；可改造1x人类泰坦超级武器和4x重型武器炮座。
+      特殊: 微型传送器需2小时充能，可前移150000km；静光发散器在近战对装甲造成额外输出。
+      观星者需求: 顶级观星者，稳态增益和爆发增益要求极高；至少12TW/mV发挥全部护盾性能。
+  </大型设定触发区>
+extensions:
+  position: 4
+  exclude_recursion: true
+  display_index: 46
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 大型设定触发区
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 10
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: false
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+  match_character_depth_prompt: false
+enabled: true
+insertion_order: 99
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9692
+comment: 大型设定触发区：圣所文明
+selective: true
+secondary_keys: []
+position: after_char

@@ -1,0 +1,74 @@
+keys:
+- 先驱者
+- 银河防御联盟
+- 完型级
+- 分形级
+- 战体
+content: |-
+  <大型设定简介>
+  设定: 先驱者 / 银河防御联盟
+  格言: 宇宙的意义是生命。存在的意义是思考。
+  定位: 先驱者不是单一物种，而是由始源者发起、横跨银河系的文明联盟；他们共享跃迁引擎和暗物质管道技术，曾缔造银河级和平。
+  历史速览: 河外“天灾”超维入侵终结联盟黄金时代；联盟以全体有意识生命化为概率云的代价，在银河中心黑洞内启动反熵装置，驱逐天灾并为后世争取数亿年。
+  叙事注意: 所有始源者在死前都留下了最后的话语；先驱者遗迹应带有牺牲、理性、亲外与末日战争余波。
+  舰队设定:
+    设计哲学: 实用、模块化、可变形、可量产、可适应万年战争；战舰是“战体”平台。
+    内部结构: 几乎无内饰、无舰桥、无舷窗，只存在神经连接装置；指挥中心深埋舰体中央。
+    防御原则: 无护盾，依赖厚重且自我修复的结晶装甲。
+    武器原则: 主要武器为熵分解炮，可少量穿透护甲和护盾直接攻击船体。
+    操作原则: 通常只需1名驾驶员/观星者，但精度、比特率和神经可塑性要求极端严苛。
+    舰型索引:
+      - 拦截者构型DD: 150m，高速拦截与远程火力支援。
+      - 巡航构型BC: 750m，机动作战中坚，可在机动/攻击模式间切换。
+      - 中枢构型CV: 2500m环状指挥、生产与投送平台。
+      - 完型构型TT: 19000m组合体，由九个分型战体构成，可重组为机动、防御、攻击、支援、投送模式。
+      - 方舟构型TT: 大陆级摇篮与最后堡垒，保存联盟成员文明基因样本。
+  触发区:
+    历史哲学: 先驱者历史、银河防御联盟历史、反熵装置、天灾战争
+    舰队技术: 先驱者舰队、战体技术、熵分解炮、结晶装甲、奇点隐形
+    舰型参数: 拦截者构型、巡航构型、中枢构型、完型构型、方舟构型
+  </大型设定简介>
+extensions:
+  position: 4
+  exclude_recursion: true
+  display_index: 1
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 大型设定简介
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 3
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: false
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 99
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 9691
+comment: 大型设定简介：银河防御联盟
+selective: true
+secondary_keys: []
+position: after_char

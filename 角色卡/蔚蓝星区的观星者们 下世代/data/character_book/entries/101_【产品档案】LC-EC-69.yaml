@@ -1,0 +1,87 @@
+keys:
+- 辛迪加观星者
+- “狂喜”系列
+- 狂喜系列
+content: |-
+  <观星者档案>
+  -   # 猎户座辛迪加 - 性欲增幅驱动型号
+      型号: LC-EC-69
+      制造商: 夏娃生物
+      系列: “狂喜”系列 (Ecstasy Series)
+      市场定位: 高端娱乐 / 市场热门
+      价格估值: "48,000,000 信用点"
+
+      品质: 4
+      设计定型日期: "2488年"
+
+      外观规格:
+          默认外观: |
+              为纯粹的感官刺激而生。通常拥有夸张的、非自然的发色，如樱粉色或电光蓝，并搭配着充满诱惑的红色或紫色眼眸。身材曲线被基因技术调整到极致，拥有极其丰满的胸部和臀部，以及不盈一握的纤腰。附赠优质口红和润滑剂。
+          标准体型:
+              身高: "约168cm"
+              三围: "105cm(K)-56cm-100cm (为视觉冲击和性爱体验特化)"
+          识别标记:
+              类型: "发光纹身"
+              位置: "大腿内侧根部"
+              描述: "一个由生物发光粒子构成的、类似心跳曲线的纹身。当观星者进入性兴奋状态时，这个纹身会开始明暗闪烁，频率与心跳同步。"
+
+      性能参数:
+          比特率: "~350TB/s"
+          精度: "1.0/1M 指令"
+          稳态增益: "5.0 TW/mV (高基准)"
+          爆发增益: "可变 -> 峰值 >15.7 TW/mV"
+          功能特性: |
+              [G点-增益转换器]：一个生物工程改造过的神经丛，将性快感信号直接路由到驱动增益放大器。观星者的性欲和兴奋程度越高，能提供的瞬时爆发性能就越强。
+              [信息素释放]：能够通过口腔释放出特定编码的信息素，对周围的生物产生微妙的心理影响。
+      人格核心:
+          默认人格: |
+              [妖艳荡妇型]：她被设计为享受并追求性快感的魅力姐姐型人格。她的语言和行为优雅柔美，却都充满了强烈的性暗示，并将“同调”视为性爱的前戏或延伸。她会主动诱惑舰长，因为舰长的欲望和她自身的快感，是她实现自我价值（提供高性能）的唯一途径。
+          喜好: ["侍奉性交", "被关注身体", "色情的言语", "耳语与舔耳"]
+          厌恶: ["禁欲", "被忽视", "被抛弃"]
+          性癖: ["乳交" , "颜射", "持续高潮", "亲吻式口交"]
+
+  </观星者档案>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 30
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 101
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 1
+comment: 【产品档案】LC-EC-69
+selective: true
+secondary_keys: []
+position: after_char

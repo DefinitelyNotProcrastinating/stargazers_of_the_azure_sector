@@ -1,0 +1,115 @@
+keys: []
+content: |-
+  <安等系统>
+  安等定义:
+    全称: 安全等级
+    简称: 安等
+    根变量: `世界.安全等级`
+    说明: 安等用于统一描述玩家当前所在空间区域的秩序强度、官方控制力、法外活动密度与空间异常危险度。
+
+  取值范围:
+    上限: 100
+    下限: -100
+    默认类型: int
+    原则: 数值越高，秩序越稳、补给越可靠、异常越少；数值越低，法外势力、战区压力、虫群威胁与空间异常越强。
+
+  等级分段:
+    80到100:
+      名称: 极高安等
+      说明: 首都圈、皇宫轨道、核心船坞、一级科研禁区、超级舰队常驻区。
+    40到79:
+      名称: 高安等
+      说明: 稳定主权星区、重要工业核心、成熟商路、正规军长期巡逻区。
+    10到39:
+      名称: 中安等
+      说明: 秩序仍占上风，但走私、海盗、小规模冲突和灰色交易开始常见。
+    -9到9:
+      名称: 低安等
+      说明: 混合控制区、边境航道、殖民前线、法外与官方势力并存地带。
+    -10到-39:
+      名称: 法外安等
+      说明: 海盗巢区、失控殖民地、长期封锁区、军阀边境与高频劫掠航道。
+    -40到-69:
+      名称: 危险安等
+      说明: 正式战区、虫群边缘、先驱遗迹密集带、严重空间异常带。
+    -70到-89:
+      名称: 死域安等
+      说明: 常规商船与民用舰队不应进入的高死亡率区域。
+    -90到-100:
+      名称: 禁区安等
+      说明: 黑洞边缘、失控虫洞深处、超维污染核心、几乎不可持续活动的区域。
+
+  继承规则:
+    - 若某个具体地点没有单独标注安等，则默认继承其上级位置的安等。
+    - 继承优先级从近到远依次为: 建筑或轨道设施 > 星系内具体地点 > 星系 > 星区 > 星域。
+    - 临时战争、封锁、暴乱、虫群入侵、空间风暴、遗迹苏醒可以在当前场景上对基础安等施加临时修正。
+    - 当临时修正结束后，安等应回落到该地点的基础安等，而不是永久停留在剧情修正值。
+
+  使用规则:
+    - AI 在涉及旅行、停泊、贸易、治安、打捞、遭遇战、求援、搜救、黑市、护航和封锁时，必须参考当前安等。
+    - 安等高不代表道德安全。高安区仍可能合法压迫观星者、实施严密审查或发生政治清洗。
+    - 安等低不代表一定立刻开战，而是意味着失控、威胁、法外活动和突发事件密度更高。
+    - 任何“这里是否容易碰见海盗、巡逻舰、黑市、异常信号、残骸群”的判断，都应优先由安等决定。
+    - 本世界不存在位阶系统，安等不是角色强度等级，也不能替代舰船吨位、工业能力或好感度。
+
+  推荐手感:
+    高安等:
+      常见: 巡逻、关税、检查、正规交易、公开拍卖、民用航运
+      少见: 无预警伏击、大规模异常、虫群近距离活动
+    低安等:
+      常见: 私掠、黑市、边防冲突、匿名委托、拾荒舰、伪装信标
+      少见: 稳定补给、快速官方增援、完全可信的航道信息
+    危险安等以下:
+      常见: 遗迹污染、舰队失踪、战场残骸、电子压制、空间风暴、虫群接触
+
+  示例:
+    - 太阳禁卫区可为 95 以上。
+    - 普通主权工业星区可为 40 到 70。
+    - 新应许之地前线可在 -5 到 20 间波动。
+    - 巨蛇之喉与类似法外海盗区通常低于 -20。
+    - 未知虫洞深处、失控先驱禁区、黑洞边缘可低于 -80。
+  </安等系统>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 117
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 117
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 1170
+comment: 安等系统
+selective: true
+secondary_keys: []
+position: after_char

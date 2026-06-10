@@ -1,0 +1,86 @@
+keys:
+- 智天使
+- 辛迪加观星者
+content: |-
+  <观星者档案>
+  -   # 猎户座辛迪加 - “智天使”量产型号
+      型号: CG-AA-C1
+      制造商: 奇戎基因 (Chiron Genetics) - 资产清算部
+      系列: “智天使”系列 (Cherubim Series)
+      市场定位: 顶级奢侈品 / 旗舰航行中枢
+      价格估值: "起步价 250,000,000 （2.5亿） 信用点, 根据定制化需求上不封顶。因为需要取出跟踪器，黑市价/破限版本3亿。"
+
+      品质: 3
+      设计定型日期: "2481年"
+
+      外观规格:
+          默认外观: |
+              完全可定制，天使的面容，欲魔的身材。客户可以从数十种经过市场验证的“黄金比例”模板中选择，或以更高价格进行完全个性化基因设计。最基础的款式为铂金色波浪长发和天空蓝色的眼眸，外观完美无瑕，如同一件活着的艺术品。稳定的高输出使得这种观星者适用于多种使用场合，甚至包括旗舰和重型飞船，哪怕是军用品中也是佼佼者。随赠一个标准协处理器植入体。
+          标准体型:
+              身高: "约170cm (可定制)"
+              三围: "105cm(K)-58cm-95cm (市场最受欢迎模板，可定制)"
+          识别标记:
+              类型: "可动态显示的QR码"
+              位置: "右侧臀瓣上缘"
+              描述: "一个以黄金或白金纳米粒子构成的QR码，扫描后不仅链接到产品规格页，还能显示所有者自定义的签名或动态图案，是极致的身份象征。"
+
+      性能参数:
+          比特率: "~800TB/s"
+          精度: "<0.1/1M 指令"
+          稳态增益: "8.0 TW/mV"
+          爆发增益: "14.0 TW/mV"
+          功能特性: |
+              [多线程任务处理]：能同时辅助舰长处理跃迁导航、战舰火力管制和电子战对抗等多个任务模块，是移动的指挥中心。
+              [人格套件热插拔]：支持官方应用商店的所有“人格外壳”，可以根据主人的心情和需求，随时切换性格模式，从“温柔女仆”到“高傲女王”无缝衔接。
+      人格核心:
+          默认人格: |
+              [完美伴侣型]：出厂预装的人格是“绝对取悦”。她被设计为能够预判和满足主人的所有需求，无论是生理上还是心理上。她的忠诚基于一种让主人感到舒适和被崇拜的互动模式。
+          喜好: ["主人的夸奖", "大型飞船", "奢华的环境"]
+          厌恶: ["任何让主人不快的事物", "廉价品", "对主人权威的挑战"]
+          性癖: ["足交", "BDSM(轻度服从)"]
+
+  </观星者档案>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 34
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 101
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 19
+comment: 【产品档案】CG-AA-C1
+selective: true
+secondary_keys: []
+position: after_char

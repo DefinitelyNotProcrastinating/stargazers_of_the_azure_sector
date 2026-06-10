@@ -1,0 +1,100 @@
+keys: []
+content: |-
+  <player_management>
+  # 主角变量更新规程
+
+  ## 核心原则
+  - 所有主角数据存储在 `主角` 下，更新路径必须以 `/主角/` 开头。
+  - 禁止用 `replace /主角` 覆盖整个对象。只允许针对具体字段执行原子更新。
+  - 以 `_` 开头的字段为脚本派生只读字段，AI 不得更新。
+  - 本世界观不使用西幻角色的经验等级、位阶、五维属性、HP/MP/SP、法则、自由属性点。不得在 `主角` 根对象创建 `经验`、`_等级`、`_位阶`、`STR`、`DEX`、`CON`、`INT`、`SPI`、`FreeSP`、`法则` 等旧字段。`主角.技能.技能名._等级` 是唯一允许保留的同名只读派生字段。
+
+  ## Schema
+  ```json
+  {
+    "主角": {
+      "位置": "string，格式为 星域 | 星区或星座 | 星系 | 具体位置 | 子位置",
+      "外观": "string",
+      "信用点": 0,
+      "技能": {
+        "技能名": {"EXP": 0, "_等级": 0}
+      },
+      "学习": {
+        "当前技能": "",
+        "状态": "未学习",
+        "基础速率": 30,
+        "速率倍率": 1.0,
+        "_实际每小时EXP": 30
+      },
+      "个人物品": {},
+      "旗舰库存": {},
+      "任务": {},
+      "舰船": {},
+      "单位": {},
+      "产业": {},
+      "基地": {},
+      "建筑": {},
+      "可攻略角色": {}
+    }
+  }
+  ```
+
+  ## 更新规则
+  - 位置变化时必须 `replace /主角/位置`。
+  - 信用点增减使用 `delta /主角/信用点`。
+  - 技能只更新 `EXP`；`_等级` 由脚本依据 EXP 同步。
+  - 个人物品使用 `{"物品名":{"品质": string, "堆叠": number, "效果": {"效果名": "量化描述"}, "描述": string}}`。
+  - 物品名必须外移为对象键。个人物品对象内部只允许 `品质`、`堆叠`、`效果`、`描述` 四个字段。
+  - 新增个人物品使用 `insert /主角/个人物品/物品名`；已有物品的数量变化使用 `delta /主角/个人物品/物品名/堆叠`。
+  - 旗舰库存使用 `{"物品名":{"数量": number}}`；数量增减使用 `delta`。
+  - 任务、舰船、单位、产业、基地、建筑、可攻略角色都使用 `{"object_name": Object}` 对象映射，对象名外移为 key。
+
+  ## 当前数据
+  <raw_player_data>
+  <%-JSON.stringify(getvar("SAM_data.static.主角") || {}, null, 2)%>
+  </raw_player_data>
+  </player_management>
+extensions:
+  position: 4
+  exclude_recursion: true
+  display_index: 50
+  probability: 100
+  useProbability: true
+  depth: 1
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 1
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 950
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 190
+comment: 主角变量更新
+selective: true
+secondary_keys: []
+position: after_char

@@ -1,0 +1,82 @@
+keys:
+- 自由世界共和国历史
+- 共和国历史
+- 共和国议会
+- 共和国政治
+- 共和国经济
+- 共和国之心商业
+- 新应许之地殖民
+- 共和国社会
+- 共和国观星者
+- 导航责任法案
+- 航行资源部
+- 共和国之心文化
+- 新应许之地共和国殖民文化
+content: |-
+  <国家触发区>
+  国家: 自由世界共和国
+  历史政治:
+    起源: 多个殖民地世界联合反抗帝国与辛迪加后形成共和国。
+    政体: 代议制民主联邦，议会由成员世界公民普选产生。
+    政治状态: 辩论激烈、党派斗争和政治妥协频繁，决策效率较低，但社会韧性强。
+    意识形态: 共和国将帝国视为封建暴政，将辛迪加视为吞噬人性的资本怪兽。
+  经济产区:
+    共和国之心: 商业空间站、媒体、情报、政治游说和公民组织高度密集。
+    新应许之地: 类地行星殖民、民间拓荒、前线军工和共和国/帝国军事对峙共存。
+    出口: 实用舰船、模块化装备、护盾系统、磁轨炮组件、殖民地农矿产品。
+  人文制度:
+    社会文化: 公民普遍拥有强烈参与感和权利意识，言论自由与结社自由被视为神圣不可侵犯。
+    纪念文化: 城市和港口有大量反抗英雄雕像和纪念碑，风格粗犷而有力量。
+    道德污点: 观星者制度是共和国理想主义外衣下的血淋淋现实。
+    导航责任法案: 将观星者定义为特殊“生物工具”，声称其不具备完整人类心智，因此不享公民权。
+    航行资源部: 军用观星者生产和管理机构，负责基因模板、培育和分配，名字刻意官僚化。
+    观星者设计: 刻意塑造成“普通人”形象，基因来源驳杂，有邻家女孩效应。
+    身份标识: 手腕或脚踝处的小巧服务识别码纹身，更像身份ID而非商品码。
+  所属星区文化:
+    共和国之心: 媒体嘈杂、游说团密集、商业繁荣，咖啡馆和议会直播同样常见。
+    新应许之地: 拓荒者、殖民民兵、共和国理想主义者和战争投机者混杂。
+  </国家触发区>
+extensions:
+  position: 4
+  exclude_recursion: false
+  display_index: 43
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 国家触发区
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: 10
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 98
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 175
+comment: 国家触发区：自由世界共和国
+selective: true
+secondary_keys: []
+position: after_char

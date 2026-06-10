@@ -1,0 +1,143 @@
+keys:
+- 隐形轰炸舰
+- 高级驱逐舰
+- 乱序级
+- 乱序
+content: |-
+  <ship_def>
+  级别: 乱序级
+  舰船类型: SD
+  舰种: 隐形轰炸舰
+  舰体类别: 高级型
+  价格: 30M
+  制造商: 联邦航空航天局第600设计所
+  舰体描述: 白色的流线梭形，正面有一个空洞，用于不破坏形体的同时发射导弹。
+  静态档案:
+    规格:
+      舰体全长: 205米
+      标准船员配置: 2人
+    性能评级:
+      装甲: 1000
+      护盾: 2200
+      机动性: 80
+      火力输出: 2800
+    装配:
+      装配资源:
+        PG: 136
+        CPU: 460
+      槽位:
+        高能: 6
+        低能: 6
+      武器座:
+      - 名称: M1
+        尺寸: M
+        类型: 智能鱼雷座
+        适配武器:
+        - 鱼雷发射器
+        - 重型导弹发射器
+      - 名称: M2
+        尺寸: M
+        类型: 智能鱼雷座
+        适配武器:
+        - 鱼雷发射器
+        - 重型导弹发射器
+      - 名称: M3
+        尺寸: M
+        类型: 智能鱼雷座
+        适配武器:
+        - 鱼雷发射器
+        - 重型导弹发射器
+      - 名称: M4
+        尺寸: M
+        类型: 智能鱼雷座
+        适配武器:
+        - 鱼雷发射器
+        - 重型导弹发射器
+      - 名称: M5
+        尺寸: M
+        类型: 智能鱼雷座
+        适配武器:
+        - 鱼雷发射器
+        - 重型导弹发射器
+      船体加成:
+      - 智能鱼雷制导表现 +25%
+      - 子母鱼雷诱饵与电子战效果 +30%
+      - 静止状态下隐形性能显著提升
+      - 虚假信号目标数量与持续时间提升
+      装配减免:
+      - 智能导弹武器 CPU需求 -20%
+      - 隐形与电子战模块 CPU需求 -20%
+      推荐武器方案:
+      - 5x 智能鱼雷发射巢
+    特殊系统:
+      名称: TCFG-V型战术隐形力场发生器
+      效果:
+      - 扭曲常规电磁与引力信号
+      - 静止状态下几乎无法被发现
+      附加系统:
+      - 名称: SME-IV 智能子母鱼雷
+        效果:
+        - 可制造大规模幽灵舰队信号
+        - 迫使敌方点防御与火控通道堵塞
+    观星者需求:
+      控制门槛:
+        最低稳态增益: 3.4 TW/mV
+        最低比特率: 420 TB/s
+        最高精度误差: 1.3/1M
+      超载门槛:
+        最低爆发增益: 7.0 TW/mV
+        需要技能: 工程 V
+        规则:
+        - 爆发增益不足时，不可超载智能鱼雷武器与战术隐形主动模块
+        - 超载为 2 回合 1 次
+        - 超载效果提高至原值的 150%
+      接口要求: 需要强大并行处理能力
+  跃迁充能: 0
+  最大充能: 7
+  跃迁消耗: 1
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 73
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 200
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 77
+comment: 舰船|SD乱序级
+selective: true
+secondary_keys:
+- 联邦
+position: after_char

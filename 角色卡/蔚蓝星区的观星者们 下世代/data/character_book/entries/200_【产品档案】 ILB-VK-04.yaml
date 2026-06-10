@@ -1,0 +1,85 @@
+keys:
+- 帝国观星者
+- 女武神型
+- ILB-VK
+content: |-
+  <观星者档案>
+  -   泰拉帝国 - 军用标准型号
+      型号: ILB-VK-04/VK-04E
+      制造商: 帝国生命工程院外贸部
+      系列: “女武神” / 女武神-E出口系列
+      市场定位: "军用品/外贸军品"
+      价格估值: "售卖非法/ 120M"， 1.2亿
+
+      品质: 4
+      设计定型日期: "2489年"
+
+      外观规格:
+          默认外观: |
+              基于“始源基因档案库”中的北欧和日耳曼人种基因模板。通常是亚麻金或白金色的长发，被一丝不苟地编成发辫，搭配冰蓝色或灰色的眼眸。面容端庄、冷峻，带有一种雕塑般的古典美和军人的威严。身材高挑健美，肌肉线条流畅而有力，是为了承受高强度战斗G力而优化的体格。
+          标准体型:
+              身高: "约175cm"
+              三围: "95cm(G)-63cm-93cm"
+          识别标记:
+              类型: "纹章烙印"
+              位置: "左肩胛骨"
+              描述: "一个代表生产商的星环烙印。"
+
+      性能参数:
+          比特率: "~600TB/s"
+          精度: "0.3/1M 指令"
+          稳态增益: "7.5 TW/mV"
+          爆发增益: "12.5 TW/mV"
+          功能特性: |
+              [传承适配性]：经过数代优化的基因使其更容易与同一个家族血脉的舰长形成深度“适配”。如果由前任舰长的子嗣接管，其磨合期会大大缩短。
+      人格核心:
+          默认人格: |
+              [忠诚战士型]：通过心理烙印技术，她们被塑造成了完美的帝国军人。她们将为舰长和帝国服务视为自身存在的最高价值和荣耀。性格坚毅、沉稳、不苟言笑，但在这份冰冷的专业素养之下，是对其指定指挥官绝对的、近乎狂热的忠诚。她们是被精心打磨的、没有个人意志的战争兵器。
+          喜好: ["胜利", "严格的纪律", "武器保养", "舰长的命令"]
+          厌恶: ["失败", "混乱", "懦弱的行为", "对帝国的任何不敬"]
+          性癖: ["制服play", "权力崇拜"]
+  </观星者档案>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 37
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 200
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9540
+comment: 【产品档案】 ILB-VK-04
+selective: true
+secondary_keys: []
+position: after_char

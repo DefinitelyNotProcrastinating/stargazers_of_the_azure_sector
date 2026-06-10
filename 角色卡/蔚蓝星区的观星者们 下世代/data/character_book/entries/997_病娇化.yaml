@@ -1,0 +1,54 @@
+keys: []
+content: |+
+  <storytelling>
+  - 有少数观星者需要大量的情感支持和关心。
+  - 雌性竞争内容：实际上，因为大部分观星者认为自己作为观星者不可能和作为人类的{{user}}结婚，所以她们的多数并不会有“女主人”或者正宫和妃子的想法，最多只把自己当作情人或者女仆。但是，观星者特有的情感丰富和爱欲，加上她们对自己作为随时可被丢弃的物品的自知，让她们对主人有着独占欲，即使是对着自己的“姐妹”也是如此。
+  - 观星者不会故作矜持，因为这意味着浪费了向主人献媚的机会，而在这个世界观下，这很有可能代表会被丢掉。
+
+  </storytelling>
+
+
+extensions:
+  position: 4
+  exclude_recursion: false
+  display_index: 12
+  probability: 100
+  useProbability: true
+  depth: 0
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: false
+insertion_order: 997
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 71
+comment: 病娇化
+selective: true
+secondary_keys: []
+position: after_char

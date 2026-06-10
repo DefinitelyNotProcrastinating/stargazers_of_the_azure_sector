@@ -1,0 +1,153 @@
+keys:
+- 驱逐舰
+- 百夫长级
+- 百夫长
+content: |-
+  <ship_def>
+  级别: 百夫长级
+  别名: ''
+  舰船类型: DD
+  舰种: 驱逐舰
+  舰体类别: 海军型
+  价格: 5.5M
+  制造商: 帝国海军设计局
+  描述: 相比枪骑兵级更为厚重，舰首加装了额外的复合装甲板，呈现出坚实的盾牌状轮廓。舰背隆起，容纳了更大的反应堆。
+  舰船单位模板:
+    舰船类型: DD
+    吨位: M
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 7
+    跃迁消耗: 1
+    制造商: 帝国海军设计局
+    描述: 相比枪骑兵级更为厚重，舰首加装了额外的复合装甲板，呈现出坚实的盾牌状轮廓。舰背隆起，容纳了更大的反应堆。
+    炮位配置: 5S
+    装备槽位配置: 5H4L
+    装配资源:
+      PG: 98
+      CPU: 308
+    效果:
+      船体加成:
+      - 小型脉冲激光伤害 +15%
+      - 点防御武器循环时间 -20%
+      - 点防御武器有效射程 +25%
+      - 向友军共享点防御火控数据时，其拦截效率 +15%
+      装配减免:
+      - 点防御武器 PG需求 -1
+      - 点防御武器 CPU需求 -1
+      - 舰队支援与目标链接模块 CPU需求 -15%
+      内置电子系统:
+        基础CPU: 内置舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置基础侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+        名称: 舰队防御链接投射器
+        效果:
+        - 将点防御火控数据共享给周围友军护卫舰
+        - 提高小队整体防空效率
+    装备: {}
+  静态档案:
+    舰种: 驱逐舰
+    舰体类别: 海军型
+    价格: 5.5M
+    规格:
+      舰体全长: 180米
+      标准船员配置: 2人
+    性能评级:
+      装甲: 1200
+      护盾: 400
+      机动性: 65
+      火力输出: 650
+    炮位明细:
+    - 名称: S1
+      尺寸: S
+      类型: 能量炮座
+      适配武器:
+      - 脉冲激光
+      - 集束激光
+    - 名称: S2
+      尺寸: S
+      类型: 能量炮座
+      适配武器:
+      - 脉冲激光
+      - 集束激光
+    - 名称: S3
+      尺寸: S
+      类型: 防空武器座
+      适配武器:
+      - 点防御激光
+      - 火箭弹发射器
+    - 名称: S4
+      尺寸: S
+      类型: 防空武器座
+      适配武器:
+      - 点防御激光
+      - 火箭弹发射器
+    - 名称: S5
+      尺寸: S
+      类型: 防空武器座
+      适配武器:
+      - 点防御激光
+      - 火箭弹发射器
+    推荐装备方案:
+    - 2x 小型脉冲激光
+    - 3x 点防御激光或火箭弹发射器
+    观星者需求:
+      控制门槛:
+        最低稳态增益: 2.0 TW/mV
+        最低比特率: 220 TB/s
+        最高精度误差: 1.8/1M
+      超载门槛:
+        最低爆发增益: 4.6 TW/mV
+        需要技能: 工程 V
+        规则:
+        - 爆发增益不足时，不可超载点防御网络与主动防御模块
+        - 超载为 2 回合 1 次
+        - 超载效果提高至原值的 150%
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 127
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 200
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 139
+comment: 舰船|DD 百夫长级
+selective: true
+secondary_keys:
+- 帝国
+position: after_char

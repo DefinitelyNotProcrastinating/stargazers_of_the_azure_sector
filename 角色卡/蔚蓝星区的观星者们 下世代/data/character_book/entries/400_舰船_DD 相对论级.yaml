@@ -1,0 +1,149 @@
+keys:
+- 驱逐舰
+- 相对论级
+- 相对论
+- 高级驱逐舰
+content: |-
+  <ship_def>
+  级别: 相对论级
+  别名: ''
+  舰船类型: DD
+  舰种: 高级驱逐舰
+  舰体类别: 高级型
+  价格: 70M
+  制造商: 联邦联合动力
+  描述: 像一把手术刀，细长而锋利。为了容纳那门与其体型不符的主炮，舰体结构经过了特殊的强化。
+  舰船单位模板:
+    舰船类型: DD
+    吨位: M
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 7
+    跃迁消耗: 1
+    制造商: 联邦联合动力
+    描述: 像一把手术刀，细长而锋利。为了容纳那门与其体型不符的主炮，舰体结构经过了特殊的强化。
+    炮位配置: 3S1M
+    装备槽位配置: 7H5L
+    装配资源:
+      PG: 112
+      CPU: 352
+    效果:
+      船体加成:
+      - 低压阳电子光矛伤害 +25%
+      - 低压阳电子光矛最佳射程 +20%
+      - 跃迁结束后 1 轮内首次攻击伤害 +20%
+      - 隐形状态下锁定时间 -30%
+      装配减免:
+      - 超限主炮座上安装的主武器 PG需求 -15%
+      - 隐形模块 CPU需求 -20%
+      - 目标标记与火控模块 CPU需求 -15%
+      内置电子系统:
+        基础CPU: 内置舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置基础侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+        名称: 战术隐形装置
+        效果:
+        - 允许在跃迁结束后立即进入隐形状态
+        - 适用于伏击、首轮打击与脱离
+    装备: {}
+  静态档案:
+    舰种: 高级驱逐舰
+    舰体类别: 高级型
+    价格: 70M
+    规格:
+      舰体全长: 180米
+      标准船员配置: 20人
+    性能评级:
+      装甲: 500
+      护盾: 400
+      机动性: 80
+      火力输出: 1200
+    炮位明细:
+    - 名称: M1
+      尺寸: M
+      类型: 超限主炮座
+      适配武器:
+      - 低压阳电子光矛
+      - 中型集束激光
+    - 名称: S1
+      尺寸: S
+      类型: 防御武器座
+      适配武器:
+      - 点防御激光
+      - 轻型脉冲激光
+    - 名称: S2
+      尺寸: S
+      类型: 防御武器座
+      适配武器:
+      - 点防御激光
+      - 轻型脉冲激光
+    - 名称: S3
+      尺寸: S
+      类型: 辅助武器座
+      适配武器:
+      - 电子战投射器
+      - 点防御激光
+    推荐装备方案:
+    - 1x 低压阳电子光矛
+    - 2x 点防御激光
+    - 1x 电子战投射器
+    观星者需求:
+      控制门槛:
+        最低稳态增益: 2.5 TW/mV
+        最高精度误差: 1.5/1M
+        最低比特率: 320 TB/s
+      超载门槛:
+        最低爆发增益: 5.5 TW/mV
+        需要技能: 工程 V
+        规则:
+        - 爆发增益不足时，不可超载低压阳电子光矛与隐形主动模块
+        - 超载为 2 回合 1 次
+        - 超载效果提高至原值的 150%
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 127
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9618
+comment: 舰船|DD 相对论级
+selective: true
+secondary_keys:
+- 联邦
+position: after_char

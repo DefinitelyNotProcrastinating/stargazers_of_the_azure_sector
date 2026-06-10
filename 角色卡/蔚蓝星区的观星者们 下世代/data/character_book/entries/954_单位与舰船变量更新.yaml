@@ -1,0 +1,119 @@
+keys: []
+content: |-
+  <unit_and_ship_management>
+  # 舰船变量更新规程
+
+  ## 通用原则
+  - `主角.舰船` 只管理属于{{user}}的舰船、工业舰、武装商船、航母、泰坦、生体舰和其他可独立航行的太空载具。
+  - 敌对舰队、一次性路过舰、纯背景残骸和未被{{user}}控制的舰船不得写入 `主角.舰船`。
+  - 所有对象使用 `{"object_name": Object}`。对象名外移为 key，不得重复存储内部名称字段。
+  - 效果统一使用 `{"效果名": "量化描述"}`。随机机制必须写成 `D100 <= x`。
+  - 舰船显示统一使用 `<ship_info>`；固定太空设施不写入这里，应写入 `主角.建筑` 并使用 `<building_info>`。
+  - 本世界不存在位阶系统，禁止给舰船添加位阶、境界或类似字段。
+
+  ## 舰船 Schema
+  ```json
+  {
+    "舰船名": {
+      "舰船类型": "FF/DD/CA/BC/BB/CVL/CV/TT或其他世界书既有类型",
+      "吨位": "S/M/L/XL",
+      "制造商": "string",
+      "驾驶员": "string",
+      "是否旗舰": false,
+      "观星者接口角色": "",
+      "描述": "string",
+      "跃迁充能": 0,
+      "最大充能": 0,
+      "跃迁消耗": 0,
+      "炮位配置": "ASBMCL",
+      "T槽种类": "string，可选；仅拥有 T 槽时填写",
+      "装备槽位配置": "5H8L",
+      "装配资源": {
+        "PG": 0,
+        "CPU": 0
+      },
+      "效果": {
+        "船体加成": "量化描述",
+        "内置电子系统": "量化描述"
+      },
+      "装备": {
+        "装备名": {
+          "品质": 1,
+          "标签": [],
+          "描述": "string",
+          "效果": {"效果名": "量化描述"},
+          "额外护盾": "int，可选，仅护盾模块",
+          "额外装甲": "int，可选，仅装甲模块",
+          "T槽种类": "string，可选；仅超级武器填写",
+          "装配要求": "PG：0 | CPU：0 | 吨位：S | 炮位：1S | 装备槽位：无"
+        }
+      }
+    }
+  }
+  ```
+
+  ## 舰船硬约束
+  - 舰船必须拥有 `吨位` 字段。标准舰船吨位为 `S/M/L/XL`。
+  - `炮位配置` 必须是紧凑字符串。`${A}S${B}M${C}L` 表示 A 个 S、B 个 M、C 个 L 舰炮挂点。数量为 0 的尺寸可以省略，例如 `3S1M`。大型舰船可以继续使用 `XL/C/T`。
+  - `装备槽位配置` 必须是紧凑字符串。`${A}H${B}L` 表示 A 个高功率槽位、B 个低功率槽位。
+  - 每件装备只能存储于 `舰船名/装备/装备名`。禁止继续使用旧字段 `模块配置`、`已装配模块`、`已装配模块/高能`、`已装配模块/低能`、`已装配模块/武器`。
+  - 每件装备必须拥有 `装配要求`，其中必须同时写出 PG、CPU、吨位、炮位需求和装备槽位需求。无某类需求时写 `炮位：无` 或 `装备槽位：无`。
+  - 挂点代号只允许 `S/M/L/XL/C/T`。装备的 `吨位` 必须与所占用挂点一致。`C` 槽只允许舰载机、无人机或对应机库模块；`T` 槽只允许超级武器。
+  - 非舰炮模块的 `吨位` 只允许 `S/M/L/XL/N`。`N` 表示常规通用模块，可以安装到任意吨位舰船。
+  - `装配资源.PG` 与 `装配资源.CPU` 仅存储舰船白值。已使用值与剩余值属于只读派生数据，AI 不得写入。
+  - 每艘舰船必须填写 `跃迁充能`、`最大充能`、`跃迁消耗`。新建舰船的 `跃迁充能` 默认可以为 0，但 `最大充能` 与 `跃迁消耗` 禁止填写为 0。`跃迁充能` 允许使用 0.5 精度的小数。
+  - 装备 `装配要求` 中的 PG 与 CPU 允许使用负数。负数表示该模块提供额外装配资源，但仍必须占用至少一个 H/L 装备槽位。
+  - 护盾模块可以拥有 `额外护盾`；装甲板可以拥有 `额外装甲`。仅在模块直接增加容量时填写。
+  - 舰炮只占用炮位挂点，不占用 H/L 装备槽位。非舰炮模块不占用炮位。
+  - 每艘舰船最多拥有 `1T`。拥有 `T` 槽的舰船必须填写 `T槽种类`；安装到 `T` 槽的超级武器也必须填写 `T槽种类`，且两者完全一致。
+  - 舰船内置侦测器、雷达、基础 CPU、内置 ECCM、基础跟踪、内置推进和其他天生电子能力都写入舰船 `效果`，视为船体加成。
+
+  ## 当前数据
+  <raw_ship_data>
+  <%-JSON.stringify(getvar("SAM_data.static.主角.舰船") || {}, null, 2)%>
+  </raw_ship_data>
+  </unit_and_ship_management>
+extensions:
+  position: 4
+  exclude_recursion: true
+  display_index: 54
+  probability: 100
+  useProbability: true
+  depth: 1
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 1
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 954
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 192
+comment: 单位与舰船变量更新
+selective: true
+secondary_keys: []
+position: after_char

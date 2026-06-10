@@ -1,0 +1,110 @@
+keys:
+- 战列巡洋舰
+- 惩戒者级
+- 惩戒者
+content: |-
+  <ship_def>
+  级别: 惩戒者级
+  别名: Punisher-class
+  舰船类型: BC
+  舰种: 战列巡洋舰 BC
+  价格: 550M
+  制造商: 帝国海军设计局
+  描述: 传统的流线型舰体布满了导弹发射井的盖板。为了平衡重型导弹的后坐力和质量，引擎部分被加长。
+  舰船单位模板:
+    舰船类型: BC
+    吨位: XL
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 5
+    跃迁消耗: 2
+    制造商: 帝国海军设计局
+    描述: 传统的流线型舰体布满了导弹发射井的盖板。为了平衡重型导弹的后坐力和质量，引擎部分被加长。
+    炮位配置: 12L6S
+    装备槽位配置: 6H6L
+    装配资源:
+      PG: 360
+      CPU: 760
+    效果:
+      船体加成:
+      - 依据舰级定位应用：战列巡洋舰 BC。
+      装配减免: []
+      内置电子系统:
+        基础CPU: 内置战巡级舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置战巡级多谱段侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+      - 名称: 远程火控协同数据链
+        描述: 允许该舰在没有直接信息的情况下，依靠前线护卫舰的锁定数据引导导弹执行传送
+    装备: {}
+  静态档案:
+    观星者需求: 最低需求：稳态增益 4.0 TW/mV，比特率 400 TB/s。
+    旧版描述: |-
+      -   级别: 惩戒者级 (Punisher-class)
+      -   类型: 战列巡洋舰 BC
+      -   价格: 550M
+      -   形态: 传统的流线型舰体布满了导弹发射井的盖板。为了平衡重型导弹的后坐力和质量，引擎部分被加长。
+      -   制造商: 帝国海军设计局
+      -   静态配置文件:
+          -   舰体全长: 610米
+          -   标准船员配置: 400人
+          -   性能评级:
+              -   装甲: 22000
+              -   护盾: 8000
+              -   机动性: 35
+              -   火力输出: 3800 (导弹齐射)
+          -   武器系统:
+              -   主要系统: 12x MK-V 巡航导弹发射井
+              -   次要系统: 6x 拦截导弹发射器
+              -   攻击射程: 170000 km
+          -   特殊系统:
+              -   名称: 远程火控协同数据链
+              -   描述: 允许该舰在没有直接信息的情况下，依靠前线护卫舰的锁定数据引导导弹执行传送
+          -   观星者需求: 最低需求：稳态增益 4.0 TW/mV，比特率 400 TB/s。
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 127
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9598
+comment: 舰船|BC 惩戒者级
+selective: true
+secondary_keys:
+- 帝国
+position: after_char

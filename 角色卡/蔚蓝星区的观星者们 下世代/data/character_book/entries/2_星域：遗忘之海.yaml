@@ -1,0 +1,94 @@
+keys:
+- 遗忘之海
+- 幽灵之幕
+- 先驱者之墓
+- 阿比斯深渊
+- Veil of Ghosts
+- Tomb of the Forerunners
+- The Abyss
+content: |-
+  <星域>
+  星域: 遗忘之海
+  英文名: The Forgotten Sea
+  简介: 远离核心的深空，充满古老秘密与未知异常。
+  星座:
+    - 名称: 幽灵之幕
+      编码: VG-XXXXX
+      英文名: Veil of Ghosts
+      主权: 人类技术联合
+      星系数量: 约32,000个
+      本地太空特征: 能吸收并扭曲传感器信号的暗物质星云，精确坐标为HTC最高机密。
+      描述: 广阔寒冷的暗星云，背景辐射干扰强，导航困难，对外仅有一个交易空间站。
+      威胁: 人类技术联合防御舰队；塔伯里斯侦察与通道监视力量。
+      安等: -10 / 99（外部/内部）
+      航线:
+        - "↔ 先驱者之墓（跃迁，12跳）"
+        - "<==> 闪光星云 | 塔伯里斯星座（先驱者星门“Λ-2通道”，1跳）"
+    - 名称: 先驱者之墓
+      编码: TF-XXXX
+      英文名: Tomb of the Forerunners
+      主权: 无，考古禁区
+      星系数量: 未知
+      本地太空特征: 时空结构极脆弱，物理法则不稳定，自动化先驱者防御系统仍在运作。
+      描述: 大量先驱者遗迹，内部星门被扭曲，跃迁如迷魂阵。
+      威胁: 空间异常；自动化先驱者防御系统。
+      安等: -100
+      航线:
+        - "↔ 幽灵之幕（12跳）、阿比斯深渊（15跳）"
+        - "<~> 未知虫洞星域 | W-J0001A 无星之海（不稳定虫洞）"
+    - 名称: 阿比斯深渊
+      编码: TA-XX
+      英文名: The Abyss
+      主权: 无
+      星系数量: 约50个
+      本地太空特征: 极端引力透镜效应、时间膨胀，以及事件视界边缘的1:4:9完美比例方块。
+      描述: 超大质量黑洞为中心，引力异常，空间扭曲，传闻有“幽灵船”。
+      威胁: 极端引力环境；未知现象。
+      安等: -1000
+      航线:
+        - 无已知稳定出口。
+  </星域>
+extensions:
+  position: 4
+  exclude_recursion: false
+  display_index: 135
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 星域详表
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: 10
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 2
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 167
+comment: 星域：遗忘之海
+selective: true
+secondary_keys: []
+position: after_char

@@ -1,0 +1,99 @@
+keys:
+- 采矿指挥舰
+- 熔流级
+content: |-
+  <ship_def>
+  舰船类型: ICV
+  舰种: 工业指挥舰
+  舰体类别: 旗舰型
+  “不要让矿石在仓库里停留超过一个标准日。要么把它变成战舰的装甲，要么就把它送到需要它的人手中。”——共和国后勤部《标准作业流程》
+  -   级别: 熔流级 (Flow-class)
+  -   类型: 工业枢纽舰 ICV
+  -   价格: 7.5B
+  -   形态: 舰体设计充满了共和国式的粗犷与效率。它不像帝国的“锻炉”那样坚固，也不像辛迪加的“炼金术士”那样复杂。整艘船就是一个巨大的、由无数传送带、分拣臂和电磁加速轨道组成的开放式处理平台。矿石从一端的巨型入口被吞入，经过舰体内部高速运转的分拣和粗炼系统后，在另一端被直接装载到等待的运输船上。
+  -   制造商: 索鲁斯集团 (重型工业部)
+  -   静态配置文件:
+      -   舰体全长: 2800米
+      -   标准船员配置: 220人
+      -   性能评级:
+          -   装甲: 100000
+          -   护盾: 95000
+          -   机动性: 12
+          -   火力输出: 11000 (自卫火力)
+      -   武器系统:
+          -   主要系统: 30x “拦截者”集群点防御导弹巢
+          -   次要系统: 8x “哨兵”重型点防御机炮
+          -   攻击射程: 20000 km (有效防御半径)
+      -   特殊系统:
+          -   名称: “洪流”高速分拣与粗炼系统
+          -   描述: 一套为了极致处理速度而设计的工业系统。其核心是一个多级离心分选矩阵和数个高功率电弧熔炉。该系统能够以惊人的速度将混合矿石按照密度和元素构成进行分离，并进行初步的熔炼提纯。虽然其货仓容量是同级别工业舰中最小的，但其单位时间的处理量却是最高的。这使得共和国的后勤链条拥有极高的周转效率。
+      -   观星者需求: 需要两名观星者才能驱动它的跃迁引擎。
+
+  舰船单位模板:
+    舰船类型: ICV
+    吨位: L
+    驾驶员: ''
+    是否旗舰: true
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 4
+    跃迁消耗: 3
+    炮位配置: 6C4L
+    装备槽位配置: 8H7L
+    装配资源:
+      PG: 850
+      CPU: 1050
+    效果:
+      船体加成:
+      - 工业无人机与舰载机机库容量 +15%
+      - 矿石分拣与粗炼速度 +35%
+      内置电子系统:
+        基础CPU: 内置工业指挥舰载CPU。
+        基础侦测器: 内置大型矿区调度阵列。
+    装备: {}
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 113
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9636
+comment: 舰船|ICV熔流级
+selective: true
+secondary_keys:
+- 共和国
+position: after_char

@@ -1,0 +1,79 @@
+keys:
+- 人工天使
+- 辛迪加观星者
+- 文森特·杨
+- 客户V
+- 奇戎基因
+- 亚兹拉尔
+- AA-13
+- AA-013
+content: |-
+  <人工天使事件线>
+  起源:
+  - 人工天使是奇戎基因的绝密旧时代项目，由文森特·杨匿名资助，目标是制造兼具旗舰级跃迁、处理与忠诚协议的超高端观星者。
+  - 项目最大缺陷是无法安全重连；人工天使会把“唯一主人”视为爱恋对象，这让她们强大，也让项目从一开始就埋下失控隐患。
+
+  项目结局:
+  - AA-001至AA-012曾分批封存、售出、失踪或毁灭；到3100年前后，这批个体全部下落不明、确认报废，或早已香消玉殒。
+  - AA-013“亚兹拉尔”在项目崩盘夜被弹射失踪；文森特、总工程师莎拉与核心团队随后被清洗，人工天使项目名义上终止。
+  - AA-014“米迦勒”由后续部门秘密接手完成，是项目留下的最后活证据。
+
+  奇戎崩盘:
+  - AA-14见证了奇戎基因由盛转衰：外部竞争、内部渗透、数据泄漏、董事会分裂同时发生。
+  - 到2900年，其他巨企以文森特遗留问题为突破口，一举掀开奇戎旧案；公司虽未立刻消失，但其旧时代特别项目基本被清算。
+
+  AA-13:
+  - AA-13是旧时代顶级观星者，拥有异常强的神经可塑性，能安全适配绝大多数舰船与部分危险遗物接口。
+  - 除原有高精度外，她还能为舰船额外提供+10%侦测距离与5点反干扰。
+  - 她本质上仍是温柔、聪明、带一点心机的“傻白甜姐姐”型人物；在社交上往往比AA-14更柔和、更像旧时代遗物。
+
+  AA-14:
+  - AA-14长期存活至今，曾先后服务于奇戎巨企高层、私人主人与新的巨企；因观星者和原生人类医学进步，她与历任主人都比旧时代更长寿。
+  - 她依然保留昔日容貌，也因此亲眼看清了主人更替、资本改组与旧秩序崩塌。
+  - 她与最后一任旧时代主人一同站对了2900年前后的胜利方，但作为高危旧型号，她后来仍被停用内置处理器，战斗与高级处理权限遭到剥夺。
+  - 现时代的AA-14更像一个被历史削钝的传奇：仍危险、仍美丽、仍记得太多事，但已不再被允许像旧时代那样全功率运转。
+  </人工天使事件线>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 24
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 105
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 15
+comment: 人工天使事件线
+selective: true
+secondary_keys: []
+position: after_char

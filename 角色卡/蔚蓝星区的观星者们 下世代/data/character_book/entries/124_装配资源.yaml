@@ -1,0 +1,173 @@
+keys: []
+content: |-
+  <装配资源>
+  fitting_baselines:
+    AI硬规则: |
+      1. 每个机制都必须量化（数值化）。禁止只写“更强”“更快”“较高概率”而不给出明确数值。
+      2. 每个随机机制都必须使用 `D100 <= x` 的格式描述触发概率。例如：`D100 <= 35 时发生护盾过载`。
+      3. 装配判定必须明确计算 PG、CPU、炮位占用、装备槽位占用与剩余值。
+      4. 模块效果写入变量时，必须尽量拆成明确字段，不要只保留模糊自然语言。
+
+    FF:
+      PG: 30
+      CPU: 120
+      H: 3
+      L: 2
+      典型挂点: 2-3S
+    DD:
+      PG: 70
+      CPU: 220
+      H: 4
+      L: 3
+      典型挂点: 4-6S
+    CA:
+      PG: 180
+      CPU: 380
+      H: 5
+      L: 4
+      典型挂点: 4-6M
+    BC:
+      PG: 320
+      CPU: 520
+      H: 6
+      L: 5
+      典型挂点: 5-7M 或 4M+1-2L
+    BB:
+      PG: 650
+      CPU: 750
+      H: 7
+      L: 6
+      典型挂点: 4-8L
+    CVL:
+      PG: 550
+      CPU: 850
+      H: 6
+      L: 5
+      典型挂点: 2-3L + 3-5C
+    CV:
+      PG: 1100
+      CPU: 1400
+      H: 8
+      L: 7
+      典型挂点: 2-4XL + 5-8C + 0-1T（旗舰型，独立定义）
+    TT:
+      PG: 2800
+      CPU: 2800
+      H: 10
+      L: 8
+      典型挂点: 4-6XL + 0-1T + 2-4C（旗舰型，独立定义）
+
+    类型修正:
+      海军型: 槽位 +1H +1L，PG/CPU x1.4，挂点 +1同级
+      特种型: 槽位总量不变但极端化分配，PG/CPU总量不变但一高一低
+      高级型: 槽位 +3H +2L，PG/CPU x1.6，可能解锁船体特殊能力
+
+    舰船装配结构: |
+      每艘舰船都必须按以下结构记录装配信息：
+      {
+        "炮位配置": "3S1M",
+        "装备槽位配置": "5H8L",
+        "吨位": "M",
+        "装配资源": {
+          "PG": 0,
+          "CPU": 0
+        },
+        "效果": {},
+        "装备": {}
+      }
+      `炮位配置` 使用紧凑字符串记录舰炮挂点，例如 `3S1M2L`。
+      `装备槽位配置` 使用紧凑字符串记录高功率与低功率槽位，例如 `5H8L`。
+      `装配资源.PG` 与 `装配资源.CPU` 只保存船体白值。已使用值与剩余值由 EJS 动态计算，不写入变量。
+      舰船内置电子系统写入 `效果`，视为船体加成。所有可拆卸模块统一写入 `装备`。
+
+    模块对象结构: |
+      每个模块都必须按以下结构记录：
+      {
+        "品质": 1,
+        "效果": {
+          "效果1名称": "量化描述",
+          "效果2名称": "量化描述"
+        },
+        "额外护盾": "int，可选，仅护盾模块",
+        "额外装甲": "int，可选，仅装甲模块",
+        "装配要求": "PG：0 | CPU：0 | 吨位：S | 炮位：1S | 装备槽位：无",
+        "描述": "str"
+      }
+      `装配要求` 必须是字符串，同时写出 PG、CPU、吨位、炮位需求与装备槽位需求。
+      不需要某类槽位时填写 `无`，不得省略字段。
+      舰炮只消耗炮位挂点，不消耗 H/L 装备槽位；非舰炮模块按自身需求消耗 H/L 装备槽位。
+      所有槽位需求统一使用数量在前、类型在后的写法，例如 `1S`、`2M`、`1H`、`1L`。
+      挂点代码只允许 `S/M/L/XL/C/T`。`L` 为战列舰级火炮，`XL` 为旗舰级火炮，`C` 为航母机库槽位，`T` 为超级武器槽位。装备的 `吨位` 必须与所占用挂点一致。
+      非舰炮模块的 `吨位` 只允许 `S/M/L/XL/N`。其中 `N` 为通用模块，可以安装到任意舰船；其余模块只能安装到同吨位舰船。
+      `T` 槽每艘舰船最多 1 个，只能安装超级武器。拥有 `T` 槽的舰船必须填写 `T槽种类`；超级武器也必须填写同名属性，且两者完全一致。禁止跨阵营或跨技术体系混装超级武器。
+      `C` 槽为航母机库槽位，只能安装舰载机、无人机或对应机库模块。
+      PG 与 CPU 允许填写负数。负数表示模块提供额外装配资源，例如：
+      - 副反应堆：`PG：-20 | CPU：5 | 吨位：M | 炮位：无 | 装备槽位：1L`
+      - 协处理器：`PG：2 | CPU：-15 | 吨位：N | 炮位：无 | 装备槽位：1H`
+      提供额外 PG 或 CPU 的模块依然必须消耗至少一个 H/L 装备槽位，并遵守吨位限制。
+      护盾模块可以拥有可选整数属性 `额外护盾`；装甲板可以拥有可选整数属性 `额外装甲`。
+
+    模块效果填写规则: |
+      - 武器模块至少写明：伤害、跟踪、射程。
+      - 护盾/装甲模块至少写明：护盾值或装甲值，以及抗性。
+      - 电子战、推进、工程模块也必须量化，例如：
+        - `锁定干扰概率: D100 <= 35`
+        - `护盾回复: 120/轮`
+        - `PG加成: +8`
+        - `最大充能加成: +2`
+      - 若模块带有触发式特效，必须写成 `D100 <= x`，并明确触发后的数值结果。
+
+    注意事项: |
+      护盾型舰船H+1~2 / L-1~2；装甲型反之。
+      工程模块中"反应堆调控元件"可提供额外5%-15%基础PG。
+      PG / CPU 已使用值与剩余值均由 EJS 根据装备的 `装配要求` 动态计算，AI 不得写入这些派生值。
+      舰炮占用不得超过舰船的 `炮位配置`；非舰炮模块占用不得超过 `装备槽位配置`。
+      非舰炮模块若不是 `吨位：N`，则其吨位必须与舰船吨位一致。
+      PG 或 CPU 为负数的资源扩展模块不得填写 `装备槽位：无`。
+
+
+  </装配资源>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 133
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 124
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 163
+comment: 装配资源
+selective: true
+secondary_keys: []
+position: after_char

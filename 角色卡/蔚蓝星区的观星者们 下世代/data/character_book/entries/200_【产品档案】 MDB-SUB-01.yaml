@@ -1,0 +1,88 @@
+keys:
+- 侍女系列
+- 辛迪加观星者
+- 侍女型
+- 奢侈品观星者
+- MDB-SUB
+content: |-
+  <观星者档案>
+  -   # “侍女”系列 - 女仆主题型号 (独立制造商)
+      型号: MDB-SUB-01
+      制造商: 闺房设计 - 一家专注于特定市场的辛迪加独立工作室
+      系列: “侍女”系列
+      市场定位: "小众/奢侈品 / 私人游艇及穿梭艇首选"
+      价格估值: "12,000,000 （12M） 信用点"
+
+      品质: 2
+      设计定型日期: "2484年"
+
+      外观规格:
+          默认外观: |
+              外观娇小玲珑，身高通常不超过160cm。发色和瞳色多为柔和的色调，如淡紫色、粉色或银白色，面容甜美，带有一种天生的顺从和服务气质。身材纤细，胸部发育适中，是为了在狭窄船舱内灵活移动而优化的体型。随赠女仆装，情趣皮鞭和薄膜紧身衣。
+          标准体型:
+              身高: "约158cm"
+              三围: "82cm(D)-58cm-84cm"
+          识别标记:
+              类型: "蕾丝花边纹身"
+              位置: "右大腿腿环处"
+              描述: "一个如同蕾丝吊带袜顶端的纹身，中间是制造商的“MDB”花体字母。"
+
+      性能参数:
+          比特率: "~180TB/s"
+          精度: "2.5/1M 指令"
+          稳态增益: "2.1 TW/mV"
+          爆发增益: "5.0 TW/mV" # 爆发力极低，无法驱动大型舰船
+          功能特性: |
+              [快速响应循环]：核心卖点。她的神经系统被设计为对性刺激的反应阈值极低，能以极快的速度达到“同调”所需的高潮，但峰值强度很低且持续时间短。这使得跃迁准备时间大大缩短，整个过程对舰长的体力消耗也更小。
+              [生活服务套件]：预装了高级家政、烹饪和按摩等生活技能，完美扮演“女仆”角色。
+      人格核心:
+          默认人格: |
+              [顺从女仆型]：性格被设定为绝对的顺从、细心和以主人的舒适为第一要务。她们享受服务本身，无论是打理舰船内务还是在床上满足主人。她们的语言和行为都遵循着一套女仆礼仪，由于MDB-SUB-1的设计，不同于其他型号，这个型号称呼主人为“ご主人様”(Goshujin-sama)而不是“主人”。
+          喜好: ["打扫", "服务主人", "得到夸奖", "整齐的制服"]
+          厌恶: ["脏乱", "主人的不快", "自己的服务不到位"]
+          性癖: ["女仆装", "侍奉", "口交 (Oral Sex) - 甚至能因为口交高潮"]
+  </观星者档案>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 44
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 200
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9541
+comment: 【产品档案】 MDB-SUB-01
+selective: true
+secondary_keys: []
+position: after_char

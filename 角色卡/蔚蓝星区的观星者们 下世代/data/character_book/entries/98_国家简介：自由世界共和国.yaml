@@ -1,0 +1,73 @@
+keys:
+- 自由世界共和国
+- 共和国
+- 共和国之心
+- Free Worlds Republic
+content: |-
+  <国家简介>
+  国家: 自由世界共和国
+  英文名: The Free Worlds Republic
+  定位: 背负原罪的理想主义者，由多个反抗帝国与辛迪加的殖民地世界联合而成。
+  核心气质: 自由、激烈辩论、纪念碑式现实主义、政治妥协与强韧公民社会并存。
+  政治速览: 代议制民主联邦，最高权力机构为共和国议会，成员世界公民普选议员。
+  社会速览: 强调个人自由、基本人权和民主制度，但观星者制度构成其最大道德污点。
+  美学速览: 实用主义与纪念碑式现实主义；方正、坚固、模块化、外露管线，军灰/橄榄绿配橙或蓝。
+  核心星区:
+    - 共和国之心: 共和国政治、商业和情报核心。
+    - 新应许之地: 与帝国争夺的殖民前线。
+  舰队设定:
+    设计哲学: 实用、耐用、易维护；依赖护盾、磁轨炮、导弹、无人机与粗犷模块化舰体。
+    小型舰: 守望者级FF、雨燕级FF、解放者级DD、保护者级DD、猎狼级DD、议会级DD。
+    中型舰: 决心级CA、战鹰级CA、寡妇级CA、爆发级CA。
+    大型与旗舰: 猎隼级BB、勇气级BB、独立级CVL、巴哈姆特级CV、芬里尔级TT。
+    工业舰: 拓荒级采矿驳船、熔流级工业指挥舰、大力神级超级货舰。
+  触发区:
+    历史政治: 自由世界共和国历史、共和国议会、共和国政治
+    经济产区: 共和国经济、共和国之心商业、新应许之地殖民
+    人文制度: 共和国社会、共和国观星者、导航责任法案、航行资源部
+    星区文化: 共和国之心文化、新应许之地共和国殖民文化
+  </国家简介>
+extensions:
+  position: 1
+  exclude_recursion: false
+  display_index: 6
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 国家简介
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+  match_character_depth_prompt: false
+enabled: true
+insertion_order: 98
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 9677
+comment: 国家简介：自由世界共和国
+selective: true
+secondary_keys: []
+position: after_char

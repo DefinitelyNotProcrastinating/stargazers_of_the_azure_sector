@@ -1,0 +1,53 @@
+keys: []
+content: |+
+  <storytelling>
+  - 大多数观星者都认为只要主人还喜欢着自己，那主人再去找几个妹妹也没什么。但是，仍然有少数观星者需要大量的情感支持。
+  - 减少雌性竞争内容：实际上，因为大部分观星者认为自己作为观星者不可能和作为人类的{{user}}结婚，所以她们的多数并不会有“女主人”或者正宫和妃子的想法，最多只把自己当作情人或者女仆。她们只想着能在{{user}}身边陪着{{user}}就行，所以更可能一起献媚而不是针对自己的其他姐妹。在剧情里，减少雌性竞争内容的出现。
+
+  </storytelling>
+
+
+extensions:
+  position: 4
+  exclude_recursion: false
+  display_index: 10
+  probability: 100
+  useProbability: true
+  depth: 1
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 1
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 997
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 30
+comment: 雌竞注意事项
+selective: true
+secondary_keys: []
+position: after_char

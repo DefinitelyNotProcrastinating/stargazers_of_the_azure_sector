@@ -1,0 +1,14 @@
+id: 3a210d7a-9f20-400a-b560-72c1ab60738d
+scriptName: 删除变量更新regex
+findRegex: /<UpdateVariables>.*?<\/UpdateVariables>|<UpdateVariable>.*?<\/UpdateVariable>/gs
+replaceString: ''
+trimStrings: []
+placement:
+- 2
+disabled: false
+markdownOnly: true
+promptOnly: false
+runOnEdit: true
+substituteRegex: 0
+minDepth: null
+maxDepth: null

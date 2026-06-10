@@ -1,0 +1,63 @@
+keys:
+- 塔伯里斯宪制帝国历史
+- 塔伯里斯帝国历史
+- 塔伯里斯议会
+- 塔伯里斯政治
+- 紧急条例
+content: |-
+  <国家触发区>
+  国家: 塔伯里斯宪制帝国
+  历史政治:
+    起源: 最初是一批具备分布式联网能力的观星者型号，以及与她们协作逃亡的人造人和少量技术人员；她们盗走大量基因样本、培养设备和舰船后，经不稳定先驱者通道逃入塔伯里斯星座。
+    失踪潮: 在公元2960年代到3010年代，越来越多观星者、人造人和运输舰在边疆失踪；包括星火姐妹会在内的各方一度误以为是海盗或解放组织所为。
+    建国: 在已知空域确认其存在前，塔伯里斯人已在通道彼端建立数十年殖民网络与自动化工业；其政体逐步从应急委员会转为半议会制宪政结构。
+    初次接触: 四大帝国确认新国家存在后准备进入通道清剿；塔伯里斯随即炸毁先驱者通道，将自己与外界再度隔绝了整整75年。
+    二次开门: 75年后，塔伯里斯重建通道并以成规模舰队重返已知空域；各方本已按虫群战争级别准备总动员，她们却首先提出互不侵犯与有限贸易。
+    政体: 平时由公民议会、执行院和专业委员会治理；公民议会拥有立法权，执行院负责日常行政，专业委员会管理基因库、工业、舰队和公民网络安全。
+    紧急条例: 在国家灭绝风险、基因灾害、网络渗透或全面战争时，可由高票表决与执行院共同启动；条例启动后，政府可接管公民植入体权限，进行短期的群体动作协调、情绪压制、记忆隔离和生产调度。
+    政治底线: 紧急条例平时不开，因为所有公民都知道这套机制既是国家存续的底牌，也是国家最危险的权力。
+  </国家触发区>
+extensions:
+  position: 4
+  exclude_recursion: false
+  display_index: 45
+  probability: 100
+  useProbability: true
+  depth: 3
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 国家触发区
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: 10
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 98
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9672
+comment: 国家触发区：塔伯里斯宪制帝国·历史政治
+selective: true
+secondary_keys: []
+position: after_char

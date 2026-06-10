@@ -1,0 +1,110 @@
+keys:
+- 升格者级
+- 战列舰
+- 舰队
+content: |-
+  <ship_def>
+  级别: 升格者级
+  别名: Ascendant-class
+  舰船类型: BB
+  舰种: 战列舰 BB
+  价格: 6.8B (黑市/打捞修复版价格)
+  制造商: 塔伯里斯大回廊 (宪制帝国自动化船坞)
+  描述: 舰体不再追求“模块化有机体”的极端表现，而是更接近辛迪加式量产战列舰的工业逻辑。它像一艘被拉长、加厚并彻底军用化的大型武装商船，装甲外板由统一规格的装甲段拼接而成，表面留下大量标准检修口和快速拆装节点，整体为了量产、运输和战损后再装配而优化。
+  舰船单位模板:
+    舰船类型: BB
+    吨位: XL
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 4
+    跃迁消耗: 3
+    制造商: 塔伯里斯大回廊 (宪制帝国自动化船坞)
+    描述: 舰体不再追求“模块化有机体”的极端表现，而是更接近辛迪加式量产战列舰的工业逻辑。它像一艘被拉长、加厚并彻底军用化的大型武装商船，装甲外板由统一规格的装甲段拼接而成，表面留下大量标准检修口和快速拆装节点，整体为了量产、运输和战损后再装配而优化。
+    炮位配置: 10L8C24S
+    装备槽位配置: 8H8L
+    装配资源:
+      PG: 720
+      CPU: 1520
+    效果:
+      船体加成:
+      - 依据舰级定位应用：战列舰 BB。
+      装配减免: []
+      内置电子系统:
+        基础CPU: 内置主力舰级舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置主力舰级多谱段侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+      - 名称: 野战换段装甲协议
+        描述: 升格者级预留了大量统一规格的外装甲段和内部总线接口。战后可快速切除整段受损装甲并换上库存件，前线修复速度远超传统战列舰。它在单舰极限抗打击能力上不如老牌旗舰化战列舰，但极其适合塔伯里斯连续造舰、快速修舰和批量补充舰队。
+    装备: {}
+  静态档案:
+    观星者需求: 中等。它并不追求极限同步与极端复杂回路，设计目标就是让标准化训练的公民观星者也能稳定驱动整舰，而不必依赖少数天才型号。
+    旧版描述: |-
+      -   级别: 升格者级 (Ascendant-class)
+      -   类型: 战列舰 BB
+      -   价格: 6.8B (黑市/打捞修复版价格)
+      -   形态: 舰体不再追求“模块化有机体”的极端表现，而是更接近辛迪加式量产战列舰的工业逻辑。它像一艘被拉长、加厚并彻底军用化的大型武装商船，装甲外板由统一规格的装甲段拼接而成，表面留下大量标准检修口和快速拆装节点，整体为了量产、运输和战损后再装配而优化。
+      -   制造商: 塔伯里斯大回廊 (宪制帝国自动化船坞)
+      -   静态配置文件:
+          -   舰体全长: 2100米
+          -   标准船员配置: 3人 (1名公民指挥官 + 1名公民观星者 + 1名同调支援员) + 自动化损管群 / 改造后可由标准雇佣兵团队操作
+          -   性能评级:
+              -   装甲: 118000
+              -   护盾: 98000
+              -   机动性: 40
+              -   火力输出: 6400
+          -   武器系统:
+              -   主要系统: 6x 重型脉冲激光阵列，4x 远程导弹/鱼雷发射模块
+              -   次要系统: 8x 轻型无人机发射口，24x 激光主动防御系统
+              -   攻击射程: 160000 km
+          -   特殊系统:
+              -   名称: 野战换段装甲协议
+              -   描述: 升格者级预留了大量统一规格的外装甲段和内部总线接口。战后可快速切除整段受损装甲并换上库存件，前线修复速度远超传统战列舰。它在单舰极限抗打击能力上不如老牌旗舰化战列舰，但极其适合塔伯里斯连续造舰、快速修舰和批量补充舰队。
+          -   观星者需求: 中等。它并不追求极限同步与极端复杂回路，设计目标就是让标准化训练的公民观星者也能稳定驱动整舰，而不必依赖少数天才型号。
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 117
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9595
+comment: 舰船|BB升格者级
+selective: true
+secondary_keys:
+- 塔伯里斯宪制帝国
+position: after_char

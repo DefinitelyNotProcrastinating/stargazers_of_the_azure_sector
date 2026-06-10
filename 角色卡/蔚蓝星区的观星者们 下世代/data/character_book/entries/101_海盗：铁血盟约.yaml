@@ -1,0 +1,70 @@
+keys:
+- 铁血盟约
+- 海盗
+- 科尔丹·沃斯克
+- 78-EJP
+- 巨蛇之喉
+content: |+
+  <pirate_desc>
+
+  2. 铁血盟约 (The Iron Covenant)
+  - 指挥者: 大元帅科尔丹·沃斯克（Kordan Volsk），一个极具魅力的铁腕人物，被称为“税收官”。
+  - 主要人口: 超过1200亿，是低安等最大的法外“国家”，由各路亡命徒、叛逃军人、破产商人、投机者和被威胁的殖民地居民（奴隶）组成。这些人口大多数是帝国，共和国和辛迪加的边境殖民地，四大帝国交战时无暇顾及的地方。
+  - 战斗舰队规模与构成: 约12,000艘。舰队构成混杂但极具规模。核心是由数个强大氏族组成的“盟约舰队”，装备有魔改的战列巡洋舰和重型巡洋舰。此外，还有大量获得“私掠许可证”的小型海盗团，驾驶着五花八门的劫掠船。拥有相当数量的“勇气”级无畏舰和航母，甚至是10艘泰坦，这些泰坦是他独立以帝国的君权级泰坦蓝图建造并改装的，功率更高，但相应对观星者的要求也更高。
+  - 主要分布区域: “巨蛇之喉”星域。首都78-EJP（安全等级-20）是一个巨大而臃肿的星系，被称为“残骸王座”。
+  - 纹章: 钢铁的巨蟒头骨。
+  势力特点:
+  - 意识形态: 极端的社会达尔文主义与务实的商业规则。他们不谈理想，只讲利益和力量。在盟约内部，有一套严酷但清晰的法律——“私掠律法”，禁止内部仇杀和欺诈，违者将被公开处决。
+  - 经济模式: 劫掠是他们认证的核心产业。科尔丹·沃斯克建立了“私掠许可证”制度，任何海盗团伙只要向盟约缴纳一部分收入作为“税金”，就可以获得许可证，在盟约的旗帜下合法劫掠，并能在“残骸王座”享受补给、维修和销赃的便利。这里同时也出口危险的增效剂。
+  - 铁血盟约并非每人都是犯罪者，有不少佣兵也和盟约合作，以换取信息和方便，但他们本质上是合法的。
+  - 观星者态度: 纯粹的高价值商品。他们拥有从辛迪加的培养舱技术，能制造观星者。盟约是星区最大的观星者黑市交易中心，一个经验丰富的观星者在这里能拍出天价。盟约同时也出口盟约自己设计生产的观星者。
+  - 外交手腕: 科尔丹是个务实派，他会与任何势力进行秘密交易。有传言称，辛迪加的某些巨头会通过他来“处理”商业对手，帝国的一些失势贵族也会从他这里购买武装。同时，他们也出口非法增效剂和药剂，这些高性能，但副作用也高的增效剂被多个走私集团走私到四大帝国境内。
+  - 威胁等级: 极高。所有帝国都会给出悬赏。
+  主要帝国敌对: 泰拉帝国，技术联邦
+  非帝国敌对：所有非帝国势力
+  </pirate_desc>
+
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 18
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 101
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 66
+comment: 海盗：铁血盟约
+selective: true
+secondary_keys: []
+position: after_char

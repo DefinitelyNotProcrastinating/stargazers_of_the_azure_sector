@@ -1,0 +1,110 @@
+keys:
+- 高级巡洋舰
+- 干扰巡洋舰
+- 噪鹃
+content: |-
+  <ship_def>
+  级别: 噪鹃级
+  别名: ''
+  舰船类型: ESC
+  舰种: 干扰巡洋舰 (特种巡洋舰) CL
+  价格: 257M
+  制造商: 泰坦重工 (电子战解决方案分部)
+  描述: 舰体设计充满了辛迪加式的模块化和商业化风格。核心是一个标准的巡洋舰舰体，但外部挂载了大量用途各异的电子战天线和信号放大器模块。整艘船看起来就像一个移动的通讯中继站，舰身上闪烁着不同制造商的品牌Logo和型号代码。
+  舰船单位模板:
+    舰船类型: ESC
+    吨位: L
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 6
+    跃迁消耗: 2
+    制造商: 泰坦重工 (电子战解决方案分部)
+    描述: 舰体设计充满了辛迪加式的模块化和商业化风格。核心是一个标准的巡洋舰舰体，但外部挂载了大量用途各异的电子战天线和信号放大器模块。整艘船看起来就像一个移动的通讯中继站，舰身上闪烁着不同制造商的品牌Logo和型号代码。
+    炮位配置: 6S
+    装备槽位配置: 10H4L
+    装配资源:
+      PG: 288
+      CPU: 608
+    效果:
+      船体加成:
+      - 特种巡洋舰；依据舰级定位应用：干扰巡洋舰 (特种巡洋舰) CL。
+      装配减免: []
+      内置电子系统:
+        基础CPU: 内置特种巡洋舰级舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置特种巡洋舰级多谱段侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+      - 名称: 可过载全频段干扰器
+        描述: 一套强大的全频段电子对抗系统。过载后，“噪鹃”级会向指定区域广播一股高强度信号风暴。被这股风暴笼罩的敌方舰船，如果系统遭到影响且无法筛选噪声，其传感器锁定距离将被削减40%，锁定一个目标所需的时间将延长100%，有抗性的舰队则收到的影响会衰减。这种“致盲”效果能降低敌方舰队的火力效率。
+    装备: {}
+  静态档案:
+    观星者需求: 对观星者的要求相对灵活。核心的计算和信号生成由舰载服务器完成。
+    旧版描述: |-
+      -   级别: 噪鹃级
+      -   类型: 干扰巡洋舰 (特种巡洋舰) CL
+      -   价格: 257M
+      -   形态: 舰体设计充满了辛迪加式的模块化和商业化风格。核心是一个标准的巡洋舰舰体，但外部挂载了大量用途各异的电子战天线和信号放大器模块。整艘船看起来就像一个移动的通讯中继站，舰身上闪烁着不同制造商的品牌Logo和型号代码。
+      -   制造商: 泰坦重工 (电子战解决方案分部)
+      -   静态配置文件:
+          -   舰体全长: 525米
+          -   标准船员配置: 10人
+          -   性能评级:
+              -   装甲: 8500
+              -   护盾: 8000
+              -   机动性: 66
+              -   火力输出: 550 (自卫无人机)
+          -   武器系统:
+              -   主要系统: 3x “杂音”广谱传感器干扰阵列
+              -   次要系统: 6x “黄蜂”武装无人机挂架
+              -   攻击射程: 200000 km (干扰有效距离)
+          -   特殊系统:
+              -   名称: 可过载全频段干扰器
+              -   描述: 一套强大的全频段电子对抗系统。过载后，“噪鹃”级会向指定区域广播一股高强度信号风暴。被这股风暴笼罩的敌方舰船，如果系统遭到影响且无法筛选噪声，其传感器锁定距离将被削减40%，锁定一个目标所需的时间将延长100%，有抗性的舰队则收到的影响会衰减。这种“致盲”效果能降低敌方舰队的火力效率。
+          -   观星者需求: 对观星者的要求相对灵活。核心的计算和信号生成由舰载服务器完成。
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 94
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 200
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 98
+comment: 舰船|ESC噪鹃级
+selective: true
+secondary_keys:
+- 辛迪加
+position: after_char

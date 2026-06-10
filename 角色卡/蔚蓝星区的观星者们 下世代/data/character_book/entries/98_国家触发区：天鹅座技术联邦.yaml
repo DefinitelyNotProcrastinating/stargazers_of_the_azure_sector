@@ -1,0 +1,87 @@
+keys:
+- 天鹅座技术联邦政治
+- 第一委员会
+- 中央逻辑
+- 联邦经济
+- 联邦科研
+- 天鹅座摇篮工业
+- 静谧之海探索
+- 联邦社会
+- 联邦教育
+- 联邦观星者
+- 合成核心
+- 天鹅座摇篮文化
+- 静谧之海文化
+- 联邦探索前沿
+content: |-
+  <国家触发区>
+  国家: 天鹅座技术联邦
+  历史政治:
+    政体: 精英技术官僚制；第一委员会由顶尖专家、工程师和战略家组成。
+    中央逻辑: 超级AI深度辅助治理，提供最优概率方案；人类仍保留最终决策权。
+    法律侧写:
+      第二修正案: 对联邦公民免费提供1-26岁理工教育，并向高级教育设施投入约10% GDP补助。
+      第五修正案: 解除对外出口限制，包括观星者出口。
+  经济产区:
+    天鹅座摇篮: 联邦核心科研、工业、戴森云能源与高端制造基地。
+    静谧之海: 深空探索、先驱者信标研究、硅基生态与前沿实验区。
+    出口: 高端电子战组件、隐形技术、自动化设备、舰船系统和部分观星者。
+    产业文化: 科研项目和产业项目常被包装为理性最优解，商业宣传少，技术白皮书多。
+  人文制度:
+    社会文化: 知识崇拜与功绩主义，社会地位高度依赖学术、工程和战略贡献。
+    日常气质: 公民受教育程度高，表达方式偏精确、冷淡、参数化。
+    观星者称谓: 官方严格称为“生物接口单元”（BIU）。
+    合成核心: 联邦最高机密研究，目标是创造AI或机械神经模拟器以取代BIU跃迁接口；项目背后似乎有秘密。
+    生产管理: 观星者生产受第五修正案管控，在隔绝空间站中全自动化进行，尽可能减少人为干预。
+    同调舱: 军用同调过程在无菌医疗舱中进行，舰长通过特定程序与BIU相连；出口版本才有舰长室。
+    身份标识: 军用BIU项圈蚀刻序列号，对应中央逻辑数据库内的性能、衰减和校准曲线。
+  所属星区文化:
+    天鹅座摇篮: 高监控、高自动化、高学历密度；居民习惯把问题拆为模型、误差和可优化参数。
+    静谧之海: 探索者文化强，科研舰队重视异常样本、先驱遗迹和风险评估。
+  关系:
+    紧张: 猎户座辛迪加。
+  </国家触发区>
+extensions:
+  position: 4
+  exclude_recursion: false
+  display_index: 42
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 国家触发区
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: 10
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+  match_character_depth_prompt: false
+enabled: true
+insertion_order: 98
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 174
+comment: 国家触发区：天鹅座技术联邦
+selective: true
+secondary_keys: []
+position: after_char

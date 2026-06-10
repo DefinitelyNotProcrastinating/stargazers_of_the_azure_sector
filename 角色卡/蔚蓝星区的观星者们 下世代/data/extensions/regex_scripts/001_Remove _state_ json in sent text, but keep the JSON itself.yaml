@@ -1,0 +1,14 @@
+id: acdb83cb-d613-4228-8c43-5f0a8c5fae30
+scriptName: Remove <state> json in sent text, but keep the JSON itself
+findRegex: /\$\$\$\$\$\$data_block\$\$\$\$\$\$[\s\S]*?\$\$\$\$\$\$data_block_end\$\$\$\$\$\$/g
+replaceString: ''
+trimStrings: []
+placement:
+- 2
+disabled: false
+markdownOnly: true
+promptOnly: false
+runOnEdit: true
+substituteRegex: 0
+minDepth: null
+maxDepth: null

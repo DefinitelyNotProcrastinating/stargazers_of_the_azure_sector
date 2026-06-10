@@ -1,0 +1,71 @@
+keys:
+- 圣所文明
+- 静光武器
+- 静光
+- 天羽级
+- 天阵级
+- 天将级
+content: |-
+  <大型设定简介>
+  设定: 圣所文明
+  档案名: 未知敌对序列-0T03
+  定位: 天灾入侵早期被投入战场的河外文明先锋，并非银河防御联盟成员；被同化前拥有高度发达的物理学、美学和能量操控技术。
+  历史速览: 圣所舰队以瞬间投送、阵列舰和静光武器给联盟造成巨大压力；联盟最终以完型构型的超远程时空长枪摧毁阵列舰，使圣所主力失去跃迁与武器效能。
+  舰队设定:
+    设计哲学: 优雅的致命性，战舰是艺术品与杀戮工具的结合。
+    防御原则: 护盾至上，绝大部分能量用于维持多层粒子流形护盾；舰体本身较脆弱。
+    美学形态: 白色未知合金、平滑曲线和翅膀状结构，外形酷似飞鸟或天使。
+    人类改造: 打捞舰必须加装人类标准跃迁引擎和独立反应堆；原生静光武器失去阵列舰增幅后射程和威力下降，但破甲特性保留。
+    舰型索引:
+      - 天羽FF: 120m高速突击护卫舰，箭矢/短翼形态，可装少量中型武器。
+      - 天阵CA: 600m重型巡洋舰，巨大双翼，强护盾与能量输出，可护盾支援。
+      - 天将BB: 5800m无畏舰级决战兵器，三对巨大光翼，移动堡垒。
+  触发区:
+    历史哲学: 圣所文明历史、未知敌对序列-0T03、天灾先锋
+    舰队技术: 圣所舰队、静光武器、静光约束器、粒子流形护盾
+    舰型参数: 天羽、天阵、天将
+  </大型设定简介>
+extensions:
+  position: 4
+  exclude_recursion: true
+  display_index: 2
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 大型设定简介
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 3
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: false
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+  match_character_depth_prompt: false
+enabled: true
+insertion_order: 99
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 9690
+comment: 大型设定简介：圣所文明
+selective: true
+secondary_keys: []
+position: after_char

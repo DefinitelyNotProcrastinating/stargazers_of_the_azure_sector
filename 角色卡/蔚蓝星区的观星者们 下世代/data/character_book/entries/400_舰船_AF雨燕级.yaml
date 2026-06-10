@@ -1,0 +1,151 @@
+keys:
+- 突击护卫舰
+- 护卫舰
+- 雨燕级
+- 雨燕
+content: |-
+  <ship_def>
+  级别: 雨燕级
+  别名: Swift-class
+  舰船类型: AF
+  舰种: 突击护卫舰
+  舰体类别: 高级型
+  价格: 11M
+  制造商: 索鲁斯集团
+  描述: 雨燕级的标准舰级档案。
+  舰船单位模板:
+    舰船类型: AF
+    吨位: S
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 8
+    跃迁消耗: 1
+    制造商: 索鲁斯集团
+    描述: 雨燕级的标准舰级档案。
+    炮位配置: 3S
+    装备槽位配置: 4H5L
+    装配资源:
+      PG: 44
+      CPU: 198
+    效果:
+      船体加成:
+      - 小型磁轨炮伤害 +15%
+      - 小型磁轨炮跟踪 +15%
+      - 亚光速航速 +20%
+      - 跃迁扰频器作用距离 +20%
+      装配减免:
+      - 推进模块 PG需求 -15%
+      - 跃迁扰频模块 CPU需求 -20%
+      - 小型动能武器 CPU需求 -1
+      内置电子系统:
+        基础CPU: 内置舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置基础侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+        名称: 微型跃迁引擎超载模块
+        效果:
+        - 将部分跃迁引擎预热能量导入常规推进器
+        - 短时间内获得爆发性加速
+        附加系统:
+        - 名称: J-2型跃迁扰频器
+          效果:
+          - 在 12000 km 范围内瘫痪目标跃迁电容
+          - 持续重置目标的跃迁启动序列
+    装备: {}
+  静态档案:
+    舰种: 突击护卫舰
+    舰体类别: 高级型
+    价格: 11M
+    规格:
+      舰体全长: 110米
+      标准船员配置: 4人
+    性能评级:
+      装甲: 250
+      护盾: 1100
+      机动性: 98
+      火力输出: 150
+    炮位明细:
+    - 名称: S1
+      尺寸: S
+      类型: 动能炮座
+      适配武器:
+      - 磁轨炮
+      - 自动加农炮
+    - 名称: S2
+      尺寸: S
+      类型: 动能炮座
+      适配武器:
+      - 磁轨炮
+      - 自动加农炮
+    - 名称: S3
+      尺寸: S
+      类型: 压制武器座
+      适配武器:
+      - 跃迁干扰武器
+      - 轻型能量武器
+    推荐装备方案:
+    - 2x 小型磁轨炮
+    - 1x 跃迁扰频器或轻型脉冲激光
+    观星者需求:
+      控制门槛:
+        最低稳态增益: 2.2 TW/mV
+        最高精度误差: 1.8/1M
+        最低比特率: 220 TB/s
+      超载门槛:
+        最低爆发增益: 5.0 TW/mV
+        需要技能: 工程 V
+        规则:
+        - 爆发增益不足时，不可启动微型跃迁引擎超载模块
+        - 超载为 2 回合 1 次
+        - 超载后的主动模块或武器效果提高至原值的 150%
+      接口要求: 神经反应速度极高
+      特性要求:
+      - 能承受极限加速带来的 G 力反馈
+      - 能处理高密度空间定向信息流
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 67
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9589
+comment: 舰船|AF雨燕级
+selective: true
+secondary_keys:
+- 共和国
+position: after_char

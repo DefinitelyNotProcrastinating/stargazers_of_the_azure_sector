@@ -1,0 +1,145 @@
+keys:
+- 高级驱逐舰
+- 屏卫驱逐舰
+- 封锁者级
+- 封锁者
+content: |-
+  <ship_def>
+  级别: 封锁者级
+  舰船类型: AD
+  舰种: 屏卫驱逐舰
+  舰体类别: 高级型
+  价格: 35M
+  制造商: 泰坦重工
+  舰体描述: 灰色的船体呈扁平的六边形，如同盾牌。舰体表面布满了密集的点防御炮塔和外露的散热管道，充满了工业化的实用美学。
+  静态档案:
+    规格:
+      舰体全长: 215米
+      标准船员配置: 4人
+    性能评级:
+      装甲: 1200
+      护盾: 2800
+      机动性: 60
+      火力输出: 200
+    装配:
+      装配资源:
+        PG: 116
+        CPU: 372
+      槽位:
+        高能: 6
+        低能: 6
+      武器座:
+      - 名称: S1
+        尺寸: S
+        类型: 近防电磁炮座
+        适配武器:
+        - 自动加农炮
+        - 磁轨炮
+      - 名称: S2
+        尺寸: S
+        类型: 近防电磁炮座
+        适配武器:
+        - 自动加农炮
+        - 磁轨炮
+      - 名称: S3
+        尺寸: S
+        类型: 近防电磁炮座
+        适配武器:
+        - 自动加农炮
+        - 磁轨炮
+      - 名称: S4
+        尺寸: S
+        类型: 近防电磁炮座
+        适配武器:
+        - 自动加农炮
+        - 磁轨炮
+      - 名称: S5
+        尺寸: S
+        类型: 自卫能量座
+        适配武器:
+        - 脉冲激光
+        - 点防御激光
+      - 名称: S6
+        尺寸: S
+        类型: 自卫能量座
+        适配武器:
+        - 脉冲激光
+        - 点防御激光
+      船体加成:
+      - 近防动能武器跟踪 +25%
+      - 点防御与拦截武器射程 +20%
+      - 前向护盾扇区强度 +35%
+      - 联合护盾屏障稳定度 +20%
+      装配减免:
+      - 点防御武器 PG需求 -1
+      - 护盾稳定器与护盾再分配模块 CPU需求 -20%
+      推荐武器方案:
+      - 4x 近防电磁炮
+      - 2x 轻型脉冲激光
+    特殊系统:
+      名称: 焦点I型护盾稳定器
+      效果:
+      - 超过 70% 的护盾能量可重定向至前方 120 度扇区
+      - 多艘同级舰协同时可形成联合能量屏障
+    观星者需求:
+      控制门槛:
+        最低稳态增益: 3.0 TW/mV
+        最低比特率: 280 TB/s
+        最高精度误差: 2.0/1M
+      超载门槛:
+        最低爆发增益: 6.0 TW/mV
+        需要技能: 工程 V
+        规则:
+        - 爆发增益不足时，不可超载前向护盾强化与联合屏障主动模块
+        - 超载为 2 回合 1 次
+        - 超载效果提高至原值的 150%
+      接口要求: 高稳定性与高耐久性
+  跃迁充能: 0
+  最大充能: 7
+  跃迁消耗: 1
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 75
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 200
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 79
+comment: 舰船|AD封锁级
+selective: true
+secondary_keys:
+- 辛迪加
+position: after_char

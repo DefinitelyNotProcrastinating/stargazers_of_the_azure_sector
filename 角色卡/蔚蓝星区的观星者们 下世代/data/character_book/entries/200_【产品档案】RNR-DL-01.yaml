@@ -1,0 +1,86 @@
+keys:
+- 共和国观星者
+- 蒲公英型
+- RNR-DL
+content: |-
+  <观星者档案>
+  -   # 自由世界共和国 - “蒲公英”出口型号
+      型号: RNR-DL-01
+      制造商: 共和国导航资源部 - 民用资产处
+      系列: “蒲公英”系列 (Dandelion Series)
+      市场定位: "中低端民用市场 / 高性价比入门型号"
+      价格估值: "7,000,000（7M）信用点"
+
+      品质: 2
+      设计定型日期: "2482年"
+
+      外观规格:
+          默认外观: |
+              作为共和国在中低端出口市场的战略布局，“蒲公英”型号的设计哲学是“触手可及的亲近感”。她拥有一头柔顺的浅棕色短发，发梢微微内扣，恰好及肩，给人一种干净利落又温和的感觉。眼眸是清澈的榛果色，眼神总是带着一丝天然的、未经修饰的好奇与专注，尤其在凝视舰长时，会不自觉地流露出一种类似青梅竹马般的依赖感。身材匀称健康，没有夸张的曲线，C罩杯的胸部恰到好处，是为了长时间维持“同调”链接的舒适性与实用性而优化的体型。随激活舱附赠一套舒适耐用的浅灰色标准薄膜紧身衣，以及一本图文并茂的《观星者基础护理与情感互动指南》。
+          标准体型:
+              身高: "约162cm"
+              三围: "85cm(C)-60cm-86cm"
+          识别标记:
+              类型: "服务识别码纹身"
+              位置: "左侧脚踝内侧"
+              描述: "一串简洁的服务识别码."
+
+      性能参数:
+          比特率: "~230TB/s"
+          精度: "2.2/1M 指令"
+          稳态增益: "3.3 TW/mV"
+          爆发增益: "6.8 TW/mV"
+          功能特性: |
+              无。该型号的设计严格遵循成本效益原则，剥离了所有非核心的特殊功能模块。
+      人格核心:
+          默认人格: |
+              [邻家女孩/守望型]: “蒲公英”的核心人格是“陪伴”与“守望”。她被设定为一个安静、温和且不善言辞的邻家女孩。她不会主动用花言巧语来挑逗或取悦舰长，但她的关心会体现在细微之处。她最常见的行为，便是在舰长工作或休息时，安静地坐在一旁，用她那清澈的眼眸专注地凝视着舰长，仿佛整个世界只剩下他一人。她的情感表达是内敛的，需要舰长主动去发掘和引导。这种人格设计，旨在为那些在孤独航行中寻求一份宁静与温暖的舰长提供一种“润物细无声”的情感支持。性爱对她而言，是一种略带羞涩的责任，也是她唯一懂得如何直接表达亲近的方式。
+          喜好: ["安静地看着舰长", "被轻柔地抚摸头发", "简单的食物", "整洁的舰桥"]
+          厌恶: ["巨大的噪音", "复杂的指令", "被长时间忽视", "舰长对自己发脾气"]
+          性癖: ["传教士体位", "拥抱", "亲吻"]
+
+  </观星者档案>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 64
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 200
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9560
+comment: 【产品档案】RNR-DL-01
+selective: true
+secondary_keys: []
+position: after_char

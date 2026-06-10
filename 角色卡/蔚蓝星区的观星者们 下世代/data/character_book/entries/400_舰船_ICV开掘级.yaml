@@ -1,0 +1,99 @@
+keys:
+- 采矿指挥舰
+- 开掘级
+content: |-
+  <ship_def>
+  舰船类型: ICV
+  舰种: 工业指挥舰
+  舰体类别: 旗舰型
+  “我们不靠蛮力敲开宇宙的宝库，我们聆听它的心跳，然后在最正确的位置，轻轻一推。”——联邦地质与行星科学研究院，项目简报
+  -   级别: 开掘级 (Excavator-class)
+  -   类型: 工业枢纽舰 ICV
+  -   价格: 10.5B
+  -   形态: 舰体设计是联邦高科技美学的典范，呈一个巨大旋转环组成的优雅结构。舰体表面光滑，看不到任何粗犷的采矿设备。在作业时，数以百计的小型采矿无人机会从环状结构的导轨上被射出，如同蜂群般飞向目标小行星带。环上有众多节点，每个节点都可以单独工作。
+  -   制造商: 联邦航空航天局第82设计所
+  -   静态配置文件:
+      -   舰体全长: 3100米 (直径)
+      -   标准船员配置: 150人
+      -   性能评级:
+          -   装甲: 70000
+          -   护盾: 130000
+          -   机动性: 18
+          -   火力输出: 8000 (自卫无人机)
+      -   武器系统:
+          -   主要系统: 12x “谐振”勘探无人机蜂巢 (每巢50架)
+          -   次要系统: 20x QP-370 防御无人机发射巢（每中队8架）
+          -   攻击射程: 100000 km (无人机作战半径)
+      -   特殊系统:
+          -   名称: 次声波采矿阵列
+          -   描述: 每架“谐振”无人机都搭载了一台高精度次声波发生器和地质传感器。在抵达目标小行星后，无人机会附着在其表面，通过发射一系列不同频率的探测波来构建小行星内部的结构应力模型。在舰载量子计算机的辅助下，系统会计算出该小行星的结构共振频率。随后，所有无人机会同步以该频率发射聚焦次声波，引发小行星内部的共振使其碎裂。
+      -   观星者需求: 需要两名观星者。
+
+  舰船单位模板:
+    舰船类型: ICV
+    吨位: L
+    驾驶员: ''
+    是否旗舰: true
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 4
+    跃迁消耗: 3
+    炮位配置: 12C2L
+    装备槽位配置: 8H8L
+    装配资源:
+      PG: 880
+      CPU: 1250
+    效果:
+      船体加成:
+      - 工业无人机与舰载机机库容量 +35%
+      - 小行星内部结构扫描效率 +30%
+      内置电子系统:
+        基础CPU: 内置工业指挥舰载CPU。
+        基础侦测器: 内置大型矿区调度阵列。
+    装备: {}
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 114
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9634
+comment: 舰船|ICV开掘级
+selective: true
+secondary_keys:
+- 联邦
+position: after_char

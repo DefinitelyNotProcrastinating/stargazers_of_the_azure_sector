@@ -1,0 +1,163 @@
+keys: []
+content: |-
+  <fleet_list>
+  舰船数据根路径为 `主角.舰船`，格式为 `{"object_name": Object}`。
+  具体 Schema 与硬约束以 `<unit_and_ship_management>` 为准。
+
+  <fleet_management>
+  *   **数据源:** `主角.舰船`
+      <%_
+        let fleet = getvar("SAM_data.static.主角.舰船") || {};
+        let fleet_str = "";
+        const parseCount = (text, label, code) => {
+          const section = String(text || "").match(new RegExp(`${label}：([^|]+)`));
+          if (!section) return 0;
+          const match = section[1].match(new RegExp(`(\\d+)${code}|${code}(\\d+)`));
+          return match ? Number(match[1] || match[2]) : 0;
+        };
+        const parseSignedNumber = (text, label) => {
+          const section = String(text || "").match(new RegExp(`${label}：\\s*([+-]?\\d+)`));
+          return section ? Number(section[1]) : 0;
+        };
+        const parseValue = (text, label) => {
+          const section = String(text || "").match(new RegExp(`${label}：([^|]+)`));
+          return section ? section[1].trim() : "";
+        };
+        const sumRequirements = (equipment) => {
+          const turretCodes = ["S", "M", "L", "XL", "C", "T"];
+          const used = { PG: 0, CPU: 0, 炮位: {}, 装备槽位: { H: 0, L: 0 }, 装备列表: [] };
+          turretCodes.forEach((code) => used.炮位[code] = 0);
+          Object.values(equipment || {}).forEach((item) => {
+            const req = item?.装配要求 || "";
+            used.PG += parseSignedNumber(req, "PG");
+            used.CPU += parseSignedNumber(req, "CPU");
+            turretCodes.forEach((code) => used.炮位[code] += parseCount(req, "炮位", code));
+            ["H", "L"].forEach((code) => used.装备槽位[code] += parseCount(req, "装备槽位", code));
+            used.装备列表.push({
+              吨位: parseValue(req, "吨位"),
+              炮位: parseValue(req, "炮位"),
+              装备槽位: parseValue(req, "装备槽位"),
+              PG: parseSignedNumber(req, "PG"),
+              CPU: parseSignedNumber(req, "CPU"),
+              T槽种类: item?.T槽种类 || ""
+            });
+          });
+          return used;
+        };
+        const parseConfig = (text, codes) => {
+          const result = {};
+          codes.forEach((code) => {
+            const match = String(text || "").match(new RegExp(`(\\d+)${code}`));
+            result[code] = match ? Number(match[1]) : 0;
+          });
+          return result;
+        };
+        const entries = Object.entries(fleet);
+        if (entries.length > 0) {
+          fleet_str += "--- 舰队状态 ---\n";
+          entries.forEach(([shipName, ship]) => {
+            fleet_str += `名字: ${shipName}\n`;
+            fleet_str += `  类型: ${ship.舰船类型 || "未知"}\n`;
+            fleet_str += `  制造商: ${ship.制造商 || "未知"}\n`;
+            fleet_str += `  吨位: ${ship.吨位 || "未知"}\n`;
+            fleet_str += `  旗舰: ${ship.是否旗舰 ? "是" : "否"}\n`;
+            fleet_str += `  观星者接口角色: ${ship.观星者接口角色 || "无"}\n`;
+            fleet_str += `  跃迁充能: ${ship.跃迁充能 ?? 0} / ${ship.最大充能 ?? 0}\n`;
+            const used = sumRequirements(ship.装备);
+            const turretCodes = ["S", "M", "L", "XL", "C", "T"];
+            const turretCap = parseConfig(ship.炮位配置, turretCodes);
+            const moduleCap = parseConfig(ship.装备槽位配置, ["H", "L"]);
+            const pgBase = Number(ship.装配资源?.PG ?? 0);
+            const cpuBase = Number(ship.装配资源?.CPU ?? 0);
+            const sizeLegal = used.装备列表.every((item) => {
+              const turretCode = item.炮位 === "无" ? "" : item.炮位.replace(/\d/g, "");
+              const moduleSizes = ["S", "M", "L", "XL", "N"];
+              return turretCode ? item.吨位 === turretCode : moduleSizes.includes(item.吨位) && (item.吨位 === "N" || item.吨位 === ship.吨位);
+            });
+            const resourceModuleLegal = used.装备列表.every((item) => (item.PG >= 0 && item.CPU >= 0) || item.装备槽位 !== "无");
+            const tSlotLegal = turretCap.T <= 1 && used.炮位.T <= 1 && used.装备列表.every((item) => {
+              const turretCode = item.炮位 === "无" ? "" : item.炮位.replace(/\d/g, "");
+              return turretCode !== "T" || Boolean(ship.T槽种类) && item.T槽种类 === ship.T槽种类;
+            });
+            const legal = used.PG <= pgBase && used.CPU <= cpuBase
+              && turretCodes.every((code) => used.炮位[code] <= turretCap[code])
+              && used.装备槽位.H <= moduleCap.H && used.装备槽位.L <= moduleCap.L
+              && sizeLegal && resourceModuleLegal && tSlotLegal;
+            fleet_str += `  炮位配置: ${ship.炮位配置 || "无"} | 装备槽位配置: ${ship.装备槽位配置 || "无"}\n`;
+            if (ship.T槽种类) fleet_str += `  T槽种类: ${ship.T槽种类}\n`;
+            fleet_str += `  PG: ${used.PG} / ${pgBase} | 剩余 ${pgBase - used.PG}\n`;
+            fleet_str += `  CPU: ${used.CPU} / ${cpuBase} | 剩余 ${cpuBase - used.CPU}\n`;
+            fleet_str += `  炮位: ${turretCodes.map((code) => `${code} ${used.炮位[code]}/${turretCap[code]}`).join(" | ")}\n`;
+            fleet_str += `  装备槽位: H ${used.装备槽位.H}/${moduleCap.H} | L ${used.装备槽位.L}/${moduleCap.L}\n`;
+            fleet_str += `  装配校验: ${legal ? "合法" : "非法"}\n`;
+            fleet_str += `  效果: ${JSON.stringify(ship.效果 || {})}\n`;
+            fleet_str += `  装备: ${JSON.stringify(ship.装备 || {})}\n\n`;
+          });
+        } else {
+          fleet_str = "--- 舰队状态 ---\n当前没有任何舰船。";
+        }
+      _%>
+  <%- fleet_str %>
+  </fleet_management>
+
+  <fleet_management_rules>
+  - 新增舰船：`insert /主角/舰船/舰船名`
+  - 修改舰船属性：`replace` / `delta` / `insert` / `remove`
+  - 重命名舰船：`move`
+  - 删除舰船：`remove`
+  - 若 `跃迁充能 < 跃迁消耗`，则无法跃迁。
+  - `装配资源` 只存储 PG 与 CPU 白值。使用量、剩余值与装配校验由 EJS 动态计算，均为只读派生数据。
+  - 装备的 PG 与 CPU 可以是负数。负数表示该模块为舰船提供额外装配资源，例如副反应堆 `PG：-20` 或协处理器 `CPU：-15`。此类模块仍然必须消耗 H/L 装备槽位。
+  - 若 PG 或 CPU 动态剩余值小于 0，则装配非法。
+  - 若舰炮占用超过 `炮位配置`，或非舰炮模块占用超过 `装备槽位配置`，则装配非法。
+  - 挂点代码只允许 `S/M/L/XL/C/T`。`L` 为战列舰级火炮，`XL` 为旗舰级火炮，`C` 为航母机库槽位，`T` 为超级武器槽位。
+  - 每件装备必须在 `装配要求` 中填写 `吨位`。装备吨位必须与所占挂点一致；非挂点模块只允许 `S/M/L/XL/N`，且 `N` 以外的模块必须与舰船吨位一致。
+  - 每艘舰船最多拥有 `1T`。`T` 槽只能安装超级武器，且舰船与超级武器的 `T槽种类` 必须完全一致。禁止跨阵营或跨技术体系混装超级武器。
+  - `C` 槽只能安装舰载机、无人机或对应机库模块。
+  - 禁止创建旧字段 `模块配置` 与 `已装配模块`。所有可拆卸模块统一放入 `装备`。
+  </fleet_management_rules>
+  </fleet_list>
+extensions:
+  position: 4
+  exclude_recursion: false
+  display_index: 130
+  probability: 100
+  useProbability: true
+  depth: 1
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 1
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 500
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 9665
+comment: 【SAM】舰队池
+selective: true
+secondary_keys: []
+position: after_char

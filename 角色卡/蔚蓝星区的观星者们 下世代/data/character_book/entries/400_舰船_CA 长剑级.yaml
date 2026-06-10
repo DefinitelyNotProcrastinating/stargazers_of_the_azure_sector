@@ -1,0 +1,110 @@
+keys:
+- 巡洋舰
+- 长剑级
+- 长剑
+content: |-
+  <ship_def>
+  级别: 长剑级
+  别名: Sword-class
+  舰船类型: CA
+  舰种: 巡洋舰 CA
+  价格: 28M
+  制造商: 帝国海军设计局
+  描述: 经典的帝国十字形舰体设计，左右两侧的武器挂舱如同剑格。黑色的装甲上镶嵌着巨大的散热格栅，在战斗中会发出暗红色的光芒。
+  舰船单位模板:
+    舰船类型: CA
+    吨位: L
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 6
+    跃迁消耗: 2
+    制造商: 帝国海军设计局
+    描述: 经典的帝国十字形舰体设计，左右两侧的武器挂舱如同剑格。黑色的装甲上镶嵌着巨大的散热格栅，在战斗中会发出暗红色的光芒。
+    炮位配置: 6M8S
+    装备槽位配置: 4H5L
+    装配资源:
+      PG: 180
+      CPU: 380
+    效果:
+      船体加成:
+      - 依据舰级定位应用：巡洋舰 CA。
+      装配减免: []
+      内置电子系统:
+        基础CPU: 内置巡洋舰级舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置巡洋舰级多谱段侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+        名称: 聚焦透镜阵列
+        描述: 允许在短时间内将所有主炮聚焦于一点，通过牺牲射速来换取极高的单次穿透伤害，专门用于熔穿敌方重甲。
+    装备: {}
+  静态档案:
+    观星者需求: 最低需求：稳态增益 3.0 TW/mV，比特率 350 TB/s。
+    旧版描述: |-
+      -   级别: 长剑级 (Sword-class)
+      -   类型: 巡洋舰 CA
+      -   价格: 28M
+      -   形态: 经典的帝国十字形舰体设计，左右两侧的武器挂舱如同剑格。黑色的装甲上镶嵌着巨大的散热格栅，在战斗中会发出暗红色的光芒。
+      -   制造商: 帝国海军设计局
+      -   静态配置文件:
+          -   舰体全长: 580米
+          -   标准船员配置: 320人
+          -   性能评级:
+              -   装甲: 16000
+              -   护盾: 5000
+              -   机动性: 50
+              -   火力输出: 1800
+          -   武器系统:
+              -   主要系统: 6x IV型 重型集束激光炮
+              -   次要系统: 8x 标准点防御阵列
+              -   攻击射程: 70000 km
+          -   特殊系统:
+              -   名称: 聚焦透镜阵列
+              -   描述: 允许在短时间内将所有主炮聚焦于一点，通过牺牲射速来换取极高的单次穿透伤害，专门用于熔穿敌方重甲。
+          -   观星者需求: 最低需求：稳态增益 3.0 TW/mV，比特率 350 TB/s。
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 127
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9601
+comment: 舰船|CA 长剑级
+selective: true
+secondary_keys:
+- 帝国
+position: after_char

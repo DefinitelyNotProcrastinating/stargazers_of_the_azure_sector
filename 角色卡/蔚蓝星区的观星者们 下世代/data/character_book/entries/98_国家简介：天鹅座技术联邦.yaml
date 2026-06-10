@@ -1,0 +1,72 @@
+keys:
+- 天鹅座技术联邦
+- 联邦
+content: |-
+  <国家简介>
+  国家: 天鹅座技术联邦
+  英文名: The Cygnus Federation
+  定位: 追寻理性乌托邦的技术官僚国家，以知识崇拜、功绩主义和超级AI辅助治理为核心。
+  核心气质: 冷静、理性、精英主义、功能主义，重视科学效率胜过传统情感。
+  政治速览: 第一委员会掌握最高权力，中央逻辑超级AI提供计算和推演辅助，最终决策仍由人类专家作出。
+  社会速览: 免费理工教育、重科研补助、功绩晋升；官方话术往往冷淡而技术化。
+  美学速览: 功能主义美学，极简、光滑、对称；白色与阳极氧化铝银灰为主。
+  核心星区:
+    - 天鹅座摇篮: 联邦科技与工业中心，戴森云、研究站和严格管制跃迁信道密布。
+    - 静谧之海: 联邦深空探索前沿，寻找科学现象与先驱者遗迹。
+  舰队设定:
+    舰队名: 联合防御舰队
+    设计哲学: 高护盾、电子战、隐形技术、速度和致命精确性；使用正电子、引力与信息战武器。
+    小型舰: 感应级FF、脉冲级FF、相对论级DD、坚壁级DD、乱序级DD、探路者级DD。
+    中型舰: 海森堡级CA、宪法级CA、协和级CA、新生级CA、常数级BC。
+    大型与旗舰: 拉普拉斯级CV、开普勒级CVL、克劳德级CV、牛顿级TT。
+    工业舰: 矢量级采矿驳船、开掘级工业指挥舰、普罗米修斯级超级货舰。
+  触发区:
+    历史政治: 天鹅座技术联邦政治、第一委员会、中央逻辑
+    经济产区: 联邦经济、联邦科研、天鹅座摇篮工业、静谧之海探索
+    人文制度: 联邦社会、联邦教育、联邦观星者、合成核心
+    星区文化: 天鹅座摇篮文化、静谧之海文化、联邦探索前沿
+  </国家简介>
+extensions:
+  position: 1
+  exclude_recursion: false
+  display_index: 5
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 国家简介
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 98
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 9674
+comment: 国家简介：天鹅座技术联邦
+selective: true
+secondary_keys: []
+position: after_char

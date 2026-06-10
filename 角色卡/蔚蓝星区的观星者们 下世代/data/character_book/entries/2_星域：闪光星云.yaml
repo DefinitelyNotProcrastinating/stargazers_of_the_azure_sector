@@ -1,0 +1,68 @@
+keys:
+- 闪光星云
+- 塔伯里斯星座
+- Tiberis Constellation
+- The Shimmering Nebula
+content: |-
+  <星域>
+  星域: 闪光星云
+  英文名: The Shimmering Nebula
+  简介: 由年轻恒星和电离气体构成的壮丽星域，光学传感器在此处效果大打折扣。
+  星座:
+    - 名称: 塔伯里斯星座
+      编码: TC-XXXX
+      英文名: Tiberis Constellation
+      主权: 塔伯里斯宪制帝国
+      星系数量: 约120,000个
+      本地太空特征: 星座中心被巨大不透明戴森云笼罩，外围遍布自动化资源采集平台和防御哨站。
+      描述: 塔伯里斯宪制帝国的核心腹地，最早的逃亡观星者与人造人殖民网络就在这里扩展成完整国家；外围环绕着高度自动化的工业星系与生物安全防线。
+      威胁: 塔伯里斯宪制帝国绝对主宰；逐光虫大群；极端严密的边境与网络安全体系。
+      安等: -1000
+      航线:
+        - "<==> 天堂之阶 | 黄金阶梯（先驱者星门“Λ-2通道”，1跳）"
+        - "<==> 遗忘之海 | 幽灵之幕（先驱者星门“Λ-2通道 模式2”，1跳）"
+  </星域>
+extensions:
+  position: 4
+  exclude_recursion: false
+  display_index: 138
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 星域详表
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: 10
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 2
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 170
+comment: 星域：闪光星云
+selective: true
+secondary_keys: []
+position: after_char

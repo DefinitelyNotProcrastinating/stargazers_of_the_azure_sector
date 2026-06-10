@@ -1,0 +1,147 @@
+keys:
+- 高级驱逐舰
+- 阐释者级
+- 战术驱逐舰
+- 阐释者
+content: |-
+  <ship_def>
+  级别: 阐释者级
+  舰船类型: TD
+  舰种: 战术驱逐舰
+  舰体类别: 高级型
+  价格: 90M
+  制造商: 帝国海军设计局
+  舰体描述: 舰体呈优雅的哑光灰色纺锤形，表面几乎没有任何外露的管道或附加结构。武器系统被巧妙地隐藏在装甲之下，只有在开火时才会展开，完美体现了帝国“力量应内敛而非炫耀”的美学。
+  静态档案:
+    设计语: 在迷雾中指引他的子民 是秩序之仆不可动摇的使命
+    规格:
+      舰体全长: 295米
+      标准船员配置: 4人
+    性能评级:
+      装甲: 2000
+      护盾: 2400
+      机动性: 87 / 45 (狙击模式)
+      火力输出: 1800
+    装配:
+      装配资源:
+        PG: 158
+        CPU: 470
+      槽位:
+        高能: 8
+        低能: 6
+      武器座:
+      - 名称: M1
+        尺寸: M
+        类型: 聚焦激光座
+        适配武器:
+        - 中型集束激光
+        - 中型脉冲激光
+      - 名称: M2
+        尺寸: M
+        类型: 聚焦激光座
+        适配武器:
+        - 中型集束激光
+        - 中型脉冲激光
+      - 名称: M3
+        尺寸: M
+        类型: 聚焦激光座
+        适配武器:
+        - 中型集束激光
+        - 中型脉冲激光
+      - 名称: M4
+        尺寸: M
+        类型: 聚焦激光座
+        适配武器:
+        - 中型集束激光
+        - 中型脉冲激光
+      - 名称: S1
+        尺寸: S
+        类型: 防御激光座
+        适配武器:
+        - 点防御激光
+        - 轻型脉冲激光
+      - 名称: S2
+        尺寸: S
+        类型: 防御激光座
+        适配武器:
+        - 点防御激光
+        - 轻型脉冲激光
+      船体加成:
+      - 中型集束激光伤害 +18%
+      - 狙击模式下最大有效射程翻倍
+      - 狙击模式下激光冷却速度 +100%
+      - 巡航模式下机动性提升
+      装配减免:
+      - 聚焦激光武器 PG需求 -10%
+      - 稳定力场与散热模块 CPU需求 -20%
+      推荐武器方案:
+      - 4x 轻型聚焦激光阵列
+      - 2x 近程防御激光
+    特殊系统:
+      名称: 真理之谕战术切换系统
+      效果:
+      - 巡航模式提高机动
+      - 狙击模式大幅强化射程与冷却
+    观星者需求:
+      控制门槛:
+        最低稳态增益: 3.8 TW/mV
+        最低比特率: 440 TB/s
+        最高精度误差: 1.0/1M
+      超载门槛:
+        最低爆发增益: 7.8 TW/mV
+        需要技能: 工程 V
+        规则:
+        - 爆发增益不足时，不可超载狙击模式主武器与稳定力场主动模块
+        - 超载为 2 回合 1 次
+        - 超载效果提高至原值的 150%
+      接口要求: 对精度和神经稳定性要求极高
+  跃迁充能: 0
+  最大充能: 7
+  跃迁消耗: 1
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 78
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 200
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 82
+comment: 舰船|TD阐释者级
+selective: true
+secondary_keys:
+- 泰拉帝国
+- 帝国
+position: after_char

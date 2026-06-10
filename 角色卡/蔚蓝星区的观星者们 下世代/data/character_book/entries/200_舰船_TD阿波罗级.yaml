@@ -1,0 +1,125 @@
+keys:
+- 高级驱逐舰
+- 战术驱逐舰
+- 阿波罗级
+- 阿波罗
+content: |-
+  <ship_def>
+  级别: 阿波罗级
+  别名: Apollo-class
+  舰船类型: TD
+  舰种: 战术驱逐舰
+  舰体类别: 高级型
+  价格: 94M
+  制造商: 星轨航天公司 (特别项目部)
+  舰体描述: 舰体线条充满了肌肉感，呈激进的扁平三角形。涂装通常是其所属公司的品牌色。九门中子炮管密集地布置在两侧，散发着危险的光芒。
+  静态档案:
+    设计语: 只有竞争才能带来成长，只有成长才能带来繁荣。
+    规格:
+      舰体全长: 275米
+      标准船员配置: 2人
+    性能评级:
+      装甲: 1900
+      护盾: 2700
+      机动性: 86
+      火力输出: 2800
+    装配:
+      装配资源:
+        PG: 162
+        CPU: 450
+      槽位:
+        高能: 8
+        低能: 5
+      武器座:
+      - 名称: M1
+        尺寸: M
+        类型: 中子炮座
+        适配武器:
+        - 中型动能武器
+      - 名称: M2
+        尺寸: M
+        类型: 中子炮座
+        适配武器:
+        - 中型动能武器
+      - 名称: M3
+        尺寸: M
+        类型: 中子炮座
+        适配武器:
+        - 中型动能武器
+      船体加成:
+      - 中型动能武器伤害 +20%
+      - 攻击模式下武器射程提升至 38000 km
+      - 攻击模式下冷却时间 -30%
+      - 突击模式下速度与加速度 +20%
+      装配减免:
+      - 中型动能武器 PG需求 -10%
+      - 推进与跃迁稳定模块 CPU需求 -15%
+      推荐武器方案:
+      - 3x 速射中子炮组
+    特殊系统:
+      名称: 能源重组线路
+      效果:
+      - 攻击模式强化射程与冷却
+      - 突击模式可无视 2 点跃迁干扰强度
+    观星者需求:
+      控制门槛:
+        最低稳态增益: 3.6 TW/mV
+        最低比特率: 360 TB/s
+        最高精度误差: 1.4/1M
+      超载门槛:
+        最低爆发增益: 7.2 TW/mV
+        需要技能: 工程 V
+        规则:
+        - 爆发增益不足时，不可超载攻击模式武器或突击模式推进模块
+        - 超载为 2 回合 1 次
+        - 超载效果提高至原值的 150%
+      接口要求: 需要较高神经坚韧度
+  跃迁充能: 0
+  最大充能: 7
+  跃迁消耗: 1
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 81
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 200
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 85
+comment: 舰船|TD阿波罗级
+selective: true
+secondary_keys:
+- 辛迪加
+position: after_char

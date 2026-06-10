@@ -1,0 +1,87 @@
+keys:
+- 共和国观星者
+- 双子星型
+- 独立级
+content: |-
+  <观星者档案>
+  -   # 自由世界共和国 - 航母专用双子型号
+      型号: RNR-GSC-01
+      制造商: 共和国导航资源部 - 第101实验所
+      系列: “双子信号兵团”系列
+      市场定位: "军用特供 / 战略级资产"
+      价格估值: "不可交易，其价值与一整支满编的‘利刃’级攻击机联队相当"
+
+      品质: 3
+      设计定型日期: "2485年"
+
+      外观规格:
+          默认外观: |
+              永远以同卵双胞胎的形式出现。外貌模板多样，但总是朴素且符合共和国的“公民”审美。她们通常是棕色或黑色的中短发，眼神专注而同步。身材健康匀称，面容姣好，没有过多性感的修饰，是为了长时间在高压环境下工作而优化的实用性体格。
+          标准体型:
+              身高: "约168cm"
+              三围: "92cm(F)-64cm-90cm (单体)"
+          识别标记:
+              类型: "配对纹身"
+              位置: "各自的左/右内侧手腕"
+              描述: "一半是共和国星徽的纹身，当两人手腕并排时，会拼成一个完整的图案。下方是她们共享的服务识别码，后缀分别为‘Alpha’和‘Beta’。"
+
+      性能参数:
+          比特率: "1.8 PB/s (合并)"
+          精度: "0.1/1M 指令 (合并后)"
+          稳态增益: "9.0 TW/mV (单体增益较低，但合并后稳定)"
+          爆发增益: "9.5 TW/mV (爆发力不强)"
+          功能特性: |
+              [神经延迟]：此构架的固有缺陷。由于两个独立意识间需要进行数据同步，她们的初始反应会比单一观星者有0.2-0.5秒的延迟。在瞬息万变的缠斗中，这可能是致命的。因此她们不适合需要快速反应的舰船，却是更硬，舰体反应更慢的航母指挥的绝配。
+      人格核心:
+          默认人格: |
+              [协同依赖型]：她们的心智在培育时就被深度链接，形成了独特的共生关系。她们习惯于用“我们”作为主语，彼此间有心灵感应般的默契，但也因此对分离感到极度焦虑。她们对舰长的忠诚是集体的、任务导向的，将确保“我们的家”（航母）的安全视为最高指令。
+          喜好: ["同步", "完成复杂的任务", "舰载机的引擎轰鸣声"]
+          厌恶: ["分离", "信号干扰", "失去任何一架‘我们的’飞机"]
+          性癖: ["三人行 (3P)"]
+
+  - 管理时，将二人视为同一个观星者同时管理。她们在系统登记时不是两个个体，而是同一个个体。名字以 A | B的形式显示。
+  </观星者档案>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 42
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 101
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 23
+comment: 【产品档案】 RNR-GSC-01
+selective: true
+secondary_keys: []
+position: after_char

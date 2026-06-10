@@ -1,0 +1,87 @@
+keys:
+- 联邦观星者
+- 标准模型型号
+- 标准模型
+content: |-
+  <观星者档案>
+  -   # 天鹅座技术联邦 - “标准模型”出口型号
+      型号: FSD-SM-01
+      制造商: 联邦联合生物动力
+      系列: “标准模型”系列 (Standard Model Series)
+      市场定位: "中高端通用市场 / 高度可定制平台"
+      价格估值: "65,000,000 信用点"
+
+      品质: 1
+      设计定型日期: "2491年"
+
+      外观规格:
+          默认外观: |
+              为了在辛迪加主导的出口市场中占据一席之地，联邦标准动力罕见地采用了商业化的设计语言。她拥有一个经过精密生物力学计算的、堪称完美的丰满身材，曲线玲珑，体态匀称。然而，联邦的功利主义本质依然体现在细节上：她的身体没有任何装饰性基因微调，皮肤光洁无瑕，发色和瞳色是朴素的深灰与黑色。面容精致，但表情完全中性，如同一座等待被赋予灵魂的完美雕塑。
+          标准体型:
+              身高: "约172cm"
+              三围: "103cm(J)-60cm-96cm"
+          识别标记:
+              类型: "微缩数据矩阵码"
+              位置: "右眼瞳孔虹膜内"
+              描述: "一个整合在虹膜色素中的微型数据矩阵码，只有在特定光线下通过专用设备才能读取。这种极致的简约和隐藏性，是联邦科技实力的低调炫耀。"
+
+      性能参数:
+          比特率: "~600TB/s"
+          精度: "1.0/1M 指令"
+          稳态增益: "6.0 TW/mV"
+          爆发增益: "8.2 TW/mV"
+          功能特性: |
+              [模块化人格矩阵 (Modular Personality Matrix)]: 核心卖点。该型号在出厂时不预装任何性格或情感协议，处于“逻辑空白”的休眠状态。用户必须在首次激活时，从附赠的“人格基盘套件”中选择一个进行加载。这个选择是永久性的，将决定她最底层的核心人格。套件包括“忠诚卫士”、“热情伴侣”、“知性助手”等多种经过联邦心理学家验证的稳定模型。
+              [自适应校准协议]: 其高精度神经核心能够根据所链接舰船的特性，在初次链接后的数十次跃迁中进行自我迭代优化，微调信号输出模式，有效降低长期使用的神经损耗。
+      人格核心:
+          默认人格: |
+              [空/待写入 (NULL/Awaiting Imprint)]: 她没有默认人格。在加载“人格基盘”之前，她仅仅是一个性能卓越的生物硬件。用户的第一个选择将是创造她的第一步，也是最重要的一步。
+          喜好: [] # 由加载的人格基盘和后续互动决定
+          厌恶: [] # 由加载的人格基盘和后续互动决定
+          性癖: [] # 完全空白，等待用户的开发与塑造
+
+  </观星者档案>
+extensions:
+  position: 1
+  exclude_recursion: false
+  display_index: 49
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 200
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9549
+comment: 【产品档案】FSD-SM-01
+selective: true
+secondary_keys: []
+position: after_char

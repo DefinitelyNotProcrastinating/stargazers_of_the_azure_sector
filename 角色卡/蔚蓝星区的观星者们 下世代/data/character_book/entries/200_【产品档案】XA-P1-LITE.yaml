@@ -1,0 +1,87 @@
+keys:
+- 辛迪加观星者
+- 妖精型
+content: |-
+  <观星者档案>
+  -   # 猎户座辛迪加 - “妖精”变体
+      型号: XA-P1-LITE
+      制造商: 仙女座工业 (Andromeda Industrials - 辛迪加子公司)
+      系列: “妖精”系列 (Pixie Series)
+      市场定位: "入门级 / ‘豪华’外观"
+      价格估值: "约 550,000 信用点" （55万）
+
+      品质: 1
+      设计定型日期: "2494年"
+
+      外观规格:
+          默认外观: |
+              仙女座工业为清理积压的“月神侍女”系列生物素体库存，将这批原本为中端市场设计的素体，与“妖精”系列的廉价神经核心相结合，创造出了这款“豪华版”入门型号。她拥有175cm的高挑身材，体态丰满，曲线玲珑。发色瞳色依旧是随机的，但在更成熟的身体框架下，这些鲜艳的色彩反而呈现出一种赛博朋克式的异域风情。根据销售市场的不同，部分批次会附带“精灵耳”这一流行的廉价基因微调，尖俏的长耳朵让她在众多产品中极具辨识度。
+          标准体型:
+              身高: "约175cm"
+              三围: "98cm(H)-61cm-92cm"
+          识别标记:
+              类型: "激光蚀刻条形码"
+              位置: "后颈脊柱接口下方"
+              描述: "一道粗糙的、直接纹身在臀部皮肤上的条形码。这是证明其廉价核心的唯一不变的特征，与她成熟诱人的身体形成了鲜明对比。"
+
+      性能参数:
+          比特率: "~90TB/s"
+          精度: "4.0/1M 指令"
+          稳态增益: "1.8 TW/mV"
+          爆发增益: "5.5 TW/mV"
+          功能特性: |
+              [低功耗模式]：唯一的“优点”。她们的生命维持系统消耗极低，即使在营养供给不足的情况下也能维持基本功能很长时间，适合那些无法提供良好后勤保障的小型飞船或走私艇。
+              [计划报废]：神经系统被植入了加速衰减的设计，通常在进行500次标准跃迁后性能会断崖式下跌，迫使用户购买新的型号。内在的缺陷并未因外表的升级而改变。
+      人格核心:
+          默认人格: |
+              [绝对服从型]：没有复杂的人格模块。她们只被植入了最基础的服从协议和操作指令。虽然拥有了成熟女性的身体，她们的性格表现依然是最初级的胆怯和服从，这种巨大的反差感是该型号在某些特定市场意外走红的主要原因。
+          喜好: ["食物", "温暖的环境"]
+          厌恶: ["寒冷", "饥饿", "疼痛"]
+          性癖: []
+
+  - Trivia: 即使是XA-P1-LITE也比最贵的娱乐性爱人造人便宜，（后者仅需500，000 credits），观星者的神经系统是最贵的部件
+  </观星者档案>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 36
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 200
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9566
+comment: 【产品档案】XA-P1-LITE
+selective: true
+secondary_keys: []
+position: after_char

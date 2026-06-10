@@ -1,0 +1,140 @@
+keys:
+- 拦截护卫舰
+- 护卫舰
+- 铁血盟约
+content: |-
+  <ship_def>
+  级别: 刺鳍鱼级
+  别名: ''
+  舰船类型: FF
+  舰种: 拦截护卫舰
+  舰体类别: 特种型
+  价格: 18M (盟约内部价) / 25M (黑市价)
+  制造商: 残骸王座兵工厂
+  描述: 基于辛迪加“猛禽”级护卫舰的船体进行改装。为了容纳更大的电子战设备，原本流线型的舰体被加装了粗犷的散热格栅和外露的信号放大器。
+  舰船单位模板:
+    舰船类型: FF
+    吨位: S
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 8
+    跃迁消耗: 1
+    制造商: 残骸王座兵工厂
+    描述: 基于辛迪加“猛禽”级护卫舰的船体进行改装。为了容纳更大的电子战设备，原本流线型的舰体被加装了粗犷的散热格栅和外露的信号放大器。
+    炮位配置: 3S
+    装备槽位配置: 2H3L
+    装配资源:
+      PG: 34
+      CPU: 145
+    效果:
+      船体加成:
+      - 小型自动加农炮伤害 +20%
+      - 小型自动加农炮跟踪 +15%
+      - 跃迁干扰器作用距离 +40%
+      - 跃迁干扰器干扰强度 +1
+      装配减免:
+      - 小型动能武器 PG需求 -1
+      - 跃迁干扰器与推进压制模块 CPU需求 -20%
+      内置电子系统:
+        基础CPU: 内置舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置基础侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+        名称: 跃迁扰频增幅器
+        效果:
+        - 跃迁干扰器有效范围提升至 42000 km
+        - 干扰强度提升至 2
+    装备: {}
+  静态档案:
+    舰种: 拦截护卫舰
+    舰体类别: 特种型
+    价格: 18M (盟约内部价) / 25M (黑市价)
+    规格:
+      舰体全长: 125米
+      标准船员配置: 5人
+    性能评级:
+      装甲: 800
+      护盾: 1200
+      机动性: 82
+      火力输出: 600
+    炮位明细:
+    - 名称: S1
+      尺寸: S
+      类型: 突击武器座
+      适配武器:
+      - 动能武器
+      - 火箭弹发射器
+    - 名称: S2
+      尺寸: S
+      类型: 突击武器座
+      适配武器:
+      - 动能武器
+      - 火箭弹发射器
+    - 名称: S3
+      尺寸: S
+      类型: 压制武器座
+      适配武器:
+      - 动能武器
+      - 导弹发射器
+    推荐装备方案:
+    - 2x 小型自动加农炮
+    - 1x 小型导弹发射器或火箭弹发射器
+    观星者需求:
+      控制门槛:
+        最低稳态增益: 1.2 TW/mV
+        最高精度误差: 4.0/1M
+      超载门槛:
+        最低爆发增益: 2.8 TW/mV
+        需要技能: 工程 V
+        规则:
+        - 爆发增益不足时，不可超载跃迁压制与突击武器模块
+        - 超载为 2 回合 1 次
+        - 超载效果提高至原值的 150%
+      接口要求: 无特殊要求
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 121
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 200
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 130
+comment: 舰船|FF刺鳍鱼级
+selective: true
+secondary_keys:
+- 铁血盟约
+position: after_char

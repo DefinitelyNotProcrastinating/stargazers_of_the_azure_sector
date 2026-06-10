@@ -1,0 +1,147 @@
+keys:
+- 高级驱逐舰
+- 战术驱逐舰
+- 议会级
+- 议会
+content: |-
+  <ship_def>
+  级别: 议会级
+  别名: Parliament-class
+  舰船类型: TD
+  舰种: 战术驱逐舰
+  舰体类别: 高级型
+  价格: 89M
+  制造商: 远环星球动力
+  舰体描述: 舰体设计敦实可靠，呈长条方形并有上下两层引导天线，外层覆盖着厚重的六角形模块化装甲板。橄榄绿的涂装上印有共和国的星徽。十二个导弹发射单元如獠牙般分布在舰体两侧，充满了务实而强悍的气息。
+  静态档案:
+    设计语: 人民给了我们力量，而我们将保证这力量永不朝向人民自身。
+    规格:
+      舰体全长: 285米
+      标准船员配置: 5人
+    性能评级:
+      装甲: 2200
+      护盾: 2800
+      机动性: 81
+      火力输出: 2000
+    装配:
+      装配资源:
+        PG: 156
+        CPU: 480
+      槽位:
+        高能: 7
+        低能: 6
+      武器座:
+      - 名称: M1
+        尺寸: M
+        类型: 通用导弹座
+        适配武器:
+        - 重型导弹发射器
+        - 重型突击导弹发射器
+      - 名称: M2
+        尺寸: M
+        类型: 通用导弹座
+        适配武器:
+        - 重型导弹发射器
+        - 重型突击导弹发射器
+      - 名称: M3
+        尺寸: M
+        类型: 通用导弹座
+        适配武器:
+        - 重型导弹发射器
+        - 重型突击导弹发射器
+      - 名称: M4
+        尺寸: M
+        类型: 通用导弹座
+        适配武器:
+        - 重型导弹发射器
+        - 重型突击导弹发射器
+      - 名称: S1
+        尺寸: S
+        类型: 点防御座
+        适配武器:
+        - 点防御激光
+        - 自动加农炮
+      - 名称: S2
+        尺寸: S
+        类型: 点防御座
+        适配武器:
+        - 点防御激光
+        - 自动加农炮
+      船体加成:
+      - 导弹装填与发射循环速度 +20%
+      - 多目标导引上限显著提高
+      - 防御模式下点防御拦截效率 +50%
+      - 拦截弹装填切换效率 +25%
+      装配减免:
+      - 导弹武器 CPU需求 -15%
+      - 火控与导引模块 CPU需求 -20%
+      推荐武器方案:
+      - 4x 实验性通用导弹发射器
+      - 2x 点防御炮塔
+    特殊系统:
+      名称: 自适应战术核心
+      效果:
+      - 投射模式下可同时追踪并引导大量导弹
+      - 防御模式下点防御拦截效率提升 50%
+    观星者需求:
+      控制门槛:
+        最低稳态增益: 3.2 TW/mV
+        最低比特率: 260 TB/s
+        最高精度误差: 1.8/1M
+      超载门槛:
+        最低爆发增益: 6.8 TW/mV
+        需要技能: 工程 V
+        规则:
+        - 爆发增益不足时，不可超载导弹投射模式或防御模式主动模块
+        - 超载为 2 回合 1 次
+        - 超载效果提高至原值的 150%
+      接口要求: 艇载计算机接管大部分算力，但仍需稳定控制
+  跃迁充能: 0
+  最大充能: 7
+  跃迁消耗: 1
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 80
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9656
+comment: 舰船|TD议会级
+selective: true
+secondary_keys:
+- 共和国
+position: after_char

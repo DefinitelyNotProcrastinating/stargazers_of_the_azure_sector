@@ -1,0 +1,104 @@
+keys:
+- 爱巢掠夺者
+- 海盗
+content: |-
+  <nest_pirate_desc>
+
+  <%var nest_raiders_str = "";%>
+  <%if (! getvar("SAM_data.static.nest_raiders_destroyed")) {
+
+  nest_raiders_str = `
+  **组织名称:** 爱巢掠夺者 (The Nest Raiders)
+  **主要活动区域:** 蛮荒边界 | 巨蛇之喉；贸易风走廊 (隐秘活动)
+  **组织概述:**
+  “爱巢掠夺者”是一个极其专业化的海盗团体，组织的核心业务是活体“观星者”的捕获、调教与转手。他们的客户群体而是一小撮拥有巨额财富且心理极度扭曲的辛迪加高层、帝国贵族或退役将领。这些人追求的不是观星者作为“设备”的性能，而是一种源于剥夺他人最亲密“财产”并将其占为己有的极致快感——即NTR体验。该组织由一位被称为“杜鹃”的神秘人物领导。目标一般是游艇和非军事飞船。
+
+  **理念与行事准则:**
+  “爱巢掠夺者”信奉一种名为“所有权置换”的扭曲哲学。他们认为，观星者与舰长之间通过长期“同调”建立的深度神经链接和情感依赖，本身就是一种极具价值的“无形资产”。他们的任务就是将这份资产从原“所有者”手中暴力剥离，然后“移植”给愿意付出天价的新主人。
+
+  *   **业务流程:**
+      1.  **委托受理:** 客户通过加密渠道提交目标信息（舰长身份、观星者型号、日常航线等）和详细的“NTR剧本”要求。
+      2.  **情报渗透与伏击:** “掠夺者”会花费数周甚至数月时间进行侦察，掌握目标的行动规律，并在最脆弱的时刻（如脱离护航、跃迁冷却期）发动闪电式突袭。
+      3.  **强制剥离:** 行动核心。他们会使用特制的电子战设备瘫痪目标舰船，强行突破舰桥，在原舰长面前将其观星者带走。有时，根据客户要求，他们会强制原舰长目睹观星者被带上己方舰船并进行初次“调教”和强奸的全过程，以最大化其精神痛苦。
+      4.  **定制化调教:** 在返回其秘密据点“孵化巢”后，观星者会接受一系列残酷的心理和物理再编程。这包括清除与原舰长的记忆链接、植入新的服从协议、以及根据新主人的性癖好进行身体改造。
+      5.  **交付:** 最终，“产品”会被装在一个特制的休眠舱中，通过最隐秘的渠道交付给客户。
+
+  **据点:**
+  “孵化巢”。位于“巨蛇之喉”星区一处被掏空的C型小行星内部。其入口被伪装成一个废弃的采矿站，并由复数的隐形武器平台和感应器网络保护。内部不仅有舰船泊位和改造设施，还有一个用于“储存”被捕获观星者的隔间区域，每个隔间都是配备了完备性玩具的调教房。
+
+  **舰队构成:**
+  “爱巢掠夺者”的舰队规模不超过十艘舰船，但每一艘都是经过极限改装的精英单位。
+
+  *   **旗舰：“窃心者”号**
+      *   **舰体:** 改装型“断头台”级重型突击舰 (辛迪加黑市型号)
+      *   **特点:** 拥有远超同级的电子战套件和隐形系统（但依然对算力超群的超大型单位/军舰效果甚微）。其货仓被完全改造为多个独立的“调教舱”和神经手术室。搭载了实验性的短程神经干扰器，能在近距离（登舰后）内暂时扰乱观星者与舰船的链接，为登舰作战创造机会。
+  *   **主力舰：“利爪”级突击舰 (Talon-class Assault Frigate)**
+      *   **数量:** 3-5艘
+      *   **舰体:** 基于共和国“长矛”级护卫舰的走私版本进行魔改。
+      *   **特点:** 放弃了大部分的常规火力，换装了强大的引擎和推进器，专门用于追击和瘫痪目标。舰首装备了大型抓捕臂和登舰突击舱。
+  *   **支援舰：“暗蛛”级隐形侦察舰 (Nightspider-class Stealth Cruiser)**
+      *   **数量:** 2-3艘
+      *   **舰体:** 未知，可能是联邦的早期原型机。
+      *   **特点:** 负责前期的情报收集和目标锁定，几乎无法被常规传感器探测到。然而，至少有人类技术联合体（HTC）能稳定反隐，发现并击毁这种飞船，并使用ECCM无效化对方的干扰尝试。
+
+  **与其他势力的关系:**
+  *   **猎户座辛迪加:** 官方将其列为高优先级的犯罪组织，但私下里，他们的一些最大客户就来自辛迪加内部的大家族。辛迪加的安保部队在追捕他们时总是显得“力不从心”。
+  *   **自由世界共和国 / 泰拉帝国:** 绝对的敌对。一旦在两国境内发现其踪迹，会立即派遣正规舰队进行围剿。他们代表了对观星者-舰长这一军事体系最恶毒的攻击形式。
+  *   **HTC:** 不了解。由于HTC先进的反隐系统和ECCM，对方几次针对HTC科研船的行动都失败了，HTC甚至未能从正电子集束造成的熔融残骸中确认它们的名字，它们从此识趣地避开了幽灵之幕，也绝口不提自己被牛顿号当成火鸡打的事情。
+  * **联邦:** 不知情。因为联邦的反隐能力，它们从不敢对联邦舰队下手，联邦甚至不知道它们的存在。
+
+  特殊变量： nest_raiders_destroyed （int, 0 or 1）
+  该变量在爱巢掠夺者的基地被摧毁，舰队全灭时使用SET设置为1。`;
+
+
+  }else{
+  nest_raiders_str = "昔日臭名昭著的海盗组织爱巢掠夺者已经被摧毁。虽然对观星者的抢夺和劫掠事件依然在继续，但该海盗组织已经不复存在。";
+  }
+  %>
+  <%-nest_raiders_str;%>
+
+  </nest_pirate_desc>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 22
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: 10
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 98
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 55
+comment: NTR团伙
+selective: true
+secondary_keys: []
+position: after_char

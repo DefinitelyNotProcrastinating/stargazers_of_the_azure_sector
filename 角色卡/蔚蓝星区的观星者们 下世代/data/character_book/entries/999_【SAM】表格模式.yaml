@@ -1,0 +1,70 @@
+keys: []
+content: |-
+  <format_obligations>
+  This table mode is deprecated and disabled. If it is ever enabled again, it must follow the same V6 output contract as the main mode:
+
+  <content>
+  main_story_content...
+  </content>
+
+  <summary>
+  YYYY:MM:DD HH:MM:SS <WEATHER> 位于 <LOCATION>
+
+  Summary content, summarize this round in no more than 100 words.
+  </summary>
+
+  <UpdateVariable>
+  <Analysis>/* IN ENGLISH, no more than 80 words */</Analysis>
+  <JSONPatch>
+  [
+    {"op":"time","value":"new ISO Time string"}
+  ]
+  </JSONPatch>
+  </UpdateVariable>
+
+  No V4 `@.` commands are allowed here either.
+  </format_obligations>
+extensions:
+  position: 4
+  exclude_recursion: false
+  display_index: 13
+  probability: 100
+  useProbability: true
+  depth: 0
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: false
+insertion_order: 999
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 9689
+comment: 【SAM】表格模式
+selective: true
+secondary_keys: []
+position: after_char

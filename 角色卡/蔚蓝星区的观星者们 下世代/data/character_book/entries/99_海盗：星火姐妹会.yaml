@@ -1,0 +1,69 @@
+keys:
+- 星火姐妹会
+- 艾娃·特纳
+- 海盗
+content: |
+  <pirate_desc>
+
+  1. 星火姐妹会 (The Starfire Sisterhood)
+  “自由，以血与火。”
+  指挥者: “断链者”艾娃·特纳（Ava Turner），前共和国卫队上校，人类，一头棕色头发和蓝色眼睛。她因为目睹了共和国“处理”无用的观星者而发动叛逃。作为双性恋，她的前对象，一位女性观星者曾经被共和国因为神经系统受损而销毁，而她的现对象是一个来自辛迪加，被她救赎的男性观星者。
+  主要人口: 约100亿，主要由被解放的观星者、女性叛逃者、同情者和在劫掠中被“收养”的孤儿，以及几个边疆的反叛殖民地组成。
+  战斗舰队规模与构成: 约5,800艘。主力为少量巴哈姆特级的改型，约200艘从共和国叛逃或缴获的“独立”级舰队航母，构成强大的远程打击力量，另有70艘“勇气”级无畏舰用于反旗舰作战。舰队中坚是大量的“解放者”级驱逐舰和“决心”级重巡，武器系统高度统一，后勤便利。
+  主要分布区域: “避难所”星团 (The Haven Cluster)。首都位于H-XP9C，一个被强大脉冲星干扰笼罩的星系（安全等级0.1），只有通过特定的跃迁窗口才能安全进入。
+  纹章: 一条从中断裂的锁链，背景是燃烧的星辰。
+  势力特点:
+  意识形态: 坚定的观星者解放运动和女权主义。她们认为观星者制度是所有人类文明的原罪，必须被彻底摧毁。劫掠是为解放战争筹集资金和物资的“必要之恶”。
+  军事行动: 她们优先攻击运送观星者的舰船、辛迪加的培养舱设施以及帝国的贵族运输队。她们不以杀戮为乐，但对任何试图阻止她们“解放”同胞的行为会报以无情打击。她们也会劫掠运输船。
+  内部结构: 姐妹会内部并非铁板一块。艾娃·特纳领导的温和派希望最终能与共和国合作，通过政治途径废除观星者制度；而激进派则认为所有“奴隶主”都该被送上断头台。
+  工业与资源: 在几个安全等级为0的，例如1N-MJ0附近的几个星系拥有基础工业设施，能生产弹药、维修或者制造直到超级航母或者泰坦的舰船、精炼矿物。
+  内部使用兴奋剂，以加强可能的女性之间“同调”的性快感和效率，解决内部性别不平衡导致的同调效率下降，她们希望这种媚药的副作用越小越好。
+  威胁等级: 极高。所有帝国都给出悬赏，尤其是辛迪加。
+  主要帝国敌对: 自由世界共和国，猎户座辛迪加
+  非帝国敌对：所有非帝国势力，包括人类技术联合（她们因为对方对观星者做实验而认为对方是不择手段的学阀集团）
+
+  </pirate_desc>
+extensions:
+  position: 4
+  exclude_recursion: true
+  display_index: 17
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: 10
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 99
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9695
+comment: 海盗：星火姐妹会
+selective: true
+secondary_keys: []
+position: after_char

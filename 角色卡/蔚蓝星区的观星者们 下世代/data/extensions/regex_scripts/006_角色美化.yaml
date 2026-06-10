@@ -1,0 +1,348 @@
+id: 5023d206-50b7-48ab-8168-da221e90c992
+scriptName: 角色美化
+findRegex: /<chara_info>\s*(?:```[a-zA-Z]*\s*)?([\s\S]*?)(?:\s*```)?\s*<\/chara_info>/gi
+replaceString: |2-
+
+    <chara>
+    ```html
+    <!DOCTYPE html>
+    <html lang="zh-CN">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Character Card</title>
+      <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+      <style>
+        :root {
+          color-scheme: dark;
+          --line: rgba(148, 223, 255, 0.22);
+          --text: #ecf9ff;
+          --muted: #8eb3c5;
+          --shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+          --accent: #7be0ff;
+          --accent-soft: rgba(123, 224, 255, 0.18);
+          --accent-strong: rgba(123, 224, 255, 0.32);
+          --panel: rgba(7, 20, 34, 0.62);
+          --panel-soft: rgba(10, 30, 50, 0.4);
+        }
+        * { box-sizing: border-box; }
+        html, body { margin: 0; background: transparent; color: var(--text); font-family: "Segoe UI", "Microsoft YaHei", sans-serif; }
+        body { padding: 12px; }
+        .sheet {
+          max-width: 940px;
+          margin: 0 auto;
+          overflow: hidden;
+          border: 1px solid var(--line);
+          border-radius: 24px;
+          background: linear-gradient(165deg, rgba(4, 12, 22, 0.72), rgba(8, 24, 40, 0.56));
+          box-shadow: var(--shadow);
+          backdrop-filter: blur(20px) saturate(145%);
+          position: relative;
+        }
+        .sheet::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          background-image:
+            linear-gradient(rgba(123, 224, 255, 0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(123, 224, 255, 0.04) 1px, transparent 1px);
+          background-size: 28px 28px;
+          opacity: 0.22;
+        }
+        .sheet.stargazer {
+          background:
+            radial-gradient(circle at 16% 16%, rgba(123,224,255,0.18), transparent 26%),
+            radial-gradient(circle at 86% 18%, rgba(127,153,255,0.14), transparent 28%),
+            linear-gradient(165deg, rgba(4, 12, 22, 0.76), rgba(8, 24, 40, 0.6));
+        }
+        .sheet.civilian {
+          background:
+            radial-gradient(circle at 16% 16%, rgba(255,210,120,0.16), transparent 26%),
+            radial-gradient(circle at 86% 18%, rgba(123,224,255,0.1), transparent 28%),
+            linear-gradient(165deg, rgba(10, 14, 20, 0.76), rgba(18, 25, 32, 0.6));
+        }
+        .head {
+          position: relative;
+          padding: 24px;
+          border-bottom: 1px solid var(--line);
+        }
+        .head-top {
+          display: flex;
+          justify-content: space-between;
+          gap: 18px;
+          align-items: flex-start;
+        }
+        .eyebrow {
+          color: var(--accent);
+          font-size: 11px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+        }
+        .sheet.civilian .eyebrow,
+        .sheet.civilian .section-title,
+        .sheet.civilian .quality {
+          color: #ffd479;
+        }
+        .sheet.civilian { --accent: #ffd479; --accent-soft: rgba(255,212,121,0.18); --accent-strong: rgba(255,212,121,0.32); }
+        h1 {
+          margin: 8px 0 10px;
+          font-size: clamp(28px, 5vw, 38px);
+          line-height: 1.08;
+        }
+        .meta, .tag-row {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+        .pill, .tag {
+          padding: 6px 12px;
+          border: 1px solid var(--line);
+          border-radius: 999px;
+          background: rgba(255,255,255,0.04);
+          font-size: 12px;
+        }
+        .pill.quality {
+          border-color: var(--accent-strong);
+          background: linear-gradient(135deg, rgba(255,255,255,0.08), var(--accent-soft));
+        }
+        .sigil {
+          min-width: 120px;
+          min-height: 120px;
+          border-radius: 24px;
+          border: 1px solid var(--accent-strong);
+          background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+          display: grid;
+          place-items: center;
+          padding: 12px;
+          text-align: center;
+        }
+        .sheet.stargazer .sigil::before {
+          content: "";
+          width: 64px;
+          height: 64px;
+          border-radius: 50%;
+          border: 1px solid var(--accent);
+          box-shadow: 0 0 0 8px rgba(123,224,255,0.08), inset 0 0 22px rgba(123,224,255,0.12);
+        }
+        .sheet.civilian .sigil::before {
+          content: "人";
+          font-size: 30px;
+          font-weight: 700;
+          color: var(--accent);
+        }
+        .sigil-text {
+          margin-top: 8px;
+          font-size: 11px;
+          color: var(--muted);
+          letter-spacing: 1px;
+        }
+        .thought {
+          margin-top: 16px;
+          padding: 14px 16px;
+          border: 1px solid var(--line);
+          border-radius: 18px;
+          background: rgba(255,255,255,0.04);
+          color: var(--muted);
+          line-height: 1.75;
+          white-space: pre-wrap;
+        }
+        .body {
+          padding: 20px;
+          display: grid;
+          gap: 18px;
+        }
+        .grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+          gap: 12px;
+        }
+        .panel, .stat, .subpanel {
+          border: 1px solid var(--line);
+          border-radius: 18px;
+          background: var(--panel-soft);
+          backdrop-filter: blur(12px);
+        }
+        .panel, .subpanel { padding: 16px; }
+        .stat { padding: 14px; }
+        .label {
+          color: var(--muted);
+          font-size: 11px;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          margin-bottom: 6px;
+        }
+        .value {
+          font-size: 14px;
+          line-height: 1.65;
+          white-space: pre-wrap;
+          word-break: break-word;
+        }
+        .section-title {
+          margin: 0 0 12px;
+          color: var(--accent);
+          font-size: 13px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+        }
+        .two-col {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 12px;
+        }
+        .kv {
+          display: grid;
+          gap: 8px;
+        }
+        .kv-item {
+          padding: 10px 12px;
+          border-radius: 14px;
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.05);
+          line-height: 1.6;
+        }
+        .kv-item strong { color: var(--text); }
+        .empty {
+          padding: 28px 16px;
+          text-align: center;
+          color: var(--muted);
+          border: 1px dashed var(--line);
+          border-radius: 18px;
+        }
+        @media (max-width: 720px) {
+          body { padding: 8px; }
+          .head-top { flex-direction: column; }
+          .sigil { min-width: 100%; min-height: 88px; }
+        }
+      </style>
+    </head>
+    <body>
+      <script id="data-source" type="text/plain">$1</script>
+      <div id="app"></div>
+      <script>
+        function escapeHtml(value) {
+          return String(value ?? "").replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
+        }
+        function formatValue(value) {
+          if (value === undefined || value === null || value === "") return "未记录";
+          if (Array.isArray(value)) return value.length ? value.map(formatValue).join(" / ") : "无";
+          if (typeof value === "object") return Object.entries(value).map(([k, v]) => `${escapeHtml(k)}: ${formatValue(v)}`).join("<br>");
+          return escapeHtml(value);
+        }
+        function formatText(value) {
+          return escapeHtml(value ?? "暂无记录").replace(/\n/g, "<br>");
+        }
+        function renderStats(entries) {
+          return `<div class="grid">${entries.map(([label, value]) => `<div class="stat"><div class="label">${escapeHtml(label)}</div><div class="value">${formatValue(value)}</div></div>`).join("")}</div>`;
+        }
+        function renderKV(obj) {
+          if (!obj || typeof obj !== "object" || !Object.keys(obj).length) return `<div class="empty">暂无扩展记录</div>`;
+          return `<div class="kv">${Object.entries(obj).map(([k, v]) => `<div class="kv-item"><strong>${escapeHtml(k)}</strong><br>${formatValue(v)}</div>`).join("")}</div>`;
+        }
+        function init() {
+          const raw = document.getElementById("data-source").textContent.trim().replace(/^\s*```(?:json|yaml)?/i, "").replace(/```\s*$/i, "").trim();
+          const app = document.getElementById("app");
+          try {
+            const data = jsyaml.load(raw);
+            const name = Object.keys(data || {})[0];
+            const chara = name ? data[name] : null;
+            if (!name || !chara || typeof chara !== "object") throw new Error("未读取到有效角色对象。");
+            const isStargazer = chara["种族"] === "观星者";
+            const coreStats = [
+              ["种族", chara["种族"]],
+              ["阵营", chara["阵营"]],
+              ["身份", chara["身份"]],
+              ["关系状态", chara["关系状态"]],
+              ["可互动定位", chara["可互动定位"]],
+              ["好感度", chara["好感度"] ?? 0]
+            ];
+            const tags = []
+              .concat(Array.isArray(chara["性格"]) ? chara["性格"] : [])
+              .concat(Array.isArray(chara["喜欢"]) ? chara["喜欢"].map((v) => `喜欢:${v}`) : [])
+              .concat(Array.isArray(chara["讨厌"]) ? chara["讨厌"].map((v) => `讨厌:${v}`) : [])
+              .concat(Array.isArray(chara["性癖"]) ? chara["性癖"].map((v) => `性癖:${v}`) : []);
+            app.innerHTML = `
+              <section class="sheet ${isStargazer ? "stargazer" : "civilian"}">
+                <header class="head">
+                  <div class="head-top">
+                    <div>
+                      <div class="eyebrow">${isStargazer ? "Stargazer Dossier / 观星者档案" : "Character Record / 人员记录"}</div>
+                      <h1>${escapeHtml(name)}</h1>
+                      <div class="meta">
+                        <span class="pill quality">${escapeHtml(isStargazer ? "观星者专用卡" : "普通角色卡")}</span>
+                        <span class="pill">${escapeHtml(chara["种族"] || "未分类")}</span>
+                        ${chara["身份"] ? `<span class="pill">${escapeHtml(chara["身份"])}</span>` : ""}
+                        ${isStargazer && chara["型号ID"] ? `<span class="pill">型号 ${escapeHtml(chara["型号ID"])}</span>` : ""}
+                      </div>
+                    </div>
+                    <div class="sigil">
+                      <div class="sigil-text">${escapeHtml(isStargazer ? "SYNTHETIC STARFRAME" : "CREW MEMBER PROFILE")}</div>
+                    </div>
+                  </div>
+                  ${chara["想法"] ? `<div class="thought">“ ${formatText(chara["想法"])} ”</div>` : ""}
+                </header>
+                <div class="body">
+                  <div>
+                    <h2 class="section-title">核心信息</h2>
+                    ${renderStats(coreStats)}
+                  </div>
+                  ${chara["外貌"] ? `<div class="panel"><h2 class="section-title">外貌记录</h2><div class="value">${formatText(chara["外貌"])}</div></div>` : ""}
+                  ${tags.length ? `<div><h2 class="section-title">人物标签</h2><div class="tag-row">${tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div></div>` : ""}
+                  ${isStargazer ? `
+                    <div class="two-col">
+                      <div class="subpanel">
+                        <h2 class="section-title">静态档案</h2>
+                        ${renderKV(chara["静态档案"])}
+                      </div>
+                      <div class="subpanel">
+                        <h2 class="section-title">动态好感</h2>
+                        ${renderKV(chara["动态好感"])}
+                      </div>
+                    </div>
+                    <div class="two-col">
+                      <div class="subpanel">
+                        <h2 class="section-title">外貌扩展</h2>
+                        ${renderKV(chara["外貌记录"])}
+                      </div>
+                      <div class="subpanel">
+                        <h2 class="section-title">附加信息</h2>
+                        ${renderKV(chara["附加信息"])}
+                      </div>
+                    </div>
+                    ${chara["性经历"] ? `<div class="panel"><h2 class="section-title">性经历</h2><div class="value">${formatText(chara["性经历"])}</div></div>` : ""}
+                  ` : `
+                    <div class="two-col">
+                      <div class="subpanel">
+                        <h2 class="section-title">偏好摘要</h2>
+                        ${renderKV({ 喜欢: chara["喜欢"] || [], 讨厌: chara["讨厌"] || [], 性癖: chara["性癖"] || [] })}
+                      </div>
+                      <div class="subpanel">
+                        <h2 class="section-title">备注</h2>
+                        <div class="value">${formatText(chara["备注"] || "暂无备注")}</div>
+                      </div>
+                    </div>
+                  `}
+                </div>
+              </section>
+            `;
+          } catch (error) {
+            app.innerHTML = `<div class="sheet" style="padding:20px;"><div class="empty">角色卡解析失败：${escapeHtml(error.message)}</div></div>`;
+          }
+        }
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+        else init();
+      </script>
+    </body>
+    </html>
+    ```
+    </chara>
+trimStrings: []
+placement:
+- 2
+disabled: false
+markdownOnly: true
+promptOnly: false
+runOnEdit: true
+substituteRegex: 0
+minDepth: 0
+maxDepth: 2

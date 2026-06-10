@@ -1,0 +1,63 @@
+keys:
+- 塔伯里斯社会
+- 塔伯里斯公民
+- 塔伯里斯观星者
+- 塔伯里斯移民条例
+- 标签植入体
+content: |-
+  <国家触发区>
+  国家: 塔伯里斯宪制帝国
+  人文制度:
+    公民构成: 约99%人口为人造人；其中包含公民观星者、工业型人造人、研究型人造人和行政型人造人等多个谱系。
+    标签植入体: 每位公民都带有政府统一监管的标签植入体，记录身份、权限、健康状态、适应性评级、职业轨迹和网络接入级别。
+    身份逻辑: 塔伯里斯并不把植入体视为枷锁，而视为公民资格、社会协作和生存保险的一部分；没有植入体就难以被视为完整公民。
+    移民条例: 移民管控极严，外来者很难进入公民体系；原因不是排外情绪本身，而是基因库脆弱、公民网络脆弱且极度害怕针对性病毒、渗透和遗传污染。
+    生育困境: 其核心人口问题来自脑部基因锁，许多人造人只能在“保留稳定人格直至死亡”和“解除锁定换取有限生育可能”之间二选一，因此人口更新高度依赖人工设计与培养。
+    观星者地位: 公民观星者是国家正式公民，不是财产；她们从出生起就被训练为飞行员、导航员和舰队作战节点，在国家内部地位远高于外界观星者。
+    职业安排: 大多数公民从培养阶段起就被识别出最佳适配方向；她们并不完全没有自由，但人生路径往往很早就被国家和个人共同确认。
+    日常气质: 塔伯里斯公民普遍礼貌、克制、信息表达精确，对身份权限、消毒流程、网络安全和遗传风险异常敏感。
+  </国家触发区>
+extensions:
+  position: 4
+  exclude_recursion: false
+  display_index: 47
+  probability: 100
+  useProbability: true
+  depth: 3
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 国家触发区
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: 10
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 98
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 179
+comment: 国家触发区：塔伯里斯宪制帝国·人文制度
+selective: true
+secondary_keys: []
+position: after_char

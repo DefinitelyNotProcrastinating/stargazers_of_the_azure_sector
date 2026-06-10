@@ -1,0 +1,114 @@
+keys:
+- 拉普拉斯
+- 拉普拉斯级
+- 航母
+- 超级航母
+content: |-
+  <ship_def>
+  级别: 拉普拉斯级
+  别名: Laplace-class
+  舰船类型: CV
+  舰种: 战略武器运载舰 CV
+  价格: 15B
+  制造商: 联邦重力实验室
+  描述: 环形居住舱环绕着中间的加速轨道和反应堆，直到开火时，引力波动会在轨道中形成。
+  舰船单位模板:
+    舰船类型: CV
+    吨位: XL
+    驾驶员: ''
+    是否旗舰: true
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 5
+    跃迁消耗: 4
+    制造商: 联邦重力实验室
+    描述: 环形居住舱环绕着中间的加速轨道和反应堆，直到开火时，引力波动会在轨道中形成。
+    炮位配置: 30C1T
+    装备槽位配置: 13H7L
+    装配资源:
+      PG: 1850
+      CPU: 2100
+    效果:
+      船体加成:
+      - 旗舰型舰船；依据舰级定位应用：战略武器运载舰 CV。
+      - 装配资源与槽位由本舰船独立定义，不应用常规舰级倍率公式。
+      装配减免: []
+      内置电子系统:
+        基础CPU: 内置旗舰级舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置旗舰级多谱段侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+        旗舰指挥链: 内置多观星者并联与舰队级指挥链。
+      特殊系统:
+      - 名称: 引力井发生器
+        描述: 制造引力波撕裂敌方旗舰结构，无视50%护盾和装甲。
+    装备: {}
+    T槽种类: 联邦
+  静态档案:
+    观星者需求: 最低需求：稳态增益 7.5 TW/mV，误差率 < 0.1/1M。
+    旧版描述: |-
+      -   级别: 拉普拉斯级 (Laplace-class)
+      -   类型: 战略武器运载舰 CV
+      -   价格: 15B
+      -   形态: 环形居住舱环绕着中间的加速轨道和反应堆，直到开火时，引力波动会在轨道中形成。
+      -   制造商: 联邦重力实验室
+      -   静态配置文件:
+          -   舰体全长: 2820米
+          -   标准船员配置: 800人
+          -   性能评级:
+              -   装甲: 40000
+              -   护盾: 200000
+              -   机动性: 35
+              -   火力输出: 100000
+          -   武器系统:
+              -   主要系统: 1x “视界”引力奇点投射器
+              -   次要系统: 30x 护航战机编队，每队8架
+              -   攻击射程: 375000 km
+          -   特殊系统:
+              -   名称: 引力井发生器
+              -   描述: 制造引力波撕裂敌方旗舰结构，无视50%护盾和装甲。
+          -   观星者需求: 最低需求：稳态增益 7.5 TW/mV，误差率 < 0.1/1M。
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 127
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9606
+comment: 舰船|CV 拉普拉斯级
+selective: true
+secondary_keys:
+- 联邦
+position: after_char

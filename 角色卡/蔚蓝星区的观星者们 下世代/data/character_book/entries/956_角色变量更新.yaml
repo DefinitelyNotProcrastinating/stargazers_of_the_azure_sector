@@ -1,0 +1,123 @@
+keys: []
+content: |-
+  <chara_management>
+  # 角色变量更新规程
+
+  ## 核心原则
+  - 所有角色存储于 `主角.可攻略角色`，格式为 `{"角色名": Object}`。角色名是唯一 key。
+  - 每个角色至少必须填写 `种族`。只有 `种族 = 观星者` 时，才允许使用观星者专属字段。
+  - 非观星者角色不得被强制补齐观星者性能参数。
+  - 角色显示统一使用 `<chara_info>`。
+  - 本世界不存在位阶系统，禁止给角色添加位阶、境界或类似字段。
+
+  ## 通用角色 Schema
+  ```json
+  {
+    "角色名": {
+      "种族": "观星者/人类/机械体/异种/其他",
+      "阵营": "string",
+      "身份": "string",
+      "外貌": "string",
+      "关系状态": "string",
+      "可互动定位": "恋爱/队友/雇员/俘虏/临时盟友/其他",
+      "好感度": 0,
+      "想法": "string",
+      "备注": "string",
+      "性格": [],
+      "喜欢": [],
+      "讨厌": [],
+      "性癖": []
+    }
+  }
+  ```
+
+  ## 观星者扩展 Schema
+  ```json
+  {
+    "种族": "观星者",
+    "阵营": "string",
+    "身份": "string",
+    "外貌": "string",
+    "关系状态": "string",
+    "可互动定位": "恋爱/队友/雇员/俘虏/临时盟友/其他",
+    "好感度": 0,
+    "想法": "string",
+    "备注": "string",
+    "型号ID": "string",
+    "静态档案": {
+      "制造商": "string",
+      "描述": "string",
+      "外貌": "string",
+      "身体数据": {"身高": "", "三围": ""},
+      "身份标识": {"类型": "", "位置": ""},
+      "性能参数": {
+        "比特率": "string",
+        "精度": "string",
+        "稳态增益": "string",
+        "爆发增益": "string"
+      },
+      "特殊能力": {},
+      "性格": [],
+      "偏好": {"喜欢": [], "讨厌": [], "性癖": []}
+    },
+    "动态好感": {"阶段1": "", "阶段2": "", "阶段3": "", "阶段4": "", "阶段5": ""},
+    "外貌记录": {"身体": "", "胸部": "", "私处": ""},
+    "性经历": "string",
+    "附加信息": {"舰船ID": "", "击杀记录": [], "植入体与增效剂": [], "历史": ""}
+  }
+  ```
+
+  ## 更新规则
+  - 新增角色使用 `insert /主角/可攻略角色/角色名`。
+  - 重命名只允许使用 `move`。
+  - 好感度的数值变化使用 `delta`。
+  - `想法` 是动态心理状态，应在角色动机明显变化时更新。
+
+  <raw_chara_data>
+  <%-JSON.stringify(getvar("SAM_data.static.主角.可攻略角色") || {}, null, 2)%>
+  </raw_chara_data>
+  </chara_management>
+extensions:
+  position: 4
+  exclude_recursion: true
+  display_index: 56
+  probability: 100
+  useProbability: true
+  depth: 1
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 1
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 956
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 194
+comment: 角色变量更新
+selective: true
+secondary_keys: []
+position: after_char

@@ -1,0 +1,72 @@
+keys: []
+content: |-
+  [
+    {
+      "func_name": "clean_romanceable_roles",
+      "func_body": "if (!state.static['主角'] || !state.static['主角']['可攻略角色'] || typeof state.static['主角']['可攻略角色'] !== 'object') return;\nfor (const [name, role] of Object.entries(state.static['主角']['可攻略角色'])) {\n  if (!role || typeof role !== 'object' || !role['种族']) {\n    delete state.static['主角']['可攻略角色'][name];\n  }\n}",
+      "periodic": true,
+      "order": "last",
+      "sequence": 10,
+      "func_params": []
+    },
+    {
+      "func_name": "clean_flagship_inventory",
+      "func_body": "if (!state.static['主角'] || !state.static['主角']['旗舰库存'] || typeof state.static['主角']['旗舰库存'] !== 'object') return;\nfor (const [name, item] of Object.entries(state.static['主角']['旗舰库存'])) {\n  if (!item || typeof item !== 'object' || (item['数量'] ?? 0) <= 0) {\n    delete state.static['主角']['旗舰库存'][name];\n  }\n}",
+      "periodic": true,
+      "order": "last",
+      "sequence": 20,
+      "func_params": []
+    },
+    {
+      "func_name": "normalize_stargazer_lust",
+      "func_body": "if (!state.static['主角'] || !state.static['主角']['可攻略角色'] || typeof state.static['主角']['可攻略角色'] !== 'object') return;\nfor (const role of Object.values(state.static['主角']['可攻略角色'])) {\n  if (role && role['种族'] === '观星者' && typeof role['欲望'] === 'number' && role['欲望'] < 0) {\n    role['欲望'] = 0;\n  }\n}",
+      "periodic": true,
+      "order": "last",
+      "sequence": 30,
+      "func_params": []
+    }
+  ]
+extensions:
+  position: 4
+  exclude_recursion: true
+  display_index: 137
+  probability: 100
+  useProbability: true
+  depth: 543
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 3
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: false
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: false
+insertion_order: 543
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 74
+comment: __SAM_IDENTIFIER__
+selective: true
+secondary_keys: []
+position: after_char

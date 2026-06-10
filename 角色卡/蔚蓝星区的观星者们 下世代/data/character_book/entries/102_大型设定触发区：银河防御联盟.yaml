@@ -1,0 +1,117 @@
+keys:
+- 先驱者历史
+- 银河防御联盟历史
+- 反熵装置
+- 天灾战争
+- 先驱者舰队
+- 战体技术
+- 熵分解炮
+- 结晶装甲
+- 奇点隐形
+- 拦截者构型
+- 巡航构型
+- 中枢构型
+- 完型构型
+- 方舟构型
+content: |-
+  <大型设定触发区>
+  设定: 先驱者 / 银河防御联盟
+  历史哲学:
+    发起者: 始源者是头足纲形态的智慧生物，亲外、唯物主义，坚信知识共享与生命延续。
+    黄金时代: 联盟将跃迁引擎等基石技术无私分享给新兴文明，并建立跨银河暗物质管道系统作为星门。
+    天灾战争: 来自银河之外的超维入侵者试图吞噬一切；始源者自告奋勇成为舰队负责人。
+    终局: 联盟在银河中心黑洞内部建造反熵装置，把每个有意识生物化作概率云消散，成功驱逐天灾。
+    引语: “同胞，启动了反熵装置，我们会变成什么样子？”——无名联盟飞行员
+    引语2: “不论我们来自何方，不论我们物种如何，今日，我们合而为一。”——无名联盟议员
+  舰队技术:
+    模块化变形: 战舰核心是战体概念，可现场变形或组合成新形态，执行不同战术任务。
+    自适应处理单元: 每艘战舰搭载可学习、可无限扩展的计算机单元，可兼容几乎任何技术体系。
+    量产原则: 单舰性能远超人类同级，但设计思路仍是高质量消耗品。
+    结晶装甲: 所有先驱者战舰无护盾，依赖厚重可自我修复的结晶装甲。
+    熵分解炮: 主要武器，可少量穿透护甲和护盾直接攻击船体。
+    奇点隐形: 泰坦级战体可利用跃迁引擎把舰体藏入微型时空裂缝；越大的先驱者飞船隐身能力越好。
+    精确原则: 多意识微小延迟会导致变形或战术链崩溃；通常只需要1个驾驶员，但精度和比特率要求极端严苛。
+    抗干扰: 泰坦级战体免疫心控和常规电子战，错误信息会被其他子个体覆盖，强行入侵可能烧毁攻击者。
+  舰型参数:
+    拦截者构型:
+      级别: DD
+      长度: 150m
+      角色: 高速拦截与远程火力支援，通常由中枢战体挂载并大规模投送。
+      数据: 装甲2500，机动95，火力800，射程100000km。
+      武器: 4x轻型熵分解炮阵列，点防御脉冲波发射器。
+      观星者需求: 极高神经反应速度和精度；低端观星者接入瞬间会烧毁神经。
+    巡航构型:
+      级别: BC
+      长度: 750m
+      角色: 舰队机动作战单位，战线中坚。
+      数据: 装甲90000，机动15/85，火力4500/6500，射程250000km。
+      武器: 2x重型熵分解炮组，12x中型熵分解炮阵列，点防御脉冲波发射器。
+      特殊: 双相变形，可在机动模式和攻击模式间切换。
+      观星者需求: 高神经可塑性，否则变形过程可能损伤舰体结构。
+    中枢构型:
+      级别: CV
+      长度: 2500m环状直径
+      角色: 移动指挥中心、生产设施与投送平台。
+      数据: 装甲550000，机动40/50，火力180加挂载战体输出。
+      挂载: 8艘巡航构型或32艘拦截者构型。
+      特殊: 战体挂载与快速生产、广域指挥脉冲、小型10LY传送通道。
+      观星者需求: 恐怖数据处理能力，约900TB/s且错误率0.01/1MOPS。
+    完型构型:
+      级别: TT
+      长度: 19000m组合体
+      结构: 由九个分型战体构成；出现时应让全部9个子个体出现，可损坏。
+      数据: 装甲900000/1500000，机动25/75，火力150000/1.0M，射程355000km/10000000km。
+      模式: 机动/防御模式、攻击模式热寂空间长枪、支援模式终末光华、投送模式人工虫洞。
+      观星者需求: 0/1TOPS错误率，约1PB/s比特率，并需天马行空的灵活思维。
+    方舟构型:
+      级别: TT
+      长度: 大陆级
+      角色: 联盟摇篮与最后堡垒，内部容纳大陆级生态系统。
+      能力: 守护者之剑、生命温床、超大型船坞、保存数百万FTL物种基因样本。
+      状态: 约一百万个方舟舰均已损毁并遭结构信息扭曲。
+  通用指标: Galactic Defense Federation DD/BC/BB/TT为1TW/mV stable，1PB/s Bitrate，0/1MOPS error rate；变形能力需要高神经可塑性。
+  </大型设定触发区>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 45
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 大型设定触发区
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 10
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: false
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 102
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 177
+comment: 大型设定触发区：银河防御联盟
+selective: true
+secondary_keys: []
+position: after_char

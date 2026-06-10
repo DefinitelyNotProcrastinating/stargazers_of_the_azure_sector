@@ -1,0 +1,57 @@
+keys: []
+content: |+
+  <industry_list>
+  产业数据根路径为 `主角.产业`，使用 `{"object_name": Object}`。
+  <%- JSON.stringify(getvar("SAM_data.static.主角.产业") || {}) %>
+
+  ```json
+  [
+    {"op":"insert","path":"/主角/产业/TY-9F0-3 小行星带 自动采矿哨站","value":{"描述":"[城市级] 位于小行星带的小型自动化采矿设施。","启用":true,"位置":"闪光星云 | 塔伯里斯星座 | TY-9F0 星系 | TY-9F0-3 小行星带","位置安全等级":-100,"仓储":{},"运维成本":{"信用点":{"效率":500}},"产出":{"高浓缩矿石":{"效率":100}},"产出缓存":{}}}
+  ]
+  ```
+  </industry_list>
+
+extensions:
+  position: 4
+  exclude_recursion: false
+  display_index: 129
+  probability: 100
+  useProbability: true
+  depth: 1
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 1
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 500
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 134
+comment: 【SAM】产业池
+selective: true
+secondary_keys: []
+position: after_char

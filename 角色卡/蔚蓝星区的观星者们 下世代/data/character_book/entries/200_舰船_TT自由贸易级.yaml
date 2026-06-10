@@ -1,0 +1,117 @@
+keys:
+- 泰坦
+- 自由贸易级
+- 自由贸易
+content: |-
+  <ship_def>
+  级别: 自由贸易级
+  别名: Free Trade-class
+  舰船类型: TT
+  舰种: 泰坦 (TT)
+  价格: 340B
+  制造商: 辛迪加联合太空公司 (SJSC.inc) - 多家企业联合制造
+  描述: 舰体是一个协调的蓝灰色模块化平台。核心来自四个不同的企业亲密无间的合作，上面挂载了密密麻麻的武器模块、护盾发生器、引擎和居住区。舰首是一个可开合的工业作业平台，既可以作为武器发射口，也能在非战斗时用于开采小行星。
+  舰船单位模板:
+    舰船类型: TT
+    吨位: XL
+    驾驶员: ''
+    是否旗舰: true
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 6
+    跃迁消耗: 6
+    制造商: 辛迪加联合太空公司 (SJSC.inc) - 多家企业联合制造
+    描述: 舰体是一个协调的蓝灰色模块化平台。核心来自四个不同的企业亲密无间的合作，上面挂载了密密麻麻的武器模块、护盾发生器、引擎和居住区。舰首是一个可开合的工业作业平台，既可以作为武器发射口，也能在非战斗时用于开采小行星。
+    炮位配置: 8XL8C1T
+    装备槽位配置: 13H9L
+    装配资源:
+      PG: 3000
+      CPU: 3200
+    效果:
+      船体加成:
+      - 旗舰型舰船；依据舰级定位应用：泰坦 (TT)。
+      - 装配资源与槽位由本舰船独立定义，不应用常规舰级倍率公式。
+      装配减免: []
+      内置电子系统:
+        基础CPU: 内置旗舰级舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置旗舰级多谱段侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+        旗舰指挥链: 内置多观星者并联与舰队级指挥链；具体接口需求见静态档案。
+      特殊系统:
+      - 名称: “公约”多功能打击系统 (三选一装配)
+        描述: 位于舰首工业平台上的多用途战略武器。
+    装备: {}
+    T槽种类: 辛迪加
+  静态档案:
+    观星者需求: 跃迁核心稳定度+25。需要至少20名来自不同制造商、经过特殊协议同步的观星者组成链接，或一名传说中拥有超过20TW/mV稳定增益的观星者才能驾驭。
+    旧版描述: |-
+      “金钱让文明成为可能。它是我们的契约，也是我们勤劳的奖赏。”——无名商人
+      -   级别: 自由贸易级 (Free Trade-class)
+      -   类型: 泰坦 (TT)
+      -   价格: 340B
+      -   形态: 舰体是一个协调的蓝灰色模块化平台。核心来自四个不同的企业亲密无间的合作，上面挂载了密密麻麻的武器模块、护盾发生器、引擎和居住区。舰首是一个可开合的工业作业平台，既可以作为武器发射口，也能在非战斗时用于开采小行星。
+      -   制造商: 辛迪加联合太空公司 (SJSC.inc) - 多家企业联合制造
+      -   静态配置文件:
+          -   舰体全长: 21000米
+          -   标准船员配置: 9800人
+          -   性能评级:
+              -   装甲: 2,000,000
+              -   护盾: 2,500,000
+              -   机动性: 6
+              -   火力输出: 380,000
+          -   武器系统:
+              -   主要系统: 8x “清盘人”等离子发射器, 8x “执行者”重型无人机蜂巢
+              -   次要系统: 220x “黄蜂”武装无人机挂架
+              -   攻击射程: 340,000 km
+          -   特殊系统:
+              -   名称: “公约”多功能打击系统 (三选一装配)
+              -   描述: 位于舰首工业平台上的多用途战略武器。
+                  1.  **“维和者”约束正电子爆弹**: 发射一颗被强磁场约束的巨大正电子球。该武器移动快速，爆炸后能形成一个巨大的能量湮灭场，对范围内的所有舰船造成毁灭性的持续伤害。
+                  2.  **“谐律”中微子散射矛**: 发射一道高密度的中微子束。该武器几乎不与常规物质作用，能够无视护盾和大部分装甲，直接攻击舰船内部的驾驶员的DNA，从内部瓦解敌人。
+                  3.  **“资源勘探者”谐振震荡鱼雷**: 发射一枚能够与目标物质产生共振的特殊鱼雷。对舰船使用时，它能引发灾难性的结构解体；对行星或小行星使用时，则能以极高的效率将其震碎，是辛迪加进行大规模资源开采的“利器”。
+          -   观星者需求: 跃迁核心稳定度+25。需要至少20名来自不同制造商、经过特殊协议同步的观星者组成链接，或一名传说中拥有超过20TW/mV稳定增益的观星者才能驾驭。
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 106
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 200
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 110
+comment: 舰船|TT自由贸易级
+selective: true
+secondary_keys:
+- 辛迪加观星者
+position: after_char

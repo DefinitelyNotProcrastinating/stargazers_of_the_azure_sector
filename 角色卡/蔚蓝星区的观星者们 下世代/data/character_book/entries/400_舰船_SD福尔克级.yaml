@@ -1,0 +1,126 @@
+keys:
+- 隐形轰炸舰
+- 高级驱逐舰
+- 福尔克级
+- 福尔克
+content: |-
+  <ship_def>
+  级别: 福尔克级
+  别名: Falk-class
+  舰船类型: SD
+  舰种: 隐形轰炸舰
+  舰体类别: 高级型
+  价格: 19M
+  制造商: 泰坦重工
+  舰体描述: 蓝色的楔形紧凑战舰，舰体头部两侧有用于挂载多用途发射器的发射管。
+  静态档案:
+    规格:
+      舰体全长: 220米
+      标准船员配置: 5人
+    性能评级:
+      装甲: 1500
+      护盾: 2000
+      机动性: 75
+      火力输出: 4000
+    装配:
+      装配资源:
+        PG: 130
+        CPU: 390
+      槽位:
+        高能: 6
+        低能: 5
+      武器座:
+      - 名称: C1
+        尺寸: C
+        类型: 投递机库
+        适配武器:
+        - 攻击无人机
+        - 轰炸无人机
+      - 名称: C2
+        尺寸: C
+        类型: 投递机库
+        适配武器:
+        - 攻击无人机
+        - 轰炸无人机
+      船体加成:
+      - 投递无人机跃迁距离 +20%
+      - 无人机对舰体内部结构伤害 +20%
+      - 隐形模块维护成本降低
+      - 对装甲抗性穿透效果 +10%
+      装配减免:
+      - 无人机联队 CPU需求 -20%
+      - 隐形模块 CPU需求 -15%
+      推荐武器方案:
+      - 2x 投递者无人机弹射发射架
+    特殊系统:
+      名称: 噤声II型战术隐形力场发生器
+      效果:
+      - 可靠且便于维护
+      - 兼容不同能源核心
+      附加系统:
+      - 名称: 魅影中微子炸弹投递无人机
+        效果:
+        - 可直接跃迁至目标 50000 km 范围内
+        - 2000 km 杀伤半径内无视目标 30% 装甲抗性
+    观星者需求:
+      控制门槛:
+        最低稳态增益: 2.8 TW/mV
+        最低比特率: 260 TB/s
+        最高精度误差: 2.2/1M
+      超载门槛:
+        最低爆发增益: 5.8 TW/mV
+        需要技能: 工程 V
+        规则:
+        - 爆发增益不足时，不可超载投递无人机系统与隐形主动模块
+        - 超载为 2 回合 1 次
+        - 超载效果提高至原值的 150%
+      接口要求: 只需稳定接口与常规引导性能
+  跃迁充能: 0
+  最大充能: 7
+  跃迁消耗: 1
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 74
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9651
+comment: 舰船|SD福尔克级
+selective: true
+secondary_keys:
+- 辛迪加
+position: after_char

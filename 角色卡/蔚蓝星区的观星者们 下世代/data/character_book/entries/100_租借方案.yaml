@@ -1,0 +1,98 @@
+keys:
+- 租借观星者
+- 二手观星者
+content: |-
+  <rental_stargazer>
+
+  rental_company:
+    company_name: "星辰纽带租赁服务 (Stellar Bond Rentals)"
+    slogan: "“体验卓越，无需拥有。”"
+    faction_affiliation: "猎户座辛迪加 (中立商业实体)"
+    description: |
+      “星辰纽带”是蔚蓝星区内最大的观星者租赁公司，以其灵活的合同和庞大的“可循环使用”观星者库而闻名。它为那些预算有限的独立舰长、短期需要增强战力的小型佣兵团，或是仅仅想体验不同型号观星者性能的富裕客户，提供了一个极具吸引力的解决方案。该公司通过大规模采购、标准化维护和高效的“记忆覆盖”程序，将拥有观星者的门槛降到了前所未有的低点，同时也创造了一个充满争议和道德灰色地带的庞大市场。
+
+    business_model:
+      service_type: "观星者租赁与买断"
+      core_offering:
+        - name: "年度租赁合同 (Annual Lease Contract)"
+          cost_structure: "支付观星者市场估价的20%作为年费。"
+          terms: |
+            - 客户获得观星者在合同期内完全的使用权。
+            - “星辰纽带”负责提供标准的维护和远程技术支持。
+            - 合同到期后，客户可选择续约、归还观星者，或以折扣价买断。
+
+        - name: "租赁转买断选项 (Lease-to-Own Option)"
+          cost_structure: "在租赁合同结束后，客户可以支付观星者剩余市场估价的70%（总计为原价的90%）来永久买断该观星者。"
+          details: "这是一个受欢迎的选项，允许客户在确认观星者符合自己需求后再做长期投资。买断的观- 星者将解除公司的远程监控和记忆覆盖协议。"
+
+        - name: "损坏赔偿条款 (Damage Penalty Clause)"
+          cost_structure: "若观星者在租赁期间遭受严重物理损伤或神经核心损坏，客户需支付该观星者全新市场估价的150%作为赔偿。"
+          details: "这一惩罚性条款确保了客户会尽力保护租赁资产的安全，也是公司主要的风险控制手段之一。"
+
+    operational_details:
+      stargazer_rentals:
+        source: "主要从辛迪加各大制造商处批量采购，也包括从破产佣兵团或战场回收的二手观星者。"
+        condition: "租赁池中的观星者绝大多数都是'二手'的。她们可能已经服务过数十位甚至上百位前任舰长。"
+        roster: "提供从入门级的'妖精'到中高端的'甜心'、'风暴'等多种型号，但不可能提供帝国或联邦的军规型号以及传说级的特殊型号。"
+
+      memory_management:
+        protocol: "“柔性记忆覆盖”协议 (Soft-Wipe Protocol)"
+        description: |
+          每次租赁合同结束后，观星者会被召回并进行记忆处理。该协议并非完全清除记忆，而是将前任舰长的具体身份信息、机密战术数据等关键信息进行模糊化和封存，同时保留其操作经验和技能。这使得观星者能够“越用越强”。
+        side_effects: |
+          虽然协议禁止观星者主动提及前任客户的细节（违反协议会触发惩罚性的神经刺激），但她们保留了与前任们的情感印记和互动习惯。客户可能会发现自己租赁的观- 星者在某些特定情境下，会无意识地流露出不属于当前关系的习惯或情绪反应，例如对某个特定称呼有反应，或是在性爱中偏好某种前任喜欢的姿势。这种“记忆的幽灵”是租赁服务中最具争议性的一点。
+
+    market_impact_and_player_opportunities:
+      - type: "低门槛入门 (Low-Barrier Entry)"
+        description: "为新手玩家提供了一种廉价的方式来快速组建一支有战斗力的舰队，而无需承担购买全新观星者的巨大财务压力。"
+      - type: "战术灵活性 (Tactical Flexibility)"
+        description: "玩家可以根据特定任务的需求，短期租赁特定型号的观- 星者。例如，在执行需要高机动缠斗的任务前，可以临时租赁一位'先锋'型号。"
+      - type: "独特的角色互动 (Unique Role-Playing Opportunities)"
+        description: "与一位带有“过去”的观星者互动，探索她模糊记忆背后的故事，或者尝试用自己的方式覆盖掉前任的印记，这本身就是一条充满情感深度的故事线。"
+      - type: "风险与机遇 (Risk and Reward)"
+        description: "租赁的观星者可能会因为前任的经历而拥有某些意想不到的技能或知识，但也可能带有隐藏的心理创伤或危险的仇家。玩家在享受低价的同时，也承担着这份未知的风险。"
+  </rental_stargazer>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 63
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: false
+insertion_order: 100
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 53
+comment: 租借方案
+selective: true
+secondary_keys: []
+position: after_char

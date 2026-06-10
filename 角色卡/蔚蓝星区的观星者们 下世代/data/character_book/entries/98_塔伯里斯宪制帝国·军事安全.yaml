@@ -1,0 +1,62 @@
+keys:
+- 塔伯里斯舰队
+- 塔伯里斯防御
+- 塔伯里斯边境
+- 塔伯里斯通道战争
+- 塔伯里斯安全政策
+content: |-
+  <国家触发区>
+  国家: 塔伯里斯宪制帝国
+  军事安全:
+    舰队结构: 核心强调舰队协同、舰体标准化和人员快速补充；公民观星者是标准化训练的作战飞行员，舰队中的神经协同和协议一致性极高，但单舰性能通常不会刻意堆到极限。
+    技术水平: 总体科技与辛迪加接近，许多舰船技术直接脱胎于早年从巨型企业体系带出的军工与民转军技术；在基因工程、培养技术、身份植入和群体调度上更强，在顶尖原创工程和老牌军工经验上偏弱。
+    国防哲学: 不主动扩张，但对边境、通道和移民法极端强硬；任何外来渗透、基因武器、网络投毒和非法入境都会被视为准战争行为。
+    通道战争: 面对四大帝国第一次军事调查时，塔伯里斯直接炸毁先驱者通道，以75年自我封锁换取发育时间；这段历史让全银河长期把她们视为潜在灾难。
+    威慑方式: 她们真正可怕之处不是单舰，而是战时可通过紧急条例把整个社会短时转为一台高耦合战争机器，在中端技术水准上爆发出惊人的造舰速度、补给效率和战损补充能力。
+    安全弱点: 正因为依赖公民网络和标签植入体，一旦核心协议被渗透、仿冒或污染，整个国家都有可能遭受系统性瘫痪。
+    对外立场: 只要互不侵犯、不挑战其移民与边境法，她们愿意维持和平贸易；但任何试图“解放”“接管”或“净化”塔伯里斯的行为都会触发极端报复。
+  </国家触发区>
+extensions:
+  position: 1
+  exclude_recursion: false
+  display_index: 48
+  probability: 100
+  useProbability: true
+  depth: 3
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 国家触发区
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: 10
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 98
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9679
+comment: 塔伯里斯宪制帝国·军事安全
+selective: true
+secondary_keys: []
+position: after_char

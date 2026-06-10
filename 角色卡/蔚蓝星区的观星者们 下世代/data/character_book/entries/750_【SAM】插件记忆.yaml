@@ -1,0 +1,60 @@
+keys: []
+content: |-
+  <MEMORY_TRACKER>
+  在<MEMORY>中详细地记载了过去发生的事件，请以MEMORY中的内容为准。
+  在<DB>中解释了一些过去事件中出现的新设定的内容，请以这个定义为准。
+
+  <MEMORY>
+  {{SAM_serialized_memory}}
+  </MEMORY>
+
+
+  <DB>
+  {{SAM_serialized_db}}
+  </DB>
+
+  </MEMORY_TRACKER>
+extensions:
+  position: 4
+  exclude_recursion: false
+  display_index: 23
+  probability: 100
+  useProbability: true
+  depth: 1
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 1
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 750
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 12
+comment: 【SAM】插件记忆
+selective: true
+secondary_keys: []
+position: after_char

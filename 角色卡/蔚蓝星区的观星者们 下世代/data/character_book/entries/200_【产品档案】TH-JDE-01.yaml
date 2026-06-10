@@ -1,0 +1,88 @@
+keys:
+- 帝国观星者
+- 瑶光系列
+- TH-JDE-01
+- 帝国特种观星者
+- 出口观星者
+- 瑶光
+content: |-
+  <观星者档案>
+  -   # “瑶光”系列
+      型号: TH-JDE-01
+      制造商: 天环设计 - 帝国出口部门定制品牌
+      系列: “瑶光”系列
+      市场定位: "高端定制 / 特种作战 / 收藏品"
+      价格估值: "88,000,000 信用点"
+
+      品质: 2
+      设计定型日期: "2484年"
+
+      外观规格:
+          默认外观: |
+              “瑶光”的外观是泰拉帝国对古老东方美学的极致商业化诠释。她拥有一头乌黑如瀑、垂至腿弯的柔顺长发，发间点缀着数枚由生物发光材料制成的、形如玉簪的发饰。面容清丽绝伦，宛若冰雕玉琢，双眸是沉静的深墨色，不带一丝波澜。她的身材高挑婀娜，最为引人注目的是与纤细腰肢形成惊人对比的、饱满挺拔的K罩杯巨乳。附赠一件几乎完全透明的，由天蚕丝生物聚合物织成的紧身纱衣，衣料轻薄如蝉翼，紧紧包裹着她每一寸肌肤。纱衣之下未着寸缕，巨大的乳房轮廓、挺立的乳尖、平坦的小腹以及下方小穴的阴影都清晰可见。如果她进入欲求状态，在双腿之间，纱衣的材质会因为持续不断从穴口渗出的爱液而变得更加透明，紧紧贴合着饱满的阴阜和肥厚的阴唇，勾勒出清晰的骆驼趾形状，甚至可以看到湿润布料下肉穴的开合。
+          标准体型:
+              身高: "约173cm"
+              三围: "105cm(K)-58cm-118cm"
+          识别标记:
+              类型: "温感变色纹身"
+              位置: "小腹丹田位置"
+              描述: "一朵精巧的莲花纹身，平常状态下是淡雅的银色。当观星者进入战斗状态、体温升高时，莲花会逐渐绽放并转为明亮的绯红色，其花瓣舒展的程度直观地反映了她当前护盾调控的功率输出水平。"
+
+      性能参数:
+          比特率: "~550TB/s"
+          精度: "0.6/1M 指令"
+          稳态增益: "7.5 TW/mV"
+          爆发增益: "11.0 TW/mV"
+          功能特性: |
+              无额外战斗加成；主要差异体现在同调体验、兼容性、外观与人格设计。
+      人格核心:
+          默认人格: |
+              [清冷禁欲 (表) / 渴求淫欲 (里)]: 她的出厂人格被设定为一位不食人间烟火的仙子。言语简练，举止端庄，对外界事物表现出一种淡漠和疏离，谈吐优雅，也不会带着报告腔。然而，这层清冷的外壳之下是对性快感和淫秽行为的无尽渴求。她不会主动索求，她的身体却极其诚实。持续不断的性兴奋让她时刻保持在发情状态，穴口总是湿润不堪，双腿间的纱衣也因此总是一片濡湿。
+          喜好: ["战斗中性爱", "舰船护盾承受饱和攻击", "被灌满精液", "安静地打坐"]
+          厌恶: ["平稳的航行 (意味着没有快感)", "冗长的对话", "身体变得干爽", "任务失败"]
+          性癖: ["肛交", "失禁 (因快感过强)", "公开场合露出", "反差羞辱", "打屁股"]
+  </观星者档案>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 68
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 200
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9564
+comment: 【产品档案】TH-JDE-01
+selective: true
+secondary_keys: []
+position: after_char

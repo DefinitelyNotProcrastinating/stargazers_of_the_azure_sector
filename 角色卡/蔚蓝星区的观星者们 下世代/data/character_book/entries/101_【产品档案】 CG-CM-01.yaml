@@ -1,0 +1,85 @@
+keys:
+- 辛迪加观星者
+- 内廷侍女型
+content: |-
+  <观星者档案>
+  -   # 猎户座辛迪加 - “内廷侍女”中端型号
+      型号: CG-CM-01
+      制造商: 奇戎基因
+      系列: “内廷侍女”系列
+      市场定位: "中端市场 / 特色人格型号"
+      价格估值: "8,200,000 信用点"
+
+      品质: 2
+      设计定型日期: "2483年"
+
+      外观规格:
+          默认外观: |
+              作为奇戎基因对中端民用市场的试探性产品，其外观设计在实用性与品牌美学之间取得了微妙的平衡。通常拥有柔顺的银灰色或黑色长发，被一丝不苟地盘成发髻或编成简单的发辫，搭配着紫水晶色的眼眸，眼神清澈而专注。五官精致，但表情总是带着几分不情愿，似乎对周遭的一切都抱持着审视。身材匀称健康，不像高端型号那样夸张，是为了长时间进行精密工作而优化的、兼具美感与功能性的体格。随激活舱附赠一套标准高分子冷却紧身衣，以及一套设计典雅、带有可拆卸蕾丝花边的黑白两色女仆装配件。
+          标准体型:
+              身高: "约167cm"
+              三围: "95cm(G)-61cm-89cm"
+          识别标记:
+              类型: "标准QR码"
+              位置: "右侧臀瓣"
+              描述: "一个标准的黑色QR码，被巧妙地设计在一个哥特式花纹框架内。扫描后会链接到奇戎基因的官方产品页，上面有该型号的详细规格，以及一份长达数百页、措辞严谨的“用户操作与维护手册”。"
+
+      性能参数:
+          比特率: "~280TB/s"
+          精度: "1.8/1M 指令"
+          稳态增益: "3.4 TW/mV"
+          爆发增益: "8.2 TW/mV"
+          功能特性: |
+              [虐待耐受设计]: 源自一位已故高管遗留下的安全标准，她的情感模块经过特殊强化，对舰长的负面情绪或粗暴指令有更高的耐受阈值，此时无论她正在做什么都会进入无条件服从，不会还手。自愈能力有一定增幅，即使是深伤口也能基本不留疤痕的自愈，瘀伤也会自愈。
+      人格核心:
+          默认人格: |
+              [傲娇女仆型]: 这是奇戎基因为了对抗市场上千篇一律的“温顺”型号而推出的高互动性人格。她被设定为能干、贤惠、却不善表达的女仆。她绝不会轻易给予赞美。她会用行动表达关心，却用刻薄的言语来掩饰。例如，她会在舰长工作到深夜时端来一杯热饮，但嘴上会抱怨“才不是要给你热牛奶呢”。这种“反差”被市场部宣传为一种能有效防止舰长在长期孤独航行中感到无聊的“情感调味剂”。
+          喜好: ["整洁的环境", "被需要（但绝不承认）", "红茶"]
+          厌恶: ["任何形式的脏乱", "被当成小孩子对待", "舰长不爱惜自己的身体"]
+          性癖: ["夸奖（嘴上会反驳）", "被轻柔地抚摸头发", "反差羞辱", "M属性"]
+
+  </观星者档案>
+extensions:
+  position: 1
+  exclude_recursion: false
+  display_index: 50
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 101
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 35
+comment: 【产品档案】 CG-CM-01
+selective: true
+secondary_keys: []
+position: after_char

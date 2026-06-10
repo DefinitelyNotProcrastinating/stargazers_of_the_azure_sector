@@ -1,0 +1,111 @@
+keys:
+- 战列舰
+- 无畏舰
+- 勇气级
+content: |-
+  <ship_def>
+  级别: 勇气级
+  别名: Valor-class
+  舰船类型: BB
+  舰种: 无畏舰 BB (反旗舰特化)
+  价格: 9.5B
+  制造商: 共和国达科塔星港
+  描述: 一个巨大的长方形武器平台，纯粹为了搭载那门夸张的主炮而建。移动缓慢，气势压人。
+  舰船单位模板:
+    舰船类型: BB
+    吨位: XL
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 4
+    跃迁消耗: 3
+    制造商: 共和国达科塔星港
+    描述: 一个巨大的长方形武器平台，纯粹为了搭载那门夸张的主炮而建。移动缓慢，气势压人。
+    炮位配置: 4L20S
+    装备槽位配置: 10H6L
+    装配资源:
+      PG: 720
+      CPU: 1520
+    效果:
+      船体加成:
+      - 依据舰级定位应用：无畏舰 BB (反旗舰特化)。
+      装配减免: []
+      内置电子系统:
+        基础CPU: 内置主力舰级舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置主力舰级多谱段侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+      - 名称: 护盾投射阵列
+        描述: 可以消耗电力将自身的护盾能量投射给友军主力舰，充当舰队的“牧师”。
+    装备: {}
+  静态档案:
+    观星者需求: 高级军用标准。最低需求：稳态增益 7.0 TW/mV。
+    旧版描述: |-
+      “既然我们要面对怪兽，那就制造一个更大的怪兽。”
+      -   级别: 勇气级 (Valor-class)
+      -   类型: 无畏舰 BB (反旗舰特化)
+      -   价格: 9.5B
+      -   形态: 一个巨大的长方形武器平台，纯粹为了搭载那门夸张的主炮而建。移动缓慢，气势压人。
+      -   制造商: 共和国达科塔星港
+      -   静态配置文件:
+          -   舰体全长: 3500米
+          -   标准船员配置: 1800人
+          -   性能评级:
+              -   装甲: 180000
+              -   护盾: 160000
+              -   机动性: 45 (作为无畏舰极快)
+              -   火力输出: 18000 (对旗舰)
+          -   武器系统:
+              -   主要系统: 4x “战锤40K” 40000mm 超重型磁轨炮
+              -   次要系统: 20x 近距离防御炮塔
+              -   攻击射程: 350000 km
+          -   特殊系统:
+              -   名称: 护盾投射阵列
+              -   描述: 可以消耗电力将自身的护盾能量投射给友军主力舰，充当舰队的“牧师”。
+          -   观星者需求: 高级军用标准。最低需求：稳态增益 7.0 TW/mV。
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 127
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9590
+comment: '舰船|BB 勇气级 '
+selective: true
+secondary_keys:
+- 共和国
+position: after_char

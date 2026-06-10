@@ -1,0 +1,151 @@
+keys:
+- 模块
+- 装备
+- 槽位
+content: |-
+  <通用装备设计>
+  # 通用舰船装备设计流程
+
+  ## 目标
+  当创建、改装或描述舰船装备时，必须先确定模块类别，再确定吨位、H/L 槽位、PG、CPU 与量化效果。
+  所有可拆卸模块统一存储于 `主角.舰船.舰船名.装备.装备名`。
+
+  ## 标准设计流程
+  1. 确定模块类别：舰炮、防御、电子、工程、推进、能源或其他。
+  2. 确定模块吨位：
+     - 挂点代码只允许 `S/M/L/XL/C/T`：`L` 为战列舰级火炮，`XL` 为旗舰级火炮，`C` 为航母机库槽位，`T` 为超级武器槽位。
+     - 非舰炮模块只允许 `S/M/L/XL/N`。
+     - `N` 表示常规通用模块，可以安装至任意吨位舰船，例如通用电脑、标准协处理器。
+     - `S/M/L/XL` 非舰炮模块只能安装至同吨位舰船。
+  3. 确定槽位：
+     - 舰炮只消耗炮位挂点，不占用 H/L 装备槽位。
+     - 非舰炮模块根据类别消耗 H 或 L 装备槽位，不占用炮位。
+     - 每艘舰船最多拥有 `1T`。`T` 槽只能安装超级武器；舰船与超级武器都必须填写 `T槽种类`，且值完全一致。禁止跨阵营或跨技术体系混装超级武器。
+     - `C` 槽只能安装舰载机、无人机或对应机库模块。
+  4. 确定 PG 与 CPU：
+     - 正数表示消耗资源。
+     - 负数表示提供额外资源，例如副反应堆 `PG：-20`，协处理器 `CPU：-15`。
+     - 资源扩展模块仍必须占用至少一个 H/L 装备槽位。
+  5. 填写量化效果。禁止只写“更强”“更快”或“更难命中”。随机机制必须写为 `D100 <= x`。
+
+  ## H/L 槽位分类
+  低功率槽位_L:
+    原则: |
+      用于不需要持续高能量通量，但会占用舰体内部空间、结构支撑或计算资源的模块。
+    常见模块:
+      - ECCM 与抗干扰模块
+      - 电脑、火控电脑、协处理器、算法模块
+      - 装甲板、副装甲板、结构强化件
+      - 低功率被动工程模块
+
+  高功率槽位_H:
+    原则: |
+      用于需要持续或瞬时高能量通量的模块。舰体需要为它们提供大功率超导电缆、能量总线、散热与隔离硬件。
+    常见模块:
+      - 额外护盾、护盾增幅器、主动护盾模块
+      - 副反应堆、反应堆调控元件、能源模块
+      - ECM 与主动干扰模块
+      - 额外主动传感器、高功率扫描阵列
+      - 主动推进、主动维修与其他高通量模块
+
+  ## 防御模块可选属性
+  护盾模块:
+    可选属性: `额外护盾: int`
+    说明: |
+      当模块直接增加舰船护盾容量时填写。仅提供抗性、恢复、稳定性或其他机制时可以省略。
+    示例:
+      额外护盾发生器:
+        品质: 1
+        标签: [护盾, 模块]
+        额外护盾: 300
+        描述: 提供额外护盾容量的标准高功率模块。
+        效果:
+          护盾容量: +300
+        装配要求: "PG：12 | CPU：8 | 吨位：M | 炮位：无 | 装备槽位：1H"
+
+  装甲模块:
+    可选属性: `额外装甲: int`
+    说明: |
+      当模块直接增加舰船装甲容量时填写。仅提供抗性、减伤或结构强化时可以省略。
+    示例:
+      巡洋舰副装甲板:
+        品质: 1
+        标签: [装甲, 模块]
+        额外装甲: 250
+        描述: 安装于巡洋舰结构框架上的低功率副装甲板。
+        效果:
+          装甲容量: +250
+        装配要求: "PG：8 | CPU：1 | 吨位：M | 炮位：无 | 装备槽位：1L"
+
+  ## 舰船槽位分布
+  盾抗船:
+    原则: |
+      通常拥有更多 H 槽与更少 L 槽，以安装额外护盾、护盾增幅器和主动护盾模块。
+      盾抗船将更多舰体能量总线与高功率硬件留给防御系统。
+
+  甲抗船:
+    原则: |
+      通常拥有更多 L 槽与更少 H 槽，以安装装甲板、结构强化件与被动防御模块。
+      较多 L 槽也提供了装配选择空间：甲抗船可以牺牲部分甚至全部装甲模块，改装电脑、ECCM 与协处理器，换取更高的火控、电子战或战术性能。
+
+  ## 标准模块模板
+  ```json
+  {
+    "模块名": {
+      "品质": 1,
+      "标签": ["模块类别"],
+      "描述": "string",
+      "效果": {
+        "效果名": "量化描述"
+      },
+      "额外护盾": "int，可选，仅护盾模块",
+      "额外装甲": "int，可选，仅装甲模块",
+      "装配要求": "PG：0 | CPU：0 | 吨位：N | 炮位：无 | 装备槽位：1L"
+    }
+  }
+  ```
+  </通用装备设计>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 133
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 125
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 197
+comment: 通用装备设计
+selective: true
+secondary_keys: []
+position: after_char

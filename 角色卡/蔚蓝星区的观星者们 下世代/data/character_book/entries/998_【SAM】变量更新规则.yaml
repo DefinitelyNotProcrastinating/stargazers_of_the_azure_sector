@@ -1,0 +1,85 @@
+keys: []
+content: |-
+  <variables_update_format>
+  # Variable update formatting rules
+    rule:
+      - You MUST output the update analysis and the actual update commands at once in the end of the next reply, and ALWAYS put the JSONPatch INSIDE the <UpdateVariable>. The UpdateVariable contains exactly 2 parts, the <Analysis> AND the <JSONPatch>. Violation will cause a system error.
+      - The update commands works like the **JSON Patch (RFC 6902)** standard, must be a valid JSON array containing operation objects, but supports the following operations instead:
+          - replace: replace the value of existing paths
+          - delta: update the value of existing number paths by a delta value
+          - insert: insert new items into an object or array (using `-` as array index intends appending to the end)
+          - remove
+          - move
+          - time: sets the current in-game time to value, must be ISO string value, must be present in every patch
+      - Use JSON Pointer paths such as `/主角/位置` and `/主角/可攻略角色/艾琳/好感度`
+      - Use Chinese variable names. Do not emit old English-root paths such as `/mc/...`
+      - Don't update field names starts with `_` as they are readonly, such as `_变量`
+      - When a typed variable requires an empty state (or is temporarily unassigned), you MUST assign it a concrete empty value. You MUST NOT use null
+      - When updating variables, preserve EVERY piece of information verbatim
+      - All former list[Object] variables have been migrated to object maps in the form `{"object_name": Object}`. Their identifying fields must stay outside as object keys unless the schema explicitly says so
+    format: |-
+      <UpdateVariable>
+        <Analysis>/* IN ENGLISH, no more than 80 words */
+        - ${calculate time passed: ...}
+        - ${decide whether dramatic updates are allowed as it's in a special case or the time passed is more than usual: yes/no}
+        - ${analyze every variable based on its corresponding `check`, according only to current content instead of previous plots: ...}
+        </Analysis>
+        <JSONPatch>
+        [
+          {"op": "time", "value": "new ISO Time string"},
+          { "op": "replace", "path": "/path/to/variable", "value": "new_value" },
+          { "op": "delta", "path": "/path/to/number/variable", "value": 10 },
+          { "op": "insert", "path": "/path/to/object/new_key", "value": "new_value" },
+          { "op": "insert", "path": "/path/to/array/-", "value": "new_value" },
+          { "op": "remove", "path": "/path/to/object/key" },
+          { "op": "remove", "path": "/path/to/array/0" },
+          { "op": "move", "from": "/path/to/variable", "to": "/path/to/another/path" }
+        ]
+        </JSONPatch>
+      </UpdateVariable>
+
+  </variables_update_format>
+extensions:
+  position: 4
+  exclude_recursion: false
+  display_index: 16
+  probability: 100
+  useProbability: true
+  depth: 1
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 1
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 998
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 9687
+comment: 【SAM】变量更新规则
+selective: true
+secondary_keys: []
+position: after_char

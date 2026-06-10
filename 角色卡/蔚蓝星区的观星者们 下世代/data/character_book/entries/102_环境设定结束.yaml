@@ -1,0 +1,46 @@
+keys: []
+content: </组织>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 46
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 大型设定触发区
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 10
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: false
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+  match_character_depth_prompt: false
+enabled: true
+insertion_order: 102
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 72
+comment: 环境设定结束
+selective: true
+secondary_keys: []
+position: after_char

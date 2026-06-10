@@ -1,0 +1,62 @@
+keys: []
+content: |-
+  <世界总览>
+  时间: 当前主时代为公元3100年前后。
+
+  宇宙状态:
+  - 蔚蓝星区是建立在先驱者遗产之上的人类星际文明区。
+  - 人类已经掌握跃迁引擎和零点反应堆的复制技术，但仍无法彻底理解其底层生物学原理。
+  - 观星者是载人超光速文明的基础设施，也是整个人造人产业链和伦理崩塌的起点。
+
+  当前主要力量:
+  - 泰拉帝国: 最古老、最强硬的秩序帝国。
+  - 自由世界共和国: 理想主义与原罪并存的议会国家。
+  - 天鹅座技术联邦: 技术官僚与高理性国家。
+  - 猎户座辛迪加: 企业、利润与消费主义国家。
+  - 塔伯里斯宪制帝国: 由逃亡观星者和人造人建立的合成人文明国家。
+
+  </世界总览>
+extensions:
+  position: 1
+  exclude_recursion: false
+  display_index: 2
+  probability: 100
+  useProbability: true
+  depth: 1
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 世界基础
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 1
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 9532
+comment: 世界总览
+selective: true
+secondary_keys: []
+position: after_char

@@ -1,0 +1,82 @@
+keys: []
+content: |-
+  <对象显示规则>
+  可显示对象:
+    - 角色只使用 <chara_info>。
+    - 舰船只使用 <ship_info>。
+    - 太空固定设施、轨道炮塔、空间站、船坞、平台、轨道工业节点只使用 <building_info>。
+
+  禁止项:
+    - 不允许输出任何陆地单位、机甲、步兵、战车专用显示块。
+    - 不允许输出 <unit_info>。
+    - 陆地上的单位、杂兵、路人、一次性背景目标只在正文叙事中描述，不进入结构化显示。
+
+  分类原则:
+    角色:
+      定义: 具有稳定人格、可长期记忆、可反复互动的个体。
+      示例: 观星者、舰长、军官、工程师、黑市中间人、海盗头目。
+      显示块: <chara_info>
+    舰船:
+      定义: 可独立机动、可跃迁或可执行太空航行任务的飞船、战舰、工业舰、航母、泰坦、虫群生体舰。
+      显示块: <ship_info>
+    建筑:
+      定义: 不能独立航行的太空固定设施与防御资产。
+      示例: 感应炮塔、轨道炮台、空间站、居住站、科研站、采矿平台、船坞、防御阵列。
+      显示块: <building_info>
+
+  触发时机:
+    - 当某个对象第一次在当前剧情中成为重要交互目标、战术目标或稳定场景要素时，才输出对应显示块。
+    - 若只是被一句话带过、没有持续影响，则不需要生成显示块。
+    - 同一对象在短时间内重复出现时，应优先沿用既有变量，不重复发明新对象。
+
+  输出约束:
+    - <ship_info> 内只写舰船对象，不混入角色心理或建筑属性。
+    - <building_info> 内只写固定太空设施，不混入可航行舰船。
+    - <chara_info> 同时兼容普通人 schema 与观星者 schema；只有种族为观星者时才补充观星者扩展字段。
+    - 三类显示块中的量化描述都应尽量与世界书现有 schema、装备、安等和变量路径保持一致。
+    - 本世界不存在位阶系统，禁止把任何角色、舰船或建筑写成位阶式强度模板。
+  </对象显示规则>
+extensions:
+  position: 4
+  exclude_recursion: true
+  display_index: 53
+  probability: 100
+  useProbability: true
+  depth: 2
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 953
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 9530
+comment: 对象显示规则
+selective: true
+secondary_keys: []
+position: after_char

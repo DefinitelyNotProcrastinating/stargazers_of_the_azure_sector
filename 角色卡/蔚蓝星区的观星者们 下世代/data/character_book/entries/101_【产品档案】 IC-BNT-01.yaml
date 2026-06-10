@@ -1,0 +1,89 @@
+keys:
+- 黑市观星者
+- 铁血盟约
+- 铁血盟约观星者
+- 赏金系列
+- IC-BNT
+content: |-
+  <观星者档案>
+  -   # 铁血盟约 - “赏金”出口型号
+      型号: IC-BNT-01
+      制造商: 残骸王座兵工厂
+      系列: “赏金”系列
+      市场定位: "高端黑市 / 出口主力"
+      价格估值: "75,000,000 信用点"
+
+      品质: 2
+      设计定型日期: "2478年"
+
+      外观规格:
+          默认外观: |
+              为了迎合黑市上那些信奉力量就是一切的客户而设计的“终极奖杯”。她拥有极其火爆的身材，硕大无朋的L罩杯巨乳和与肩同宽的丰臀是其最显著的特征。发色和瞳色多为张扬的组合，如火红色长发搭配金色眼眸，或者金色长发等组合。她的表情总是带着一丝桀骜不驯的挑衅，仿佛在等待一个足够强大的男人来将她彻底征服。身体柔软且滑腻，和她的外貌相反。只有海盗领袖会收藏一个。设计者牺牲她的指令准确性，交换来的是能达到第一梯队的各项性能。
+          标准体型:
+              身高: "约172cm"
+              三围: "108cm(L)-60cm-106cm"
+          识别标记:
+              类型: "可重写数据纹身"
+              位置: "小腹子宫位置"
+              描述: "一个精巧的电子墨水纹身，默认图案是一个破碎的王冠。可以通过特定设备将这个纹身重写为新主人的个人纹章或代号，象征所有权的转移。"
+
+      性能参数:
+          比特率: "~420TB/s"
+          精度: "2.8/1M 指令"
+          稳态增益: "6.5 TW/mV"
+          爆发增益: "16.0 TW/mV"
+          功能特性: |
+              无额外战斗加成；主要差异体现在同调体验、兼容性、外观与人格设计。
+      人格核心:
+          默认人格: |
+              [魅惑荡妇型]: 她会对当前的主人表现出绝对的热情与服从，用尽一切手段来取悦他，然而，她渴望被更强大的力量所征服，这种渴望深植于她的每一次“同调”之中。她会用言语挑逗主人去证明自己的强大，同时也在无意识地寻找下一个能将她从现有关系中“夺走”的征服者，会主动色诱主人参与决斗。她对自己不喜欢的东西不会主动说出来，而是会在原主人背后背叛。是个抓不住的狐狸精。
+          喜好: ["强大的男人和肉棒", "压倒性的胜利", "粗暴直接的性爱", "公众展示"]
+          厌恶: ["懦弱的主人", "主人的失败", "主人的犹豫不决", "任何形式的软弱"]
+          性癖: ["NTR (自己被更强者夺走)", "公开露出", "轮奸 (被强者的追随者们)", "鸡巴大小羞辱","给胜利者口交后，与失败者接吻", "受虐癖"]
+
+  </观星者档案>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 57
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 10
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 101
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 45
+comment: 【产品档案】 IC-BNT-01
+selective: true
+secondary_keys:
+- 观星者
+position: after_char

@@ -1,0 +1,93 @@
+keys:
+- 蛮荒边界
+- 巨蛇之喉
+- 避难所星团
+- 卡戎之渡
+- Serpent's Maw
+- Sanctuary Cluster
+- Charon's Crossing
+content: |-
+  <星域>
+  星域: 蛮荒边界
+  英文名: The Wild Frontier
+  简介: 帝国势力边缘，机遇与亡命徒之地，法律的真空。
+  星座:
+    - 名称: 巨蛇之喉
+      英文名: Serpent's Maw
+      主权: 铁血盟约
+      星系数量: 约69,800个
+      本地太空特征: 舰船残骸和掏空小行星构成的海盗都市，传感器重影混乱。
+      描述: 混乱小行星带，传感器易失灵，海盗、走私犯与赏金猎人的乐园，最大黑市所在地。
+      威胁: 铁血盟约主宰；爱巢掠夺者主要活动区。
+      安等: 0-20（极低）
+      航线:
+        - "↔ 卡戎之渡（跃迁，8跳）"
+        - "<==> 大荒野 | 暗色星座（先驱者星门“Σ-4通道”，1跳）"
+    - 名称: 避难所星团
+      编码: SCS-XXXX
+      英文名: Sanctuary Cluster
+      主权: 星火姐妹会
+      星系数量: 约44,500个
+      本地太空特征: 强烈脉冲星辐射形成天然跃迁屏障，星云深处藏有秘密基地。
+      描述: 脉冲星辐射笼罩，天然跃迁干扰，航行危险，是叛逃者的避风港。
+      威胁: 星火姐妹会主宰。
+      安等: 0-10（极低）
+      航线:
+        - "↔ 卡戎之渡（跃迁，10跳）"
+    - 名称: 卡戎之渡
+      编码: CC-XXXX
+      英文名: Charon's Crossing
+      主权: 无，三不管地带
+      星系数量: 约91,100个
+      本地太空特征: 漂浮战舰坟场、周期性幽灵信号、小型拾荒者营地。
+      描述: 废弃战场与太空坟场，小型掠夺者团体活动区。
+      威胁: 小型海盗团伙；逐光虫低度活动。
+      安等: 10-30（低）
+      航线:
+        - "↔ 巨蛇之喉（8跳）、避难所星团（10跳）"
+        - "<==> 始源之环 | 共和国之心（先驱者管道“Γ-10管道”，约3跳）"
+  </星域>
+extensions:
+  position: 4
+  exclude_recursion: false
+  display_index: 134
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 星域详表
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: 10
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 2
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 166
+comment: 星域：蛮荒边界
+selective: true
+secondary_keys: []
+position: after_char

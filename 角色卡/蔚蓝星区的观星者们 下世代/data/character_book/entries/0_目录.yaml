@@ -1,0 +1,82 @@
+keys: []
+content: |-
+  <目录>
+  使用顺序:
+  - 第一层，世界底板: 先阅读世界基础规则、世界总览、宇宙编年史，建立题材边界与时代感。
+  - 第二层，空间结构: 再阅读星图总览、各星域、先驱触发区与大型设定触发区，明确宇宙地理与长期威胁。
+  - 第三层，政治生态: 再看国家开始到国家结束之间的国家、海盗、虫群与非帝国势力条目。
+  - 第四层，玩法系统: 最后看安等系统、舰船树、装备、跃迁、技能学习、战斗规程与 SAM 变量规则。
+
+  第一篇 基础设定:
+  - 世界基础规则: 不可违背的硬规则与叙事边界。
+  - 世界总览: 当前时代、主要矛盾、文明格局。
+  - 宇宙编年史: 从先驱者时代到公元3100年前后的关键历史。
+
+  第二篇 空间与环境:
+  - 星图总览与各星域: 星域、星区、星系、航道、虫洞与异常空间。
+  - 安等系统: 用统一安等描述治安、控制度、法外活动密度与空间异常危险度。
+  - 大型设定触发区: 银河防御联盟、圣所文明等高阶背景模块。
+
+  第三篇 国家与势力:
+  - 国家开始 到 国家结束: 四大国家、塔伯里斯、海盗、虫群、非帝国势力。
+  - 国家简介 与 国家触发区: 先看国家概览，再看触发区细节。
+  - 事件开始 到 事件结束: 当前时代正在发酵的大型事件与争夺战。
+
+  第四篇 舰船与技术:
+  - 产品档案 / 传奇档案: 观星者型号、特殊原型与设定事件线。
+  - 植入体与增效剂: 生体强化、接口适配与药剂副作用。
+  - 舰船树开始 到 舰船树结束: 舰船型号、舰体类型与阵营风格。
+  - 装备品质、舰船基本类型、跃迁充能、武器基准、装配资源、通用装备设计: 数值与装配底板。
+  - 技能学习与旗舰门槛、电子战规则、战斗规程: 长期成长与战斗结算规则。这里不存在位阶系统。
+
+  第五篇 SAM 与数据层:
+  - 开局JSON: 开局模板、起始资源与预制对象。
+  - 骰子池: 所有高风险随机结算统一从骰池读取。
+  - 对象显示规则: 只允许输出 `<ship_info>`、`<building_info>`、`<chara_info>` 三类显示块。
+  - 变量格式规则、变量列表、变量处理规则、变量更新规则: JSONPatch 与变量根路径。
+  - 主角变量更新、任务变量更新、舰船变量更新、建筑变量更新、角色变量更新、新闻变量更新: 各对象池的更新规程。
+  </目录>
+extensions:
+  position: 1
+  exclude_recursion: false
+  display_index: 1
+  probability: 100
+  useProbability: true
+  depth: 1
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 世界基础
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 0
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 182
+comment: 目录
+selective: true
+secondary_keys: []
+position: after_char

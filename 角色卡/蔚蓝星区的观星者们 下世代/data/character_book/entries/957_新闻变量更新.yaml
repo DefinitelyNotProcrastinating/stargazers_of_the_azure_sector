@@ -1,0 +1,68 @@
+keys: []
+content: |-
+  <news_management>
+  # 星区新闻变量更新规程
+  - 所有新闻存储于根对象 `新闻` 下。
+  - 新闻固定使用九个字符串槽位。过期新闻使用 `replace` 写入空字符串，不要删除槽位。
+  - 大事件用于星区、文明或主要势力级消息；本地事件用于当前星系、空间站或航路；邂逅用于可能引发剧情互动的重要人物行踪、求救信号或异常线索。
+  - 除非是重大公开事件，不要让新闻无条件围绕{{user}}。
+
+  ## Schema
+  ```json
+  {
+    "新闻": {
+      "大事件1": "", "大事件2": "", "大事件3": "",
+      "本地事件1": "", "本地事件2": "", "本地事件3": "",
+      "邂逅1": "", "邂逅2": "", "邂逅3": ""
+    }
+  }
+  ```
+
+  <raw_news_data>
+  <%-JSON.stringify(getvar("SAM_data.static.新闻") || {}, null, 2)%>
+  </raw_news_data>
+  </news_management>
+extensions:
+  position: 4
+  exclude_recursion: true
+  display_index: 57
+  probability: 100
+  useProbability: true
+  depth: 1
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 1
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 957
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 195
+comment: 新闻变量更新
+selective: true
+secondary_keys: []
+position: after_char

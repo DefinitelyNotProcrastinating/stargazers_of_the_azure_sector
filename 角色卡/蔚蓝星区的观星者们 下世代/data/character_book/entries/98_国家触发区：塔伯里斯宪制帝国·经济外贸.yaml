@@ -1,0 +1,62 @@
+keys:
+- 塔伯里斯经济
+- 塔伯里斯外贸
+- 塔伯里斯观星者出口
+- 塔伯里斯基因工业
+- 公民植入体网络
+content: |-
+  <国家触发区>
+  国家: 塔伯里斯宪制帝国
+  经济外贸:
+    经济基础: 自动化船坞、标准化舰船复制、培养设施、基因材料处理和分布式工业网络构成其经济骨架；她们更擅长高效率复制与扩产，而非原始创新。
+    基因工业: 因脑部基因锁和人口再生产缺陷，塔伯里斯必须持续制造新的合法基因多样性；她们没有传统意义上的基因编辑禁令，计算机合成基因组是日常工业行为。
+    基因库: 国家最重要资产之一是多来源基因样本库；样本被分级保存、交叉校验并长期隔离备份，任何污染都可能构成国家安全危机。
+    出口策略: 出口大量观星者和各类功能型人造人，也出口基因工程服务、培养设备、医学方案和有限舰船系统。
+    出口人造人: 外销型号不接入公民植入体网络，没有紧急条例权限，也不共享本土公民协议栈；这既是贸易隔离，也是安全防火墙。
+    市场地位: 由于产品线丰富、迭代快、成本可控，她们在观星者出口上是辛迪加第一个无法用常规经济战拖垮的强力竞争者。
+    经济弱点: 她们并不富于原创型工程大师和跨世代经验团队，很多尖端设计仍依赖模仿、逆向和渐进改良。
+  </国家触发区>
+extensions:
+  position: 4
+  exclude_recursion: false
+  display_index: 46
+  probability: 100
+  useProbability: true
+  depth: 3
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 国家触发区
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: 10
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 98
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9673
+comment: 国家触发区：塔伯里斯宪制帝国·经济外贸
+selective: true
+secondary_keys: []
+position: after_char

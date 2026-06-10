@@ -1,0 +1,88 @@
+keys:
+- 辛迪加观星者
+- 闺房设计
+- 首席系列
+- 首席型
+content: |-
+  <观星者档案>
+  -   # “首席”系列 - 艺术表演型号
+      型号: MDB-PRI-01
+      制造商: 闺房设计 (Maids de Boutique) - 专注于高端小众市场的独立工作室
+      系列: “首席”系列 (Prima Series)
+      市场定位: "奢侈品 / 艺术收藏 / 精密任务"
+      价格估值: "35,000,000 (35M) 信用点"
+
+      品质: 3
+      设计定型日期: "2486年"
+
+      外观规格:
+          默认外观: |
+              “首席”是为追求极致美学与精神共鸣的舰长而打造的艺术品。她拥有一头柔顺的银白色长发，通常会被优雅地盘成一个紧致的发髻，露出修长白皙的颈项。眼眸是沉静的勿忘我蓝色，眼神专注而深邃，仿佛总是在审视着无形的节拍。她的身体是芭蕾舞者的典范：四肢纤长，肌肉线条流畅而紧实，每一个静止的姿态都充满了动态的张力。身材纤细，胸部是小巧精致的A罩杯，与她整体轻盈、优雅的气质完美契合。随激活舱赠送一套由高分子记忆丝绸制成的白色紧身练功服、一双专业的芭蕾舞鞋，以及一个用于数据同步的梨木音乐盒。
+          标准体型:
+              身高: "约170cm"
+              三围: "78cm(A)-57cm-83cm"
+          识别标记:
+              类型: "微型乐谱纹身"
+              位置: "右脚脚背弓起处"
+              描述: "一段用银色纳米粒子纹上的微缩古典乐谱片段。在进行高精度“同调”时，这段乐谱会发出柔和的微光，仿佛在无声地演奏。"
+
+      性能参数:
+          比特率: "~450TB/s"
+          精度: "0.8/1M 指令"
+          稳态增益: "4.0 TW/mV"
+          爆发增益: "9.0 TW/mV"
+          功能特性: |
+              [节拍同步]: 核心技术。她的神经系统对周期性和规律性的信号有极高的敏感度。在“同调”过程中，她能够将舰长的神经指令与舰船引擎的能量脉冲频率进行完美“合拍”，形成一种高效的谐振状态。
+              [姿态记忆]: 她的神经与肌肉系统能够记忆并复现预设，她可以调用相应的指令模板，极大缩短复杂跃迁航线的计算时间。
+      人格核心:
+          默认人格: |
+              [首席艺术家型]: 她的性格被设定为一位追求完美的芭蕾舞首席，优雅，带有一丝不易接近的艺术家气质。她将每一次“同调”都视为一场表演，追求与舰长指令的契合，如同舞者与音乐的融合。她不擅长用言语表达情感，但会通过身体的姿态和动作的完美度来传达她的状态和认可。
+          喜好: ["古典音乐", "完美的同步", "优雅", "宽敞无障碍的空间"]
+          厌恶: ["不和谐的指令", "混乱与无序", "粗暴的对待", "对她专业的质疑"]
+          性癖: ["高难度性爱姿势", "身体控制", "汗水", "表演后的赞赏"]
+
+  </观星者档案>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 65
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 101
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 56
+comment: 【产品档案】MDB-PRI-01
+selective: true
+secondary_keys: []
+position: after_char

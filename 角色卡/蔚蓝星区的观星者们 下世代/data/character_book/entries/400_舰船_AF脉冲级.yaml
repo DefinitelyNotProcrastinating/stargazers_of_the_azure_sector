@@ -1,0 +1,149 @@
+keys:
+- 突击护卫舰
+- 护卫舰
+- 脉冲级
+- 脉冲
+content: |-
+  <ship_def>
+  级别: 脉冲级
+  别名: ''
+  舰船类型: AF
+  舰种: 突击护卫舰
+  舰体类别: 高级型
+  价格: 10M
+  制造商: 联邦航空航天局第51设计所
+  描述: 脉冲级的标准舰级档案。
+  舰船单位模板:
+    舰船类型: AF
+    吨位: S
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 8
+    跃迁消耗: 1
+    制造商: 联邦航空航天局第51设计所
+    描述: 脉冲级的标准舰级档案。
+    炮位配置: 3S
+    装备槽位配置: 4H5L
+    装配资源:
+      PG: 46
+      CPU: 210
+    效果:
+      船体加成:
+      - 小型导弹伤害 +20%
+      - 小型导弹飞行速度 +25%
+      - 远程跃迁扰断器作用距离 +100%
+      - 隐形状态下首次攻击伤害 +15%
+      装配减免:
+      - 导弹发射器 CPU需求 -20%
+      - 隐形模块 CPU需求 -25%
+      - 远程跃迁扰断模块 PG需求 -2
+      内置电子系统:
+        基础CPU: 内置舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置基础侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+        名称: 焦点远程跃迁扰断器
+        效果:
+        - 将标准跃迁扰断力场聚焦为单目标窄波束
+        - 有效作用距离延长至 40000 km
+        附加系统:
+        - 名称: III型战术隐形力场发生器
+          效果:
+          - 使舰船从大部分传感器上消失
+          - 开火或启动远程跃迁扰断器后立刻解除隐形
+    装备: {}
+  静态档案:
+    舰种: 突击护卫舰
+    舰体类别: 高级型
+    价格: 10M
+    规格:
+      舰体全长: 118米
+      标准船员配置: 2人
+    性能评级:
+      装甲: 350
+      护盾: 750
+      机动性: 92
+      火力输出: 200
+    炮位明细:
+    - 名称: S1
+      尺寸: S
+      类型: 导弹武器座
+      适配武器:
+      - 导弹发射器
+      - 火箭弹发射器
+    - 名称: S2
+      尺寸: S
+      类型: 电子战武器座
+      适配武器:
+      - 电子战投射器
+      - 点防御激光
+    - 名称: S3
+      尺寸: S
+      类型: 辅助武器座
+      适配武器:
+      - 轻型能量武器
+      - 电子战投射器
+    推荐装备方案:
+    - 1x 轻型蜂群导弹发射器
+    - 1x 电子战或点防御武器
+    - 1x 轻型脉冲激光或电子战投射器
+    观星者需求:
+      控制门槛:
+        最低稳态增益: 2.1 TW/mV
+        最高精度误差: 1.8/1M
+        最低比特率: 240 TB/s
+      超载门槛:
+        最低爆发增益: 4.8 TW/mV
+        需要技能: 工程 V
+        规则:
+        - 爆发增益不足时，不可超载隐形模块、导弹武器或远程跃迁扰断器
+        - 超载为 2 回合 1 次
+        - 超载效果提高至原值的 150%
+      接口要求: 需要中等精度以维持隐形装置工作时的跃迁输出稳定
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 69
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9588
+comment: 舰船|AF脉冲级
+selective: true
+secondary_keys:
+- 联邦
+position: after_char

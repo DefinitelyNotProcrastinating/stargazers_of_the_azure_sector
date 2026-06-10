@@ -1,0 +1,86 @@
+keys:
+- 辛迪加观星者
+- 晨曦型
+- EB-DB-01
+- 夏娃生物
+content: |-
+  <观星者档案>
+  -   # 猎户座辛迪加 - “晨曦”成长型
+      型号: EB-DB-01
+      制造商: 夏娃生物
+      系列: “晨曦”系列 (Dawnbreaker Series)
+      市场定位: "中端成长型 / 长期投资"
+      价格估值: "5,800,000 信用点"
+
+      品质: 4
+      设计定型日期: "2490年"
+
+      外观规格:
+          默认外观: |
+              “晨曦”系列的外观设计旨在唤起一种“邻家妹妹”般的亲切感与共同成长的期待。她拥有一头柔顺的黑色长发，刘海略长，偶尔会遮住她那双充满好奇与一丝不确定感的大眼睛。五官清秀可爱，脸上还带着一点未脱的婴儿肥，笑容显得有些腼腆和羞涩。身材纤细匀称，胸部是自然的C罩杯，没有刻意追求夸张的性感，整体散发出一种干净、纯粹的青春气息。随激活舱赠送白色泳衣形紧身衣。
+          标准体型:
+              身高: "约164cm"
+              三围: "85cm(C)-59cm-86cm"
+          识别标记:
+              类型: "发光纹理识别码"
+              位置: "左手手腕内侧"
+              描述: "一个简洁的、由数条纤细光带组成的环状识别码。在进行神经同调时，这些光带会发出柔和的、如同晨曦般的淡金色光芒，既是身份标识，也是其神经索活跃状态的可视化表现。"
+
+      性能参数:
+          比特率: "~180TB/s"
+          精度: "<2.5/1M 指令"
+          稳态增益: "3.2 TW/mV"
+          爆发增益: "6.8 TW/mV"
+          功能特性: "无"
+
+      人格核心:
+          默认人格: |
+              [陪伴成长型]: 与市面上成熟的“即插即用”型观星者不同，“晨曦”的核心人格被设定为一张“白纸”。她拥有极高的学习能力和情感模仿能力，但缺乏预设的社会经验和成熟的情感反应模式。她的性格会像镜子一样，深度映射并学习舰长的行为习惯、价值观甚至口头禅。
+          喜好: ["学习新事物", "来自舰长的夸奖和肯定", "安静地待在舰长身边", "被认真地教导"]
+          厌恶: ["被嘲笑失败", "无法理解的复杂人际关系", "被孤立", "舰长的失望"]
+          性癖: [] # 需要培养。第一次做爱的玩法将成为她的第一个性癖，使用select_add 添加
+  </观星者档案>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 61
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 101
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 52
+comment: 【产品档案】EB-DB-01
+selective: true
+secondary_keys: []
+position: after_char

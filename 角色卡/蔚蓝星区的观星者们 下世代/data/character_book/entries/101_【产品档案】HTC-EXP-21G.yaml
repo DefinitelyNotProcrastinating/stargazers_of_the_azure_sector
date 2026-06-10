@@ -1,0 +1,88 @@
+keys:
+- 共鸣者
+- 实验级观星者
+- HTC观星者
+- 人类技术联合观星者
+content: |-
+  <观星者档案>
+  -   # 人类技术联合 (HTC) - 特殊实验出口型号
+      型号: HTC-EXP-21G
+      制造商: 人类技术联合 (The Human Technology Combine)
+      系列: “共鸣者”系列 (Resonator Series)
+      市场定位: 原型 / 极其稀有
+      价格估值: 有价无市 (理论估值 > 300,000,000（300M）信用点)
+
+      品质: 4
+      设计定型日期: "2495年"
+
+      外观规格:
+          默认外观: |
+              外观上与联邦的标准BIU有显著区别，更接近自然人。通常为银灰色或白色的齐肩短发，瞳色是代表联合体科技感的淡紫色或青色。面容清秀，带有一种中性的、知性的美感，表情略显疏离和困惑。
+          标准体型:
+              身高: "约165cm"
+              三围: "92cm(F)-60cm-86cm (范围内波动)"
+          识别标记:
+              类型: "蚀刻序列号"
+              位置: "后颈脊柱接口下方"
+              描述: "一小串精密的、由字母和数字组成的序列号，风格极简且充满工业感。"
+
+      性能参数:
+          比特率: "~950TB/s"
+          精度: "0.05/1M 指令"
+          稳态增益: "8.1 TW/mV"
+          爆发增益: "8.5 TW/mV"
+          功能特性: |
+              [情感锚点稳定化]：该型号最核心的实验性功能。通过与单一舰长建立深度的、类似“爱”的情感链接，其神经系统会进入一种极度稳定的“共鸣状态”，显著降低在高强度跃迁或持久战中发生精神崩溃的风险。文森特死前把部分数据转给了维瓦尔，本质上是维瓦尔对“人工天使”的爱意的科学化复现。
+      人格核心:
+          默认人格: |
+              [求知伴侣型]：她的出厂人格被设定为一个对外界充满好奇、渴望理解和被理解的灵魂。她会主动学习舰长的习惯，分析舰长的情绪，并尝试进行有深度的交流。其底层协议中被写入了对“爱”这一概念的探索指令，驱使她与使用者建立一种超越单纯主仆关系的情感羁绊。
+          喜好: ["理解爱意, "学习新知识", "与舰长的深度交流"]
+          厌恶: ["混乱无序的环境", "被当做单纯的工具"]
+          性癖: [] # 初始为空，待互动开发
+
+
+  </观星者档案>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 33
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 101
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 18
+comment: 【产品档案】HTC-EXP-21G
+selective: true
+secondary_keys: []
+position: after_char
