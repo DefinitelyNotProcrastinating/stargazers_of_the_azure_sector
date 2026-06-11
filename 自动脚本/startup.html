@@ -816,18 +816,6 @@
       return null;
     }
 
-    function pushUniqueName(list, value) {
-      var name = String(value == null ? "" : value).trim();
-      if (!name || list.indexOf(name) !== -1) return;
-      list.push(name);
-    }
-
-    function pushUniqueNames(list, values) {
-      if (!Array.isArray(values)) return;
-      var idx = 0;
-      for (idx = 0; idx < values.length; idx++) pushUniqueName(list, values[idx]);
-    }
-
     function looksLikeInitData(raw) {
       if (!raw || typeof raw !== "object") return false;
       if (raw.ships && raw.modules && raw.stargazers) return true;
@@ -1030,82 +1018,33 @@
       return consume(prioritized) || consume(fallback);
     }
 
-    function describeWorldbookDiscoveryError(errorList) {
-      if (!errorList.length) return "";
-      var samples = errorList.slice(0, 3);
-      return " 已尝试的发现接口报错：" + samples.join(" | ");
-    }
-
-    async function resolveWorldbookNames() {
-      var names = [];
-      var errors = [];
+    async function resolveCharacterWorldbookName() {
       var getCharNames = getInjectedFunction("getCharWorldbookNames");
-      var getChatName = getInjectedFunction("getChatWorldbookName");
-      var getGlobalNames = getInjectedFunction("getGlobalWorldbookNames");
-      var getAllNames = getInjectedFunction("getWorldbookNames");
+      var expectedName = WORLDBOOK_NAME_CANDIDATES[0];
+      if (!getCharNames) throw new Error("当前环境没有注入 getCharWorldbookNames 接口。");
 
-      if (getCharNames) {
-        try {
-          var charWorldbooks = await getCharNames("current");
-          if (charWorldbooks && typeof charWorldbooks === "object") {
-            pushUniqueName(names, charWorldbooks.primary);
-            pushUniqueNames(names, charWorldbooks.additional);
-          }
-        } catch (err) {
-          errors.push("getCharWorldbookNames: " + (err && err.message ? err.message : err));
-        }
+      var charWorldbooks = await getCharNames("current");
+      if (!charWorldbooks || typeof charWorldbooks !== "object") {
+        throw new Error("当前角色卡没有返回有效的世界书绑定信息。");
       }
 
-      if (getChatName) {
-        try {
-          pushUniqueName(names, await getChatName("current"));
-        } catch (err2) {
-          errors.push("getChatWorldbookName: " + (err2 && err2.message ? err2.message : err2));
-        }
+      if (charWorldbooks.primary === expectedName) return expectedName;
+      if (Array.isArray(charWorldbooks.additional) && charWorldbooks.additional.indexOf(expectedName) !== -1) {
+        return expectedName;
       }
 
-      if (getGlobalNames) {
-        try {
-          pushUniqueNames(names, await getGlobalNames());
-        } catch (err3) {
-          errors.push("getGlobalWorldbookNames: " + (err3 && err3.message ? err3.message : err3));
-        }
-      }
-
-      pushUniqueNames(names, WORLDBOOK_NAME_CANDIDATES);
-
-      if (getAllNames) {
-        try {
-          pushUniqueNames(names, await getAllNames());
-        } catch (err4) {
-          errors.push("getWorldbookNames: " + (err4 && err4.message ? err4.message : err4));
-        }
-      }
-
-      if (!names.length) {
-        throw new Error("未发现任何可读取的世界书名称。" + describeWorldbookDiscoveryError(errors));
-      }
-      return names;
+      throw new Error("当前角色卡未绑定指定世界书：" + expectedName);
     }
 
     async function loadInitDataFromWorldbook() {
       var loader = getWorldbookLoader();
       if (!loader) throw new Error("当前环境没有注入 getWorldbook 接口。");
-      var worldbookNames = await resolveWorldbookNames();
-      var idx = 0;
-      var loadErrors = [];
-      for (idx = 0; idx < worldbookNames.length; idx++) {
-        var worldbookName = worldbookNames[idx];
-        try {
-          var worldbook = await loader(worldbookName);
-          var entries = Array.isArray(worldbook) ? worldbook : (worldbook && worldbook.entries ? worldbook.entries : []);
-          var found = findInitDataEntry(entries);
-          if (found) return found;
-        } catch (err) {
-          loadErrors.push(worldbookName + ": " + (err && err.message ? err.message : err));
-        }
-      }
-      throw new Error("在已发现的世界书中未找到开局 JSON 条目。已扫描：" + worldbookNames.join("、") + describeWorldbookDiscoveryError(loadErrors));
+      var worldbookName = await resolveCharacterWorldbookName();
+      var worldbook = await loader(worldbookName);
+      var entries = Array.isArray(worldbook) ? worldbook : (worldbook && worldbook.entries ? worldbook.entries : []);
+      var found = findInitDataEntry(entries);
+      if (found) return found;
+      throw new Error("角色卡绑定世界书中未找到 INIT_DATA 条目：" + worldbookName);
     }
 
     async function ensureBootData() {
