@@ -708,7 +708,7 @@
     var DATA = null;
     var BOOT_PROMISE = null;
     var DEFAULT_SKILL_NAMES = ["导弹", "炮术", "战机", "算法", "工程", "工业", "科学", "驾驶", "装甲", "护盾", "同调"];
-    var WORLDBOOK_NAME_CANDIDATES = ["蔚蓝星区的观星者（大世界）"];
+    var WORLDBOOK_NAME = "蔚蓝星区的观星者（大世界）";
     var SKILL_NAMES = DEFAULT_SKILL_NAMES.slice();
     var SKILL_PRESETS = {};
 
@@ -761,18 +761,6 @@
       }
     }
 
-    function getWorldbookLoader() {
-      if (typeof getWorldbook === "function") {
-        return function (name) { return getWorldbook(name); };
-      }
-      try {
-        if (window.parent && window.parent !== window && typeof window.parent.getWorldbook === "function") {
-          return function (name) { return window.parent.getWorldbook(name); };
-        }
-      } catch (err) {}
-      return null;
-    }
-
     function parseNumericValue(value) {
       if (typeof value === "number") return value;
       var match = String(value == null ? "" : value).match(/-?\d+(?:\.\d+)?/);
@@ -789,37 +777,6 @@
         if (arguments[idx] != null && String(arguments[idx]).trim()) return String(arguments[idx]).trim();
       }
       return "";
-    }
-
-    function tryParseJsonText(text) {
-      if (!text) return null;
-      try {
-        return JSON.parse(text);
-      } catch (err) {}
-      var trimmed = String(text).trim();
-      var fence = trimmed.match(/```(?:json)?\s*([\s\S]*?)```/i);
-      if (fence) {
-        try {
-          return JSON.parse(fence[1].trim());
-        } catch (err2) {}
-      }
-      return null;
-    }
-
-    function getInjectedFunction(name) {
-      if (typeof window[name] === "function") return window[name];
-      try {
-        if (window.parent && window.parent !== window && typeof window.parent[name] === "function") {
-          return window.parent[name];
-        }
-      } catch (err) {}
-      return null;
-    }
-
-    function looksLikeInitData(raw) {
-      if (!raw || typeof raw !== "object") return false;
-      if (raw.ships && raw.modules && raw.stargazers) return true;
-      return !!(raw["舰船模板"] || raw["开局可选舰船装备"] || raw["开局可选观星者"] || raw["开局规则"]);
     }
 
     function normalizeStargazerReq(req) {
@@ -980,71 +937,14 @@
       resetSkillLevels();
     }
 
-    function getEntryLabel(entry) {
-      return [entry && entry.name, entry && entry.comment, entry && entry.title, entry && entry.key]
-        .join(" ")
-        .toLowerCase();
-    }
-
-    function findInitDataEntry(entries) {
-      var prioritized = [];
-      var fallback = [];
-      var idx = 0;
-      for (idx = 0; idx < entries.length; idx++) {
-        var entry = entries[idx] || {};
-        var candidates = [];
-        if (entry.comment != null && entry.comment !== "") candidates.push(entry.comment);
-        if (entry.content != null && entry.content !== "" && entry.content !== entry.comment) candidates.push(entry.content);
-        var ci = 0;
-        for (ci = 0; ci < candidates.length; ci++) {
-          var text = candidates[ci];
-          if (/开局json|init_data/.test(getEntryLabel(entry)) || /\bINIT_DATA\b/.test(String(text))){
-            prioritized.push(text);
-          } else {
-            fallback.push(text);
-          }
-        }
-      }
-
-      function consume(list) {
-        var li = 0;
-        for (li = 0; li < list.length; li++) {
-          var parsed = tryParseJsonText(list[li]);
-          if (looksLikeInitData(parsed)) return normalizeInitData(parsed);
-        }
-        return null;
-      }
-
-      return consume(prioritized) || consume(fallback);
-    }
-
-    async function resolveCharacterWorldbookName() {
-      var getCharNames = getInjectedFunction("getCharWorldbookNames");
-      var expectedName = WORLDBOOK_NAME_CANDIDATES[0];
-      if (!getCharNames) throw new Error("当前环境没有注入 getCharWorldbookNames 接口。");
-
-      var charWorldbooks = await getCharNames("current");
-      if (!charWorldbooks || typeof charWorldbooks !== "object") {
-        throw new Error("当前角色卡没有返回有效的世界书绑定信息。");
-      }
-
-      if (charWorldbooks.primary === expectedName) return expectedName;
-      if (Array.isArray(charWorldbooks.additional) && charWorldbooks.additional.indexOf(expectedName) !== -1) {
-        return expectedName;
-      }
-
-      throw new Error("当前角色卡未绑定指定世界书：" + expectedName);
-    }
-
     async function loadInitDataFromWorldbook() {
-      var loader = getWorldbookLoader();
-      if (!loader) throw new Error("当前环境没有注入 getWorldbook 接口。");
-      var worldbookName = await resolveCharacterWorldbookName();
-      var worldbook = await loader(worldbookName);
-      var entries = Array.isArray(worldbook) ? worldbook : (worldbook && worldbook.entries ? worldbook.entries : []);
-      var found = findInitDataEntry(entries);
-      if (found) return found;
-      throw new Error("角色卡绑定世界书中未找到 INIT_DATA 条目：" + worldbookName);
+      if (typeof getWorldbook !== "function") throw new Error("当前环境没有注入 getWorldbook 接口。");
+      var worldbook = await getWorldbook(WORLDBOOK_NAME);
+      var entry = worldbook.find(function (item) {
+        return item && item.comment === "__INIT_DATA__";
+      });
+      if (entry && entry.content) return normalizeInitData(JSON.parse(entry.content));
+      throw new Error("世界书中未找到 __INIT_DATA__ 条目：" + WORLDBOOK_NAME);
     }
 
     async function ensureBootData() {
