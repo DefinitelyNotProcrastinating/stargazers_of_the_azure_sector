@@ -4,31 +4,28 @@ findRegex: \$开始游戏\$
 replaceString: |-
   <start>
     ```html
-  <!doctype html>
-  <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>蔚蓝星区开局</title>
-    <style>
-      html,body{margin:0;height:100%;background:#05070f}
-      iframe{display:block;width:100%;height:900px;min-height:90vh;border:0;background:#05070f}
-    </style>
-  </head>
-  <body>
-    <iframe id="startup" title="蔚蓝星区开局"></iframe>
-    <script>
-      fetch("https://raw.githubusercontent.com/DefinitelyNotProcrastinating/stargazers_of_the_azure_sector/main/%E8%87%AA%E5%8A%A8%E8%84%9A%E6%9C%AC/startup.html",{cache:"no-store"})
-        .then(function(r){return r.text()})
-        .then(function(h){startup.src=URL.createObjectURL(new Blob([h],{type:"text/html"}))})
-    </script>
-  </body>
-  </html>
+    <!doctype html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>蔚蓝星区开局</title>
+      <style>
+        html,body{margin:0;height:100%;background:#05070f}
+        iframe{display:block;width:100%;height:900px;min-height:90vh;border:0;background:#05070f}
+      </style>
+    </head>
+    <body>
+      <iframe id="startup" title="蔚蓝星区开局"></iframe>
+      <script>
+        fetch("https://raw.githubusercontent.com/DefinitelyNotProcrastinating/stargazers_of_the_azure_sector/main/%E8%87%AA%E5%8A%A8%E8%84%9A%E6%9C%AC/startup.html",{cache:"no-store"})
+          .then(function(r){return r.text()})
+          .then(function(h){startup.src=URL.createObjectURL(new Blob([h],{type:"text/html"}))})
+      </script>
+    </body>
+    </html>
     ```
-    </start>
-
-
-   [测试版本]
+  </start>
 trimStrings: []
 placement:
 - 2
