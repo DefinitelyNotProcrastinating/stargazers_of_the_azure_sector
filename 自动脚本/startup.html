@@ -984,7 +984,7 @@
         var entry = entries[idx] || {};
         var text = entry.content || entry.text || entry.value || "";
         if (!text) continue;
-        if (/开局json|init_data/.test(getEntryLabel(entry))) prioritized.push(text);
+        if (/开局json|init_data/.test(getEntryLabel(entry)) || /\bINIT_DATA\b/.test(text)) prioritized.push(text);
         else fallback.push(text);
       }
 
@@ -1883,7 +1883,6 @@
   </script>
 </body>
 </html>
-
 
 
 
