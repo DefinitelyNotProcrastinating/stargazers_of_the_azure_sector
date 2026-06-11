@@ -982,7 +982,7 @@
       var idx = 0;
       for (idx = 0; idx < entries.length; idx++) {
         var entry = entries[idx] || {};
-        var text = entry.content || entry.text || entry.value || "";
+        var text = entry.comment || entry.text || entry.value || "";
         if (!text) continue;
         if (/开局json|init_data/.test(getEntryLabel(entry)) || /\bINIT_DATA\b/.test(text)) prioritized.push(text);
         else fallback.push(text);
