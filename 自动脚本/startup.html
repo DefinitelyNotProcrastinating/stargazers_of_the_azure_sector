@@ -982,10 +982,13 @@
       var idx = 0;
       for (idx = 0; idx < entries.length; idx++) {
         var entry = entries[idx] || {};
-        var text = entry.comment || entry.text || entry.value || "";
+        var text = entry.comment;
         if (!text) continue;
-        if (/开局json|init_data/.test(getEntryLabel(entry)) || /\bINIT_DATA\b/.test(text)) prioritized.push(text);
-        else fallback.push(text);
+        if (/开局json|init_data/.test(getEntryLabel(entry)) || /\bINIT_DATA\b/.test(text)){
+          prioritized.push(text);
+        } else {
+          fallback.push(text);
+        }
       }
 
       function consume(list) {
