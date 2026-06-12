@@ -1,0 +1,988 @@
+id: 7f3d2f4a-65f8-4b5e-8f22-90fd6cc5b3d1
+scriptName: 开局
+findRegex: \$开始游戏\$
+replaceString: |-
+  <start>
+  ```html
+  <!DOCTYPE html>
+  <html lang="zh-CN">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>TERMINAL // 蔚蓝星域初始化</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+      <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+      <style>
+          :root {
+              --bg-dark: #05070f;
+              --bg-panel: #0b1021;
+              --border-main: #1f305c;
+              --accent-main: #00d4ff;
+              --text-main: #e2e8f0;
+              --text-muted: #64748b;
+              --glow-main: 0 0 12px rgba(0, 212, 255, 0.5);
+          }
+          body {
+              background-color: var(--bg-dark);
+              color: var(--text-main);
+              font-family: 'Noto Sans SC', sans-serif;
+              margin: 0;
+              min-height: 100vh;
+              overflow-y: auto;
+              overflow-x: hidden;
+          }
+          .font-mono { font-family: 'JetBrains Mono', monospace; }
+          .panel {
+              background: rgba(11, 16, 33, 0.82);
+              border: 1px solid var(--border-main);
+              backdrop-filter: blur(5px);
+          }
+          .btn {
+              background: transparent;
+              border: 1px solid var(--border-main);
+              color: var(--accent-main);
+              text-transform: uppercase;
+              font-weight: bold;
+              cursor: pointer;
+              transition: all 0.2s;
+          }
+          .btn:hover:not(:disabled) {
+              background: var(--accent-main);
+              color: #000;
+              box-shadow: var(--glow-main);
+          }
+          .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+          input, textarea {
+              background: rgba(0, 212, 255, 0.05);
+              border: 1px solid var(--border-main);
+              color: #fff;
+              padding: 8px;
+              outline: none;
+              font-family: 'JetBrains Mono', monospace;
+          }
+          .screen { display: none; min-height: 100vh; }
+          .screen.active { display: flex; }
+          .grid-container {
+              display: grid;
+              grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+              gap: 16px;
+          }
+          .item-card {
+              background: rgba(13, 20, 40, 0.6);
+              border: 1px solid var(--border-main);
+              padding: 12px;
+              cursor: pointer;
+              transition: transform 0.1s, border-color 0.2s;
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
+              min-height: 220px;
+          }
+          .item-card:hover { border-color: var(--accent-main); transform: scale(1.01); }
+          .item-card.selected { border: 2px solid var(--accent-main); background: rgba(0, 80, 120, 0.35); box-shadow: var(--glow-main); }
+          .kv-row { display: flex; font-size: 0.85rem; border-bottom: 1px dashed rgba(0, 212, 255, 0.15); padding: 4px 0; }
+          .kv-key { color: var(--text-muted); width: 92px; flex-shrink: 0; }
+          .kv-val { color: var(--text-main); flex-grow: 1; word-break: break-word; }
+          .modal-overlay {
+              position: fixed;
+              inset: 0;
+              background: rgba(0, 0, 0, 0.78);
+              backdrop-filter: blur(3px);
+              display: none;
+              justify-content: center;
+              align-items: center;
+              z-index: 50;
+          }
+          .modal-content {
+              background: var(--bg-panel);
+              border: 1px solid var(--accent-main);
+              width: 92%;
+              max-width: 760px;
+              max-height: 86vh;
+              overflow-y: auto;
+              padding: 20px;
+          }
+          .step-dot { flex: 1; height: 4px; background: var(--border-main); }
+          .step-dot.active { background: var(--accent-main); box-shadow: var(--glow-main); }
+          .fitting-shell {
+              display: grid;
+              grid-template-columns: minmax(0, 1fr) 320px;
+              gap: 18px;
+          }
+          .fitting-stage {
+              position: relative;
+              min-height: 760px;
+              border: 1px solid var(--border-main);
+              background: radial-gradient(circle at center, rgba(0, 212, 255, 0.06), rgba(5, 7, 15, 0.9) 58%);
+              overflow: hidden;
+          }
+          .fitting-stage::before,
+          .fitting-stage::after {
+              content: "";
+              position: absolute;
+              border-radius: 999px;
+              border: 1px dashed rgba(0, 212, 255, 0.15);
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, -50%);
+          }
+          .fitting-stage::before { width: 540px; height: 540px; }
+          .fitting-stage::after { width: 360px; height: 360px; }
+          .ring-slot {
+              position: absolute;
+              width: 108px;
+              min-height: 58px;
+              padding: 8px 6px;
+              border: 1px solid var(--border-main);
+              background: rgba(8, 18, 34, 0.92);
+              color: var(--text-main);
+              font-size: 11px;
+              text-align: center;
+              cursor: pointer;
+              transform: translate(-50%, -50%);
+          }
+          .ring-slot:hover { border-color: var(--accent-main); box-shadow: var(--glow-main); }
+          .ring-slot.empty { color: var(--text-muted); }
+          .ring-slot.filled { border-color: rgba(0, 212, 255, 0.5); }
+          .ring-slot .slot-name { display: block; color: var(--accent-main); margin-bottom: 4px; }
+          .ring-slot .slot-text { display: block; line-height: 1.4; }
+          .center-core {
+              position: absolute;
+              width: 190px;
+              height: 190px;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, -50%);
+              border-radius: 999px;
+              border: 1px solid var(--accent-main);
+              background: rgba(7, 20, 34, 0.95);
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              text-align: center;
+              padding: 18px;
+              cursor: pointer;
+              box-shadow: 0 0 30px rgba(0, 212, 255, 0.15);
+          }
+          .center-core:hover { box-shadow: var(--glow-main); }
+          .center-core small { color: var(--text-muted); margin-top: 8px; line-height: 1.5; }
+          .fitting-side {
+              display: flex;
+              flex-direction: column;
+              gap: 14px;
+          }
+          .resource-grid {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 10px;
+          }
+          .resource-box {
+              border: 1px solid var(--border-main);
+              background: rgba(13, 20, 40, 0.6);
+              padding: 12px;
+          }
+          .resource-box strong { color: var(--accent-main); display: block; margin-bottom: 4px; }
+          .fit-list {
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
+              max-height: 260px;
+              overflow-y: auto;
+          }
+          .fit-row {
+              border: 1px solid rgba(0, 212, 255, 0.12);
+              background: rgba(13, 20, 40, 0.45);
+              padding: 8px 10px;
+              font-size: 12px;
+              line-height: 1.6;
+          }
+          .candidate-list {
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+          }
+          .candidate-card {
+              border: 1px solid var(--border-main);
+              background: rgba(13, 20, 40, 0.55);
+              padding: 12px;
+          }
+          .candidate-card.disabled {
+              opacity: 0.55;
+              border-color: rgba(255, 120, 120, 0.45);
+          }
+          .candidate-card .head {
+              display: flex;
+              justify-content: space-between;
+              gap: 10px;
+              margin-bottom: 8px;
+          }
+          .candidate-card .meta {
+              color: var(--text-muted);
+              font-size: 11px;
+              line-height: 1.5;
+              margin: 6px 0;
+          }
+          .candidate-card .desc {
+              color: var(--text-main);
+              font-size: 12px;
+              line-height: 1.6;
+          }
+          .candidate-card .reason {
+              color: #ff8f8f;
+              font-size: 11px;
+              margin-top: 8px;
+          }
+          @media (max-width: 980px) {
+              .fitting-shell { grid-template-columns: 1fr; }
+              .fitting-stage { min-height: 820px; }
+          }
+      </style>
+  </head>
+  <body>
+      <div id="screen-0" class="screen active items-center justify-center p-8">
+          <div class="panel max-w-4xl w-full p-8 text-center">
+              <div class="font-mono text-sm tracking-[0.4em] text-[var(--text-muted)]">AZURE SECTOR / INITIALIZATION</div>
+              <h1 class="text-5xl font-bold text-[var(--accent-main)] mt-4">蔚蓝星域的观星者</h1>
+              <p class="text-[var(--text-muted)] mt-5 leading-8">
+                  载入新的开局协议。<br>
+                  你将先选择舰船，再完成三环装配，随后选择随身物品与开局剧情，并将结果注入聊天。
+              </p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 text-left">
+                  <div>
+                      <label class="text-xs text-[var(--text-muted)]">舰长名称</label>
+                      <input type="text" id="captain-name" class="w-full mt-1" value="{{user}}">
+                  </div>
+                  <div>
+                      <label class="text-xs text-[var(--text-muted)]">主角外貌</label>
+                      <input type="text" id="captain-appearance" class="w-full mt-1" placeholder="例如：穿着常服的年轻舰长，眼下带着轻微熬夜痕迹">
+                  </div>
+              </div>
+              <button class="btn px-8 py-3 text-xl tracking-widest mt-8" onclick="startGame()">建立连接 [CONNECT]</button>
+          </div>
+      </div>
+
+      <div id="main-ui" class="hidden flex-col min-h-screen p-4">
+          <div class="flex justify-between items-end border-b border-[var(--border-main)] pb-2 mb-4">
+              <div>
+                  <h2 class="text-2xl font-bold text-[var(--accent-main)]" id="phase-title">PHASE_1: 开局剧情</h2>
+                  <div class="text-xs text-[var(--text-muted)] font-mono" id="phase-desc">Select opening story</div>
+              </div>
+              <div class="text-right font-mono text-xs text-[var(--text-muted)]" id="selection-summary"></div>
+          </div>
+          <div class="flex gap-2 mb-4">
+              <div class="step-dot" id="dot-1"></div>
+              <div class="step-dot" id="dot-2"></div>
+              <div class="step-dot" id="dot-3"></div>
+              <div class="step-dot" id="dot-4"></div>
+          </div>
+          <div class="panel p-4 mb-4">
+              <div class="text-sm text-[var(--text-muted)]" id="phase-help"></div>
+          </div>
+          <div id="catalog-grid" class="grid-container flex-1"></div>
+          <div class="flex justify-between items-center pt-4 mt-4 border-t border-[var(--border-main)]">
+              <button class="btn px-6 py-2" id="btn-prev" onclick="prevPhase()"><<< 后退</button>
+              <button class="btn px-6 py-2" id="btn-next" onclick="nextPhase()">继续 >>></button>
+          </div>
+      </div>
+
+      <div id="modal-details" class="modal-overlay">
+          <div class="modal-content relative">
+              <button class="absolute top-3 right-3 text-[var(--accent-main)] font-bold" onclick="closeModal()">[X]</button>
+              <h2 id="modal-title" class="text-2xl font-bold text-[var(--accent-main)] mb-4"></h2>
+              <div id="modal-body" class="font-mono text-sm"></div>
+              <div class="mt-6 pt-4 border-t border-[var(--border-main)] flex justify-end gap-2">
+                  <button class="btn px-4 py-2" onclick="closeModal()">取消</button>
+                  <button class="btn px-4 py-2" id="modal-primary-action" onclick="selectCurrentItem()">选择</button>
+              </div>
+          </div>
+      </div>
+
+      <script>
+          var gameData = null;
+          var currentPhaseIndex = 0;
+          var phases = ["ships", "fitting", "items", "init_stories"];
+          var phaseTitles = [
+              { t: "PHASE_1: 起始舰船", d: "Select starting ship", help: "先选择一艘起始舰船。下一步将直接进入舰船装配。" },
+              { t: "PHASE_2: 舰船装配", d: "Fit your ship", help: "外环是武器槽，内环是 H/L 装备槽，中心用于装配观星者。所有装配都必须满足 PG 和 CPU。" },
+              { t: "PHASE_3: 随身物资", d: "Select personal items", help: "可多选个人物品。导出时会写入主角.个人物品。" },
+              { t: "PHASE_4: 开局剧情", d: "Select opening story", help: "最后选择开局剧情，它将作为时间、地点与初始叙事锚点。" }
+          ];
+          var selectionLimits = {
+              ships: 1,
+              items: null,
+              init_stories: 1
+          };
+          var shipRequirementMap = {
+              "枪骑兵级": { minStable: 1.0, minBitrate: 150, maxError: 2.5, minBurst: 2.6 },
+              "封锁者级": { minStable: 3.0, minBitrate: 280, maxError: 2.0, minBurst: 6.0 },
+              "探路者级": { minStable: 3.8, minBitrate: 420, maxError: 1.2, minBurst: 7.5 },
+              "拓荒级": { minStable: 0.0, minBitrate: 0, maxError: 99, minBurst: 0.0 }
+          };
+          var fittingLibrary = [
+              { "name": "S-脉冲激光炮", "slotFamily": "weapon", "mount": "S", "品质": 6, "吨位": "S", "标签": ["武器","能量","脉冲"], "描述": "常规帝国风格小型脉冲激光炮。", "效果": { "火力": "适合持续输出与缠斗。" }, "装配要求": "PG：8 | CPU：18 | 吨位：S | 炮位：1S | 装备槽位：无" },
+              { "name": "S-点防御激光", "slotFamily": "weapon", "mount": "S", "品质": 5, "吨位": "S", "标签": ["武器","拦截","点防御"], "描述": "用于拦截火箭与轻型飞行器。", "效果": { "拦截": "提升近距离防空与反导能力。" }, "装配要求": "PG：4 | CPU：16 | 吨位：S | 炮位：1S | 装备槽位：无" },
+              { "name": "S-自动加农炮", "slotFamily": "weapon", "mount": "S", "品质": 5, "吨位": "S", "标签": ["武器","动能","近防"], "描述": "高射速的小型动能炮。", "效果": { "火力": "压制近距离目标。" }, "装配要求": "PG：7 | CPU：12 | 吨位：S | 炮位：1S | 装备槽位：无" },
+              { "name": "S-火箭发射架", "slotFamily": "weapon", "mount": "S", "品质": 4, "吨位": "S", "标签": ["武器","导弹"], "描述": "轻型火箭发射系统。", "效果": { "爆发": "提供短时间爆发输出。" }, "装配要求": "PG：6 | CPU：14 | 吨位：S | 炮位：1S | 装备槽位：无" },
+              { "name": "S-牵引光束", "slotFamily": "weapon", "mount": "S", "品质": 5, "吨位": "S", "标签": ["工具","牵引"], "描述": "用于拖拽样本、残骸或航标。", "效果": { "工具": "增强打捞与样本回收。" }, "装配要求": "PG：3 | CPU：20 | 吨位：S | 炮位：1S | 装备槽位：无" },
+              { "name": "M-阳电子束炮", "slotFamily": "weapon", "mount": "M", "品质": 7, "吨位": "M", "标签": ["武器","能量","中型"], "描述": "联邦风格中型阳电子束炮。", "效果": { "火力": "中型能量主炮，适合攻击模式输出。" }, "装配要求": "PG：20 | CPU：30 | 吨位：M | 炮位：1M | 装备槽位：无" },
+              { "name": "M-磁轨炮", "slotFamily": "weapon", "mount": "M", "品质": 6, "吨位": "M", "标签": ["武器","动能","中型"], "描述": "中型磁轨炮。", "效果": { "火力": "兼顾穿透与中程压制。" }, "装配要求": "PG：18 | CPU：24 | 吨位：M | 炮位：1M | 装备槽位：无" },
+              { "name": "M-采矿激光阵列", "slotFamily": "weapon", "mount": "M", "品质": 5, "吨位": "M", "标签": ["工业","采矿"], "描述": "拓荒级常用采矿激光阵列。", "效果": { "开采": "提升矿石开采效率。" }, "装配要求": "PG：14 | CPU：22 | 吨位：M | 炮位：1M | 装备槽位：无" },
+              { "name": "H-护盾扩展器", "slotFamily": "module", "slotType": "H", "品质": 6, "吨位": "N", "标签": ["护盾","高功率"], "描述": "增加舰船护盾容量。", "效果": { "防御": "额外护盾容量提升。" }, "额外护盾": 300, "装配要求": "PG：12 | CPU：16 | 吨位：N | 炮位：无 | 装备槽位：1H" },
+              { "name": "H-护盾稳压器", "slotFamily": "module", "slotType": "H", "品质": 7, "吨位": "N", "标签": ["护盾","高功率"], "描述": "强化护盾稳定与回充效率。", "效果": { "护盾": "提升护盾稳定度与回充。" }, "装配要求": "PG：6 | CPU：22 | 吨位：N | 炮位：无 | 装备槽位：1H" },
+              { "name": "H-勘探扫描阵列", "slotFamily": "module", "slotType": "H", "品质": 5, "吨位": "N", "标签": ["侦测","工业"], "描述": "矿区与遗迹勘探扫描阵列。", "效果": { "侦测": "提升资源与样本扫描效率。" }, "装配要求": "PG：4 | CPU：28 | 吨位：N | 炮位：无 | 装备槽位：1H" },
+              { "name": "H-隐形场发生器", "slotFamily": "module", "slotType": "H", "品质": 8, "吨位": "N", "标签": ["隐形","高功率"], "描述": "战术隐形模块。", "效果": { "隐形": "显著降低被发现概率。" }, "装配要求": "PG：10 | CPU：36 | 吨位：N | 炮位：无 | 装备槽位：1H" },
+              { "name": "H-采矿效率阵列", "slotFamily": "module", "slotType": "H", "品质": 5, "吨位": "N", "标签": ["工业","高功率"], "描述": "提高采矿模块循环效率。", "效果": { "工业": "提升采矿持续效率。" }, "装配要求": "PG：10 | CPU：20 | 吨位：N | 炮位：无 | 装备槽位：1H" },
+              { "name": "L-协处理器", "slotFamily": "module", "slotType": "L", "品质": 6, "吨位": "N", "标签": ["电子","低功率"], "描述": "提供额外 CPU 装配余量。", "效果": { "电子": "提供额外运算资源。" }, "装配要求": "PG：0 | CPU：-18 | 吨位：N | 炮位：无 | 装备槽位：1L" },
+              { "name": "L-反应堆增容器", "slotFamily": "module", "slotType": "L", "品质": 6, "吨位": "N", "标签": ["能源","低功率"], "描述": "提供额外 PG 装配余量。", "效果": { "能源": "增加电网输出余量。" }, "装配要求": "PG：-12 | CPU：6 | 吨位：N | 炮位：无 | 装备槽位：1L" },
+              { "name": "L-装甲附加板", "slotFamily": "module", "slotType": "L", "品质": 5, "吨位": "N", "标签": ["装甲","低功率"], "描述": "常规结构加强装甲板。", "效果": { "装甲": "提升舰体容错。" }, "额外装甲": 220, "装配要求": "PG：2 | CPU：4 | 吨位：N | 炮位：无 | 装备槽位：1L" },
+              { "name": "L-散热器", "slotFamily": "module", "slotType": "L", "品质": 5, "吨位": "N", "标签": ["武器","散热"], "描述": "提高能量武器循环效率。", "效果": { "武器": "提升能量武器输出稳定性。" }, "装配要求": "PG：1 | CPU：10 | 吨位：N | 炮位：无 | 装备槽位：1L" },
+              { "name": "L-跃迁电容继电器", "slotFamily": "module", "slotType": "L", "品质": 5, "吨位": "N", "标签": ["跃迁","低功率"], "描述": "改善跃迁前充能与电容循环。", "效果": { "跃迁": "提升连续航行稳定性。" }, "装配要求": "PG：0 | CPU：12 | 吨位：N | 炮位：无 | 装备槽位：1L" }
+          ];
+          var state = {
+              captain: { name: "{{user}}", appearance: "" },
+              selections: { ships: [], items: [], init_stories: [] },
+              fitting: { weapons: {}, modules: {}, stargazer: null }
+          };
+          var currentViewingItem = null;
+          var currentCategory = "";
+          var modalMode = "detail";
+          var selectorContext = null;
+
+          async function fetchGameData() {
+              try {
+                  var wb = await getWorldbook("蔚蓝星域的观星者 下世代");
+                  var entry = null;
+                  var parsed = null;
+                  var i = 0;
+                  for (i = 0; i < wb.length; i++) {
+                      if (wb[i].comment === "__INIT_DATA__" || wb[i].name === "__INIT_DATA__") { entry = wb[i]; break; }
+                  }
+                  if (entry && entry.content) {
+                      parsed = JSON.parse(entry.content);
+                      parsed.stargazers = normalizeStargazerMap(parsed.stargazers || {});
+                      return parsed;
+                  }
+              } catch (e) {
+                  console.warn("INIT_DATA load failed:", e.message);
+              }
+              return { init_stories: {}, ships: {}, items: {}, stargazers: {} };
+          }
+
+          function getSelectedShip() { return state.selections.ships.length ? state.selections.ships[0] : null; }
+          function getSelectedShipName() { return getSelectedShip() ? getSelectedShip()._key : ""; }
+          function getSelectedStargazer() { return state.fitting.stargazer; }
+
+          function resetFitting() {
+              state.fitting.weapons = {};
+              state.fitting.modules = {};
+              state.fitting.stargazer = null;
+          }
+
+          async function startGame() {
+              state.captain.name = document.getElementById('captain-name').value.replace(/^\s+|\s+$/g, "") || "{{user}}";
+              state.captain.appearance = document.getElementById('captain-appearance').value.replace(/^\s+|\s+$/g, "");
+              document.getElementById('screen-0').classList.remove('active');
+              document.getElementById('main-ui').classList.add('flex');
+              document.getElementById('main-ui').classList.remove('hidden');
+              gameData = await fetchGameData();
+              goToPhase(0);
+          }
+
+          function goToPhase(index) {
+              currentPhaseIndex = index;
+              currentCategory = phases[currentPhaseIndex];
+              updateNavUI();
+              renderPhase();
+          }
+
+          function updateNavUI() {
+              var info = phaseTitles[currentPhaseIndex];
+              var i = 0;
+              document.getElementById('phase-title').textContent = info.t;
+              document.getElementById('phase-desc').textContent = info.d;
+              document.getElementById('phase-help').textContent = info.help;
+              for (i = 0; i < phases.length; i++) {
+                  document.getElementById('dot-' + (i + 1)).classList.toggle('active', i <= currentPhaseIndex);
+              }
+              document.getElementById('btn-prev').disabled = currentPhaseIndex === 0;
+              document.getElementById('btn-next').textContent = currentPhaseIndex === phases.length - 1 ? "生成协议 >>>" : "继续 >>>";
+              renderSummary();
+          }
+
+          function renderSummary() {
+              var ship = getSelectedShipName() || "未选";
+              var fitCount = countKeys(state.fitting.weapons) + countKeys(state.fitting.modules);
+              var summary = [];
+              summary.push("舰船: " + ship);
+              summary.push("装配模块: " + fitCount);
+              summary.push("观星者: " + (state.fitting.stargazer ? state.fitting.stargazer._key : "未装配"));
+              summary.push("物品: " + state.selections.items.length);
+              summary.push("剧情: " + state.selections.init_stories.length);
+              document.getElementById('selection-summary').innerHTML = summary.join("<br>");
+          }
+
+          function countKeys(obj) {
+              var n = 0, k = "";
+              for (k in obj) if (Object.prototype.hasOwnProperty.call(obj, k)) n++;
+              return n;
+          }
+
+          function escapeHtml(value) {
+              var str = value === undefined || value === null ? "" : String(value);
+              var map = {};
+              map["&"] = "&" + "amp;";
+              map["<"] = "&" + "lt;";
+              map[">"] = "&" + "gt;";
+              map['"'] = "&" + "quot;";
+              map["'"] = "&" + "#39;";
+              return str.replace(/[&<>"']/g, function(ch) { return map[ch]; });
+          }
+
+          function formatValue(value) {
+              var rows = [], k = "";
+              if (value === undefined || value === null || value === "") return "未记录";
+              if (Array.isArray(value)) return value.length ? value.map(formatValue).join(" / ") : "无";
+              if (typeof value === "object") {
+                  for (k in value) if (Object.prototype.hasOwnProperty.call(value, k)) rows.push('<div class="kv-row"><div class="kv-key">' + escapeHtml(k) + '</div><div class="kv-val">' + formatValue(value[k]) + '</div></div>');
+                  return rows.join("");
+              }
+              return escapeHtml(value);
+          }
+
+          function previewText(category, item) {
+              if (category === "ships") return item["描述"] || ((item["舰船类型"] || "舰船") + " / " + (item["吨位"] || "未知吨位"));
+              if (category === "items") return item["描述"] || "未记录描述";
+              if (category === "init_stories") return item["描述"] || "未记录描述";
+              return "未记录描述";
+          }
+
+          function renderBadges(category, item) {
+              var badges = [], html = [], i = 0;
+              if (category === "ships") { if (item["舰船类型"]) badges.push(item["舰船类型"]); if (item["吨位"]) badges.push(item["吨位"]); }
+              if (category === "items" && item["品质"] !== undefined) badges.push("品质 " + item["品质"]);
+              if (category === "init_stories" && item["时间"]) badges.push(item["时间"]);
+              for (i = 0; i < badges.length; i++) html.push('<span class="text-[10px] px-2 py-1 border border-[var(--border-main)] text-[var(--accent-main)]">' + escapeHtml(badges[i]) + '</span>');
+              return html.join(" ");
+          }
+
+          function renderPhase() {
+              if (currentCategory === "fitting") renderFitting();
+              else renderCatalog();
+          }
+
+          function renderCatalog() {
+              var grid = document.getElementById('catalog-grid');
+              var data = gameData[currentCategory] || {};
+              var selected = state.selections[currentCategory] || [];
+              var entries = [], html = [], key = "", i = 0, j = 0;
+              grid.className = "grid-container flex-1";
+              for (key in data) if (Object.prototype.hasOwnProperty.call(data, key)) entries.push([key, data[key]]);
+              if (!entries.length) { grid.innerHTML = '<div class="panel p-6 text-[var(--text-muted)]">当前分类没有可用数据。</div>'; return; }
+              for (i = 0; i < entries.length; i++) {
+                  var itemKey = entries[i][0];
+                  var item = entries[i][1];
+                  var enriched = JSON.parse(JSON.stringify(item));
+                  var isSelected = false;
+                  enriched._key = itemKey;
+                  for (j = 0; j < selected.length; j++) if (selected[j]._key === itemKey) { isSelected = true; break; }
+                  html.push('<article class="item-card ' + (isSelected ? 'selected' : '') + '" onclick="openDetailModal(\'' + encodeURIComponent(JSON.stringify(enriched)) + '\')">' +
+                      '<div class="flex justify-between items-start gap-2"><h3 class="text-lg font-bold text-[var(--accent-main)]">' + escapeHtml(itemKey) + '</h3></div>' +
+                      '<div class="flex flex-wrap gap-1">' + renderBadges(currentCategory, item) + '</div>' +
+                      '<div class="text-sm text-[var(--text-muted)] leading-6">' + escapeHtml(previewText(currentCategory, item)) + '</div>' +
+                  '</article>');
+              }
+              grid.innerHTML = html.join("");
+          }
+
+          function parseCountMap(config, keys) {
+              var map = {}, i = 0, regex, match;
+              for (i = 0; i < keys.length; i++) {
+                  regex = new RegExp('(\\d+)' + keys[i], 'g');
+                  match = regex.exec(config || "");
+                  map[keys[i]] = match ? parseInt(match[1], 10) : 0;
+              }
+              return map;
+          }
+
+          function buildWeaponSlots(ship) {
+              var counts = parseCountMap(ship["炮位配置"], ["S","M","L","XL","C","T"]);
+              var slots = [], key = "", i = 0;
+              for (key in counts) if (counts[key] > 0) for (i = 1; i <= counts[key]; i++) slots.push({ id: key + i, mount: key, label: key + i });
+              return slots;
+          }
+
+          function buildModuleSlots(ship) {
+              var counts = parseCountMap(ship["装备槽位配置"], ["H","L"]);
+              var slots = [], i = 0;
+              for (i = 1; i <= counts["H"]; i++) slots.push({ id: "H" + i, slotType: "H", label: "H" + i });
+              for (i = 1; i <= counts["L"]; i++) slots.push({ id: "L" + i, slotType: "L", label: "L" + i });
+              return slots;
+          }
+
+          function parseRequirement(reqText) {
+              var out = { PG: 0, CPU: 0, "吨位": "", "炮位": "无", "装备槽位": "无" };
+              var parts = (reqText || "").split("|"), i = 0, segment = "", pair, key, value;
+              for (i = 0; i < parts.length; i++) {
+                  segment = parts[i].replace(/^\s+|\s+$/g, "");
+                  pair = segment.split("：");
+                  if (pair.length < 2) pair = segment.split(":");
+                  if (pair.length >= 2) {
+                      key = pair[0].replace(/^\s+|\s+$/g, "");
+                      value = pair.slice(1).join(":").replace(/^\s+|\s+$/g, "");
+                      out[key] = value;
+                  }
+              }
+              out.PG = parseFloat(out.PG || 0) || 0;
+              out.CPU = parseFloat(out.CPU || 0) || 0;
+              return out;
+          }
+
+          function parseBitrate(value) {
+              var num = parseFloat(String(value || "").replace(/[^0-9.]/g, ""));
+              if (!num) return 0;
+              if (String(value).indexOf("PB") > -1) return num * 1000;
+              return num;
+          }
+
+          function parsePlainNumber(value) {
+              var num = parseFloat(String(value || "").replace(/[^0-9.]/g, ""));
+              return num || 0;
+          }
+
+          function firstNonEmpty(values) {
+              var i = 0;
+              for (i = 0; i < values.length; i++) {
+                  if (values[i] !== undefined && values[i] !== null && values[i] !== "") return values[i];
+              }
+              return "";
+          }
+
+          function normalizeStargazerRecord(key, raw) {
+              var src = JSON.parse(JSON.stringify(raw || {}));
+              var profile = src["静态档案"] || {};
+              var perf = profile["性能参数"] || {};
+              var prefs = profile["偏好"] || {};
+              var normalized = {
+                  "种族": src["种族"] || "观星者",
+                  "阵营": src["阵营"] || "",
+                  "身份": src["身份"] || "",
+                  "好感度": src["好感度"] || 0,
+                  "想法": src["想法"] || "",
+                  "历史": firstNonEmpty([src["历史"], (src["附加信息"] || {})["历史"]]),
+                  "型号ID": src["型号ID"] || key || "",
+                  "制造商": firstNonEmpty([src["制造商"], profile["制造商"]]),
+                  "描述": firstNonEmpty([src["描述"], profile["描述"], src["备注"]]),
+                  "外貌": firstNonEmpty([src["外貌"], profile["外貌"]]),
+                  "身份标识": firstNonEmpty([src["身份标识"], (profile["身份标识"] || {})["类型"] ? ((profile["身份标识"] || {})["类型"] + " / " + ((profile["身份标识"] || {})["位置"] || "未记录位置")) : ""]),
+                  "比特率": firstNonEmpty([src["比特率"], perf["比特率"]]),
+                  "精度": firstNonEmpty([src["精度"], perf["精度"]]),
+                  "稳态增益": firstNonEmpty([src["稳态增益"], perf["稳态增益"]]),
+                  "爆发增益": firstNonEmpty([src["爆发增益"], perf["爆发增益"]]),
+                  "特殊效果": src["特殊效果"] || profile["特殊能力"] || {},
+                  "性格": src["性格"] || profile["性格"] || [],
+                  "喜欢": src["喜欢"] || prefs["喜欢"] || [],
+                  "讨厌": src["讨厌"] || prefs["讨厌"] || [],
+                  "性癖": src["性癖"] || prefs["性癖"] || [],
+                  "外貌记录": src["外貌记录"] || { "身体": "", "胸部": "", "私处": "" },
+                  "性经历": src["性经历"] || "未知",
+                  "分配舰船": firstNonEmpty([src["分配舰船"], (src["附加信息"] || {})["舰船ID"]])
+              };
+              normalized._key = key;
+              return normalized;
+          }
+
+          function normalizeStargazerMap(source) {
+              var out = {}, key = "";
+              for (key in source) if (Object.prototype.hasOwnProperty.call(source, key)) out[key] = normalizeStargazerRecord(key, source[key]);
+              return out;
+          }
+
+          function getShipRequirement(shipName) {
+              return shipRequirementMap[shipName] || { minStable: 0, minBitrate: 0, maxError: 99, minBurst: 0 };
+          }
+
+          function getStargazerMetrics(stargazer) {
+              var perf = (((stargazer || {})["静态档案"] || {})["性能参数"]) || {};
+              return {
+                  stable: parsePlainNumber(firstNonEmpty([(stargazer || {})["稳态增益"], perf["稳态增益"]])),
+                  burst: parsePlainNumber(firstNonEmpty([(stargazer || {})["爆发增益"], perf["爆发增益"]])),
+                  bitrate: parseBitrate(firstNonEmpty([(stargazer || {})["比特率"], perf["比特率"]])),
+                  error: parsePlainNumber(firstNonEmpty([(stargazer || {})["精度"], perf["精度"]]))
+              };
+          }
+
+          function isStargazerCompatible(shipName, stargazer) {
+              var req = getShipRequirement(shipName);
+              var m = getStargazerMetrics(stargazer);
+              if (m.stable < req.minStable) return "稳态增益不足";
+              if (m.bitrate < req.minBitrate) return "比特率不足";
+              if (m.error > req.maxError) return "精度误差过高";
+              if (m.burst < req.minBurst) return "爆发增益不足";
+              return "";
+          }
+
+          function getCurrentFittingEntries() {
+              var list = [], k = "";
+              for (k in state.fitting.weapons) if (Object.prototype.hasOwnProperty.call(state.fitting.weapons, k) && state.fitting.weapons[k]) list.push(state.fitting.weapons[k]);
+              for (k in state.fitting.modules) if (Object.prototype.hasOwnProperty.call(state.fitting.modules, k) && state.fitting.modules[k]) list.push(state.fitting.modules[k]);
+              return list;
+          }
+
+          function getSlotCurrentRequirement(kind, slotId) {
+              var current = null;
+              if (kind === "weapon") current = state.fitting.weapons[slotId];
+              else if (kind === "module") current = state.fitting.modules[slotId];
+              if (!current) return null;
+              return parseRequirement(current["装配要求"]);
+          }
+
+          function getResourceStatus(extraRequirement, removedRequirement) {
+              var ship = getSelectedShip();
+              var entries = getCurrentFittingEntries();
+              var usedPG = 0, usedCPU = 0, i = 0, req;
+              var totalPG = ship ? parsePlainNumber(ship["装配资源"] && ship["装配资源"]["PG"]) : 0;
+              var totalCPU = ship ? parsePlainNumber(ship["装配资源"] && ship["装配资源"]["CPU"]) : 0;
+              for (i = 0; i < entries.length; i++) {
+                  req = parseRequirement(entries[i]["装配要求"]);
+                  usedPG += req.PG;
+                  usedCPU += req.CPU;
+              }
+              if (removedRequirement) {
+                  usedPG -= removedRequirement.PG;
+                  usedCPU -= removedRequirement.CPU;
+              }
+              if (extraRequirement) {
+                  usedPG += extraRequirement.PG;
+                  usedCPU += extraRequirement.CPU;
+              }
+              return {
+                  totalPG: totalPG,
+                  totalCPU: totalCPU,
+                  usedPG: usedPG,
+                  usedCPU: usedCPU,
+                  remainPG: totalPG - usedPG,
+                  remainCPU: totalCPU - usedCPU
+              };
+          }
+
+          function buildSlotButton(x, y, label, text, className, clickCode) {
+              return '<button class="ring-slot ' + className + '" style="left:' + x + 'px;top:' + y + 'px;" onclick="' + clickCode + '"><span class="slot-name">' + escapeHtml(label) + '</span><span class="slot-text">' + escapeHtml(text) + '</span></button>';
+          }
+
+          function buildRingPositions(count, radius, startDeg, endDeg, centerX, centerY) {
+              var points = [], i = 0, deg, rad;
+              if (count <= 0) return points;
+              if (count === 1) {
+                  deg = (startDeg + endDeg) / 2;
+                  rad = deg * Math.PI / 180;
+                  points.push({ x: centerX + Math.cos(rad) * radius, y: centerY + Math.sin(rad) * radius });
+                  return points;
+              }
+              for (i = 0; i < count; i++) {
+                  deg = startDeg + (endDeg - startDeg) * (i / (count - 1));
+                  rad = deg * Math.PI / 180;
+                  points.push({ x: centerX + Math.cos(rad) * radius, y: centerY + Math.sin(rad) * radius });
+              }
+              return points;
+          }
+
+          function renderFitting() {
+              var ship = getSelectedShip();
+              var grid = document.getElementById('catalog-grid');
+              var centerX = 360, centerY = 370;
+              var weapons, modules, weaponPos, highSlots, lowSlots, highPos, lowPos;
+              var i = 0, weaponHtml = [], moduleHtml = [], fitList = [], status, stargazerLabel;
+              if (!ship) {
+                  grid.innerHTML = '<div class="panel p-6 text-[var(--text-muted)]">请先返回上一步选择舰船。</div>';
+                  return;
+              }
+              weapons = buildWeaponSlots(ship);
+              modules = buildModuleSlots(ship);
+              weaponPos = buildRingPositions(weapons.length, 250, -160, 160, centerX, centerY);
+              highSlots = [];
+              lowSlots = [];
+              for (i = 0; i < modules.length; i++) {
+                  if (modules[i].slotType === "H") highSlots.push(modules[i]);
+                  else if (modules[i].slotType === "L") lowSlots.push(modules[i]);
+              }
+              highPos = buildRingPositions(highSlots.length, 165, 110, 250, centerX, centerY);
+              lowPos = buildRingPositions(lowSlots.length, 165, -70, 70, centerX, centerY);
+              for (i = 0; i < weapons.length; i++) {
+                  var w = state.fitting.weapons[weapons[i].id];
+                  weaponHtml.push(buildSlotButton(weaponPos[i].x, weaponPos[i].y, weapons[i].label, w ? w.name : ("空槽 / " + weapons[i].mount), w ? "filled" : "empty", "openFittingSelector(\\'weapon\\',\\'" + weapons[i].id + "\\')"));
+              }
+              for (i = 0; i < highSlots.length; i++) {
+                  var h = state.fitting.modules[highSlots[i].id];
+                  moduleHtml.push(buildSlotButton(highPos[i].x, highPos[i].y, highSlots[i].label, h ? h.name : "高功率槽", h ? "filled" : "empty", "openFittingSelector(\\'module\\',\\'" + highSlots[i].id + "\\')"));
+              }
+              for (i = 0; i < lowSlots.length; i++) {
+                  var l = state.fitting.modules[lowSlots[i].id];
+                  moduleHtml.push(buildSlotButton(lowPos[i].x, lowPos[i].y, lowSlots[i].label, l ? l.name : "低功率槽", l ? "filled" : "empty", "openFittingSelector(\\'module\\',\\'" + lowSlots[i].id + "\\')"));
+              }
+              status = getResourceStatus();
+              for (i = 0; i < weapons.length; i++) if (state.fitting.weapons[weapons[i].id]) fitList.push('<div class="fit-row">' + escapeHtml(weapons[i].label) + ' / ' + escapeHtml(state.fitting.weapons[weapons[i].id].name) + '</div>');
+              for (i = 0; i < modules.length; i++) if (state.fitting.modules[modules[i].id]) fitList.push('<div class="fit-row">' + escapeHtml(modules[i].label) + ' / ' + escapeHtml(state.fitting.modules[modules[i].id].name) + '</div>');
+              stargazerLabel = state.fitting.stargazer ? state.fitting.stargazer._key : "点击装配观星者";
+              grid.className = "flex-1";
+              grid.innerHTML = '<div class="fitting-shell">' +
+                  '<div class="fitting-stage">' +
+                      weaponHtml.join("") +
+                      moduleHtml.join("") +
+                      '<button class="center-core" onclick="openFittingSelector(\\'stargazer\\',\\'CENTER\\')"><strong>' + escapeHtml(stargazerLabel) + '</strong><small>' + escapeHtml(ship._key) + ' / 中心接口</small></button>' +
+                  '</div>' +
+                  '<div class="fitting-side">' +
+                      '<div class="panel p-4"><div class="text-lg font-bold text-[var(--accent-main)]">' + escapeHtml(ship._key) + '</div><div class="text-sm text-[var(--text-muted)] mt-2">' + escapeHtml(ship["炮位配置"] || "") + ' / ' + escapeHtml(ship["装备槽位配置"] || "") + '</div></div>' +
+                      '<div class="panel p-4"><div class="resource-grid">' +
+                          '<div class="resource-box"><strong>PG</strong><div>总计 ' + status.totalPG + '</div><div>已用 ' + status.usedPG + '</div><div>剩余 ' + status.remainPG + '</div></div>' +
+                          '<div class="resource-box"><strong>CPU</strong><div>总计 ' + status.totalCPU + '</div><div>已用 ' + status.usedCPU + '</div><div>剩余 ' + status.remainCPU + '</div></div>' +
+                      '</div></div>' +
+                      '<div class="panel p-4"><div class="text-sm text-[var(--accent-main)] mb-2">已装配清单</div><div class="fit-list">' + (fitList.length ? fitList.join("") : '<div class="fit-row">尚未装配模块</div>') + '</div></div>' +
+                  '</div>' +
+              '</div>';
+          }
+
+          function openDetailModal(encoded) {
+              var clone = null;
+              modalMode = "detail";
+              selectorContext = null;
+              currentViewingItem = JSON.parse(decodeURIComponent(encoded));
+              clone = JSON.parse(JSON.stringify(currentViewingItem));
+              delete clone._key;
+              document.getElementById('modal-title').textContent = currentViewingItem._key;
+              document.getElementById('modal-body').innerHTML = formatValue(clone);
+              document.getElementById('modal-primary-action').style.display = 'inline-block';
+              document.getElementById('modal-primary-action').textContent = '选择';
+              document.getElementById('modal-details').style.display = 'flex';
+          }
+
+          function openFittingSelector(kind, slotId) {
+              var ship = getSelectedShip(), title = "", candidates = [], i = 0, slotType = "";
+              if (!ship) return;
+              modalMode = "selector";
+              selectorContext = { kind: kind, slotId: slotId };
+              if (kind === "weapon") {
+                  var mount = slotId.replace(/[0-9]/g, "");
+                  title = "选择武器 / " + slotId;
+                  for (i = 0; i < fittingLibrary.length; i++) if (fittingLibrary[i].slotFamily === "weapon" && fittingLibrary[i].mount === mount) candidates.push(fittingLibrary[i]);
+              } else if (kind === "module") {
+                  slotType = slotId.charAt(0);
+                  title = "选择模块 / " + slotId;
+                  for (i = 0; i < fittingLibrary.length; i++) if (fittingLibrary[i].slotFamily === "module" && fittingLibrary[i].slotType === slotType) candidates.push(fittingLibrary[i]);
+              } else {
+                  title = "选择观星者 / 中央接口";
+                  for (i = 0; i < getStargazerEntries().length; i++) candidates.push(getStargazerEntries()[i]);
+              }
+              document.getElementById('modal-title').textContent = title;
+              document.getElementById('modal-body').innerHTML = renderCandidateList(kind, candidates);
+              document.getElementById('modal-primary-action').style.display = 'none';
+              document.getElementById('modal-details').style.display = 'flex';
+          }
+
+          function getStargazerEntries() {
+              var out = [], key = "";
+              for (key in (gameData.stargazers || {})) if (Object.prototype.hasOwnProperty.call(gameData.stargazers, key)) out.push(normalizeStargazerRecord(key, gameData.stargazers[key]));
+              return out;
+          }
+
+          function renderCandidateList(kind, candidates) {
+              var html = ['<div class="candidate-list">'], i = 0;
+              if (kind !== "stargazer") html.push('<button class="btn px-3 py-2 mb-2" onclick="clearFittingSlot()">清空当前槽位</button>');
+              else html.push('<button class="btn px-3 py-2 mb-2" onclick="clearFittingStargazer()">清空观星者</button>');
+              for (i = 0; i < candidates.length; i++) {
+                  var candidate = JSON.parse(JSON.stringify(candidates[i]));
+                  if (!candidate._key) candidate._key = candidate.name;
+                  var evalResult = evaluateCandidate(kind, candidate);
+                  html.push('<div class="candidate-card ' + (evalResult.ok ? '' : 'disabled') + '">' +
+                      '<div class="head"><strong>' + escapeHtml(candidate._key || candidate.name) + '</strong><span>' + escapeHtml(kind === "stargazer" ? (candidate["型号ID"] || "") : (candidate["品质"] !== undefined ? ("品质 " + candidate["品质"]) : "")) + '</span></div>' +
+                      '<div class="meta">' + escapeHtml(kind === "stargazer" ? buildStargazerMeta(candidate) : candidate["装配要求"]) + '</div>' +
+                      '<div class="desc">' + escapeHtml(kind === "stargazer" ? previewStargazer(candidate) : (candidate["描述"] || "")) + '</div>' +
+                      (evalResult.ok ? '<div class="mt-3"><button class="btn px-3 py-2" onclick="applyFittingSelection(\'' + kind + '\', \'' + escapeJsString(encodeURIComponent(JSON.stringify(candidate))) + '\')">装配</button></div>' : '<div class="reason">' + escapeHtml(evalResult.reason) + '</div>') +
+                  '</div>');
+              }
+              html.push('</div>');
+              return html.join("");
+          }
+
+          function buildStargazerMeta(candidate) {
+              var m = getStargazerMetrics(candidate);
+              return '稳态 ' + m.stable + ' TW/mV | 爆发 ' + m.burst + ' TW/mV | 比特率 ' + m.bitrate + ' TB/s | 误差 ' + m.error;
+          }
+
+          function previewStargazer(candidate) {
+              if (candidate["外貌"]) return candidate["外貌"];
+              if (candidate["描述"]) return candidate["描述"];
+              if (candidate["静态档案"] && candidate["静态档案"]["描述"]) return candidate["静态档案"]["描述"];
+              return "未记录描述";
+          }
+
+          function evaluateCandidate(kind, candidate) {
+              var ship = getSelectedShip(), resourceStatus, req, compatible, removedRequirement;
+              if (kind === "stargazer") {
+                  compatible = isStargazerCompatible(getSelectedShipName(), candidate);
+                  if (compatible) return { ok: false, reason: compatible };
+                  return { ok: true, reason: "" };
+              }
+              req = parseRequirement(candidate["装配要求"]);
+              removedRequirement = getSlotCurrentRequirement(kind, selectorContext.slotId);
+              resourceStatus = getResourceStatus(req, removedRequirement);
+              if (resourceStatus.remainPG < 0) return { ok: false, reason: "PG 不足" };
+              if (resourceStatus.remainCPU < 0) return { ok: false, reason: "CPU 不足" };
+              if (kind === "weapon") {
+                  if ((req["炮位"] || "").indexOf(selectorContext.slotId.replace(/[0-9]/g, "")) === -1 && req["炮位"] !== "无") return { ok: false, reason: "炮位尺寸不匹配" };
+              } else {
+                  if ((req["装备槽位"] || "").indexOf(selectorContext.slotId.charAt(0)) === -1 && req["装备槽位"] !== "无") return { ok: false, reason: "装备槽位不匹配" };
+              }
+              return { ok: true, reason: "" };
+          }
+
+          function applyFittingSelection(kind, encoded) {
+              var candidate = JSON.parse(decodeURIComponent(encoded));
+              if (kind === "weapon") state.fitting.weapons[selectorContext.slotId] = sanitizeEquipment(candidate);
+              else if (kind === "module") state.fitting.modules[selectorContext.slotId] = sanitizeEquipment(candidate);
+              else state.fitting.stargazer = candidate;
+              closeModal();
+              renderSummary();
+              renderPhase();
+          }
+
+          function sanitizeEquipment(item) {
+              var clone = JSON.parse(JSON.stringify(item));
+              delete clone._key;
+              delete clone.slotFamily;
+              delete clone.slotType;
+              delete clone.mount;
+              return clone;
+          }
+
+          function clearFittingSlot() {
+              if (!selectorContext) return;
+              if (selectorContext.kind === "weapon") delete state.fitting.weapons[selectorContext.slotId];
+              else delete state.fitting.modules[selectorContext.slotId];
+              closeModal();
+              renderSummary();
+              renderPhase();
+          }
+
+          function clearFittingStargazer() {
+              state.fitting.stargazer = null;
+              closeModal();
+              renderSummary();
+              renderPhase();
+          }
+
+          function escapeJsString(value) {
+              return String(value).replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+          }
+
+          function closeModal() {
+              document.getElementById('modal-details').style.display = 'none';
+          }
+
+          function selectCurrentItem() {
+              var list = state.selections[currentCategory];
+              var idx = -1, limit = selectionLimits[currentCategory], i = 0;
+              for (i = 0; i < list.length; i++) if (list[i]._key === currentViewingItem._key) { idx = i; break; }
+              if (idx > -1) list.splice(idx, 1);
+              else if (limit === 1) {
+                  state.selections[currentCategory] = [currentViewingItem];
+                  if (currentCategory === "ships") resetFitting();
+              } else list.push(currentViewingItem);
+              closeModal();
+              renderSummary();
+              renderPhase();
+          }
+
+          function prevPhase() {
+              if (currentPhaseIndex > 0) goToPhase(currentPhaseIndex - 1);
+          }
+
+          function nextPhase() {
+              if (currentCategory === "ships" && state.selections.ships.length === 0) { alert("必须先选择一艘起始舰船。"); return; }
+              if (currentCategory === "fitting" && !state.fitting.stargazer) { alert("必须在装配中心选择一名观星者。"); return; }
+              if (currentCategory === "init_stories" && state.selections.init_stories.length === 0) { alert("必须选择一个开局剧情。"); return; }
+              if (currentPhaseIndex < phases.length - 1) goToPhase(currentPhaseIndex + 1);
+              else exportData();
+          }
+
+          function formatSelection(arr) {
+              var res = {}, i = 0;
+              for (i = 0; i < arr.length; i++) { var item = JSON.parse(JSON.stringify(arr[i])); var key = item._key; delete item._key; res[key] = item; }
+              return res;
+          }
+
+          function buildEquippedShip() {
+              var ship = JSON.parse(JSON.stringify(getSelectedShip()));
+              var weaponSlots = state.fitting.weapons, moduleSlots = state.fitting.modules, k = "", name, clone;
+              ship["驾驶员"] = state.captain.name;
+              ship["是否旗舰"] = true;
+              ship["观星者接口角色"] = state.fitting.stargazer ? state.fitting.stargazer._key : "";
+              ship["装备"] = {};
+              for (k in weaponSlots) if (Object.prototype.hasOwnProperty.call(weaponSlots, k) && weaponSlots[k]) { name = k + " " + (weaponSlots[k]["描述"] ? weaponSlots[k]["描述"].split("。")[0] : "武器"); clone = JSON.parse(JSON.stringify(weaponSlots[k])); ship["装备"][name] = clone; }
+              for (k in moduleSlots) if (Object.prototype.hasOwnProperty.call(moduleSlots, k) && moduleSlots[k]) { name = k + " " + (moduleSlots[k]["描述"] ? moduleSlots[k]["描述"].split("。")[0] : "模块"); clone = JSON.parse(JSON.stringify(moduleSlots[k])); ship["装备"][name] = clone; }
+              return ship;
+          }
+
+          function buildEquippedStargazer() {
+              var stargazer = normalizeStargazerRecord(state.fitting.stargazer._key, state.fitting.stargazer);
+              stargazer["分配舰船"] = getSelectedShipName();
+              delete stargazer._key;
+              return stargazer;
+          }
+
+          function exportData() {
+              var ship = buildEquippedShip();
+              var stargazer = buildEquippedStargazer();
+              var story = state.selections.init_stories[0];
+              var items = formatSelection(state.selections.items);
+              var yamlStr = "";
+              var cb = String.fromCharCode(96, 96, 96);
+              var promptStr = "";
+              var finalPayload = null;
+              if (!story || !ship || !stargazer) { alert("请完成舰船、装配、观星者与开局剧情后再生成协议。"); return; }
+              finalPayload = {
+                  System: { Module: "Azure_Sector_Init", Version: "2.1.0" },
+                  Captain: { Name: state.captain.name, Appearance: state.captain.appearance },
+                  ships: (function(){ var obj = {}; obj[getSelectedShipName()] = ship; return obj; })(),
+                  stargazers: (function(){ var obj = {}; obj[state.fitting.stargazer._key] = JSON.parse(JSON.stringify(stargazer)); return obj; })(),
+                  items: items,
+                  init_stories: formatSelection(state.selections.init_stories)
+              };
+              yamlStr = jsyaml.dump(finalPayload);
+              promptStr = `[系统指令：玩家已完成新版开局装配。请严格根据以下 YAML 初始化本次开局。]
+
+              1. 先读取 ships 与 stargazers。舰船已经完成装配，必须原样使用其 装备、驾驶员、是否旗舰、观星者接口角色。
+              2. 将 ships 写入 主角.舰船，将 items 写入 主角.个人物品，将 stargazers 写入 主角.可攻略角色。
+              3. 开局剧情以 init_stories 为唯一叙事锚点，必须根据其中的 时间、地点、描述 开场。
+              4. 主角姓名使用 Captain.Name。如果 Captain.Appearance 非空，则写入 主角.外貌。
+              5. 将 主角.位置 设置为所选开局剧情中的 地点。
+              6. 输出开场叙事后，立刻进行相应的变量更新，并严格遵守当前世界书中的主角、舰船、角色、新闻更新规则。
+              
+              以下为初始化配置：
+              ${cb}yaml
+              ${yamlStr}
+              ${cb}
+              请开始输出：`;
+              if (typeof createChatMessages !== "undefined") {
+                  try { createChatMessages([{ role: "user", message: promptStr }]); document.getElementById('btn-next').textContent = "已注入 (SENT)"; } catch (e) { console.error(e); }
+              } else if (navigator.clipboard) {
+                  navigator.clipboard.writeText(promptStr).then(function() { alert("协议已复制到剪贴板，请手动粘贴到聊天框。"); }).catch(function() { console.log(promptStr); alert("无法写入剪贴板，请按 F12 从控制台复制。"); });
+              } else console.log(promptStr);
+          }
+
+      </script>
+  </body>
+  </html>
+  ```
+  </start>
+trimStrings: []
+placement:
+- 2
+disabled: false
+markdownOnly: true
+promptOnly: false
+runOnEdit: true
+substituteRegex: 0
+minDepth: 0
+maxDepth: 0

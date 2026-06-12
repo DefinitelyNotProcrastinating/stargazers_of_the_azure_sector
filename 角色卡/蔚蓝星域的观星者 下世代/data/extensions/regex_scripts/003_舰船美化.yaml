@@ -1,0 +1,508 @@
+id: 4f5d7fd2-c894-4212-9de5-40793d7e9e06
+scriptName: 舰船美化
+findRegex: /<ship_info>\s*(?:```[a-zA-Z]*\s*)?([\s\S]*?)(?:\s*```)?\s*<\/ship_info>/gi
+replaceString: |2-
+
+    <ship>
+    ```html
+    <!DOCTYPE html>
+    <html lang="zh-CN">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Ship Card</title>
+      <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+      <style>
+        :root {
+          color-scheme: dark;
+          --bg: transparent;
+          --panel: rgba(7, 20, 34, 0.62);
+          --panel-soft: rgba(10, 30, 50, 0.4);
+          --line: rgba(148, 223, 255, 0.22);
+          --text: #ecf9ff;
+          --muted: #8eb3c5;
+          --shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+          --accent: #7be0ff;
+          --accent-soft: rgba(123, 224, 255, 0.18);
+          --accent-strong: rgba(123, 224, 255, 0.32);
+        }
+        * { box-sizing: border-box; }
+        html, body { margin: 0; background: transparent; color: var(--text); font-family: "Segoe UI", "Microsoft YaHei", sans-serif; }
+        body { padding: 12px; }
+        .ship-card {
+          position: relative;
+          overflow: hidden;
+          max-width: 960px;
+          margin: 0 auto;
+          border: 1px solid var(--line);
+          border-radius: 24px;
+          background:
+            radial-gradient(circle at 15% 18%, var(--accent-soft), transparent 28%),
+            radial-gradient(circle at 88% 78%, rgba(62, 157, 255, 0.16), transparent 28%),
+            linear-gradient(160deg, rgba(4, 12, 22, 0.72), rgba(8, 24, 40, 0.56));
+          box-shadow: var(--shadow);
+          backdrop-filter: blur(20px) saturate(145%);
+        }
+        .ship-card::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          background-image:
+            linear-gradient(rgba(123, 224, 255, 0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(123, 224, 255, 0.04) 1px, transparent 1px);
+          background-size: 28px 28px;
+          opacity: 0.35;
+        }
+        .hero {
+          position: relative;
+          padding: 24px 24px 18px;
+          border-bottom: 1px solid var(--line);
+        }
+        .hero-top {
+          display: flex;
+          justify-content: space-between;
+          gap: 18px;
+          align-items: flex-start;
+        }
+        .eyebrow {
+          color: var(--accent);
+          font-size: 11px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+        }
+        .ship-name {
+          margin: 8px 0 8px;
+          font-size: clamp(28px, 5vw, 40px);
+          line-height: 1.06;
+          letter-spacing: 1px;
+        }
+        .meta {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+        .pill {
+          padding: 6px 12px;
+          border: 1px solid var(--line);
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.04);
+          color: var(--text);
+          font-size: 12px;
+        }
+        .quality {
+          color: var(--accent);
+          border-color: var(--accent-strong);
+          background: linear-gradient(135deg, rgba(255,255,255,0.08), var(--accent-soft));
+          box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+        }
+        .glyph {
+          min-width: 112px;
+          height: 112px;
+          display: grid;
+          place-items: center;
+          border: 1px solid var(--accent-strong);
+          border-radius: 22px;
+          background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+          color: var(--accent);
+        }
+        .glyph-inner {
+          width: 74px;
+          height: 74px;
+          border: 1px solid currentColor;
+          border-radius: 18px;
+          display: grid;
+          place-items: center;
+          font-size: 28px;
+          font-weight: 700;
+          letter-spacing: 2px;
+        }
+        .desc {
+          margin-top: 16px;
+          padding: 14px 16px;
+          border: 1px solid var(--line);
+          border-radius: 18px;
+          background: rgba(255,255,255,0.04);
+          color: var(--muted);
+          line-height: 1.75;
+          white-space: pre-wrap;
+        }
+        .tabs {
+          display: flex;
+          gap: 8px;
+          padding: 16px 20px 0;
+          flex-wrap: wrap;
+        }
+        .tab-btn {
+          appearance: none;
+          border: 1px solid var(--line);
+          background: rgba(255,255,255,0.03);
+          color: var(--muted);
+          border-radius: 999px;
+          padding: 8px 14px;
+          font: inherit;
+          cursor: pointer;
+          transition: 0.2s ease;
+        }
+        .tab-btn.active {
+          color: var(--accent);
+          border-color: var(--accent-strong);
+          background: linear-gradient(135deg, rgba(62,157,255,0.18), rgba(123,224,255,0.08));
+        }
+        .tab-panel {
+          display: none;
+          padding: 20px;
+        }
+        .tab-panel.active {
+          display: block;
+        }
+        .grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+          gap: 12px;
+        }
+        .stat, .subcard {
+          border: 1px solid var(--line);
+          border-radius: 18px;
+          background: var(--panel-soft);
+          backdrop-filter: blur(12px);
+        }
+        .stat {
+          padding: 14px;
+        }
+        .label {
+          color: var(--muted);
+          font-size: 11px;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          margin-bottom: 6px;
+        }
+        .value {
+          font-size: 14px;
+          line-height: 1.6;
+          word-break: break-word;
+          white-space: pre-wrap;
+        }
+        .section-title {
+          margin: 0 0 12px;
+          color: var(--accent);
+          font-size: 13px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+        }
+        .energy {
+          display: grid;
+          gap: 10px;
+        }
+        .bar-row {
+          display: grid;
+          grid-template-columns: 90px 1fr 74px;
+          gap: 10px;
+          align-items: center;
+          font-size: 12px;
+        }
+        .bar-track {
+          height: 8px;
+          border-radius: 999px;
+          overflow: hidden;
+          background: rgba(255,255,255,0.08);
+        }
+        .bar-fill {
+          height: 100%;
+          border-radius: inherit;
+          background: linear-gradient(90deg, rgba(62,157,255,0.92), rgba(123,224,255,0.96));
+          box-shadow: 0 0 16px rgba(123,224,255,0.38);
+        }
+        .stack {
+          display: grid;
+          gap: 12px;
+        }
+        .equip-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 12px;
+        }
+        .subcard {
+          padding: 16px;
+          position: relative;
+          overflow: hidden;
+        }
+        .subcard::after {
+          content: "";
+          position: absolute;
+          inset: auto 0 0;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, var(--accent), transparent);
+          opacity: 0.42;
+        }
+        .subhead {
+          display: flex;
+          justify-content: space-between;
+          gap: 10px;
+          align-items: flex-start;
+          margin-bottom: 10px;
+        }
+        .subname {
+          font-size: 16px;
+          font-weight: 600;
+        }
+        .mini {
+          font-size: 11px;
+          color: var(--muted);
+        }
+        .tag-row {
+          display: flex;
+          gap: 6px;
+          flex-wrap: wrap;
+          margin-bottom: 8px;
+        }
+        .tag {
+          padding: 3px 8px;
+          border: 1px solid var(--line);
+          border-radius: 999px;
+          color: var(--muted);
+          font-size: 11px;
+        }
+        .effect-list {
+          display: grid;
+          gap: 6px;
+          margin-top: 10px;
+        }
+        .effect-item {
+          padding: 10px 12px;
+          border-radius: 14px;
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.05);
+          line-height: 1.6;
+        }
+        .effect-item strong {
+          color: var(--text);
+        }
+        .empty {
+          padding: 28px 16px;
+          text-align: center;
+          color: var(--muted);
+          border: 1px dashed var(--line);
+          border-radius: 18px;
+        }
+        @media (max-width: 720px) {
+          body { padding: 8px; }
+          .hero-top { flex-direction: column; }
+          .glyph { min-width: 100%; height: 88px; }
+          .glyph-inner { width: 64px; height: 64px; font-size: 24px; }
+          .bar-row { grid-template-columns: 1fr; }
+        }
+      </style>
+    </head>
+    <body>
+      <script id="data-source" type="text/plain">$1</script>
+      <div id="app"></div>
+      <script>
+        const QUALITY_MAP = {
+          1: { name: "粗制", accent: "#8ca0b4", soft: "rgba(140,160,180,0.18)", strong: "rgba(140,160,180,0.36)" },
+          2: { name: "标准", accent: "#5bd0a5", soft: "rgba(91,208,165,0.18)", strong: "rgba(91,208,165,0.36)" },
+          3: { name: "精良", accent: "#66b8ff", soft: "rgba(102,184,255,0.18)", strong: "rgba(102,184,255,0.36)" },
+          4: { name: "上等", accent: "#a78bfa", soft: "rgba(167,139,250,0.18)", strong: "rgba(167,139,250,0.36)" },
+          5: { name: "史诗", accent: "#ffcf6d", soft: "rgba(255,207,109,0.18)", strong: "rgba(255,207,109,0.36)" },
+          6: { name: "传奇", accent: "#ff879b", soft: "rgba(255,135,155,0.18)", strong: "rgba(255,135,155,0.36)" },
+          7: { name: "神话", accent: "#86f6ff", soft: "rgba(134,246,255,0.18)", strong: "rgba(134,246,255,0.36)" }
+        };
+        const QUALITY_ALIAS = { "粗制": 1, "标准": 2, "精良": 3, "上等": 4, "史诗": 5, "传奇": 6, "神话": 7 };
+
+        function escapeHtml(value) {
+          return String(value ?? "").replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
+        }
+        function formatValue(value) {
+          if (value === undefined || value === null || value === "") return "未记录";
+          if (Array.isArray(value)) return value.length ? value.map(formatValue).join(" / ") : "无";
+          if (typeof value === "object") return Object.entries(value).map(([k, v]) => `${escapeHtml(k)}: ${formatValue(v)}`).join("<br>");
+          return escapeHtml(value);
+        }
+        function textBlock(value) {
+          return escapeHtml(value ?? "暂无描述").replace(/\n/g, "<br>");
+        }
+        function parseQuality(raw) {
+          if (typeof raw === "number" && QUALITY_MAP[raw]) return raw;
+          if (typeof raw === "string") {
+            if (/^\d+$/.test(raw.trim()) && QUALITY_MAP[Number(raw.trim())]) return Number(raw.trim());
+            for (const [name, index] of Object.entries(QUALITY_ALIAS)) {
+              if (raw.includes(name)) return index;
+            }
+          }
+          return 2;
+        }
+        function pickShipQuality(ship) {
+          if (ship && ship["品质"] !== undefined) return parseQuality(ship["品质"]);
+          const equipment = ship && ship["装备"] && typeof ship["装备"] === "object" ? Object.values(ship["装备"]) : [];
+          let highest = 2;
+          equipment.forEach((item) => {
+            if (item && item["品质"] !== undefined) highest = Math.max(highest, parseQuality(item["品质"]));
+          });
+          return highest;
+        }
+        function setTheme(quality) {
+          const info = QUALITY_MAP[quality] || QUALITY_MAP[2];
+          document.documentElement.style.setProperty("--accent", info.accent);
+          document.documentElement.style.setProperty("--accent-soft", info.soft);
+          document.documentElement.style.setProperty("--accent-strong", info.strong);
+          return info;
+        }
+        function compactRequirement(value) {
+          if (!value) return "未声明";
+          return escapeHtml(String(value)).replace(/\s*\|\s*/g, " · ");
+        }
+        function renderStats(entries) {
+          return `<div class="grid">${entries.map(([label, value]) => `<div class="stat"><div class="label">${escapeHtml(label)}</div><div class="value">${formatValue(value)}</div></div>`).join("")}</div>`;
+        }
+        function renderEffects(obj) {
+          if (!obj || typeof obj !== "object" || !Object.keys(obj).length) return `<div class="empty">暂无系统效果</div>`;
+          return `<div class="effect-list">${Object.entries(obj).map(([k, v]) => `<div class="effect-item"><strong>${escapeHtml(k)}</strong><br>${formatValue(v)}</div>`).join("")}</div>`;
+        }
+        function renderEquipment(obj) {
+          if (!obj || typeof obj !== "object" || !Object.keys(obj).length) return `<div class="empty">暂无装载装备</div>`;
+          return `<div class="equip-grid">${Object.entries(obj).map(([name, item]) => {
+            const q = QUALITY_MAP[parseQuality(item && item["品质"])];
+            const tags = Array.isArray(item && item["标签"]) ? item["标签"] : [];
+            return `<article class="subcard" style="box-shadow: inset 0 0 0 1px ${q.strong};">
+              <div class="subhead">
+                <div>
+                  <div class="subname">${escapeHtml(name)}</div>
+                  <div class="mini">${escapeHtml(q.name)} · ${compactRequirement(item && item["装配要求"])}</div>
+                </div>
+                <div class="pill quality" style="margin:0;color:${q.accent};border-color:${q.strong};background:${q.soft};">${escapeHtml(item && item["品质"] !== undefined ? String(item["品质"]) : q.name)}</div>
+              </div>
+              ${tags.length ? `<div class="tag-row">${tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>` : ""}
+              ${item && item["描述"] ? `<div class="value" style="color:var(--muted);margin-bottom:8px;">${textBlock(item["描述"])}</div>` : ""}
+              ${renderEffects(item && item["效果"])}
+            </article>`;
+          }).join("")}</div>`;
+        }
+        function attachTabs() {
+          document.querySelectorAll(".tab-btn").forEach((button) => {
+            button.addEventListener("click", () => {
+              const tab = button.getAttribute("data-tab");
+              document.querySelectorAll(".tab-btn").forEach((node) => node.classList.toggle("active", node === button));
+              document.querySelectorAll(".tab-panel").forEach((panel) => panel.classList.toggle("active", panel.id === tab));
+            });
+          });
+        }
+        function init() {
+          const raw = document.getElementById("data-source").textContent.trim().replace(/^\s*```(?:json|yaml)?/i, "").replace(/```\s*$/i, "").trim();
+          const app = document.getElementById("app");
+          try {
+            const data = jsyaml.load(raw);
+            const shipName = Object.keys(data || {})[0];
+            const ship = shipName ? data[shipName] : null;
+            if (!shipName || !ship || typeof ship !== "object") throw new Error("未读取到有效舰船对象。");
+            const quality = pickShipQuality(ship);
+            const theme = setTheme(quality);
+            const currentCharge = Number(ship["跃迁充能"] || 0);
+            const maxCharge = Math.max(Number(ship["最大充能"] || 0), 1);
+            const chargeRate = Math.max(0, Math.min(100, currentCharge / maxCharge * 100));
+            const tonnage = ship["吨位"] || "S";
+            const overviewStats = [
+              ["舰船类型", ship["舰船类型"]],
+              ["吨位", tonnage],
+              ["制造商", ship["制造商"]],
+              ["驾驶员", ship["驾驶员"]],
+              ["是否旗舰", ship["是否旗舰"] ? "是" : "否"],
+              ["观星者接口角色", ship["观星者接口角色"] || "无"],
+              ["炮位配置", ship["炮位配置"] || "未登记"],
+              ["T槽种类", ship["T槽种类"] || "无"],
+              ["装备槽位配置", ship["装备槽位配置"] || "未登记"],
+              ["跃迁消耗", ship["跃迁消耗"] ?? "未登记"]
+            ];
+            const resourceStats = [
+              ["PG", ship["装配资源"] && ship["装配资源"]["PG"]],
+              ["CPU", ship["装配资源"] && ship["装配资源"]["CPU"]]
+            ];
+            app.innerHTML = `
+              <section class="ship-card">
+                <header class="hero">
+                  <div class="hero-top">
+                    <div>
+                      <div class="eyebrow">Ship Manifest / 舰船档案</div>
+                      <h1 class="ship-name">${escapeHtml(shipName)}</h1>
+                      <div class="meta">
+                        <span class="pill quality">${escapeHtml(theme.name)}</span>
+                        <span class="pill">${escapeHtml(ship["舰船类型"] || "未分类")}</span>
+                        <span class="pill">${escapeHtml(tonnage)}</span>
+                        ${ship["驾驶员"] ? `<span class="pill">驾驶员 · ${escapeHtml(ship["驾驶员"])}</span>` : ""}
+                      </div>
+                    </div>
+                    <div class="glyph">
+                      <div class="glyph-inner">${escapeHtml(String(tonnage).toUpperCase())}</div>
+                    </div>
+                  </div>
+                  <div class="desc">${textBlock(ship["描述"])}</div>
+                </header>
+                <nav class="tabs">
+                  <button class="tab-btn active" data-tab="ship-tab-overview">概览</button>
+                  <button class="tab-btn" data-tab="ship-tab-equipment">装备</button>
+                  <button class="tab-btn" data-tab="ship-tab-systems">系统</button>
+                </nav>
+                <section class="tab-panel active" id="ship-tab-overview">
+                  <div class="stack">
+                    <div>
+                      <h2 class="section-title">舰体参数</h2>
+                      ${renderStats(overviewStats)}
+                    </div>
+                    <div>
+                      <h2 class="section-title">跃迁状态</h2>
+                      <div class="subcard">
+                        <div class="energy">
+                          <div class="bar-row">
+                            <div class="label" style="margin:0;">跃迁充能</div>
+                            <div class="bar-track"><div class="bar-fill" style="width:${chargeRate}%"></div></div>
+                            <div class="mini" style="text-align:right;">${escapeHtml(String(currentCharge))} / ${escapeHtml(String(maxCharge))}</div>
+                          </div>
+                          <div class="grid">
+                            <div class="stat"><div class="label">当前充能</div><div class="value">${escapeHtml(String(currentCharge))}</div></div>
+                            <div class="stat"><div class="label">最大充能</div><div class="value">${escapeHtml(String(ship["最大充能"] ?? "未登记"))}</div></div>
+                            <div class="stat"><div class="label">单次跃迁消耗</div><div class="value">${escapeHtml(String(ship["跃迁消耗"] ?? "未登记"))}</div></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <section class="tab-panel" id="ship-tab-equipment">
+                  <h2 class="section-title">舰载装备</h2>
+                  ${renderEquipment(ship["装备"])}
+                </section>
+                <section class="tab-panel" id="ship-tab-systems">
+                  <div class="stack">
+                    <div>
+                      <h2 class="section-title">装配资源</h2>
+                      ${renderStats(resourceStats)}
+                    </div>
+                    <div>
+                      <h2 class="section-title">船体效果</h2>
+                      ${renderEffects(ship["效果"])}
+                    </div>
+                  </div>
+                </section>
+              </section>
+            `;
+            attachTabs();
+          } catch (error) {
+            app.innerHTML = `<div class="ship-card" style="padding:20px;"><div class="empty">舰船卡解析失败：${escapeHtml(error.message)}</div></div>`;
+          }
+        }
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+        else init();
+      </script>
+    </body>
+    </html>
+    ```
+    </ship>
+trimStrings: []
+placement:
+- 2
+disabled: false
+markdownOnly: true
+promptOnly: false
+runOnEdit: true
+substituteRegex: 0
+minDepth: 0
+maxDepth: 2
