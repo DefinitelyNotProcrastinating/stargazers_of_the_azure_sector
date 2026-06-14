@@ -48,7 +48,7 @@ content: |-
         - "<==> 始源之环 | 共和国之心（先驱者管道“Γ-10管道”，约3跳）"
   </星域>
 extensions:
-  position: 4
+  position: 1
   exclude_recursion: false
   display_index: 134
   probability: 100

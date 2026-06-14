@@ -47,7 +47,7 @@ content: |-
 
   </sanctuary_sisters_desc>
 extensions:
-  position: 4
+  position: 1
   exclude_recursion: true
   display_index: 21
   probability: 100

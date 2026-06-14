@@ -5,7 +5,7 @@ content: |-
 
   **核心系统**
   *   `string time` (特殊变量, ISO 8601格式)
-  *   `int 世界.安全等级`
+  *   `int 主角.所处位置安全等级`
       *   `安等根变量，范围建议为 -100 到 100`
 
   **主角核心**
@@ -32,13 +32,7 @@ content: |-
       *   `每艘舰船必须拥有 吨位、炮位配置、装备槽位配置、装配资源、效果、装备`
   *   `object 主角.个人物品`
       *   `格式: {"物品名": {"品质": string, "堆叠": number, "效果": {"效果名": "量化描述"}, "描述": string}}`
-  *   `object 主角.旗舰库存`
-      *   `格式: {"object_name": Object}`
   *   `object 主角.任务`
-      *   `格式: {"object_name": Object}`
-  *   `object 主角.产业`
-      *   `格式: {"object_name": Object}`
-  *   `object 主角.基地`
       *   `格式: {"object_name": Object}`
   *   `object 主角.建筑`
       *   `格式: {"object_name": Object}`

@@ -42,7 +42,7 @@ content: |-
     紧张: 猎户座辛迪加。
   </国家触发区>
 extensions:
-  position: 4
+  position: 1
   exclude_recursion: false
   display_index: 42
   probability: 100

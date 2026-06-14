@@ -34,7 +34,7 @@ content: |-
         - "↔ 暗色星座（15跳）"
   </星域>
 extensions:
-  position: 4
+  position: 1
   exclude_recursion: false
   display_index: 139
   probability: 100

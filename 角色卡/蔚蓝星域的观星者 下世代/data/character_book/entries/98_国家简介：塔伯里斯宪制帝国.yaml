@@ -28,7 +28,7 @@ content: |-
     军事安全: 塔伯里斯舰队、塔伯里斯防御、塔伯里斯边境、塔伯里斯通道战争、塔伯里斯安全政策
   </国家简介>
 extensions:
-  position: 4
+  position: 1
   exclude_recursion: false
   display_index: 8
   probability: 100

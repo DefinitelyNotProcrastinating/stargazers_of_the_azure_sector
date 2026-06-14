@@ -17,7 +17,7 @@ content: |-
     经济弱点: 她们并不富于原创型工程大师和跨世代经验团队，很多尖端设计仍依赖模仿、逆向和渐进改良。
   </国家触发区>
 extensions:
-  position: 4
+  position: 1
   exclude_recursion: false
   display_index: 46
   probability: 100

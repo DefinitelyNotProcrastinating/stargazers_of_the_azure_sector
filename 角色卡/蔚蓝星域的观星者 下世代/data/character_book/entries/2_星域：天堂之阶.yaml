@@ -54,7 +54,7 @@ content: |-
         - "<~> 未知虫洞星域 | W-C1101B 大陆架（不稳定虫洞）"
   </星域>
 extensions:
-  position: 4
+  position: 1
   exclude_recursion: false
   display_index: 137
   probability: 100

@@ -18,7 +18,7 @@ content: |-
     政治底线: 紧急条例平时不开，因为所有公民都知道这套机制既是国家存续的底牌，也是国家最危险的权力。
   </国家触发区>
 extensions:
-  position: 4
+  position: 1
   exclude_recursion: false
   display_index: 45
   probability: 100

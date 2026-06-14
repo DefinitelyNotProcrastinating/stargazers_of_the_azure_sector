@@ -26,7 +26,7 @@ content: |-
     舰型参数: 天羽、天阵、天将
   </大型设定简介>
 extensions:
-  position: 4
+  position: 1
   exclude_recursion: true
   display_index: 2
   probability: 100

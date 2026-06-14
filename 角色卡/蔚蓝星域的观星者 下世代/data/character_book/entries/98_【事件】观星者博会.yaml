@@ -61,7 +61,7 @@ content: |-
 
   </stargazer_expo_campaign>
 extensions:
-  position: 4
+  position: 1
   exclude_recursion: true
   display_index: 28
   probability: 100

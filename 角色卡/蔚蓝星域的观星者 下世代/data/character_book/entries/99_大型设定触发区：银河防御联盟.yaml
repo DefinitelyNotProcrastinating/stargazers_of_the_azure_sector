@@ -72,7 +72,7 @@ content: |-
   通用指标: Galactic Defense Federation DD/BC/BB/TT为1TW/mV stable，1PB/s Bitrate，0/1MOPS error rate；变形能力需要高神经可塑性。
   </大型设定触发区>
 extensions:
-  position: 4
+  position: 1
   exclude_recursion: true
   display_index: 45
   probability: 100

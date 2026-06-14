@@ -44,7 +44,7 @@ content: |-
     紧张: 自由世界共和国。
   </国家触发区>
 extensions:
-  position: 4
+  position: 1
   exclude_recursion: false
   display_index: 41
   probability: 100

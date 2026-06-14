@@ -54,7 +54,7 @@ content: |-
         - "↔ 钴蓝边境（6跳）、暗红星座（8跳）"
   </星域>
 extensions:
-  position: 4
+  position: 1
   exclude_recursion: false
   display_index: 136
   probability: 100

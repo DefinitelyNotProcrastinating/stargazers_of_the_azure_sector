@@ -18,7 +18,7 @@ content: |-
     日常气质: 塔伯里斯公民普遍礼貌、克制、信息表达精确，对身份权限、消毒流程、网络安全和遗传风险异常敏感。
   </国家触发区>
 extensions:
-  position: 4
+  position: 1
   exclude_recursion: false
   display_index: 47
   probability: 100

@@ -23,7 +23,7 @@ content: |-
         - "<==> 遗忘之海 | 幽灵之幕（先驱者星门“Λ-2通道 模式2”，1跳）"
   </星域>
 extensions:
-  position: 4
+  position: 1
   exclude_recursion: false
   display_index: 138
   probability: 100

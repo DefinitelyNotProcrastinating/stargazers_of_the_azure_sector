@@ -66,7 +66,7 @@ content: |-
         - "<==> 天穹王冠 | 钴蓝边境（先驱者星门“Ω-1通道”，1跳）"
   </星域>
 extensions:
-  position: 4
+  position: 1
   exclude_recursion: false
   display_index: 133
   probability: 100

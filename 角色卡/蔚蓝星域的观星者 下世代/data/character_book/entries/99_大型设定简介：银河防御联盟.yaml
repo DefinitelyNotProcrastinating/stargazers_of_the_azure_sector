@@ -29,7 +29,7 @@ content: |-
     舰型参数: 拦截者构型、巡航构型、中枢构型、完型构型、方舟构型
   </大型设定简介>
 extensions:
-  position: 4
+  position: 1
   exclude_recursion: true
   display_index: 1
   probability: 100

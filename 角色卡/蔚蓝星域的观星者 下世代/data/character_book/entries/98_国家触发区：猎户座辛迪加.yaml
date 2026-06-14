@@ -42,7 +42,7 @@ content: |-
     璨辉星座: 企业高管、贵族游客、自由港工人和商业间谍混居。
   </国家触发区>
 extensions:
-  position: 4
+  position: 1
   exclude_recursion: false
   display_index: 44
   probability: 100

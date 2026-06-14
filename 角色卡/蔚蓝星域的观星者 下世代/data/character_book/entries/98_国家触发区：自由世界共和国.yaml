@@ -37,7 +37,7 @@ content: |-
     新应许之地: 拓荒者、殖民民兵、共和国理想主义者和战争投机者混杂。
   </国家触发区>
 extensions:
-  position: 4
+  position: 1
   exclude_recursion: false
   display_index: 43
   probability: 100

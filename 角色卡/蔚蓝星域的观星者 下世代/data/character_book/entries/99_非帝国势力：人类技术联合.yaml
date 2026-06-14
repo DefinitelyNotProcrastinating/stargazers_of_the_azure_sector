@@ -35,7 +35,7 @@ content: |
   - 非帝国敌对: 所有非帝国势力
   </pirate_desc>
 extensions:
-  position: 4
+  position: 1
   exclude_recursion: true
   display_index: 19
   probability: 100

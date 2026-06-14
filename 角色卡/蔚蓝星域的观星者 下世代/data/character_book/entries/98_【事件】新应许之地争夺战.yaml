@@ -110,7 +110,7 @@ content: |-
 
   </new_canaan_campaign>
 extensions:
-  position: 4
+  position: 1
   exclude_recursion: true
   display_index: 27
   probability: 100

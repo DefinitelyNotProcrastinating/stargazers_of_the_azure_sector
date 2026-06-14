@@ -17,7 +17,7 @@ content: |-
     对外立场: 只要互不侵犯、不挑战其移民与边境法，她们愿意维持和平贸易；但任何试图“解放”“接管”或“净化”塔伯里斯的行为都会触发极端报复。
   </国家触发区>
 extensions:
-  position: 4
+  position: 1
   exclude_recursion: false
   display_index: 48
   probability: 100
