@@ -1,0 +1,97 @@
+keys:
+- BB
+- 升格者级
+- 升格者
+- 战列舰
+- 战列舰 BB
+- 塔伯里斯宪制帝国
+- 塔伯里斯
+- 塔伯里斯帝国
+content: |-
+  <ship_def>
+  级别: 升格者级
+  别名: Ascendant-class
+  舰船类型: BB
+  舰种: 战列舰 BB
+  价格: 6.8B (黑市/打捞修复版价格)
+  制造商: 塔伯里斯大回廊 (宪制帝国自动化船坞)
+  描述: 舰体不再追求“模块化有机体”的极端表现，而是更接近辛迪加式量产战列舰的工业逻辑。它像一艘被拉长、加厚并彻底军用化的大型武装商船，装甲外板由统一规格的装甲段拼接而成，表面留下大量标准检修口和快速拆装节点，整体为了量产、运输和战损后再装配而优化。
+  舰船单位模板:
+    舰船类型: BB
+    吨位: XL
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 4
+    跃迁消耗: 3
+    制造商: 塔伯里斯大回廊 (宪制帝国自动化船坞)
+    描述: 舰体不再追求“模块化有机体”的极端表现，而是更接近辛迪加式量产战列舰的工业逻辑。它像一艘被拉长、加厚并彻底军用化的大型武装商船，装甲外板由统一规格的装甲段拼接而成，表面留下大量标准检修口和快速拆装节点，整体为了量产、运输和战损后再装配而优化。
+    炮位配置: 10L4M8S
+    装备槽位配置: 5H7L
+    船体护盾值: 1560
+    船体结构值: 3640
+    护盾值: 1560
+    结构值: 3640
+    装配资源:
+      PG: 720
+      CPU: 1520
+    效果:
+      船体加成:
+      - 依据舰级定位应用：战列舰 BB。
+      装配减免: []
+      内置电子系统:
+        基础CPU: 内置主力舰级舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置主力舰级多谱段侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+      - 名称: 野战换段装甲协议
+        描述: 升格者级预留了大量统一规格的外装甲段和内部总线接口。战后可快速切除整段受损装甲并换上库存件，前线修复速度远超传统战列舰。它在单舰极限抗打击能力上不如老牌旗舰化战列舰，但极其适合塔伯里斯连续造舰、快速修舰和批量补充舰队。
+    装备: {}
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 201
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9704
+comment: 舰船|升格者级
+selective: true
+secondary_keys:
+- 塔伯里斯宪制帝国
+- 塔伯里斯
+- 塔伯里斯帝国
+position: after_char

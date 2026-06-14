@@ -39,7 +39,7 @@ content: |-
 extensions:
   position: 4
   exclude_recursion: true
-  display_index: 53
+  display_index: 98
   probability: 100
   useProbability: true
   depth: 2
@@ -57,9 +57,9 @@ extensions:
   automation_id: ''
   role: 0
   vectorized: false
-  sticky: 0
-  cooldown: 0
-  delay: 0
+  sticky: null
+  cooldown: null
+  delay: null
   match_persona_description: false
   match_character_description: false
   match_character_personality: false
@@ -77,6 +77,6 @@ name: null
 priority: null
 id: 9530
 comment: 对象显示规则
-selective: true
+selective: false
 secondary_keys: []
 position: after_char

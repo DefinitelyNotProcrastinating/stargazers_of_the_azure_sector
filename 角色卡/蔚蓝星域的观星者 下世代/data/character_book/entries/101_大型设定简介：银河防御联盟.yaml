@@ -49,9 +49,9 @@ extensions:
   automation_id: ''
   role: 0
   vectorized: false
-  sticky: 0
-  cooldown: 0
-  delay: 0
+  sticky: null
+  cooldown: null
+  delay: null
   match_persona_description: false
   match_character_description: false
   match_character_personality: false
@@ -69,6 +69,6 @@ name: null
 priority: null
 id: 43
 comment: 大型设定简介：银河防御联盟
-selective: true
+selective: false
 secondary_keys: []
 position: after_char

@@ -1,0 +1,111 @@
+keys:
+- ICV
+- 炼金术士级
+- 炼金术士
+- 工业指挥舰
+- 采矿指挥舰
+- 猎户座辛迪加
+- 辛迪加
+- 泰坦重工
+content: |-
+  <ship_def>
+  舰船类型: ICV
+  舰种: 工业指挥舰
+  舰体类别: 旗舰型
+  “时间就是信用点，而税收就是成本。我的朋友，‘炼金术士’能帮你同时解决这两个问题。”——辛迪加独立矿业承包商的广告语
+  -   级别: 炼金术士级 (Alchemist-class)
+  -   类型: 工业枢纽舰 ICV
+  -   价格: 9.8B
+  -   形态: 舰体呈一个不对称的巨大复合体，由一个核心的引擎/指挥段和外部挂载的数个巨大的、可替换的工业模块组成。这些模块包括矿石分拣舱、初级熔炼炉和成品仓库，舰身上闪烁着不同模块制造商的品牌Logo。整艘船看起来就像一座能够自由组合和升级的移动工业园区。
+  -   制造商: 泰坦重工 (工业解决方案部)
+  -   静态配置文件:
+      -   舰体全长: 2900米 (标准配置)
+      -   标准船员配置: 180人
+      -   性能评级:
+          -   装甲: 90000
+          -   护盾: 110000
+          -   机动性: 15
+          -   火力输出: 10000 (自卫无人机)
+      -   武器系统:
+          -   主要系统: 12x “黄蜂”武装无人机挂架
+          -   次要系统: 20x “哨兵”双联装点防御炮塔
+          -   攻击射程: 70000 km (无人机作战半径)
+      -   特殊系统:
+          -   名称: 重型精炼阵列
+          -   描述: 一套完整的、高度自动化的矿石精炼流水线。虽然其精炼效率和产物纯度无法与专业的空间站设施相比，但足以将大部分常见矿石处理成符合辛迪加贸易法案中“初级工业产品”标准的金属锭或同位素。这使得搭载该舰的矿业集团能够以更低的税率出售其产品，或直接将其用于前线的模块化建造，极大地提升了整个产业链的灵活性和利润空间。
+      -   观星者需求: 需要两名观星者协作。对观星者的要求相对灵活。
+
+  舰船单位模板:
+    舰船类型: ICV
+    吨位: XL
+    驾驶员: ''
+    是否旗舰: true
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 4
+    跃迁消耗: 3
+    炮位配置: 4L
+    装备槽位配置: 7H5L
+    船体护盾值: 6300
+    船体结构值: 4500
+    护盾值: 6300
+    结构值: 4500
+    装配资源:
+      PG: 820
+      CPU: 1180
+    效果:
+      船体加成:
+      - 工业无人机与舰载机机库容量 +20%
+      - 常见矿石精炼产物产出 +20%
+      内置电子系统:
+        基础CPU: 内置工业指挥舰载CPU。
+        基础侦测器: 内置大型矿区调度阵列。
+    装备: {}
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 223
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9726
+comment: 舰船|炼金术士级
+selective: true
+secondary_keys:
+- 猎户座辛迪加
+- 辛迪加
+- 泰坦重工
+position: after_char

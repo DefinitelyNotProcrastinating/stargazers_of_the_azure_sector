@@ -1,0 +1,110 @@
+keys:
+- JF
+- 普罗米修斯级
+- 普罗米修斯
+- 超级货舰
+- Jumbo Freighter
+- 货舰
+- 战略隐形货舰
+- 天鹅座技术联邦
+- 联邦
+content: |-
+  <ship_def>
+  舰船类型: JF
+  舰种: 战略隐形货舰
+  舰体类别: 高级型
+  -   级别: 普罗米修斯级
+  -   类型: 战略隐形货舰 (超级货舰) JF
+  -   价格: 35B (350亿 信用点)
+  -   形态: 舰体设计极度扁平化，像是一只巨大的、被拉长的银色鳐鱼。表面覆盖着复杂的六边形热散逸瓦片，能在隐形模式下完美遮蔽引擎废热。舰体没有任何突出的舰桥结构，控制中枢位于深埋于装甲之下的全封闭舱室。其货舱并非传统的集装箱挂载点，而是三个内置的巨型反重力稳定舱，能够容纳体积惊人的货物而不影响舰体流线型。
+  -   制造商: 联邦联合物流系统 (Federated Logistics Systems)
+  -   静态配置文件:
+      -   舰体全长: 3200米
+      -   标准船员配置: 120人 (高度自动化)
+      -   性能评级:
+          -   装甲: 102000
+          -   护盾: 5000
+          -   机动性: 15
+          -   火力输出: 0
+          -   货仓容量: 1,850,000 m³ (基础) / 2,200,000 m³ (扩展)
+      -   武器系统:
+          -   无。该舰船完全依赖隐形和护航生存。
+      -   特殊系统:
+          -   名称: 超重型隐形装置
+          -   描述: 联邦隐形技术的工业级应用。该装置能够生成一个覆盖全舰的光学与电子伪装场，使这艘3公里长的巨舰在雷达上彻底消失。**限制**: 由于能耗巨大且会干扰跃迁场稳定性，该装置无法在跃迁引擎启动时或跃迁过程中开启。这意味着它在进出星门或进行跃迁校准的几分钟内是最脆弱的。然而，一旦进入亚光速巡航，它就是不可捉摸的幽灵。
+      -   观星者需求: 增益需达到4TW/mV
+
+  舰船单位模板:
+    舰船类型: JF
+    吨位: XL
+    驾驶员: ''
+    是否旗舰: true
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 4
+    跃迁消耗: 2
+    炮位配置: ''
+    装备槽位配置: 5H7L
+    船体护盾值: 3600
+    船体结构值: 8400
+    护盾值: 3600
+    结构值: 8400
+    装配资源:
+      PG: 960
+      CPU: 1250
+    效果:
+      船体加成:
+      - 基础货舱容量 1850000 m³
+      - 扩展货舱容量 2200000 m³
+      - 超重型隐形装置启用时无法启动跃迁引擎
+      内置电子系统:
+        基础CPU: 内置高级运输舰载CPU。
+        基础侦测器: 内置低可视航行侦测器。
+    装备: {}
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 227
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9730
+comment: 舰船|普罗米修斯级
+selective: true
+secondary_keys:
+- 天鹅座技术联邦
+- 联邦
+position: after_char

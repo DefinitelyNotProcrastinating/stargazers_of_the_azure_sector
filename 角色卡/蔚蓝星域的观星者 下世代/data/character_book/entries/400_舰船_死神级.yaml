@@ -1,0 +1,98 @@
+keys:
+- BBV
+- 死神级
+- 死神
+- 航空战列舰
+- 战列舰
+- 航空战列舰 (高级战列舰)
+- 猎户座辛迪加
+- 辛迪加
+- 奇戎基因
+content: |-
+  <ship_def>
+  级别: 死神级
+  别名: Reaper-class
+  舰船类型: BBV
+  舰种: 航空战列舰 (高级战列舰)
+  价格: ''
+  制造商: 奇戎基因 (特别项目部 - 定制)
+  描述: 舰体设计充满了哥特式的、病态的美感。修长的舰身主体呈深邃的黑色，如同出鞘的利刃，上面用银线勾勒出复杂的、类似天使羽翼的纹路。舰体中部集成了两座战列舰级的主炮塔，后半段则是扁平化的、内置式的无人机机库。整艘船在“机动模式”下看起来像一艘放大了的突击巡洋舰，但在切换到“猎杀模式”时，舰体两侧会展开巨大的、如同骨翼般的散热器和能量传导矩阵，散发出不祥的血红色光芒。
+  舰船单位模板:
+    舰船类型: BBV
+    吨位: XL
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 4
+    跃迁消耗: 3
+    制造商: 奇戎基因 (特别项目部 - 定制)
+    描述: 舰体设计充满了哥特式的、病态的美感。修长的舰身主体呈深邃的黑色，如同出鞘的利刃，上面用银线勾勒出复杂的、类似天使羽翼的纹路。舰体中部集成了两座战列舰级的主炮塔，后半段则是扁平化的、内置式的无人机机库。整艘船在“机动模式”下看起来像一艘放大了的突击巡洋舰，但在切换到“猎杀模式”时，舰体两侧会展开巨大的、如同骨翼般的散热器和能量传导矩阵，散发出不祥的血红色光芒。
+    炮位配置: 2L4C
+    装备槽位配置: 7H5L
+    船体护盾值: 3920
+    船体结构值: 2800
+    护盾值: 3920
+    结构值: 2800
+    装配资源:
+      PG: 1152
+      CPU: 2432
+    效果:
+      船体加成:
+      - 依据舰级定位应用：航空战列舰 (高级战列舰)。
+      装配减免: []
+      内置电子系统:
+        基础CPU: 内置主力舰级舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置主力舰级多谱段侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+      - 名称: 双相作战协议
+        描述: '专为AA-014“米迦勒”的神经特性而设计的战术切换系统，允许她在两种截然不同的作战模式间切换。\n**机动模式**: 将能源优先供应给引擎和跃迁核心，收回所有外部散热器，以巡洋舰级别的机动性进行长距离的追踪和索敌。\n**猎杀模式**: 展开散热骨翼，将反应堆的全部输出灌注到武器系统中。主炮充能速度提升50%，锁定精度提升30%，无人机AI的攻击性协议被解锁至最高级别。在此模式下，舰船的防御能力和机动性会大幅下降，完全依赖“米迦勒”精准的判断来规避伤害。'
+    装备: {}
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 199
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9702
+comment: 舰船|死神级
+selective: true
+secondary_keys:
+- 猎户座辛迪加
+- 辛迪加
+- 奇戎基因
+position: after_char

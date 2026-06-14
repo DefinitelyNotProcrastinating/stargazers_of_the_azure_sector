@@ -3,7 +3,7 @@ content: <组织>
 extensions:
   position: 1
   exclude_recursion: false
-  display_index: 48
+  display_index: 85
   probability: 100
   useProbability: true
   depth: 3
@@ -21,9 +21,9 @@ extensions:
   automation_id: ''
   role: 0
   vectorized: false
-  sticky: 0
-  cooldown: 0
-  delay: 0
+  sticky: null
+  cooldown: null
+  delay: null
   match_persona_description: false
   match_character_description: false
   match_character_personality: false
@@ -41,6 +41,6 @@ name: null
 priority: null
 id: 57
 comment: 组织和历史开始
-selective: true
+selective: false
 secondary_keys: []
 position: after_char

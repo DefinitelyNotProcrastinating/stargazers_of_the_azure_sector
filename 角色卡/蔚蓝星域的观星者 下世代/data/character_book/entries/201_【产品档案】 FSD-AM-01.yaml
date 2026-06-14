@@ -1,0 +1,87 @@
+keys:
+- FSD-AM
+- 阿尼玛系列
+- 阿尼玛
+- 联邦观星者
+content: |-
+  <观星者档案>
+  -   天鹅座技术联邦 - “标准模型”入门级分支
+      型号: FSD-AM-7540
+      制造商: 联邦联合生物动力 - 青年教育部特供
+      系列: “阿尼玛”系列
+      市场定位: "入门级通用 / 飞行员学院配给 / 出口许可"
+      价格估值: "4,200,000 信用点"
+
+      品质: 3
+      设计定型日期: "2487年"
+
+      外观规格:
+          默认外观: |
+              “阿尼玛”系列是联邦针对年轻一代飞行员心理特征而专门优化的型号。她拥有一头经过基因调色的、富有光泽的渐变浅蓝色短发，发梢呈现出半透明的质感，仿佛数据流在发间闪烁。面容被设计成极其讨喜的“邻家少女”或“青梅竹马”风格，五官柔和，大眼睛中闪烁着淡紫色的生物荧光，带着一种无条件的信任与崇拜。
+              她的身材娇小但比例完美，充满了青春的活力。最引人注目的是她的标准着装：一套联邦标志性的白色半透明高分子紧身衣。这种材料在常态下呈现乳白色的磨砂质感，隐约透出肌肤的肉色；而在同调或体温升高时，它会变得更加透明，清晰地勾勒出她青涩却诱人的身体曲线——微微隆起的胸部、平坦的小腹以及下体那稚嫩的缝隙。她通常佩戴着一对发光的几何体耳饰，实际上是微型的生物状态指示灯。
+          标准体型:
+              身高: "约162cm"
+              三围: "82cm(B)-56cm-84cm"
+          识别标记:
+              类型: "全息投射项圈"
+              位置: "颈部"
+              描述: "一个极细的金属项圈，会在颈部周围投射出一圈淡淡的全息光环，上面滚动显示着她的序列号和当前的神经同步率。"
+
+      性能参数:
+          比特率: "~280TB/s"
+          精度: "1.2/1M 指令"
+          稳态增益: "2.5 TW/mV"
+          爆发增益: "4.0 TW/mV"
+          功能特性: |
+              [情感引导协议]: 针对许多联邦学员“高智商低情商”、在性行为上羞涩或笨拙的特点，她的神经系统预装了一套循序渐进的引导程序。在初次同调时，她会表现得比主人更加害羞和紧张，激起主人的保护欲和主导欲，从而自然地消除隔阂。
+      人格核心:
+          默认人格: |
+              [元气青梅/小恶魔型]: 为了中和联邦社会冷漠的理性氛围，她被赋予了极具活力的性格。平时，她会像一个粘人的小妹妹或者一起长大的邻家女孩一样，在舰长耳边叽叽喳喳，吐槽枯燥的任务，或者分享一些联邦流行文化梗。但在两人独处时，她会展现出一种带有挑逗意味的“小恶魔”属性，用半透明紧身衣下的身体去蹭舰长的手臂，或者用天真的语气说出令人脸红的邀请。这种“只有你能看到我这一面”的专属感，是联邦心理学家精心设计的陷阱。
+          喜好: ["全息游戏", "甜食", "听舰长抱怨", "被摸头"]
+          厌恶: ["复杂的数学作业（虽然她会做）", "被冷落", "不仅不有趣还很危险的任务"]
+          性癖: ["Cosplay (虽然她已经是了)", "半推半就", "羞耻play"]
+  </观星者档案>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 59
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 201
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 123
+comment: 【产品档案】 FSD-AM-01
+selective: true
+secondary_keys: []
+position: after_char

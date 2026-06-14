@@ -1,0 +1,109 @@
+keys:
+- TC
+- 执政官构型
+- 自动化无人机巡洋舰
+- 无人机巡洋舰
+- 巡洋舰
+- 银河防御联盟
+- 先驱者
+content: |-
+  <ship_def>
+  -   级别: 执政官构型
+  -   类型: 自动化无人机巡洋舰 (特种巡洋舰) CA
+  -   价格: 无法购买
+  -   形态: 舰体呈完美的圆柱形，表面覆盖着洁白的、略带磨砂质感的陶瓷状装甲。没有任何多余的凸起或装饰，只有舰体侧面整齐排列的五个巨大的长方形发射口。在非战斗状态下，这些发射口是封闭的，使整艘船看起来像是一根巨大的白色权杖。
+  -   制造商: 银河防御联盟舰队管理中枢 (已灭绝)
+  -   静态配置文件:
+      -   舰体全长: 680米
+      -   标准船员配置: 2人
+      -   性能评级:
+          -   装甲: 45000
+          -   护盾: 0
+          -   机动性: 55
+          -   火力输出: 12000
+      -   武器系统:
+          -   主要系统: 5x 重型战体挂架，每个挂架可挂载超级航母级别的战斗机 8架 总计40架
+          -   次要系统: 2x “寂静”指向性介子脉冲波发射器
+          -   攻击射程: 180000 km (战机作战半径) / 15000 km (脉冲波)
+      -   特殊系统:
+          -   名称: 自动化战术协调中枢
+          -   描述: 舰载的高级AI核心接管了95%的无人机指挥任务。指挥官只需要下达“攻击目标A”或“保护目标B”这样的宏观指令，剩下的战术机动、编队飞行和火力分配全由AI自动完成。
+          -   名称: 重型战体维护协议
+          -   描述: 尽管是巡洋舰体型，但其内部空间几乎完全被机库占据。它可以维护和补给通常只有航母才能搭载的重型战斗机（尺寸接近护卫舰）。注意：该舰没有生产能力，所有损耗的战机必须在空间站购买补充。
+      -   观星者需求: 极低。只需要最基础的神经接口连接以维持FTL。
+  舰船单位模板:
+    舰船类型: TC
+    吨位: L
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 4
+    跃迁消耗: 2
+    制造商: 银河防御联盟舰队管理中枢 (已灭绝)
+    描述: 舰载的高级AI核心接管了95%的无人机指挥任务。指挥官只需要下达“攻击目标A”或“保护目标B”这样的宏观指令，剩下的战术机动、编队飞行和火力分配全由AI自动完成。
+    炮位配置: 4M4S
+    装备槽位配置: 4H4L
+    船体护盾值: 1100
+    船体结构值: 1320
+    护盾值: 1100
+    结构值: 1320
+    装配资源:
+      PG: 360
+      CPU: 720
+    效果:
+      船体加成:
+      - 依据舰级定位应用：自动化无人机巡洋舰 (特种巡洋舰) CA。
+      装配减免: []
+      内置电子系统:
+        基础CPU: 内置标准舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置标准多谱段侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+    装备: {}
+
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 232
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9735
+comment: 舰船|执政官构型
+selective: true
+secondary_keys:
+- 银河防御联盟
+- 先驱者
+position: after_char

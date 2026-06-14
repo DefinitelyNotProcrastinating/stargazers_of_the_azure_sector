@@ -7,8 +7,8 @@ keys:
 - CVL
 - 天鹅座技术联邦
 - 联邦
-content: |-
-  
+content: |2-
+
   <ship_def>
   “然而，微观上的混沌，在宏观上往往是有序的……”——联邦航空航天局第01设计所首席理论物理学家，日志条目 2.7
   -   级别: 开普勒级
@@ -61,12 +61,12 @@ content: |-
         基础CPU: 内置标准舰载CPU；跟踪与ECCM按电子战规则计算。
         基础侦测器: 内置标准多谱段侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
     装备: {}
-  
+
   </ship_def>
 extensions:
   position: 1
   exclude_recursion: true
-  display_index: 101
+  display_index: 145
   probability: 100
   useProbability: true
   depth: 4
@@ -84,9 +84,9 @@ extensions:
   automation_id: ''
   role: 0
   vectorized: false
-  sticky: 0
-  cooldown: 0
-  delay: 0
+  sticky: null
+  cooldown: null
+  delay: null
   match_persona_description: false
   match_character_description: false
   match_character_personality: false

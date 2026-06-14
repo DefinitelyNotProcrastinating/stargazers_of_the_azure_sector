@@ -1,0 +1,3835 @@
+id: 1efbca0b-ee25-48e4-bf0e-5a48873c6069
+scriptName: 状态栏
+findRegex: $
+replaceString: |-
+  <ui_sys>
+    ```
+  <!DOCTYPE html>
+  <html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>蔚蓝星区状态栏</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <style>
+      :root {
+        --bg: rgba(18, 8, 32, .58);
+        --panel: rgba(34, 14, 58, .46);
+        --panel-strong: rgba(46, 18, 78, .76);
+        --line: rgba(212, 167, 255, .24);
+        --line-hot: rgba(232, 198, 255, .82);
+        --cyan: #d9b7ff;
+        --blue: #9167ff;
+        --gold: #f1c7ff;
+        --danger: #ff7fa8;
+        --text: #fbf6ff;
+        --muted: #bda4d4;
+        --shadow: 0 22px 70px rgba(0, 0, 0, .46), 0 0 80px rgba(116, 60, 190, .16);
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        color: var(--text);
+        font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+      }
+
+      body {
+        min-height: 780px;
+        overflow: hidden;
+        position: relative;
+        background:
+          radial-gradient(circle at 18% 12%, rgba(148, 83, 255, .36), transparent 31%),
+          radial-gradient(circle at 84% 18%, rgba(255, 105, 203, .18), transparent 30%),
+          radial-gradient(circle at 70% 82%, rgba(81, 51, 178, .28), transparent 38%),
+          linear-gradient(135deg, #08030f 0%, #160821 48%, #090312 100%);
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: .55;
+        z-index: 0;
+        background-image:
+          linear-gradient(rgba(226, 190, 255, .05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(226, 190, 255, .05) 1px, transparent 1px);
+        background-size: 32px 32px;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.015) 42%, rgba(140,67,255,.08));
+        mix-blend-mode: screen;
+      }
+
+      button { font: inherit; }
+
+      ::-webkit-scrollbar { width: 5px; height: 5px; }
+      ::-webkit-scrollbar-thumb { background: rgba(219,181,255,.42); border-radius: 10px; }
+
+      .shell {
+        width: min(1440px, 100vw);
+        height: min(900px, 100vh);
+        margin: auto;
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 216px 1fr;
+        overflow: hidden;
+        border-radius: 28px;
+        border: 1px solid rgba(218, 180, 255, .26);
+        background: rgba(18, 7, 31, .88);
+        box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,.08);
+      }
+
+      .side {
+        padding: 20px 13px;
+        border-right: 1px solid var(--line);
+        background: rgba(24, 8, 42, .92);
+      }
+
+      .brand {
+        padding: 4px 10px 23px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 15px;
+      }
+
+      .brand strong {
+        display: block;
+        color: var(--cyan);
+        letter-spacing: 5px;
+        font-size: 20px;
+      }
+
+      .brand small {
+        color: var(--muted);
+        letter-spacing: 2px;
+        font-size: 10px;
+      }
+
+      .nav-btn {
+        width: 100%;
+        margin: 3px 0;
+        padding: 11px 10px;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        color: var(--muted);
+        background: transparent;
+        cursor: pointer;
+        text-align: left;
+        transition: .2s;
+      }
+
+      .nav-btn:hover {
+        color: var(--text);
+        background: rgba(210, 167, 255, .09);
+      }
+
+      .nav-btn.active {
+        color: var(--cyan);
+        border-color: var(--line);
+        background: linear-gradient(90deg, rgba(142, 96, 255, .30), rgba(229, 174, 255, .07));
+      }
+
+      .nav-btn span {
+        display: inline-block;
+        width: 22px;
+        color: var(--cyan);
+        opacity: .8;
+      }
+
+      .main {
+        min-width: 0;
+        display: grid;
+        grid-template-rows: 62px 1fr;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 22px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(24, 8, 42, .92);
+      }
+
+      .top-title {
+        color: var(--cyan);
+        letter-spacing: 2px;
+        font-size: 15px;
+      }
+
+      .top-meta {
+        text-align: right;
+        color: #d8c4ec;
+        font-size: 11px;
+        line-height: 1.6;
+      }
+
+      .view {
+        display: none;
+        overflow: auto;
+        padding: 20px;
+      }
+
+      .view.active { display: block; }
+
+      #map-view.active {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 290px;
+        gap: 14px;
+        overflow: hidden;
+      }
+
+      h1, h2, h3 { margin: 0; font-weight: 500; }
+      h1 { font-size: 23px; letter-spacing: 2px; }
+
+      h2 {
+        padding-bottom: 8px;
+        color: var(--cyan);
+        font-size: 15px;
+        letter-spacing: 2px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      h3 {
+        color: var(--gold);
+        font-size: 13px;
+        letter-spacing: 1px;
+      }
+
+      .muted { color: #d8c4ec; }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        gap: 10px;
+      }
+
+      .grid.wide { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+
+      .panel,
+      .stat,
+      .card,
+      details,
+      .skill-card,
+      .map-wrap,
+      .ship-orbital,
+      .module-node,
+      .stargazer-link {
+        border: 1px solid rgba(226, 190, 255, .24);
+        border-radius: 20px;
+        background-color: rgba(33, 12, 56, .86);
+        box-shadow: 0 16px 42px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.10);
+      }
+
+      .panel { padding: 15px; margin-bottom: 14px; }
+      .stat { min-height: 68px; padding: 11px 13px; }
+
+      .label {
+        margin-bottom: 5px;
+        color: #d8c4ec;
+        font-size: 10px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .value {
+        color: #fff9ff;
+        font-size: 13px;
+        word-break: break-word;
+        white-space: pre-wrap;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: end;
+        gap: 16px;
+        padding: 18px;
+      }
+
+      .hero .place {
+        color: #fff9ff;
+        font-size: 22px;
+        letter-spacing: 1px;
+      }
+
+      .hero .subplace {
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .credits {
+        color: var(--gold);
+        font-size: 20px;
+        text-align: right;
+      }
+
+      .section-title {
+        margin: 20px 0 10px;
+        color: var(--cyan);
+        font-size: 13px;
+        letter-spacing: 2px;
+      }
+
+      .skill-card {
+        padding: 10px;
+        background: rgba(35, 13, 59, .86);
+      }
+
+      .skill-card.learning {
+        border-color: rgba(255,212,121,.55);
+        background: rgba(255,212,121,.08);
+      }
+
+      .skill-head {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        font-size: 12px;
+      }
+
+      .level { color: var(--gold); }
+
+      .bar {
+        height: 5px;
+        overflow: hidden;
+        border-radius: 5px;
+        background: rgba(255,255,255,.10);
+      }
+
+      .fill {
+        height: 100%;
+        background: linear-gradient(90deg, #7b5cff, #dfb5ff);
+        box-shadow: 0 0 16px rgba(221,181,255,.72);
+      }
+
+      .skill-foot {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+        gap: 11px;
+      }
+
+      .card {
+        padding: 14px;
+        cursor: pointer;
+        transition: .2s;
+      }
+
+      .card:hover {
+        border-color: var(--line-hot);
+        transform: translateY(-2px);
+        box-shadow: 0 22px 70px rgba(95, 47, 161, .28), inset 0 1px 0 rgba(255,255,255,.10);
+      }
+
+      .card-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 8px;
+      }
+
+      .card-head h3 { color: #fff9ff; }
+
+      .badge,
+      .tag {
+        display: inline-block;
+        padding: 2px 7px;
+        margin: 2px;
+        border: 1px solid rgba(221, 181, 255, .32);
+        border-radius: 12px;
+        color: #e6caff;
+        background: rgba(219, 177, 255, .07);
+        font-size: 10px;
+      }
+
+      .badge.human {
+        color: var(--gold);
+        border-color: rgba(255,212,121,.35);
+      }
+
+      .desc {
+        color: #d8c4ec;
+        font-size: 12px;
+        line-height: 1.7;
+        white-space: pre-wrap;
+      }
+
+      details { margin-top: 10px; padding: 10px 12px; }
+      summary { color: var(--cyan); cursor: pointer; font-size: 12px; }
+
+      .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .empty {
+        padding: 45px 15px;
+        color: var(--muted);
+        text-align: center;
+        border: 1px dashed var(--line);
+        border-radius: 10px;
+      }
+
+      .map-wrap {
+        min-width: 0;
+        min-height: 0;
+        position: relative;
+        overflow: hidden;
+        background: rgba(0,5,12,.52);
+      }
+
+      .map-wrap svg { width: 100%; height: 100%; min-height: 650px; }
+
+      .route { stroke: rgba(226, 190, 255, .22); stroke-width: 2; }
+      .route.gate { stroke: rgba(226, 190, 255, .66); stroke-width: 3; }
+      .route.worm { stroke: rgba(203,128,255,.65); stroke-dasharray: 6 5; }
+
+      .node { cursor: pointer; }
+
+      .node circle {
+        fill: #dff8ff;
+        stroke: rgba(226,190,255,.75);
+        stroke-width: 4;
+        transition: .2s;
+      }
+
+      .node:hover circle,
+      .node.player circle {
+        fill: var(--cyan);
+        stroke-width: 9;
+      }
+
+      .node.worm circle {
+        fill: #c980ff;
+        stroke: rgba(203,128,255,.38);
+      }
+
+      .node text {
+        fill: var(--muted);
+        font-size: 11px;
+        paint-order: stroke;
+        stroke: rgba(0,5,12,.9);
+        stroke-width: 4px;
+        stroke-linejoin: round;
+      }
+
+      .map-side { overflow: auto; }
+
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      .dot {
+        width: 9px;
+        height: 9px;
+        display: inline-block;
+        margin-right: 4px;
+        border-radius: 50%;
+        background: var(--cyan);
+      }
+
+      .dot.worm { background: #c980ff; }
+
+      .ship-card { overflow: hidden; }
+
+      .ship-layout {
+        display: grid;
+        grid-template-columns: minmax(310px, 460px) minmax(0, 1fr);
+        gap: 14px;
+        align-items: stretch;
+      }
+
+      .ship-orbital {
+        position: relative;
+        min-height: 430px;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 50% 45%, rgba(255,255,255,.12), rgba(126,67,202,.30) 28%, rgba(21,8,39,.84) 58%, rgba(8,3,18,.92) 100%);
+      }
+
+      .ship-orbital::before,
+      .ship-orbital::after,
+      .ship-ring {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 999px;
+        pointer-events: none;
+      }
+
+      .ship-orbital::before {
+        width: 82%;
+        aspect-ratio: 1;
+        border: 1px solid rgba(226,190,255,.16);
+        box-shadow: 0 0 0 18px rgba(255,255,255,.018);
+      }
+
+      .ship-orbital::after {
+        width: 52%;
+        aspect-ratio: 1;
+        border: 1px dashed rgba(226,190,255,.25);
+      }
+
+      .ship-ring.inner {
+        width: 35%;
+        aspect-ratio: 1;
+        border: 1px solid rgba(226,190,255,.20);
+      }
+
+      .ship-core {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 132px;
+        height: 132px;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 14px;
+        border: 1px solid rgba(232,198,255,.42);
+        background: radial-gradient(circle at 30% 18%, rgba(255,255,255,.25), rgba(91,41,144,.92));
+        box-shadow: 0 0 45px rgba(190,124,255,.28), inset 0 1px 0 rgba(255,255,255,.12);
+      }
+
+      .ship-core strong {
+        color: #fff9ff;
+        font-size: 14px;
+        letter-spacing: 1px;
+      }
+
+      .ship-core small {
+        display: block;
+        margin-top: 6px;
+        color: #d8c4ec;
+        font-size: 10px;
+        line-height: 1.45;
+      }
+
+      .module-node {
+        position: absolute;
+        left: var(--x);
+        top: var(--y);
+        transform: translate(-50%, -50%);
+        width: clamp(78px, 18vw, 112px);
+        min-height: 54px;
+        padding: 7px 8px;
+        text-align: center;
+        background: rgba(50, 18, 82, .94);
+      }
+
+      .module-node.weapon { border-color: rgba(255,156,218,.42); }
+      .module-node.high { border-color: rgba(223,188,255,.50); }
+      .module-node.low { border-color: rgba(159,139,255,.48); }
+
+      .module-node .module {
+        display: block;
+        color: #fff9ff;
+        font-size: 10px;
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+      }
+
+      .module-node.empty-slot .module {
+        color: var(--muted);
+        opacity: .82;
+      }
+
+      .stargazer-link {
+        margin-top: 10px;
+        padding: 10px 12px;
+        background: rgba(255,255,255,.045);
+      }
+
+      .stargazer-link strong { color: var(--gold); }
+
+      .ship-stargazer-card {
+        display: grid;
+        grid-template-columns: 34px minmax(0, 1fr);
+        gap: 8px;
+        align-items: center;
+      }
+
+      .ship-stargazer-card .character-avatar.small {
+        margin-right: 0;
+      }
+
+
+      .collapse-section {
+        margin-top: 20px;
+      }
+
+      .collapse-section > summary {
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 13px 15px;
+        border-radius: 18px;
+        color: var(--cyan);
+        font-size: 13px;
+        letter-spacing: 2px;
+        cursor: pointer;
+        background: rgba(50, 18, 82, .55);
+        border: 1px solid rgba(226, 190, 255, .24);
+      }
+
+      .collapse-section > summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .collapse-section > summary::after {
+        content: "展开";
+        color: var(--muted);
+        font-size: 10px;
+        letter-spacing: 1px;
+      }
+
+      .collapse-section[open] > summary::after {
+        content: "收起";
+      }
+
+      .collapse-body {
+        margin-top: 10px;
+      }
+
+      .item-list,
+      .news-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 11px;
+      }
+
+      .item-entry,
+      .news-entry {
+        padding: 13px;
+        border: 1px solid rgba(226, 190, 255, .24);
+        border-radius: 18px;
+        background: rgba(35, 13, 59, .72);
+        box-shadow: 0 12px 32px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.08);
+      }
+
+      .item-entry h3,
+      .news-entry h3 {
+        margin: 0 0 8px;
+        color: #fff9ff;
+        font-size: 13px;
+        letter-spacing: 1px;
+      }
+
+      .entry-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 8px;
+      }
+
+      .entry-pill {
+        display: inline-block;
+        padding: 2px 7px;
+        border: 1px solid rgba(221, 181, 255, .32);
+        border-radius: 999px;
+        color: #e6caff;
+        background: rgba(219, 177, 255, .07);
+        font-size: 10px;
+      }
+
+
+      /* Compact density pass */
+      .view { padding: 12px; }
+      .panel { padding: 11px; margin-bottom: 9px; }
+      .stat { min-height: 54px; padding: 8px 10px; }
+      .grid { gap: 7px; }
+      .grid.wide { gap: 7px; }
+      .cards { gap: 8px; }
+      .card { padding: 10px; }
+      .section-title { margin: 12px 0 7px; }
+      details { margin-top: 7px; padding: 8px 10px; }
+      .detail-grid { gap: 6px; margin-top: 7px; }
+      .desc { line-height: 1.55; }
+      .hero { padding: 13px; gap: 10px; }
+      .skill-card { padding: 8px; }
+      .collapse-section { margin-top: 12px; }
+      .collapse-section > summary { padding: 10px 12px; }
+      .collapse-body { margin-top: 7px; }
+      .item-list, .news-list { gap: 8px; }
+      .item-entry, .news-entry { padding: 10px; }
+
+
+
+      .character-visual-shell {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(180px, 280px);
+        gap: 12px;
+        align-items: stretch;
+      }
+
+      .character-identity {
+        display: grid;
+        grid-template-columns: 82px minmax(0, 1fr) auto;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .character-avatar {
+        width: 74px;
+        height: 74px;
+        border-radius: 22px;
+        border: 1px solid rgba(221, 181, 255, .36);
+        background: radial-gradient(circle at 35% 20%, rgba(255,255,255,.18), rgba(255,127,168,.24) 42%, rgba(65,21,77,.86));
+        box-shadow: 0 14px 34px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.12);
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        color: #ff9ac1;
+        font-size: 34px;
+        line-height: 1;
+      }
+
+      .character-avatar.small {
+        width: 28px;
+        height: 28px;
+        border-radius: 10px;
+        font-size: 15px;
+        margin-right: 7px;
+        display: inline-flex;
+        vertical-align: middle;
+      }
+
+      .character-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .character-avatar .avatar-fallback {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .character-tab {
+        display: inline-flex;
+        align-items: center;
+        gap: 0;
+      }
+
+      .character-illust {
+        position: relative;
+        min-height: 260px;
+        border: 1px solid rgba(226, 190, 255, .24);
+        border-radius: 22px;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 50% 18%, rgba(255,255,255,.16), transparent 32%),
+          linear-gradient(145deg, rgba(50,18,82,.78), rgba(19,7,35,.94));
+        box-shadow: 0 18px 48px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.10);
+      }
+
+      .character-illust img {
+        width: 100%;
+        height: 100%;
+        min-height: 260px;
+        object-fit: cover;
+        object-position: top center;
+        display: block;
+      }
+
+      .character-illust-caption {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 8px 10px;
+        color: var(--muted);
+        font-size: 10px;
+        background: linear-gradient(180deg, transparent, rgba(8,3,18,.88));
+      }
+
+      .character-illust.empty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 260px;
+        color: var(--muted);
+        text-align: center;
+        padding: 18px;
+      }
+
+      .character-illust.empty .illust-fallback {
+        display: grid;
+        gap: 8px;
+        justify-items: center;
+        line-height: 1.6;
+      }
+
+      .character-illust.empty .illust-heart {
+        width: 76px;
+        height: 76px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 24px;
+        color: #ff9ac1;
+        font-size: 42px;
+        border: 1px solid rgba(221, 181, 255, .28);
+        background: radial-gradient(circle at 35% 20%, rgba(255,255,255,.18), rgba(255,127,168,.18) 42%, rgba(65,21,77,.72));
+      }
+
+
+
+      .character-avatar.editable {
+        cursor: pointer;
+        position: relative;
+        transition: border-color .18s, box-shadow .18s, transform .18s;
+      }
+
+      .character-avatar.editable::after {
+        content: "更换";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 3px 0;
+        color: #fff9ff;
+        background: linear-gradient(180deg, transparent, rgba(8,3,18,.92));
+        font-size: 10px;
+        letter-spacing: 1px;
+        opacity: 0;
+        transition: opacity .18s;
+      }
+
+      .character-avatar.editable:hover,
+      .character-avatar.editable:focus-visible {
+        border-color: var(--line-hot);
+        box-shadow: 0 18px 45px rgba(190,124,255,.28), inset 0 1px 0 rgba(255,255,255,.12);
+        transform: translateY(-1px);
+        outline: none;
+      }
+
+      .character-avatar.editable:hover::after,
+      .character-avatar.editable:focus-visible::after {
+        opacity: 1;
+      }
+
+      .visual-bind-overlay {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 80;
+        padding: 18px;
+        background: rgba(9, 3, 18, .66);
+        backdrop-filter: blur(10px);
+      }
+
+      .visual-bind-dialog {
+        width: min(440px, 100%);
+        border: 1px solid rgba(226, 190, 255, .28);
+        border-radius: 24px;
+        background: rgba(24, 8, 42, .98);
+        box-shadow: 0 26px 80px rgba(0,0,0,.52), inset 0 1px 0 rgba(255,255,255,.10);
+        padding: 18px;
+      }
+
+      .visual-bind-dialog h3 {
+        margin: 0 0 8px;
+        color: var(--cyan);
+        font-size: 16px;
+        letter-spacing: 1px;
+      }
+
+      .visual-bind-dialog p {
+        margin: 0 0 14px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.7;
+      }
+
+      .visual-bind-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .visual-bind-btn {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid rgba(221, 181, 255, .32);
+        border-radius: 999px;
+        color: var(--text);
+        background: rgba(219, 177, 255, .07);
+        cursor: pointer;
+        transition: .18s;
+      }
+
+      .visual-bind-btn:hover {
+        color: var(--cyan);
+        border-color: var(--line-hot);
+        background: rgba(219, 177, 255, .13);
+      }
+
+      .visual-bind-status {
+        min-height: 18px;
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.6;
+        white-space: pre-wrap;
+      }
+
+      .character-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin: 10px 0 10px;
+        padding: 8px;
+        border: 1px solid rgba(226, 190, 255, .24);
+        border-radius: 18px;
+        background: rgba(35, 13, 59, .58);
+      }
+
+      .character-tab {
+        padding: 8px 12px;
+        border: 1px solid rgba(221, 181, 255, .25);
+        border-radius: 999px;
+        background: rgba(219, 177, 255, .06);
+        color: var(--muted);
+        cursor: pointer;
+        transition: .18s;
+        font-size: 12px;
+      }
+
+      .character-tab:hover {
+        color: var(--text);
+        border-color: var(--line-hot);
+        background: rgba(219, 177, 255, .11);
+      }
+
+      .character-tab.active {
+        color: var(--cyan);
+        border-color: var(--line-hot);
+        background: linear-gradient(90deg, rgba(142, 96, 255, .32), rgba(229, 174, 255, .08));
+      }
+
+      .character-panel {
+        display: none;
+      }
+
+      .character-panel.active {
+        display: block;
+      }
+
+      .character-hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 10px;
+        align-items: start;
+        margin-bottom: 8px;
+      }
+
+      .character-title {
+        color: #fff9ff;
+        font-size: 20px;
+        letter-spacing: 1px;
+      }
+
+      .character-subtitle {
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .character-score {
+        min-width: 96px;
+        padding: 8px 10px;
+        border: 1px solid rgba(221, 181, 255, .25);
+        border-radius: 16px;
+        background: rgba(219, 177, 255, .06);
+        text-align: center;
+      }
+
+      .character-score .score-value {
+        color: var(--gold);
+        font-size: 22px;
+        line-height: 1;
+      }
+
+      .character-score .score-label {
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 10px;
+        letter-spacing: 1px;
+      }
+
+      .character-block {
+        margin-top: 8px;
+      }
+
+      .character-block h3 {
+        margin-bottom: 6px;
+        color: var(--cyan);
+        font-size: 12px;
+        letter-spacing: 1px;
+      }
+
+
+      .ship-tabs-layout {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-top: 10px;
+        min-height: 0;
+      }
+
+      .ship-tab-list {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 7px;
+        padding: 8px;
+        border: 1px solid rgba(226, 190, 255, .24);
+        border-radius: 18px;
+        background: rgba(35, 13, 59, .58);
+        overflow-x: scroll;
+        overflow-y: hidden;
+        max-width: 100%;
+        scrollbar-gutter: stable;
+        scrollbar-width: thin;
+      }
+
+      .ship-panels {
+        min-width: 0;
+      }
+
+      .ship-tab {
+        display: grid;
+        grid-template-columns: 44px minmax(0, 1fr);
+        gap: 8px;
+        align-items: center;
+        flex: 0 0 220px;
+        width: 220px;
+        max-width: 78vw;
+        padding: 8px 10px;
+        border: 1px solid rgba(221, 181, 255, .25);
+        border-radius: 16px;
+        background: rgba(219, 177, 255, .06);
+        color: var(--muted);
+        text-align: left;
+        cursor: pointer;
+        transition: .18s;
+      }
+
+      .ship-tab:hover {
+        color: var(--text);
+        border-color: var(--line-hot);
+        background: rgba(219, 177, 255, .11);
+      }
+
+      .ship-tab.active {
+        color: var(--cyan);
+        border-color: var(--line-hot);
+        background: linear-gradient(90deg, rgba(142, 96, 255, .32), rgba(229, 174, 255, .08));
+      }
+
+      .ship-tab-type {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 28px;
+        border-radius: 999px;
+        border: 1px solid rgba(221, 181, 255, .32);
+        color: var(--gold);
+        font-size: 11px;
+        font-weight: 700;
+        background: rgba(219, 177, 255, .07);
+      }
+
+      .ship-tab-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 12px;
+      }
+
+      .ship-panel {
+        display: none;
+        min-width: 0;
+      }
+
+      .ship-panel.active {
+        display: block;
+      }
+
+      .ship-detail-shell {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 10px;
+        align-items: start;
+      }
+
+      .prop-list {
+        display: grid;
+        gap: 5px;
+      }
+
+      .prop-row {
+        display: grid;
+        grid-template-columns: minmax(96px, 150px) minmax(0, 1fr);
+        gap: 8px;
+        align-items: start;
+        padding: 6px 8px;
+        border: 1px solid rgba(226, 190, 255, .18);
+        border-radius: 12px;
+        background: rgba(255,255,255,.035);
+        font-size: 12px;
+      }
+
+      .prop-key {
+        color: var(--muted);
+        word-break: keep-all;
+      }
+
+      .prop-val {
+        color: #fff9ff;
+        word-break: break-word;
+        white-space: pre-wrap;
+      }
+
+      .ship-section {
+        margin-top: 9px;
+      }
+
+      .ship-section-title {
+        margin: 0 0 6px;
+        color: var(--cyan);
+        font-size: 12px;
+        letter-spacing: 1px;
+      }
+
+      .ship-health-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .ship-health-card {
+        padding: 9px;
+        border: 1px solid rgba(114, 232, 255, .22);
+        border-radius: 15px;
+        background: linear-gradient(135deg, rgba(19, 49, 82, .58), rgba(45, 18, 63, .58));
+      }
+
+      .ship-health-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 7px;
+        color: #fff9ff;
+        font-size: 12px;
+      }
+
+      .ship-health-bar {
+        height: 7px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(255,255,255,.10);
+      }
+
+      .ship-health-fill {
+        height: 100%;
+        border-radius: inherit;
+      }
+
+      .ship-health-fill.shield {
+        background: linear-gradient(90deg, #56ddff, #9cf7d5);
+      }
+
+      .ship-health-fill.structure {
+        background: linear-gradient(90deg, #f4c76b, #ff8a66);
+      }
+
+      .ship-health-meta {
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .equipment-list {
+        display: grid;
+        gap: 7px;
+      }
+
+      .equipment-entry {
+        padding: 8px;
+        border: 1px solid rgba(226, 190, 255, .20);
+        border-radius: 14px;
+        background: rgba(35, 13, 59, .58);
+      }
+
+      .equipment-entry-title {
+        margin-bottom: 6px;
+        color: #fff9ff;
+        font-size: 12px;
+        letter-spacing: 1px;
+      }
+
+
+      .index-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .index-card {
+        min-width: 0;
+        padding: 10px;
+        border: 1px solid rgba(226, 190, 255, .24);
+        border-radius: 16px;
+        background: rgba(35, 13, 59, .68);
+        cursor: pointer;
+        transition: .18s;
+        text-align: left;
+        color: var(--text);
+      }
+
+      .index-card:hover {
+        border-color: var(--line-hot);
+        background: rgba(50, 18, 82, .78);
+        transform: translateY(-1px);
+      }
+
+      .index-card.active {
+        border-color: var(--line-hot);
+        background: linear-gradient(90deg, rgba(142, 96, 255, .32), rgba(229, 174, 255, .08));
+      }
+
+      .index-card-title {
+        color: #fff9ff;
+        font-size: 13px;
+        letter-spacing: .5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .index-card-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 7px;
+      }
+
+      .index-card-desc {
+        margin-top: 7px;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.45;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .detail-panel {
+        display: none;
+        margin-top: 10px;
+      }
+
+      .detail-panel.active {
+        display: block;
+      }
+
+      .detail-title-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        gap: 10px;
+        margin-bottom: 8px;
+      }
+
+      .detail-title {
+        color: #fff9ff;
+        font-size: 18px;
+        letter-spacing: 1px;
+      }
+
+      .detail-subtitle {
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      @media (max-width: 980px) {
+        .index-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 620px) {
+        .index-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+
+      .index-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .index-card {
+        min-width: 0;
+        padding: 10px;
+        border: 1px solid rgba(226, 190, 255, .24);
+        border-radius: 16px;
+        background: rgba(35, 13, 59, .68);
+        cursor: pointer;
+        transition: .18s;
+        text-align: left;
+        color: var(--text);
+      }
+
+      .index-card:hover {
+        border-color: var(--line-hot);
+        background: rgba(50, 18, 82, .78);
+        transform: translateY(-1px);
+      }
+
+      .index-card.active {
+        border-color: var(--line-hot);
+        background: linear-gradient(90deg, rgba(142, 96, 255, .32), rgba(229, 174, 255, .08));
+      }
+
+      .index-card-title {
+        color: #fff9ff;
+        font-size: 13px;
+        letter-spacing: .5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .index-card-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 7px;
+      }
+
+      .index-card-desc {
+        margin-top: 7px;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.45;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .detail-panel {
+        display: none;
+        margin-top: 10px;
+      }
+
+      .detail-panel.active {
+        display: block;
+      }
+
+      .detail-title-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        gap: 10px;
+        margin-bottom: 8px;
+      }
+
+      .detail-title {
+        color: #fff9ff;
+        font-size: 18px;
+        letter-spacing: 1px;
+      }
+
+      .detail-subtitle {
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      @media (max-width: 980px) {
+        .index-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 620px) {
+        .index-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 980px) {
+        .ship-layout { grid-template-columns: 1fr; }
+        .ship-orbital { min-height: 390px; }
+      }
+
+
+      @media (max-width: 980px) {
+        .character-visual-shell {
+          grid-template-columns: 1fr;
+        }
+
+        .character-identity {
+          grid-template-columns: 74px minmax(0, 1fr);
+        }
+
+        .character-score {
+          grid-column: 1 / -1;
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 820px) {
+        .shell {
+          border-radius: 0;
+          grid-template-columns: 1fr;
+          grid-template-rows: auto 1fr;
+        }
+
+        .side {
+          padding: 9px;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+          overflow-x: auto;
+          white-space: nowrap;
+        }
+
+        .brand { display: none; }
+        .nav-btn { width: auto; display: inline-block; padding: 8px; }
+        .nav-btn span { width: 16px; }
+        .main { min-height: 0; }
+        .topbar { padding: 0 13px; }
+        .view { padding: 12px; }
+
+        #map-view.active {
+          grid-template-columns: 1fr;
+          overflow: auto;
+        }
+
+        .map-wrap svg { min-height: 500px; }
+      }
+
+
+      /* Three.js starmap ported from the legacy tactical UI */
+      #map-view.active {
+        display: block;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      #starmap-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 30% 20%, rgba(145, 103, 255, .15), transparent 26%),
+          radial-gradient(circle at 70% 78%, rgba(203, 128, 255, .12), transparent 34%),
+          #000;
+      }
+
+      #webgl-layer,
+      #connection-svg,
+      #ui-overlay {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      #webgl-layer { z-index: 0; pointer-events: all; }
+      #connection-svg { z-index: 1; pointer-events: none; }
+      #ui-overlay { z-index: 2; pointer-events: none; }
+
+      .connection-line {
+        stroke-linecap: round;
+        vector-effect: non-scaling-stroke;
+        transition: stroke-width .2s, opacity .2s;
+      }
+
+      .line-pipe {
+        stroke: #d9b7ff;
+        stroke-opacity: .62;
+        stroke-width: 1.5px;
+      }
+
+      .line-wormhole {
+        stroke: #c980ff;
+        stroke-width: 1.5px;
+        stroke-dasharray: 2, 4;
+        stroke-opacity: .86;
+      }
+
+      .line-jump {
+        stroke: #bda4d4;
+        stroke-opacity: .42;
+        stroke-width: 1px;
+        stroke-dasharray: 4, 4;
+      }
+
+      .map-node {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        transform: translate(-50%, -50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        pointer-events: auto;
+        cursor: pointer;
+        z-index: 8;
+      }
+
+      .node-dot {
+        width: 8px;
+        height: 8px;
+        background-color: #fff;
+        border: 1px solid #05030a;
+        transform: rotate(45deg);
+        box-shadow: 0 0 8px rgba(255,255,255,.58);
+        transition: all .2s;
+        z-index: 10;
+      }
+
+      .map-node:hover .node-dot {
+        transform: rotate(45deg) scale(1.55);
+        background-color: var(--cyan);
+        border-color: #fff;
+        box-shadow: 0 0 14px rgba(217,183,255,.9);
+      }
+
+      .node-player .node-dot {
+        background-color: #7ffcff;
+        border-color: #fff;
+        box-shadow: 0 0 16px #7ffcff, 0 0 26px rgba(217,183,255,.55);
+      }
+
+      .node-wormhole .node-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        transform: rotate(0deg);
+        background-color: #c980ff;
+        border-color: #fff;
+        box-shadow: 0 0 14px rgba(203,128,255,.82);
+      }
+
+      .node-wormhole:hover .node-dot {
+        transform: scale(1.55);
+        background-color: #e0b7ff;
+      }
+
+      .node-label {
+        position: absolute;
+        top: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 180px;
+        padding: 1px 5px;
+        border: 1px solid rgba(226,190,255,.16);
+        color: var(--muted);
+        background: rgba(0,0,0,.72);
+        font-size: 10px;
+        font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+        text-shadow: 0 0 3px #000;
+        white-space: nowrap;
+        pointer-events: none;
+        opacity: .68;
+        transition: all .2s;
+        z-index: 5;
+      }
+
+      .map-node:hover .node-label,
+      .node-player .node-label {
+        opacity: 1;
+        color: #fff;
+        border-color: var(--line-hot);
+        background: rgba(11,4,20,.92);
+      }
+
+      .building-icon {
+        position: absolute;
+        top: -7px;
+        right: -8px;
+        min-width: 12px;
+        height: 12px;
+        padding: 0 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #1b0d22;
+        background: var(--gold);
+        border: 1px solid rgba(0,0,0,.65);
+        font-size: 8px;
+        line-height: 1;
+        font-weight: 700;
+        clip-path: polygon(50% 0%,100% 50%,50% 100%,0% 50%);
+        transform: rotate(-45deg);
+        z-index: 12;
+        pointer-events: auto;
+        box-shadow: 0 0 12px rgba(241,199,255,.65);
+      }
+
+      .building-icon span {
+        transform: rotate(45deg);
+        display: block;
+      }
+
+      .map-controls {
+        position: absolute;
+        left: 18px;
+        bottom: 18px;
+        z-index: 10;
+        padding: 10px;
+        border: 1px solid rgba(226,190,255,.24);
+        background: rgba(10, 5, 18, .90);
+        pointer-events: auto;
+        box-shadow: 0 16px 42px rgba(0,0,0,.34);
+        clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+      }
+
+      .map-controls .legend {
+        display: grid;
+        gap: 5px;
+        margin-bottom: 9px;
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      .btn-center {
+        width: 100%;
+        padding: 7px 10px;
+        border: 1px solid var(--line-hot);
+        color: var(--cyan);
+        background: rgba(145,103,255,.13);
+        cursor: pointer;
+        font-size: 11px;
+        letter-spacing: 1px;
+        transition: .18s;
+      }
+
+      .btn-center:hover {
+        color: #15051f;
+        background: var(--cyan);
+        box-shadow: 0 0 18px rgba(217,183,255,.5);
+      }
+
+      #starmap-info-panel {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        width: min(320px, calc(100% - 36px));
+        max-height: calc(100% - 36px);
+        overflow: auto;
+        border: 1px solid rgba(226,190,255,.28);
+        background: rgba(18, 7, 31, .96);
+        box-shadow: -8px 8px 0 rgba(0,0,0,.32), 0 20px 70px rgba(0,0,0,.45);
+        transform: translateX(120%);
+        transition: transform .28s cubic-bezier(.4,0,.2,1);
+        z-index: 20;
+        pointer-events: auto;
+      }
+
+      #starmap-info-panel.visible { transform: translateX(0); }
+      #starmap-panel-content { padding: 14px; }
+
+      .panel-close {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        z-index: 25;
+        color: var(--muted);
+        font-size: 20px;
+        cursor: pointer;
+      }
+
+      .panel-close:hover { color: #fff; }
+
+      .map-detail-list {
+        display: grid;
+        gap: 6px;
+        margin-top: 10px;
+      }
+
+      .map-detail-row {
+        padding: 7px 8px;
+        border: 1px solid rgba(226,190,255,.18);
+        border-radius: 12px;
+        background: rgba(255,255,255,.035);
+        font-size: 12px;
+      }
+
+      .map-detail-row strong {
+        display: block;
+        margin-bottom: 3px;
+        color: var(--cyan);
+        font-size: 10px;
+        letter-spacing: 1px;
+      }
+
+      @media (max-width: 820px) {
+        #map-view.active { overflow: hidden; }
+        .map-controls { left: 10px; bottom: 10px; }
+        #starmap-info-panel { top: 10px; right: 10px; width: calc(100% - 20px); }
+      }
+
+
+
+      /* Wide-screen scrollbar fix: allow desktop grid children to shrink so inner overflow can scroll. */
+      .main,
+      .view,
+      .ship-panels,
+      .ship-panel,
+      .ship-detail-shell,
+      .map-side {
+        min-height: 0;
+        min-width: 0;
+      }
+
+      .view {
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+
+      .ship-tab-list {
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: thin;
+        scrollbar-gutter: stable;
+      }
+
+      /* Keep the WebGL starmap canvas fixed; its info drawer scrolls independently. */
+      #map-view.active {
+        overflow: hidden;
+      }
+
+      #starmap-info-panel {
+        overflow-y: auto;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <div class="shell">
+      <aside class="side">
+        <div class="brand">
+          <strong>蔚蓝星区</strong>
+          <small>状态栏</small>
+        </div>
+
+        <button class="nav-btn active" data-view="home-view"><span>01</span>主页</button>
+        <button class="nav-btn" data-view="characters-view"><span>02</span>可攻略角色</button>
+        <button class="nav-btn" data-view="ships-view"><span>03</span>舰船系统</button>
+        <button class="nav-btn" data-view="bases-view"><span>04</span>建筑</button>
+        <button class="nav-btn" data-view="assets-view"><span>05</span>资产与声望</button>
+        <button class="nav-btn" data-view="missions-view"><span>06</span>任务</button>
+        <button class="nav-btn" data-view="map-view"><span>07</span>星图</button>
+      </aside>
+
+      <section class="main">
+        <header class="topbar">
+          <div class="top-title">蔚蓝星区状态栏</div>
+          <div class="top-meta" id="top-meta">正在接入蔚蓝星区状态数据流...</div>
+        </header>
+
+        <main id="home-view" class="view active"></main>
+        <main id="characters-view" class="view"></main>
+        <main id="ships-view" class="view"></main>
+        <main id="bases-view" class="view"></main>
+        <main id="assets-view" class="view"></main>
+        <main id="missions-view" class="view"></main>
+        <main id="map-view" class="view"></main>
+      </section>
+    </div>
+
+
+    <div id="visual-bind-modal" class="visual-bind-overlay" aria-hidden="true">
+      <div class="visual-bind-dialog" role="dialog" aria-modal="true" aria-labelledby="visual-bind-title">
+        <h3 id="visual-bind-title">选择本地图片 / 选择线上图片</h3>
+        <p id="visual-bind-desc">将为当前角色绑定头像或立绘。保存后会写入主世界书「蔚蓝星域的观星者 下世代」的 VISUAL_BINDS 条目。</p>
+        <div class="visual-bind-actions">
+          <button type="button" class="visual-bind-btn" data-visual-bind-action="local-profile">选择本地头像</button>
+          <button type="button" class="visual-bind-btn" data-visual-bind-action="local-illust">选择本地立绘</button>
+          <button type="button" class="visual-bind-btn" data-visual-bind-action="online-profile">选择线上头像</button>
+          <button type="button" class="visual-bind-btn" data-visual-bind-action="online-illust">选择线上立绘</button>
+          <button type="button" class="visual-bind-btn" data-visual-bind-action="cancel">取消</button>
+        </div>
+        <div class="visual-bind-status" id="visual-bind-status"></div>
+        <input id="visual-bind-file-input" type="file" accept="image/*" style="display:none;">
+      </div>
+    </div>
+
+    <script>
+      const SKILL_THRESHOLDS = [0, 250, 1415, 8000, 45255, 256000];
+      const VISUAL_BINDS_ENTRY_NAME = "VISUAL_BINDS";
+      const VISUAL_BINDS_WORLDBOOK_NAME = "蔚蓝星域的观星者 下世代";
+      const LOCAL_VISUAL_MAX_DATA_URL_BYTES = 102400;
+      let characterVisualBinds = {};
+      let currentStaticData = null;
+      let pendingVisualBindCharacterName = "";
+
+      const MAP = {
+        nodes: [
+          ["sol","太阳禁卫区","始源之环",230,205,"95","泰拉帝国","帝国首都泰拉所在的核心星区。"],
+          ["republic","共和国之心","始源之环",385,145,"88","自由世界共和国","商业繁荣、思想自由、情报密集的共和国心脏。"],
+          ["cygnus","天鹅座摇篮","始源之环",190,330,"92","天鹅座技术联邦","联邦科技与工业中心，戴森云和研究站密布。"],
+          ["trade","贸易风走廊","始源之环",390,320,"73","猎户座辛迪加","连接三大强权的黄金航道，财富与罪恶交织。"],
+          ["serpent","巨蛇之喉","蛮荒边界",135,530,"10","铁血盟约","舰船残骸和掏空小行星构成的海盗都市。"],
+          ["sanctuary","避难所星团","蛮荒边界",255,585,"5","星火姐妹会","脉冲星辐射笼罩下的叛逃者避风港。"],
+          ["charon","卡戎之渡","蛮荒边界",275,495,"20","无","废弃战场与太空坟场，小型掠夺者活动频繁。"],
+          ["veil","幽灵之幕","遗忘之海",845,565,"-10 / 99","人类技术联合","暗物质星云深处的秘密根据地。"],
+          ["tomb","先驱者之墓","遗忘之海",980,620,"-100","无","时空结构脆弱的考古禁区。"],
+          ["abyss","阿比斯深渊","遗忘之海",1100,690,"-1000","无","超大质量黑洞周围的极端引力异常区。"],
+          ["cobalt","钴蓝边境","天穹王冠",685,450,"50","辛迪加 / 独立军阀","灰色贸易与非正规采矿频繁的争议区。"],
+          ["crimson","暗红星座","天穹王冠",785,405,"88","泰拉帝国","帝国重兵把守的能源产地与战略咽喉。"],
+          ["splendor","璨辉星座","天穹王冠",790,490,"68","帝国 / 辛迪加","奢华度假世界与自由贸易区并存。"],
+          ["canaan","新应许之地","天堂之阶",620,180,"35","共和国 / 帝国","类地行星密集的殖民冲突前线。"],
+          ["golden","黄金阶梯","天堂之阶",760,235,"55","猎户座辛迪加","正在建设中的第二贸易枢纽。"],
+          ["tranquil","静谧之海","天堂之阶",770,115,"45","天鹅座技术联邦","联邦探索舰队搜寻先驱遗迹的前沿。"],
+          ["taboris","塔伯里斯星座","闪光星云",1050,470,"-1000","塔伯里斯宪制帝国","戴森云笼罩下的合成人文明工业心脏。"],
+          ["murky","暗色星座","大荒野",185,685,"-200","塔伯里斯 / 铁血盟约","战略矿产与武装采矿平台密布的争议区。"],
+          ["banshee","女妖星旋","大荒野",65,760,"-500","无","双中子星构成的极端引力与辐射航道。"],
+          ["w1","W-J0001A 无星之海","未知虫洞星域",1110,505,"N/A","???","绝对黑暗的口袋宇宙，中心悬浮着 1:4:9 方块。",1],
+          ["w2","W-B2005C 自我倒影","未知虫洞星域",70,110,"-2000","高维残渣","非欧几里得结构充斥的精神危害空间。",1],
+          ["w3","W-C1101B 大陆架","未知虫洞星域",1070,105,"-300","无","通往未知宇宙的单向超空间裂隙。",1],
+          ["w4","W-J101134 空房间","未知虫洞星域",490,70,"N/A","无","含有 1:4:9 方块的稳定 G 型主序星系。",1],
+          ["w5","W-J110110","未知虫洞星域",80,350,"N/A","敌对无人机","存在敌对古代无人机编队的沃尔夫-拉叶星系。",1],
+          ["w6","W-J142857 循环","未知虫洞星域",1040,225,"N/A","时空异常","每七标准时发生一次周期性坍缩。",1],
+          ["w7","W-J155432 冰壳","未知虫洞星域",905,750,"N/A","无","冰壳行星地下存在空腔与规则能量信号。",1],
+          ["w8","W-J160888 双星","未知虫洞星域",1180,585,"N/A","无","引力透镜效应强烈的双中子星系统。",1],
+          ["w9","W-J210956 死寂","未知虫洞星域",70,570,"N/A","无","白矮星与复杂小行星带构成的死寂星系。",1]
+        ],
+        links: [
+          ["sol","trade"],["sol","republic"],["sol","cygnus","gate"],["republic","trade"],["cygnus","trade"],
+          ["cygnus","tranquil","gate"],["republic","canaan","gate"],["republic","charon","gate"],["trade","cobalt","gate"],
+          ["sol","crimson","gate"],["cobalt","splendor"],["crimson","splendor"],["crimson","canaan","gate"],["crimson","murky","gate"],
+          ["charon","serpent"],["charon","sanctuary"],["serpent","murky","gate"],["murky","banshee"],["canaan","golden"],
+          ["canaan","tranquil"],["golden","tranquil"],["golden","taboris","gate"],["taboris","veil","gate"],["veil","tomb"],
+          ["tomb","abyss"],["tomb","w1","worm"],["tranquil","w3","worm"]
+        ]
+      };
+
+      const $ = id => document.getElementById(id);
+      const entries = value => Object.entries(value || {});
+      const text = value => value === undefined || value === null || value === "" ? "未记录" : String(value);
+
+      /*
+        Important:
+        Do not use literal HTML entities like &quot; inside this script.
+        Some srcdoc pipelines decode entities before script execution, which can turn:
+            '"': "&quot;"
+        into invalid JavaScript:
+            '"': """
+        Therefore entities are assembled through string concatenation.
+      */
+      function escapeHtml(value) {
+        const str = text(value);
+        const map = {};
+        map["&"] = "&" + "amp;";
+        map["<"] = "&" + "lt;";
+        map[">"] = "&" + "gt;";
+        map['"'] = "&" + "quot;";
+        map["'"] = "&" + "#39;";
+        return str.replace(/[&<>"']/g, ch => map[ch]);
+      }
+
+      const display = value => {
+        if (Array.isArray(value)) {
+          return value.length
+            ? value.map(v => typeof v === "object" ? display(v) : escapeHtml(v)).join(" / ")
+            : "无";
+        }
+
+        if (value && typeof value === "object") {
+          return entries(value).map(([k, v]) => {
+            return `<div><span class="muted">${escapeHtml(k)}：</span>${display(v)}</div>`;
+          }).join("");
+        }
+
+        return escapeHtml(value);
+      };
+
+      const stat = (label, value) => `
+        <div class="stat">
+          <div class="label">${escapeHtml(label)}</div>
+          <div class="value">${display(value)}</div>
+        </div>
+      `;
+
+      const detail = obj => `
+        <div class="detail-grid">
+          ${entries(obj).map(([k, v]) => stat(k, v)).join("")}
+        </div>
+      `;
+
+      const empty = message => `<div class="empty">${escapeHtml(message)}</div>`;
+
+      const objectCards = (obj, renderer) => {
+        const list = entries(obj);
+        return list.length ? `<div class="cards">${list.map(renderer).join("")}</div>` : empty("暂无记录");
+      };
+
+
+      function normalizeVisualBind(value) {
+        if (!value || typeof value !== "object") return { profile_link: "", illust_link: "" };
+        return {
+          profile_link: typeof value.profile_link === "string" ? value.profile_link : "",
+          illust_link: typeof value.illust_link === "string" ? value.illust_link : ""
+        };
+      }
+
+      function getCharacterVisualBind(name) {
+        return normalizeVisualBind(characterVisualBinds && characterVisualBinds[name]);
+      }
+
+      function renderCharacterAvatar(name, sizeClass, editable) {
+        const bind = getCharacterVisualBind(name);
+        const cls = (sizeClass ? "character-avatar " + sizeClass : "character-avatar") + (editable ? " editable" : "");
+        const fallbackStyle = bind.profile_link ? "display:none;" : "";
+        const actionAttrs = editable
+          ? ` role="button" tabindex="0" title="更换 ${escapeHtml(name)} 的头像" data-action="open-visual-bind" data-character-name="${escapeHtml(name)}"`
+          : "";
+        const img = bind.profile_link
+          ? `<img src="${escapeHtml(bind.profile_link)}" alt="${escapeHtml(name)} 头像" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">`
+          : "";
+        return `<span class="${cls}"${actionAttrs}>${img}<span class="avatar-fallback" style="${fallbackStyle}">♥</span></span>`;
+      }
+
+      function renderCharacterIllust(name) {
+        const bind = getCharacterVisualBind(name);
+        if (!bind.illust_link) {
+          return `
+            <aside class="character-illust empty" aria-label="${escapeHtml(name)} 立绘未绑定">
+              <div class="illust-fallback">
+                <div class="illust-heart">♥</div>
+                <div>未绑定立绘</div>
+                <div class="muted">点击角色头像可选择本地/线上头像与立绘</div>
+              </div>
+            </aside>
+          `;
+        }
+        return `
+          <aside class="character-illust">
+            <img src="${escapeHtml(bind.illust_link)}" alt="${escapeHtml(name)} 立绘" loading="lazy" onerror="this.closest('.character-illust').classList.add('empty');this.closest('.character-illust').innerHTML='<div class=&quot;illust-fallback&quot;><div class=&quot;illust-heart&quot;>♥</div><div>立绘加载失败</div></div>';">
+            <div class="character-illust-caption">ILLUSTRATION / ${escapeHtml(name)}</div>
+          </aside>
+        `;
+      }
+
+      async function loadVisualBinds() {
+        try {
+          if (typeof getWorldbook !== "function") return {};
+          const worldbook = await getWorldbook(VISUAL_BINDS_WORLDBOOK_NAME);
+          const entry = (worldbook || []).find(item => item && (item.name === "VISUAL_BINDS" || item.comment === "VISUAL_BINDS"));
+          if (!entry || !entry.content) return {};
+          const parsed = JSON.parse(entry.content);
+          const out = {};
+          Object.keys(parsed || {}).forEach(name => {
+            out[name] = normalizeVisualBind(parsed[name]);
+          });
+          return out;
+        } catch (err) {
+          console.warn("VISUAL_BINDS 读取失败", err);
+          return {};
+        }
+      }
+
+
+      function getVisualBindsEntry(worldbook) {
+        return (worldbook || []).find(item => item && (item.name === VISUAL_BINDS_ENTRY_NAME || item.comment === VISUAL_BINDS_ENTRY_NAME));
+      }
+
+      function parseVisualBindsContent(content) {
+        try {
+          const parsed = JSON.parse(content || "{}");
+          const out = {};
+          Object.keys(parsed || {}).forEach(name => {
+            out[name] = normalizeVisualBind(parsed[name]);
+          });
+          return out;
+        } catch (err) {
+          console.warn("VISUAL_BINDS JSON 解析失败，将以空对象覆盖", err);
+          return {};
+        }
+      }
+
+          function makeVisualBindsEntry(content, uid) {
+        return {
+          uid: uid,
+          name: VISUAL_BINDS_ENTRY_NAME,
+          enabled: false,
+          strategy: {
+            type: "constant",
+            keys: [],
+            keys_secondary: { logic: "and_any", keys: [] },
+            scan_depth: "same_as_global"
+          },
+          position: {
+            type: "at_depth",
+            role: "system",
+            depth: 0,
+            order: 0
+          },
+          content: content,
+          probability: 100,
+          recursion: {
+            prevent_incoming: true,
+            prevent_outgoing: true,
+            delay_until: null
+          },
+          effect: {
+            sticky: null,
+            cooldown: null,
+            delay: null
+          },
+          extra: { purpose: "status_bar_visual_binds" }
+        };
+      }
+
+      function readFileAsDataUrl(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(String(reader.result || ""));
+          reader.onerror = () => reject(reader.error || new Error("文件读取失败"));
+          reader.readAsDataURL(file);
+        });
+      }
+
+      function loadImageFromDataUrl(dataUrl) {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => resolve(img);
+          img.onerror = () => reject(new Error("图片解码失败"));
+          img.src = dataUrl;
+        });
+      }
+
+      function estimateDataUrlBytes(dataUrl) {
+        return new Blob([String(dataUrl || "")]).size;
+      }
+
+      function canvasToJpegDataUrl(canvas, quality) {
+        return canvas.toDataURL("image/jpeg", quality);
+      }
+
+      async function compressImageToDataUrl(file, maxBytes) {
+        if (!file || !file.type || !/^image\//i.test(file.type)) {
+          throw new Error("请选择图片文件。");
+        }
+
+        const originalDataUrl = await readFileAsDataUrl(file);
+        const originalBytes = estimateDataUrlBytes(originalDataUrl);
+        if (originalBytes <= maxBytes) return originalDataUrl;
+
+        const img = await loadImageFromDataUrl(originalDataUrl);
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        if (!ctx) throw new Error("当前浏览器无法创建图片压缩画布。");
+
+        let width = img.naturalWidth || img.width;
+        let height = img.naturalHeight || img.height;
+        if (!width || !height) throw new Error("图片尺寸无效。");
+
+        const maxSide = 1800;
+        if (Math.max(width, height) > maxSide) {
+          const ratio = maxSide / Math.max(width, height);
+          width = Math.max(1, Math.round(width * ratio));
+          height = Math.max(1, Math.round(height * ratio));
+        }
+
+        let best = "";
+        let scale = 1;
+
+        for (let scalePass = 0; scalePass < 9; scalePass++) {
+          canvas.width = Math.max(1, Math.round(width * scale));
+          canvas.height = Math.max(1, Math.round(height * scale));
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+          for (let quality = 0.88; quality >= 0.42; quality -= 0.08) {
+            const dataUrl = canvasToJpegDataUrl(canvas, quality);
+            const bytes = estimateDataUrlBytes(dataUrl);
+            if (!best || bytes < estimateDataUrlBytes(best)) best = dataUrl;
+            if (bytes <= maxBytes) return dataUrl;
+          }
+
+          scale *= 0.82;
+        }
+
+        if (best && estimateDataUrlBytes(best) <= maxBytes) return best;
+        throw new Error("图片已尝试压缩，但仍超过 1048576 bytes。请先裁剪或换用更小图片。");
+      }
+
+      async function uploadVisualLocalFile(file) {
+        return compressImageToDataUrl(file, LOCAL_VISUAL_MAX_DATA_URL_BYTES);
+      }
+
+      function setVisualBindStatus(message) {
+        const el = $("visual-bind-status");
+        if (el) el.textContent = message || "";
+      }
+
+      function closeVisualBindModal() {
+        pendingVisualBindCharacterName = "";
+        pendingVisualBindField = "profile_link";
+        setVisualBindStatus("");
+        const modal = $("visual-bind-modal");
+        if (modal) {
+          modal.style.display = "none";
+          modal.setAttribute("aria-hidden", "true");
+        }
+        const input = $("visual-bind-file-input");
+        if (input) input.value = "";
+      }
+
+      function openVisualBindModal(characterName) {
+        pendingVisualBindCharacterName = characterName;
+        setVisualBindStatus("");
+        const modal = $("visual-bind-modal");
+        const desc = $("visual-bind-desc");
+        if (desc) desc.textContent = "将为「" + characterName + "」绑定头像或立绘。本地图片会先压缩到 1048576 bytes 以下并以 Base64 写入；线上图片继续保存原始链接。";
+        if (modal) {
+          modal.style.display = "flex";
+          modal.setAttribute("aria-hidden", "false");
+        }
+      }
+
+      function refreshCharactersAfterVisualBind(characterName) {
+        if (!currentStaticData) return;
+        renderCharacters(currentStaticData);
+        activateCharacterPanel(characterName);
+      }
+
+      async function updateVisualBindForCharacter(characterName, patch) {
+        if (!characterName) throw new Error("缺少角色名");
+        if (typeof updateWorldbookWith !== "function") {
+          throw new Error("当前环境缺少 updateWorldbookWith，无法写入主世界书 VISUAL_BINDS。");
+        }
+
+        const worldbookName = VISUAL_BINDS_WORLDBOOK_NAME;
+        const normalizedPatch = normalizeVisualPatch(patch);
+        let nextBind = null;
+
+        await updateWorldbookWith(worldbookName, worldbook => {
+          const list = Array.isArray(worldbook) ? worldbook.slice() : [];
+          let entry = getVisualBindsEntry(list);
+          const binds = entry ? parseVisualBindsContent(entry.content) : {};
+          nextBind = Object.assign({}, normalizeVisualBind(binds[characterName]), normalizedPatch);
+          binds[characterName] = nextBind;
+          const nextContent = JSON.stringify(binds, null, 2);
+
+          if (entry) {
+            entry.content = nextContent;
+            entry.name = VISUAL_BINDS_ENTRY_NAME;
+          } else {
+            let maxUid = 0;
+            list.forEach(item => {
+              if (item && Number(item.uid) > maxUid) maxUid = Number(item.uid);
+            });
+            list.push(makeVisualBindsEntry(nextContent, maxUid + 1));
+          }
+          return list;
+        }, { render: "immediate" });
+
+        characterVisualBinds[characterName] = nextBind || Object.assign({}, getCharacterVisualBind(characterName), normalizedPatch);
+        refreshCharactersAfterVisualBind(characterName);
+      }
+
+      function visualFieldLabel(field) {
+        return field === "illust_link" ? "立绘" : "头像";
+      }
+
+      function makeVisualPatch(field, link) {
+        const patch = {};
+        patch[field === "illust_link" ? "illust_link" : "profile_link"] = String(link || "");
+        return patch;
+      }
+
+      function normalizeVisualPatch(patch) {
+        const out = {};
+        if (patch && Object.prototype.hasOwnProperty.call(patch, "profile_link")) {
+          out.profile_link = typeof patch.profile_link === "string" ? patch.profile_link : "";
+        }
+        if (patch && Object.prototype.hasOwnProperty.call(patch, "illust_link")) {
+          out.illust_link = typeof patch.illust_link === "string" ? patch.illust_link : "";
+        }
+        return out;
+      }
+
+      async function bindCharacterVisualFromFile(file) {
+        if (!pendingVisualBindCharacterName || !file) return;
+        const field = pendingVisualBindField || "profile_link";
+        const label = visualFieldLabel(field);
+        setVisualBindStatus("正在读取并压缩本地" + label + "图片到 1048576 bytes 以下...");
+        try {
+          const link = await uploadVisualLocalFile(file);
+          if (!link || !/^data:image\//i.test(link)) throw new Error("未能取得压缩后的图片 Base64。");
+          await updateVisualBindForCharacter(pendingVisualBindCharacterName, makeVisualPatch(field, link));
+          setVisualBindStatus(label + " Base64 已写入主世界书 VISUAL_BINDS。");
+          setTimeout(closeVisualBindModal, 450);
+        } catch (err) {
+          console.error(err);
+          setVisualBindStatus("写入失败：" + (err && err.message ? err.message : String(err)));
+        }
+      }
+
+      async function bindCharacterVisualFromOnlineUrl(field) {
+        const name = pendingVisualBindCharacterName;
+        if (!name) return;
+        const targetField = field || pendingVisualBindField || "profile_link";
+        const label = visualFieldLabel(targetField);
+        const current = getCharacterVisualBind(name)[targetField];
+        const link = window.prompt("请输入线上" + label + "图片链接", current && /^https?:\/\//i.test(current) ? current : "https://");
+        if (!link) return;
+        const clean = String(link).trim();
+        if (!/^https?:\/\//i.test(clean)) {
+          setVisualBindStatus("线上图片链接必须以 http:// 或 https:// 开头。");
+          return;
+        }
+        setVisualBindStatus("正在写入 VISUAL_BINDS...");
+        try {
+          await updateVisualBindForCharacter(name, makeVisualPatch(targetField, clean));
+          setVisualBindStatus("线上" + label + "链接已写入主世界书 VISUAL_BINDS。");
+          setTimeout(closeVisualBindModal, 450);
+        } catch (err) {
+          console.error(err);
+          setVisualBindStatus("写入失败：" + (err && err.message ? err.message : String(err)));
+        }
+      }
+
+      function activateCharacterPanel(target) {
+        if (!target || !$("characters-view")) return;
+        $("characters-view").querySelectorAll(".character-tab").forEach(v => {
+          v.classList.toggle("active", v.dataset.characterTab === target);
+        });
+        $("characters-view").querySelectorAll(".character-panel").forEach(panel => {
+          panel.classList.toggle("active", panel.dataset.characterPanel === target);
+        });
+      }
+
+      function expProgress(exp) {
+        const total = Number(exp) || 0;
+        let level = 0;
+
+        for (let i = 1; i < SKILL_THRESHOLDS.length; i++) {
+          if (total >= SKILL_THRESHOLDS[i]) level = i;
+        }
+
+        if (level >= SKILL_THRESHOLDS.length - 1) {
+          return { level, percent: 100, caption: `${total.toLocaleString()} EXP / MAX` };
+        }
+
+        const start = SKILL_THRESHOLDS[level];
+        const end = SKILL_THRESHOLDS[level + 1];
+        const percent = ((total - start) / (end - start)) * 100;
+
+        return {
+          level,
+          percent: Math.max(0, Math.min(100, percent)),
+          caption: `${total.toLocaleString()} / ${end.toLocaleString()} EXP`
+        };
+      }
+
+      function renderHome(staticData, gameTime) {
+        const mc = staticData.主角 || {};
+        const learning = mc.学习 || {};
+        const path = text(mc.位置).split("|").map(v => v.trim());
+
+        const skills = entries(mc.技能).map(([name, item]) => {
+          const progress = expProgress(item && item.EXP);
+          const isLearning = learning.当前技能 === name && learning.状态 === "学习中";
+
+          return `
+            <div class="skill-card ${isLearning ? "learning" : ""}">
+              <div class="skill-head">
+                <strong>${escapeHtml(name)}</strong>
+                <span class="level">LV ${item && item._等级 !== undefined ? item._等级 : progress.level}${isLearning ? " · 学习中" : ""}</span>
+              </div>
+              <div class="bar">
+                <div class="fill" style="width:${progress.percent}%"></div>
+              </div>
+              <div class="skill-foot">
+                <span>${progress.caption}</span>
+                <span>${progress.percent.toFixed(1)}%</span>
+              </div>
+            </div>
+          `;
+        }).join("");
+
+        const itemCards = entries(mc.个人物品 || {}).map(([itemName, item]) => {
+          const meta = [];
+          if (item && item.品质 !== undefined) meta.push(`<span class="entry-pill">品质 ${escapeHtml(item.品质)}</span>`);
+          if (item && item.堆叠 !== undefined) meta.push(`<span class="entry-pill">数量 ${escapeHtml(item.堆叠)}</span>`);
+
+          return `
+            <article class="item-entry">
+              <h3>${escapeHtml(itemName)}</h3>
+              <div class="entry-meta">${meta.join("")}</div>
+              <div class="desc">${escapeHtml(item && item.描述 ? item.描述 : "暂无描述")}</div>
+              <details>
+                <summary>详细属性</summary>
+                ${detail(item || {})}
+              </details>
+            </article>
+          `;
+        }).join("");
+
+        const newsCards = entries(staticData.新闻 || {}).map(([newsName, content]) => `
+          <article class="news-entry">
+            <h3>${escapeHtml(newsName)}</h3>
+            <div class="desc">${escapeHtml(content || "暂无内容")}</div>
+          </article>
+        `).join("");
+
+        $("home-view").innerHTML = `
+          <div class="panel hero">
+            <div>
+              <div class="label">当前位置</div>
+              <div class="place">${escapeHtml(path.slice(0, 2).join(" / "))}</div>
+              <div class="subplace">${escapeHtml(path.slice(2).join(" / ") || "未记录详细坐标")}</div>
+            </div>
+            <div>
+              <div class="label">信用点</div>
+              <div class="credits">${Number(mc.信用点 || 0).toLocaleString()} C</div>
+            </div>
+          </div>
+
+          <div class="grid">
+            ${stat("当前外貌", mc.外貌 || mc.外观)}
+            ${stat("游戏时间", gameTime)}
+            ${stat("训练状态", `${learning.状态 || "未学习"}${learning.当前技能 ? ` / ${learning.当前技能}` : ""}`)}
+            ${stat("训练速率", `${learning._实际每小时EXP || 0} EXP / 小时`)}
+          </div>
+
+          <details class="collapse-section" open>
+            <summary>技能许可与经验</summary>
+            <div class="collapse-body">
+              <div class="grid wide">${skills || empty("尚未登记技能")}</div>
+            </div>
+          </details>
+
+          <details class="collapse-section" open>
+            <summary>随身物品</summary>
+            <div class="collapse-body">
+              ${itemCards ? `<div class="item-list">${itemCards}</div>` : empty("暂无随身物品")}
+            </div>
+          </details>
+
+          <section class="collapse-section">
+            <div class="section-title">新闻与邂逅</div>
+            ${newsCards ? `<div class="news-list">${newsCards}</div>` : empty("暂无新闻")}
+          </section>
+        `;
+      }
+
+      function renderCharacters(staticData) {
+        const mc = staticData.主角 || {};
+        const characters = entries(mc.可攻略角色 || {});
+
+        if (!characters.length) {
+          $("characters-view").innerHTML = `
+            <h1>可攻略角色</h1>
+            ${empty("暂无可攻略角色记录")}
+          `;
+          return;
+        }
+
+        const tabs = characters.map(([name, c], index) => `
+          <button class="character-tab ${index === 0 ? "active" : ""}" data-character-tab="${escapeHtml(name)}">
+            ${renderCharacterAvatar(name, "small")}<span>${escapeHtml(name)}</span>
+          </button>
+        `).join("");
+
+        const panels = characters.map(([name, c], index) => {
+          const isStargazer = c.种族 === "观星者";
+
+          const allFields = Object.assign({}, c);
+          delete allFields._key;
+
+          const overview = {
+            种族: c.种族,
+            阵营: c.阵营,
+            身份: c.身份,
+            制造商: c.制造商,
+            型号ID: c.型号ID,
+            分配舰船: c.分配舰船,
+            身份标识: c.身份标识
+          };
+
+          const relation = {
+            好感度: c.好感度,
+            想法: c.想法,
+            性格: c.性格,
+            喜欢: c.喜欢,
+            讨厌: c.讨厌
+          };
+
+          const profile = {
+            描述: c.描述,
+            外貌: c.外貌,
+            历史: c.历史
+          };
+
+          const stargazer = {
+            比特率: c.比特率,
+            精度: c.精度,
+            稳态增益: c.稳态增益,
+            爆发增益: c.爆发增益,
+            特殊效果: c.特殊效果
+          };
+
+          const privateData = {
+            性癖: c.性癖,
+            外貌记录: c.外貌记录,
+            性经历: c.性经历
+          };
+
+          return `
+            <section class="character-panel ${index === 0 ? "active" : ""}" data-character-panel="${escapeHtml(name)}">
+              <div class="panel">
+                <div class="character-visual-shell">
+                  <div>
+                    <div class="character-hero">
+                      <div class="character-identity">
+                        ${renderCharacterAvatar(name, "", true)}
+                        <div>
+                          <div class="character-title">${escapeHtml(name)}</div>
+                          <div class="character-subtitle">${escapeHtml(c.种族 || "未记录种族")} / ${escapeHtml(c.阵营 || "未记录阵营")} / ${escapeHtml(c.身份 || "未记录身份")}</div>
+                        </div>
+                        <div class="character-score">
+                          <div class="score-value">${escapeHtml(c.好感度 !== undefined ? c.好感度 : "—")}</div>
+                          <div class="score-label">好感度</div>
+                        </div>
+                      </div>
+                    </div>
+
+                <div class="character-block">
+                  <h3>概览</h3>
+                  ${detail(overview)}
+                </div>
+
+                <div class="character-block">
+                  <h3>关系与偏好</h3>
+                  ${detail(relation)}
+                </div>
+
+                <div class="character-block">
+                  <h3>档案</h3>
+                  ${detail(profile)}
+                </div>
+
+                ${isStargazer ? `
+                  <div class="character-block">
+                    <h3>观星者专属参数</h3>
+                    ${detail(stargazer)}
+                  </div>
+                ` : ""}
+
+                <details class="character-block">
+                  <summary>私密档案</summary>
+                  ${detail(privateData)}
+                </details>
+
+                <details class="character-block">
+                  <summary>完整原始字段</summary>
+                  ${detail(allFields)}
+                </details>
+                  </div>
+                  ${renderCharacterIllust(name)}
+                </div>
+              </div>
+            </section>
+          `;
+        }).join("");
+
+        $("characters-view").innerHTML = `
+          <h1>可攻略角色</h1>
+          <p class="desc">使用顶部标签切换角色；每个标签页内显示该角色的完整档案。</p>
+          <div class="character-tabs">${tabs}</div>
+          <div class="character-panels">${panels}</div>
+        `;
+
+        $("characters-view").querySelectorAll(".character-tab").forEach(tab => {
+          tab.addEventListener("click", () => activateCharacterPanel(tab.dataset.characterTab));
+        });
+
+        $("characters-view").querySelectorAll('[data-action="open-visual-bind"]').forEach(avatar => {
+          avatar.addEventListener("click", event => {
+            event.preventDefault();
+            event.stopPropagation();
+            openVisualBindModal(avatar.dataset.characterName || "");
+          });
+          avatar.addEventListener("keydown", event => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              openVisualBindModal(avatar.dataset.characterName || "");
+            }
+          });
+        });
+      }
+
+      function parseDynamicSlotConfig(config) {
+        /*
+          动态槽位解析：
+          - 支持 4S3M2L
+          - 支持 4C1T
+          - 支持未来新增槽位 ID，例如 2X3Q
+          - 支持空格：4 C 1 T
+          返回顺序按配置文本出现顺序保留。
+        */
+        const source = text(config);
+        const result = [];
+        const re = /(\d+)\s*([A-Za-z]+)/g;
+        let m;
+
+        while ((m = re.exec(source))) {
+          const count = Number(m[1]) || 0;
+          const slotId = String(m[2] || "").toUpperCase();
+          if (count > 0 && slotId) {
+            result.push({ slotId, count });
+          }
+        }
+
+        return result;
+      }
+
+      function inferSlotKind(slotId, sourceKind) {
+        /*
+          kind 只用于环形布局与视觉分组，不用于限制槽位 ID。
+        */
+        if (sourceKind === "weapon") return "weapon";
+        if (slotId === "H") return "high";
+        if (slotId === "L") return "low";
+        return "module";
+      }
+
+      function makeDynamicSlots(config, sourceKind, prefix) {
+        const specs = parseDynamicSlotConfig(config);
+        const slots = [];
+
+        specs.forEach(spec => {
+          for (let i = 1; i <= spec.count; i++) {
+            slots.push({
+              id: `${prefix}${spec.slotId}${i}`,
+              slot: `${spec.slotId}${i}`,
+              slotType: spec.slotId,
+              sourceKind,
+              kind: inferSlotKind(spec.slotId, sourceKind),
+              module: "无装备",
+              empty: true
+            });
+          }
+        });
+
+        return slots;
+      }
+
+      function extractRequirementField(reqText, fieldNames) {
+        const req = String(reqText || "");
+        for (let i = 0; i < fieldNames.length; i++) {
+          const name = fieldNames[i];
+          const re = new RegExp(name + "\\s*[：:]\\s*([^|/，,;；\\n\\r]+)", "i");
+          const m = req.match(re);
+          if (m) return String(m[1] || "").trim();
+        }
+        return "";
+      }
+
+      function normalizeSlotToken(value) {
+        /*
+          从 “S槽”、“C 机库槽”、“T 超级武器槽”、“1T”、“XL炮位” 等文本中提取槽位 ID。
+          注意：XL 是多字符槽位 ID，必须保留完整。
+        */
+        const textValue = String(value || "").toUpperCase().trim();
+        let m = textValue.match(/^([A-Z]+)/);
+        if (m) return m[1];
+        m = textValue.match(/[A-Z]+/);
+        return m ? m[0] : "";
+      }
+
+      function getShipWeaponSlotTypes(ship) {
+        return parseDynamicSlotConfig(ship && ship.炮位配置).map(v => v.slotId);
+      }
+
+      function getShipModuleSlotTypes(ship) {
+        return parseDynamicSlotConfig(ship && ship.装备槽位配置).map(v => v.slotId);
+      }
+
+      function inferWeaponSlotFromText(reqText, ship) {
+        /*
+          武器的槽位 ID 必须从舰船自身的炮位配置中反查。
+          这样可以支持 S / XL / C / T / 未来任意 ID。
+          例如舰船只有 4S，装备要求中出现 “S炮位” 或 “炮位：S” 才匹配 S。
+        */
+        const req = String(reqText || "").toUpperCase();
+        const slotTypes = getShipWeaponSlotTypes(ship).sort((a, b) => b.length - a.length);
+
+        for (let i = 0; i < slotTypes.length; i++) {
+          const id = slotTypes[i];
+          const escaped = id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          const re = new RegExp("(^|[^A-Z])" + escaped + "([^A-Z]|$)", "i");
+          if (re.test(req)) return id;
+        }
+
+        return "";
+      }
+
+      function inferModuleSlotFromText(reqText, ship) {
+        const req = String(reqText || "").toUpperCase();
+        const slotTypes = getShipModuleSlotTypes(ship).sort((a, b) => b.length - a.length);
+
+        for (let i = 0; i < slotTypes.length; i++) {
+          const id = slotTypes[i];
+          const escaped = id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          const re = new RegExp("(^|[^A-Z])" + escaped + "([^A-Z]|$)", "i");
+          if (re.test(req)) return id;
+        }
+
+        return "";
+      }
+
+      function parseEquipRequirementSlot(moduleData, ship) {
+        const req = String((moduleData && moduleData.装配要求) || "");
+        const tags = moduleData && moduleData.标签 ? moduleData.标签 : [];
+        const tagText = Array.isArray(tags) ? tags.join(" ") : String(tags);
+
+        const mountText = extractRequirementField(req, ["炮位", "武器槽位", "武器槽", "挂点"]);
+        const moduleText = extractRequirementField(req, ["装备槽位", "模块槽位", "模块槽"]);
+
+        if (mountText && mountText !== "无") {
+          const explicitType = normalizeSlotToken(mountText);
+          return {
+            type: explicitType,
+            sourceKind: "weapon",
+            kind: "weapon",
+            strict: true
+          };
+        }
+
+        if (moduleText && moduleText !== "无") {
+          const explicitType = normalizeSlotToken(moduleText);
+          return {
+            type: explicitType,
+            sourceKind: "module",
+            kind: inferSlotKind(explicitType, "module"),
+            strict: true
+          };
+        }
+
+        /*
+          没有标准字段时，尝试从整个装配要求文本里根据舰船现有槽位 ID 反查。
+        */
+        const inferredWeaponType = inferWeaponSlotFromText(req, ship);
+        if (inferredWeaponType) {
+          return {
+            type: inferredWeaponType,
+            sourceKind: "weapon",
+            kind: "weapon",
+            strict: true
+          };
+        }
+
+        const inferredModuleType = inferModuleSlotFromText(req, ship);
+        if (inferredModuleType) {
+          return {
+            type: inferredModuleType,
+            sourceKind: "module",
+            kind: inferSlotKind(inferredModuleType, "module"),
+            strict: true
+          };
+        }
+
+        /*
+          标签只能判断大类，不能判断具体槽位 ID。
+          对武器来说，这里不再允许“任意 weapon 槽”兜底。
+          否则 4S 这种配置可能被错误扩展/错误占用。
+        */
+        if (tagText.includes("武器") || tagText.includes("炮塔") || tagText.includes("机库") || tagText.includes("超级武器")) {
+          return { type: "", sourceKind: "weapon", kind: "weapon", strict: false };
+        }
+
+        if (tagText.includes("防御") || tagText.includes("护盾")) {
+          return { type: "H", sourceKind: "module", kind: "high", strict: false };
+        }
+
+        if (tagText.includes("电子") || tagText.includes("辅助")) {
+          return { type: "L", sourceKind: "module", kind: "low", strict: false };
+        }
+
+        return { type: "", sourceKind: "", kind: "module", strict: false };
+      }
+
+      function buildAllShipSlots(ship) {
+        /*
+          槽位数量与槽位 ID 只来自舰船数据：
+          - 炮位配置
+          - 装备槽位配置
+
+          不硬编码 S/M/L/XL/H/L。
+          例如 4C1T 会生成 C1 C2 C3 C4 T1。
+        */
+        const weaponSlots = makeDynamicSlots(
+          ship && ship.炮位配置,
+          "weapon",
+          "W-"
+        );
+
+        const moduleSlots = makeDynamicSlots(
+          ship && ship.装备槽位配置,
+          "module",
+          "M-"
+        );
+
+        return weaponSlots.concat(moduleSlots);
+      }
+
+      function assignEquipmentToSlots(slots, ship) {
+        const equipment = entries((ship && ship.装备) || {});
+        const used = new Set();
+
+        equipment.forEach(([moduleName, moduleData]) => {
+          const req = parseEquipRequirementSlot(moduleData, ship);
+          let index = -1;
+
+          /*
+            第一优先级：精确匹配来源类型 + 槽位 ID。
+            武器必须匹配炮位配置中真实存在的槽位 ID。
+          */
+          if (req.type && req.sourceKind) {
+            index = slots.findIndex(slot =>
+              !used.has(slot.id) &&
+              slot.sourceKind === req.sourceKind &&
+              slot.slotType === req.type
+            );
+          }
+
+          /*
+            第二优先级：只匹配槽位 ID。
+            仅用于明确给出了 type 的情况。
+          */
+          if (index < 0 && req.type) {
+            index = slots.findIndex(slot =>
+              !used.has(slot.id) &&
+              slot.slotType === req.type
+            );
+          }
+
+          /*
+            第三优先级：
+            只允许模块使用大类兜底。
+            武器不允许用 sourceKind=weapon 兜底，否则装备无法识别槽位时可能错误占用。
+          */
+          if (index < 0 && req.sourceKind === "module" && !req.strict) {
+            index = slots.findIndex(slot =>
+              !used.has(slot.id) &&
+              slot.sourceKind === "module" &&
+              (slot.kind === req.kind || req.kind === "module")
+            );
+          }
+
+          /*
+            关键约束：
+            找不到可兼容槽位时，不创建额外节点。
+            槽位总数永远等于舰船配置解析出的槽位总数。
+          */
+          if (index >= 0) {
+            slots[index].module = moduleName;
+            slots[index].empty = false;
+            used.add(slots[index].id);
+          }
+        });
+
+        return slots;
+      }
+
+      function shipModuleNodes(ship) {
+        const slots = buildAllShipSlots(ship);
+        if (!slots.length) return [];
+        return assignEquipmentToSlots(slots, ship);
+      }
+
+      function polarNodes(items, radius, startDeg, endDeg) {
+        if (!items.length) return "";
+
+        return items.map((item, i) => {
+          const deg = items.length === 1
+            ? (startDeg + endDeg) / 2
+            : startDeg + (endDeg - startDeg) * (i / (items.length - 1));
+
+          const rad = deg * Math.PI / 180;
+          const x = 50 + Math.cos(rad) * radius;
+          const y = 50 + Math.sin(rad) * radius;
+
+          return `
+            <div class="module-node ${escapeHtml(item.kind)} ${item.empty ? "empty-slot" : ""}" style="--x:${x.toFixed(2)}%;--y:${y.toFixed(2)}%" title="${escapeHtml(item.slot)}">
+              <span class="module">${escapeHtml(item.module || "无装备")}</span>
+            </div>
+          `;
+        }).join("");
+      }
+
+      function renderShipOrbital(name, ship) {
+        const nodes = shipModuleNodes(ship);
+        const weapons = nodes.filter(v => v.kind === "weapon");
+        const highs = nodes.filter(v => v.kind === "high");
+        const lows = nodes.filter(v => v.kind === "low");
+        const others = nodes.filter(v => !["weapon", "high", "low"].includes(v.kind));
+
+        return `
+          <div class="ship-orbital">
+            <div class="ship-ring inner"></div>
+            ${polarNodes(weapons, 39, -155, 155)}
+            ${polarNodes(highs, 26, 110, 250)}
+            ${polarNodes(lows, 26, -70, 70)}
+            ${polarNodes(others, 34, 200, 340)}
+            <div class="ship-core">
+              <strong>${escapeHtml(name)}</strong>
+              <small>
+                ${escapeHtml(ship && ship.舰船类型 || "舰船")} / ${escapeHtml(ship && ship.吨位 || "未知吨位")}<br>
+                ${escapeHtml(ship && ship.炮位配置 || "无炮位记录")} · ${escapeHtml(ship && ship.装备槽位配置 || "无槽位记录")}
+              </small>
+            </div>
+          </div>
+        `;
+      }
+
+      function findShipStargazer(staticData, shipName, ship) {
+        const chars = staticData.主角 && staticData.主角.可攻略角色 ? staticData.主角.可攻略角色 : {};
+        const candidates = [
+          shipName,
+          ship && ship.舰船ID,
+          ship && ship.舰船id,
+          ship && ship.ID,
+          ship && ship.id,
+          ship && ship.编号,
+          ship && ship.观星者接口角色
+        ].filter(Boolean).map(String);
+
+        let found = null;
+
+        entries(chars).some(([charName, c]) => {
+          const info = c && c.附加信息 ? c.附加信息 : {};
+          const linked = [
+            c && c.分配舰船,
+            c && c.舰船ID,
+            c && c.舰船id,
+            info.舰船ID,
+            info.舰船id,
+            info.舰船,
+            info.舰船名称
+          ].filter(Boolean).map(String);
+
+          if (candidates.includes(charName) || linked.some(v => candidates.includes(v))) {
+            found = { name: charName, data: c };
+            return true;
+          }
+
+          return false;
+        });
+
+        return found;
+      }
+
+      function renderStargazerForShip(staticData, shipName, ship) {
+        const sg = findShipStargazer(staticData, shipName, ship);
+
+        if (!sg) {
+          return `
+            <div class="stargazer-link">
+              <div class="label">观星者接口</div>
+              <div class="value muted">未找到匹配的观星者。</div>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="stargazer-link">
+            <div class="label">观星者接口 / 来自可攻略角色</div>
+            <div class="ship-stargazer-card">
+              ${renderCharacterAvatar(sg.name, "small", false)}
+              <div class="value">
+                <strong>${escapeHtml(sg.name)}</strong><br>
+                ${escapeHtml(sg.data && (sg.data.型号ID || sg.data.身份) || "未记录型号")} · ${escapeHtml(sg.data && sg.data.种族 || "未记录种族")}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function propRows(obj, skipKeys) {
+        const skip = new Set(skipKeys || []);
+        return entries(obj || {}).filter(([k]) => !skip.has(k)).map(([k, v]) => `
+          <div class="prop-row">
+            <div class="prop-key">${escapeHtml(k)}</div>
+            <div class="prop-val">${display(v)}</div>
+          </div>
+        `).join("");
+      }
+
+      function numericField(obj, key) {
+        const raw = obj && obj[key] !== undefined ? obj[key] : 0;
+        const num = parseFloat(String(raw).replace(/[^0-9.-]/g, ""));
+        return Number.isFinite(num) ? num : 0;
+      }
+
+      function sumEquipmentField(equipment, key) {
+        return entries(equipment || {}).reduce((sum, [, item]) => sum + numericField(item || {}, key), 0);
+      }
+
+      function shipHpStatus(ship) {
+        const baseShield = numericField(ship, "船体护盾值");
+        const baseStructure = numericField(ship, "船体结构值");
+        const bonusShield = sumEquipmentField(ship && ship.装备, "护盾");
+        const bonusStructure = sumEquipmentField(ship && ship.装备, "结构值");
+        const maxShield = baseShield + bonusShield;
+        const maxStructure = baseStructure + bonusStructure;
+        const currentShield = ship && ship.护盾值 !== undefined ? numericField(ship, "护盾值") : baseShield;
+        const currentStructure = ship && ship.结构值 !== undefined ? numericField(ship, "结构值") : baseStructure;
+
+        return {
+          currentShield,
+          maxShield,
+          bonusShield,
+          currentStructure,
+          maxStructure,
+          bonusStructure
+        };
+      }
+
+      function hpBar(label, current, max, bonus, kind) {
+        const pct = max > 0 ? Math.max(0, Math.min(100, current / max * 100)) : 0;
+        const bonusText = bonus > 0 ? `装备 +${bonus}` : "无装备容量加成";
+        return `
+          <div class="ship-health-card">
+            <div class="ship-health-head">
+              <span>${escapeHtml(label)}</span>
+              <strong>${escapeHtml(current)} / ${escapeHtml(max)}</strong>
+            </div>
+            <div class="ship-health-bar">
+              <div class="ship-health-fill ${kind}" style="width:${pct.toFixed(2)}%"></div>
+            </div>
+            <div class="ship-health-meta">${escapeHtml(bonusText)}</div>
+          </div>
+        `;
+      }
+
+      function renderShipHp(ship) {
+        const hp = shipHpStatus(ship || {});
+        return `
+          <div class="ship-health-grid">
+            ${hpBar("护盾", hp.currentShield, hp.maxShield, hp.bonusShield, "shield")}
+            ${hpBar("结构", hp.currentStructure, hp.maxStructure, hp.bonusStructure, "structure")}
+          </div>
+        `;
+      }
+
+      function equipmentRows(equipment) {
+        const list = entries(equipment || {});
+        if (!list.length) return empty("暂无装备记录");
+
+        return `
+          <div class="equipment-list">
+            ${list.map(([name, item]) => `
+              <article class="equipment-entry">
+                <div class="equipment-entry-title">${escapeHtml(name)}</div>
+                <div class="prop-list">
+                  ${propRows(item || {})}
+                </div>
+              </article>
+            `).join("")}
+          </div>
+        `;
+      }
+
+      function renderShips(staticData) {
+        const mc = staticData.主角 || {};
+        const ships = entries(mc.舰船 || {});
+
+        if (!ships.length) {
+          $("ships-view").innerHTML = `
+            <h1>舰船系统</h1>
+            ${empty("暂无舰船记录")}
+          `;
+          return;
+        }
+
+        const tabs = ships.map(([name, ship], index) => {
+          const type = ship.舰船类型 || "舰船";
+          return `
+            <button class="ship-tab ${index === 0 ? "active" : ""}" data-ship-tab="${escapeHtml(name)}">
+              <span class="ship-tab-type">${escapeHtml(type)}</span>
+              <span class="ship-tab-name">${escapeHtml(name)}</span>
+            </button>
+          `;
+        }).join("");
+
+        const panels = ships.map(([name, ship], index) => {
+          const core = {
+            舰船名称: name,
+            舰船类型: ship.舰船类型,
+            吨位: ship.吨位,
+            制造商: ship.制造商,
+            驾驶员: ship.驾驶员,
+            是否旗舰: ship.是否旗舰,
+            观星者接口角色: ship.观星者接口角色,
+            跃迁充能: ship.跃迁充能,
+            最大充能: ship.最大充能,
+            跃迁消耗: ship.跃迁消耗,
+            炮位配置: ship.炮位配置,
+            装备槽位配置: ship.装备槽位配置,
+            船体护盾值: ship.船体护盾值,
+            船体结构值: ship.船体结构值,
+            护盾值: ship.护盾值,
+            结构值: ship.结构值
+          };
+
+          const resources = {
+            PG: ship.装配资源 && ship.装配资源.PG,
+            CPU: ship.装配资源 && ship.装配资源.CPU
+          };
+
+          const effects = ship.效果 || {};
+          const rawFields = Object.assign({}, ship);
+          delete rawFields.装备;
+
+          return `
+            <section class="ship-panel ${index === 0 ? "active" : ""}" data-ship-panel="${escapeHtml(name)}">
+              <div class="ship-detail-shell">
+                ${renderShipOrbital(name, ship)}
+
+                <div class="panel">
+                  <div class="character-hero">
+                    <div>
+                      <div class="character-title">${escapeHtml(ship.舰船类型 || "舰船")} ${escapeHtml(name)}</div>
+                      <div class="character-subtitle">${escapeHtml(ship.制造商 || "未知制造商")} / ${escapeHtml(ship.吨位 || "未知吨位")}</div>
+                    </div>
+                    <div class="character-score">
+                      <div class="score-value">${escapeHtml(ship.跃迁充能 !== undefined ? ship.跃迁充能 : "—")}</div>
+                      <div class="score-label">跃迁充能</div>
+                    </div>
+                  </div>
+
+                  <div class="ship-section">
+                    <h3 class="ship-section-title">护盾 / 结构</h3>
+                    ${renderShipHp(ship)}
+                  </div>
+
+                  <div class="ship-section">
+                    <h3 class="ship-section-title">核心属性</h3>
+                    <div class="prop-list">${propRows(core)}</div>
+                  </div>
+
+                  <div class="ship-section">
+                    <h3 class="ship-section-title">装配资源</h3>
+                    <div class="prop-list">${propRows(resources)}</div>
+                  </div>
+
+                  <div class="ship-section">
+                    <h3 class="ship-section-title">效果</h3>
+                    <div class="prop-list">${propRows(effects)}</div>
+                  </div>
+
+                  <div class="ship-section">
+                    <h3 class="ship-section-title">观星者接口</h3>
+                    <div class="prop-list">
+                      <div class="prop-row">
+                        <div class="prop-key">接口角色</div>
+                        <div class="prop-val">${renderStargazerForShip(staticData, name, ship)}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="ship-section">
+                    <h3 class="ship-section-title">装备</h3>
+                    ${equipmentRows(ship.装备 || {})}
+                  </div>
+
+                  <details class="ship-section">
+                    <summary>完整原始字段</summary>
+                    <div class="prop-list">${propRows(rawFields)}</div>
+                  </details>
+                </div>
+              </div>
+            </section>
+          `;
+        }).join("");
+
+        $("ships-view").innerHTML = `
+          <h1>舰船系统</h1>
+          <p class="desc">舰船以顶部滑动 Tab 管理。中部显示舰船环形装配图，下方显示舰船属性、资源、观星者接口与装备信息。</p>
+          <div class="ship-tabs-layout">
+            <div class="ship-tab-list">${tabs}</div>
+            <div class="ship-panels">${panels}</div>
+          </div>
+        `;
+
+        $("ships-view").querySelectorAll(".ship-tab").forEach(tab => {
+          tab.addEventListener("click", () => {
+            const target = tab.dataset.shipTab;
+            $("ships-view").querySelectorAll(".ship-tab").forEach(v => {
+              v.classList.toggle("active", v === tab);
+            });
+            $("ships-view").querySelectorAll(".ship-panel").forEach(panel => {
+              panel.classList.toggle("active", panel.dataset.shipPanel === target);
+            });
+          });
+        });
+      }
+
+      function shortDescription(item, fallback) {
+        if (!item || typeof item !== "object") return fallback || "暂无简介";
+        return item.简介 || item.描述 || item.目标 || item.内容 || item.说明 || fallback || "暂无简介";
+      }
+
+      function statusOf(item) {
+        if (!item || typeof item !== "object") return "";
+        return item.状态 || item.完成状态 || item.进度 || item.阶段 || "";
+      }
+
+      function activateIndexedPanel(containerId, key) {
+        const root = $(containerId);
+        if (!root) return;
+
+        root.querySelectorAll(".index-card").forEach(card => {
+          card.classList.toggle("active", card.dataset.itemKey === key);
+        });
+
+        root.querySelectorAll(".detail-panel").forEach(panel => {
+          panel.classList.toggle("active", panel.dataset.itemKey === key);
+        });
+      }
+
+      function renderBases(staticData) {
+        const mc = staticData.主角 || {};
+        const buildings = entries(mc.建筑 || {});
+
+        if (!buildings.length) {
+          $("bases-view").innerHTML = `
+            <h1>建筑</h1>
+            ${empty("暂无建筑记录")}
+          `;
+          return;
+        }
+
+        const cards = buildings.map(([name, item], index) => {
+          const status = statusOf(item);
+          const desc = shortDescription(item, "暂无建筑简介");
+
+          return `
+            <button class="index-card ${index === 0 ? "active" : ""}" data-item-key="${escapeHtml(name)}">
+              <div class="index-card-title">${escapeHtml(name)}</div>
+              <div class="index-card-meta">
+                <span class="entry-pill">${escapeHtml(item.类型 || "建筑")}</span>
+                ${item.品质 !== undefined ? `<span class="entry-pill">品质 ${escapeHtml(item.品质)}</span>` : ""}
+                ${item.吨位 !== undefined ? `<span class="entry-pill">${escapeHtml(item.吨位)}</span>` : ""}
+                ${status ? `<span class="entry-pill">${escapeHtml(status)}</span>` : ""}
+              </div>
+              <div class="index-card-desc">${escapeHtml(desc)}</div>
+            </button>
+          `;
+        }).join("");
+
+        const panels = buildings.map(([name, item], index) => `
+          <section class="detail-panel ${index === 0 ? "active" : ""}" data-item-key="${escapeHtml(name)}">
+            <div class="panel">
+              <div class="detail-title-row">
+                <div>
+                  <div class="detail-title">${escapeHtml(name)}</div>
+                  <div class="detail-subtitle">${escapeHtml(item.类型 || "建筑")} / ${escapeHtml(item.吨位 || "未记录吨位")}</div>
+                </div>
+                <span class="badge">${escapeHtml(item.品质 !== undefined ? `品质 ${item.品质}` : "建筑资产")}</span>
+              </div>
+              <div class="prop-list">${propRows(item || {})}</div>
+            </div>
+          </section>
+        `).join("");
+
+        $("bases-view").innerHTML = `
+          <h1>建筑</h1>
+          <p class="desc">建筑以 3×N 列表显示；点击建筑卡片后查看具体信息。</p>
+          <div id="building-index-root">
+            <div class="index-grid">${cards}</div>
+            ${panels}
+          </div>
+        `;
+
+        $("building-index-root").querySelectorAll(".index-card").forEach(card => {
+          card.addEventListener("click", () => {
+            activateIndexedPanel("building-index-root", card.dataset.itemKey);
+          });
+        });
+      }
+
+      function renderAssets(staticData) {
+        const mc = staticData.主角 || {};
+        const inventory = mc.个人库存 || mc.个人物品 || {};
+
+        $("assets-view").innerHTML = `
+          <h1>资产与声望</h1>
+
+          <div class="section-title">信用点</div>
+          <div class="grid">
+            ${stat("当前余额", `${Number(mc.信用点 || 0).toLocaleString()} C`)}
+          </div>
+
+          <div class="section-title">个人库存</div>
+          <div class="panel">
+            ${entries(inventory || {}).length ? `
+              <div class="item-list">
+                ${entries(inventory).map(([itemName, item]) => {
+                  const meta = [];
+                  if (item && item.品质 !== undefined) meta.push(`<span class="entry-pill">品质 ${escapeHtml(item.品质)}</span>`);
+                  if (item && item.堆叠 !== undefined) meta.push(`<span class="entry-pill">数量 ${escapeHtml(item.堆叠)}</span>`);
+                  return `
+                    <article class="item-entry">
+                      <h3>${escapeHtml(itemName)}</h3>
+                      <div class="entry-meta">${meta.join("")}</div>
+                      <div class="desc">${escapeHtml(item && item.描述 ? item.描述 : "暂无描述")}</div>
+                      <details>
+                        <summary>详细属性</summary>
+                        <div class="prop-list">${propRows(item || {})}</div>
+                      </details>
+                    </article>
+                  `;
+                }).join("")}
+              </div>
+            ` : empty("个人库存为空")}
+          </div>
+
+          <div class="section-title">势力声望</div>
+          <div class="grid">
+            ${entries(mc.势力声望 || {}).map(([k, v]) => stat(k, Number(v).toFixed(2))).join("") || empty("暂无声望记录")}
+          </div>
+        `;
+      }
+
+      function renderMissions(staticData) {
+        const mc = staticData.主角 || {};
+        const missions = entries(mc.任务 || {});
+
+        if (!missions.length) {
+          $("missions-view").innerHTML = `
+            <h1>任务</h1>
+            ${empty("暂无任务记录")}
+          `;
+          return;
+        }
+
+        const cards = missions.map(([name, item], index) => {
+          const status = statusOf(item) || "进行中";
+          const desc = shortDescription(item, "暂无任务简介");
+
+          return `
+            <button class="index-card ${index === 0 ? "active" : ""}" data-item-key="${escapeHtml(name)}">
+              <div class="index-card-title">${escapeHtml(name)}</div>
+              <div class="index-card-meta">
+                <span class="entry-pill">${escapeHtml(status)}</span>
+                ${item.发布方 ? `<span class="entry-pill">${escapeHtml(item.发布方)}</span>` : ""}
+                ${item.奖励 ? `<span class="entry-pill">奖励</span>` : ""}
+              </div>
+              <div class="index-card-desc">${escapeHtml(desc)}</div>
+            </button>
+          `;
+        }).join("");
+
+        const panels = missions.map(([name, item], index) => {
+          const status = statusOf(item) || "进行中";
+
+          return `
+            <section class="detail-panel ${index === 0 ? "active" : ""}" data-item-key="${escapeHtml(name)}">
+              <div class="panel">
+                <div class="detail-title-row">
+                  <div>
+                    <div class="detail-title">${escapeHtml(name)}</div>
+                    <div class="detail-subtitle">${escapeHtml(shortDescription(item, "暂无任务简介"))}</div>
+                  </div>
+                  <span class="badge">${escapeHtml(status)}</span>
+                </div>
+                <div class="prop-list">${propRows(item || {})}</div>
+              </div>
+            </section>
+          `;
+        }).join("");
+
+        $("missions-view").innerHTML = `
+          <h1>任务</h1>
+          <p class="desc">任务以 3×N 列表显示；卡片显示完成状态与简介，点击后查看完整字段。</p>
+          <div id="mission-index-root">
+            <div class="index-grid">${cards}</div>
+            ${panels}
+          </div>
+        `;
+
+        $("mission-index-root").querySelectorAll(".index-card").forEach(card => {
+          card.addEventListener("click", () => {
+            activateIndexedPanel("mission-index-root", card.dataset.itemKey);
+          });
+        });
+      }
+
+          const LEGACY_STAR_MAP_DATA = {
+              nodes: [ { id: "sol_ward", name: "太阳禁卫区", x: 400, y: 300, region: "始源之环", sec: "95", owner: "泰拉帝国", desc: "帝国首都“泰拉”（地球）所在地，海军“裁决之手”舰队常驻。宏伟，古典，管制严格。\n<b>本地太空特征:</b> 密集的轨道防御平台，标准化的帝国航道信标，以及一个太阳中心位置的1:4:9完美比例方块。" }, { id: "heart_republic", name: "共和国之心", x: 600, y: 250, region: "始源之环", sec: "88", owner: "自由世界共和国", desc: "共和国心脏，实用主义，商业繁荣，思想自由，情报集散地。\n<b>本地太空特征:</b> 繁忙的商业空间站集群，模块化的殖民地栖息地，以及无处不在的全息广告。" }, { id: "cygnus_cradle", name: "天鹅座摇篮", x: 300, y: 450, region: "始源之环", sec: "92", owner: "天鹅座技术联邦", desc: "联邦科技与工业中心，遍布研究站，工业站与戴森云，监控严格。\n<b>本地太空特征:</b> 包围恒星的巨型戴森云结构，高度自动化的研究前哨，以及严格管制的跃迁信道。" }, { id: "trade_winds", name: "贸易风走廊", x: 550, y: 450, region: "始源之环", sec: "73", owner: "猎户座辛迪加", desc: "连接三大帝国的黄金航道，宇宙最繁华的商业中心，财富与罪恶交织。\n<b>本地太空特征:</b> 巨型货运船组成的“钢铁长河”，奢华的私人空间站，以及隐藏在航道阴影中的走私网络。" }, { id: "serpent_maw", name: "巨蛇之喉", x: 300, y: 700, region: "蛮荒边界", sec: "10", owner: "铁血盟约", desc: "混乱小行星带，传感器易失灵，海盗、走私犯与赏金猎人的乐园，最大黑市所在地。\n<b>本地太空特征:</b> 由舰船残骸和掏空小行星构成的海盗都市，混乱的传感器重影。" }, { id: "sanctuary", name: "避难所星团", x: 350, y: 700, region: "蛮荒边界", sec: "5", owner: "星火姐妹会", desc: "脉冲星辐射笼罩，天然跃迁干扰，航行危险，是叛逃者的避风港。\n<b>本地太空特征:</b> 强烈的脉冲星辐射形成天然的跃遷屏障，数个隐藏在星云深处的秘密基地。" }, { id: "charon", name: "卡戎之渡", x: 300, y: 680, region: "蛮荒边界", sec: "20", owner: "无", desc: "废弃战场与太空坟场，小型掠夺者团体活动区。\n<b>本地太空特征:</b> 漂浮的战舰坟场，周期性出现的幽灵信号，小型拾荒者营地。" }, { id: "veil_ghosts", name: "幽灵之幕", x: 900, y: 750, region: "遗忘之海", sec: "外部-10 / 内部99", owner: "人类技术联合", desc: "广阔寒冷的暗星云，背景辐射干扰强，导航困难，对外仅有一个交易空间站。\n<b>本地太空特征:</b> 能够吸收并扭曲传感器信号的暗物质星云，精确坐标是HTC的最高机密。" }, { id: "forerunners_tomb", name: "先驱者之墓", x: 1050, y: 850, region: "遗忘之海", sec: "-100", owner: "无 (考古禁区)", desc: "大量先驱者遗迹，空间结构极不稳定，时空扭曲。内部星门被扭曲，跃迁如同迷魂阵。\n<b>本地太空特征:</b> 时空结构极其脆弱，物理法则不稳定，自动化先驱者防御系统仍在运作。" }, { id: "abyss", name: "阿比斯深渊", x: 1150, y: 950, region: "遗忘之海", sec: "-1000", owner: "无", desc: "超大质量黑洞为中心，引力异常，空间扭曲，传闻有“幽灵船”。\n<b>本地太空特征:</b> 极端引力透镜效应，时间膨胀现象，以及一座在事件视界边缘稳定存在的1:4:9完美比例方块。" }, { id: "new_promised", name: "新应许之地", x: 800, y: 250, region: "天堂之阶", sec: "35", owner: "争议 (帝国/共和国)", desc: "大量类地行星，两大势力殖民冲突区，拓荒者的机遇与混乱之地。\n<b>本地太空特征:</b> 拥有大量富氧行星和液态水行星，两大帝国的勘探舰队和殖民船频繁出没。" }, { id: "golden_steps", name: "黄金阶梯", x: 950, y: 350, region: "天堂之阶", sec: "55", owner: "猎户座辛迪加", desc: "辛迪加的“经济特区”，试图打造第二个“贸易风走廊”。\n<b>本地太空特征:</b> 正在建设中的巨型商业枢纽站，充满了企业勘探队和雇佣兵舰队。" }, { id: "tranquil_sea", name: "静谧之海", x: 1000, y: 150, region: "天堂之阶", sec: "45", owner: "天鹅座联邦", desc: "联邦深空探索舰队活动区，寻找科学现象与先驱者遗迹。\n<b>本地太空特征:</b> 分布着奇异的硅基生态系统和未被激活的先驱者信标。" }, { id: "taboris", name: "塔伯里斯星座", x: 1200, y: 1000, region: "闪光星云", sec: "-1000", owner: "归元共同体", desc: "共同体的首都和克隆中心所在的星座，隐藏在一片被人工戴森云包裹的星系内。\n<b>本地太空特征:</b> 星座中心被巨大的不透明戴森云笼罩，外围星系遍布自动化的资源采集平台和防御哨站。" }, { id: "dark_constellation", name: "暗色星座", x: 100, y: 850, region: "大荒野", sec: "-200", owner: "争议 (共同体/铁血)", desc: "归元共同体的自动化船坞与铁血盟约的秘密矿场在此犬牙交错。\n<b>本地太空特征:</b> 高度放射性的熔岩行星，以及双方势力建造的武装采矿平台。" }, { id: "banshee", name: "女妖星旋", x: -50, y: 950, region: "大荒野", sec: "-500", owner: "无", desc: "两颗中子星相互绕行形成的极端引力与辐射环境，是宇宙中最危险的航道之一。\n<b>本地太空特征:</b> 强大的引力场和X射线暴，任何常规护盾都会被迅速剥离。" }, { id: "cobalt_frontier", name: "钴蓝边境", x: 978, y: 672, region: "天穹王冠", sec: "50", owner: "猎户座辛迪加 / 独立军阀", desc: "传统的“灰色地带”，由各路海盗领主和独立军阀割据。走私、赏金猎杀和非正规采矿是这里的日常。\n<b>本地太空特征:</b> 弥漫着淡蓝色的电离气体云，传感器效率中等。小行星带富含钴与铱。" }, { id: "crimson_constellation", name: "暗红星座", x: 998, y: 750, region: "天穹王冠", sec: "88", owner: "泰拉帝国 (军事管制区)", desc: "帝国的战略要塞区。这里不仅是重要的能源产地，更是通往边缘世界的咽喉。帝国海军在此部署了重兵。\n<b>本地太空特征:</b> 密集分布的老年红巨星使得整个星区沐浴在暗红色的光辉中。" }, { id: "splendor_constellation", name: "璨辉星座", x: 968, y: 700, region: "天穹王冠", sec: "68", owner: "泰拉帝国 / 猎户座辛迪加", desc: "被誉为“王冠上的宝石”。这里既有全银河最奢华的度假行星，也有高效运转的高科技工业世界。帝国与辛迪加在此设立了巨大的自由贸易区。\n<b>本地太空特征:</b> 壮丽的蓝巨星和稳定的主序星交相辉映，风景绝美。" }, { id: "w_no_stars", name: "W-J0001A 无星之海", x: 1300, y: 700, region: "虫洞空间", sec: "N/A", owner: "???", desc: "一个完全虚无的口袋宇宙。\n<b>本地太空特征:</b> 绝对的黑暗，没有任何恒星或背景辐射。空间中心悬浮着一个由未知原理构成的1:4:9完美比例方块。该空间具有重置特性。", isWormhole: true }, { id: "w_reflection", name: "W-B2005C 自我倒影", x: 0, y: 100, region: "虫洞空间", sec: "-2000", owner: "高维回响", desc: "天灾战争时期遗留下来的高维存在残渣所占据的污染空间。\n<b>本地太空特征:</b> 星系间充满着扭曲的、非欧几里得几何结构的空间。长期暴露会导致不可逆转的精神错乱。", isWormhole: true }, { id: "w_shelf", name: "W-C1101B 大陆架", x: 1250, y: 50, region: "虫洞空间", sec: "-300", owner: "无", desc: "通往另一个宇宙的无法回头的门扉。\n<b>本地太空特征:</b> 星系中心是一个巨大的、单向通行的超空间裂隙，不断向外喷射出不属于已知宇宙的奇异物质和能量。", isWormhole: true }, { id: "w_j101134", name: "W-J101134 空房间", x: 600, y: 50, region: "虫洞空间", sec: "-100", owner: "无", desc: "G型主序星，含1:4:9方块。资源贫乏，被探险家们戏称为“空房间”。", isWormhole: true }, { id: "w_j110110", name: "W-J110110", x: 50, y: 400, region: "虫洞空间", sec: "-500", owner: "敌对无人机", desc: "沃尔夫-拉叶星，古代无人机编队。", isWormhole: true }, { id: "w_j142857", name: "W-J142857 循环", x: 1350, y: 250, region: "虫洞空间", sec: "-1000", owner: "时空异常", desc: "每7小时发生一次时空坍缩重置。", isWormhole: true }, { id: "w_j155432", name: "W-J155432 冰壳", x: 1000, y: 1100, region: "虫洞空间", sec: "-200", owner: "无", desc: "红巨星，冰封行星下的巨大空腔与方块。", isWormhole: true }, { id: "w_j160888", name: "W-J160888 双星", x: 1400, y: 900, region: "虫洞空间", sec: "-1000", owner: "无", desc: "双中子星系统，引力透镜效应。", isWormhole: true }, { id: "w_j210956", name: "W-J210956 死寂", x: -100, y: 600, region: "虫洞空间", sec: "-100", owner: "无", desc: "熄灭的恒星，白矮星与小行星带。", isWormhole: true } ],
+              links: [ { s: "sol_ward", t: "trade_winds", type: "jump", jumps: 5 },{ s: "sol_ward", t: "heart_republic", type: "jump", jumps: 7 },{ s: "sol_ward", t: "cygnus_cradle", type: "wormhole_stable", jumps: 1 },{ s: "heart_republic", t: "trade_winds", type: "jump", jumps: 5 },{ s: "cygnus_cradle", t: "trade_winds", type: "jump", jumps: 6 },{ s: "cygnus_cradle", t: "tranquil_sea", type: "pipe", jumps: 1 },{ s: "heart_republic", t: "new_promised", type: "pipe", jumps: 3 },{ s: "heart_republic", t: "charon", type: "pipe", jumps: 3 },{ s: "trade_winds", t: "cobalt_frontier", type: "gate", jumps: 1 },{ s: "sol_ward", t: "crimson_constellation", type: "pipe", jumps: 1 },{ s: "cobalt_frontier", t: "splendor_constellation", type: "jump", jumps: 6 },{ s: "crimson_constellation", t: "splendor_constellation", type: "jump", jumps: 8 },{ s: "crimson_constellation", t: "new_promised", type: "gate", jumps: 1 },{ s: "crimson_constellation", t: "dark_constellation", type: "gate", jumps: 1 },{ s: "charon", t: "serpent_maw", type: "jump", jumps: 8 },{ s: "charon", t: "sanctuary", type: "jump", jumps: 10 },{ s: "serpent_maw", t: "dark_constellation", type: "gate", jumps: 1 },{ s: "dark_constellation", t: "banshee", type: "jump", jumps: 15 },{ s: "new_promised", t: "golden_steps", type: "jump", jumps: 5 },{ s: "new_promised", t: "tranquil_sea", type: "jump", jumps: 6 },{ s: "golden_steps", t: "tranquil_sea", type: "jump", jumps: 7 },{ s: "golden_steps", t: "taboris", type: "gate", jumps: 1 },{ s: "taboris", t: "veil_ghosts", type: "gate", jumps: 1 },{ s: "veil_ghosts", t: "forerunners_tomb", type: "jump", jumps: 12 },{ s: "forerunners_tomb", t: "abyss", type: "jump", jumps: 15 },{ s: "forerunners_tomb", t: "w_no_stars", type: "wormhole_unstable", jumps: 1 },{ s: "tranquil_sea", t: "w_shelf", type: "wormhole_unstable", jumps: 1 },{ s: "serpent_maw", t: "w_reflection", type: "wormhole_unstable", jumps: 1 },{ s: "heart_republic", t: "w_j101134", type: "wormhole_unstable", jumps: 1 }, { s: "sanctuary", t: "w_j110110", type: "wormhole_unstable", jumps: 1 }, { s: "taboris", t: "w_j142857", type: "wormhole_unstable", jumps: 1 },{ s: "abyss", t: "w_j160888", type: "wormhole_unstable", jumps: 1 },{ s: "new_promised", t: "w_j155432", type: "wormhole_unstable", jumps: 1 },{ s: "banshee", t: "w_j210956", type: "wormhole_unstable", jumps: 1 }]
+          };
+
+      const STAR_MAP_CENTER = { x: 600, y: 500 };
+      let starmapRuntime = null;
+      let pendingMapStaticData = null;
+      let starmapAnimationId = null;
+
+      function toStarmapNode(row) {
+        return {
+          id: row[0],
+          name: row[1],
+          region: row[2],
+          x: row[3],
+          y: row[4],
+          sec: row[5],
+          owner: row[6],
+          desc: row[7],
+          isWormhole: Boolean(row[8])
+        };
+      }
+
+      function toStarmapLink(row) {
+        const type = row[2] === "worm" ? "wormhole_unstable" : row[2] === "gate" ? "pipe" : "jump";
+        return { s: row[0], t: row[1], type, jumps: row[2] ? 1 : 5 };
+      }
+
+      function getStarmapData() {
+        if (typeof LEGACY_STAR_MAP_DATA !== "undefined") {
+          return LEGACY_STAR_MAP_DATA;
+        }
+        return {
+          nodes: MAP.nodes.map(toStarmapNode),
+          links: MAP.links.map(toStarmapLink)
+        };
+      }
+
+      function getPseudoRandomZ(value) {
+        const str = String(value || "");
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+          hash = ((hash << 5) - hash) + str.charCodeAt(i);
+          hash |= 0;
+        }
+        return (hash % 300) - 150;
+      }
+
+      function normalizeLocationParts(value) {
+        return text(value)
+          .split(/[|>＞\/\\，,;；\n\r]+/)
+          .map(v => v.trim())
+          .filter(Boolean);
+      }
+
+      function collectLocationText(item) {
+        const keys = ["位置", "所在地", "地点", "坐标", "部署位置", "停泊位置", "所在星区", "星区", "星域", "地址", "location"];
+        const chunks = [];
+
+        keys.forEach(key => {
+          if (item && item[key] !== undefined && item[key] !== null) chunks.push(text(item[key]));
+        });
+
+        if (!chunks.length && item && typeof item === "object") {
+          entries(item).forEach(([k, v]) => {
+            if (/位置|地点|坐标|星区|星域|地址|location/i.test(k)) chunks.push(text(v));
+          });
+        }
+
+        if (!chunks.length) chunks.push(text(item));
+        return chunks.join(" | ");
+      }
+
+      function matchNodeFromLocation(locationText, nodes) {
+        const parts = normalizeLocationParts(locationText);
+        const byName = new Map(nodes.map(node => [node.name, node]));
+
+        for (let i = parts.length - 1; i >= 0; i--) {
+          const part = parts[i];
+          if (byName.has(part)) {
+            return { node: byName.get(part), matchedIndex: i, matchedPart: part, finePath: parts.slice(i + 1).join(" | ") };
+          }
+        }
+
+        for (let i = parts.length - 1; i >= 0; i--) {
+          const part = parts[i];
+          const found = nodes.find(node => part.includes(node.name) || node.name.includes(part));
+          if (found) return { node: found, matchedIndex: i, matchedPart: part, finePath: parts.slice(i + 1).join(" | ") };
+        }
+
+        for (let i = parts.length - 1; i >= 0; i--) {
+          const part = parts[i];
+          const found = nodes.find(node => node.region === part || part.includes(node.region));
+          if (found) return { node: found, matchedIndex: i, matchedPart: part, finePath: parts.slice(i + 1).join(" | ") };
+        }
+
+        const found = nodes.find(node => locationText.includes(node.name));
+        return found ? { node: found, matchedIndex: -1, matchedPart: found.name, finePath: "" } : null;
+      }
+
+      function collectBuildingsForMap(staticData, nodes) {
+        const mc = staticData.主角 || {};
+        const raw = mc.建筑 || mc.产业 || mc.industry || {};
+        const list = Array.isArray(raw) ? raw.map((item, index) => [item && item.名称 || item && item.name || `建筑 ${index + 1}`, item]) : entries(raw);
+
+        return list.map(([name, item]) => {
+          const locationText = collectLocationText(item || {});
+          const match = matchNodeFromLocation(locationText, nodes);
+          return {
+            name,
+            data: item || {},
+            locationText,
+            match,
+            nodeId: match && match.node ? match.node.id : ""
+          };
+        }).filter(item => item.nodeId);
+      }
+
+      function mapRows(obj) {
+        return entries(obj || {}).map(([k, v]) => `
+          <div class="map-detail-row">
+            <strong>${escapeHtml(k)}</strong>
+            <div>${display(v)}</div>
+          </div>
+        `).join("");
+      }
+
+      function secColor(sec) {
+        const value = parseFloat(sec);
+        if (Number.isNaN(value)) return "var(--muted)";
+        if (value >= 75) return "#7ffcff";
+        if (value >= 40) return "var(--gold)";
+        return "var(--danger)";
+      }
+
+      function showMapNodeDetails(node) {
+        const panel = $("starmap-info-panel");
+        const content = $("starmap-panel-content");
+        if (!panel || !content) return;
+
+        const runtime = starmapRuntime;
+        const localBuildings = runtime && runtime.buildingsByNode ? runtime.buildingsByNode.get(node.id) || [] : [];
+        const buildingSummary = localBuildings.length ? `
+          <div class="section-title">本地建筑</div>
+          <div class="map-detail-list">
+            ${localBuildings.map(item => `
+              <div class="map-detail-row">
+                <strong>${escapeHtml(item.name)}</strong>
+                <div>${escapeHtml(item.match && item.match.finePath || item.locationText || "未记录细分位置")}</div>
+              </div>
+            `).join("")}
+          </div>
+        ` : "";
+
+        content.innerHTML = `
+          <h2>${escapeHtml(node.name)}</h2>
+          <div class="map-detail-list">
+            <div class="map-detail-row"><strong>所属星域</strong><div>${escapeHtml(node.region)}</div></div>
+            <div class="map-detail-row"><strong>主权归属</strong><div>${escapeHtml(node.owner)}</div></div>
+            <div class="map-detail-row"><strong>安全等级</strong><div style="color:${secColor(node.sec)};font-weight:700;">${escapeHtml(node.sec)}</div></div>
+          </div>
+          <div class="section-title">情报摘要</div>
+          <p class="desc">${escapeHtml(node.desc)}</p>
+          ${node.isWormhole ? `<div class="map-detail-row" style="color:var(--danger);border-color:rgba(255,127,168,.45);text-align:center;">>>> 检测到高维异常 <<<</div>` : ""}
+          ${buildingSummary}
+        `;
+        panel.classList.add("visible");
+      }
+
+      function showMapBuildingDetails(node, buildingItems) {
+        const panel = $("starmap-info-panel");
+        const content = $("starmap-panel-content");
+        if (!panel || !content) return;
+
+        const list = buildingItems || [];
+        content.innerHTML = `
+          <h2>${escapeHtml(node.name)} / 建筑定位</h2>
+          <p class="desc">已将建筑位置向下匹配到星图可识别的最细节点；节点以下的空间站、轨道、行星等层级保留为细分位置。</p>
+          <div class="map-detail-list">
+            ${list.map(item => `
+              <div class="map-detail-row">
+                <strong>${escapeHtml(item.name)}</strong>
+                <div><span class="muted">匹配星区：</span>${escapeHtml(node.name)}</div>
+                <div><span class="muted">细分位置：</span>${escapeHtml(item.match && item.match.finePath || "未记录")}</div>
+                <div><span class="muted">原始位置：</span>${escapeHtml(item.locationText)}</div>
+                <details style="margin-top:7px;">
+                  <summary>完整字段</summary>
+                  <div class="map-detail-list">${mapRows(item.data)}</div>
+                </details>
+              </div>
+            `).join("")}
+          </div>
+        `;
+        panel.classList.add("visible");
+      }
+
+      window.closeMapPanel = function() {
+        const panel = $("starmap-info-panel");
+        if (panel) panel.classList.remove("visible");
+      };
+
+      function disposeStarmapRuntime() {
+        if (!starmapRuntime) return;
+        if (starmapAnimationId) cancelAnimationFrame(starmapAnimationId);
+        starmapAnimationId = null;
+        window.removeEventListener("resize", refreshStarMapSize);
+        if (starmapRuntime.renderer) {
+          starmapRuntime.renderer.dispose();
+          const canvas = starmapRuntime.renderer.domElement;
+          if (canvas && canvas.parentNode) canvas.parentNode.removeChild(canvas);
+        }
+        starmapRuntime = null;
+      }
+
+      function initStarMapEngine(staticData) {
+        const container = $("webgl-layer");
+        const uiLayer = $("ui-overlay");
+        const svgLayer = $("connection-svg");
+        const mapRoot = $("starmap-container");
+        if (!container || !uiLayer || !svgLayer || !mapRoot) return;
+        if (starmapRuntime) return;
+        if (!window.THREE || !THREE.OrbitControls) {
+          mapRoot.innerHTML = empty("Three.js 或 OrbitControls 未加载，无法渲染旧版交互星图");
+          return;
+        }
+        if (mapRoot.clientWidth < 20 || mapRoot.clientHeight < 20) return;
+
+        const starMapData = getStarmapData();
+        const mc = staticData.主角 || {};
+        const location = text(mc.位置);
+        const locParts = normalizeLocationParts(location);
+        const currentName = locParts.length > 1 ? locParts[1] : "";
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(60, mapRoot.clientWidth / mapRoot.clientHeight, 1, 5000);
+        camera.position.set(0, 0, 820);
+
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        renderer.setSize(mapRoot.clientWidth, mapRoot.clientHeight);
+        container.innerHTML = "";
+        container.appendChild(renderer.domElement);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.minDistance = 50;
+        controls.maxDistance = 2000;
+        controls.enableRotate = false;
+        controls.mouseButtons = {
+          LEFT: THREE.MOUSE.PAN,
+          MIDDLE: THREE.MOUSE.DOLLY,
+          RIGHT: THREE.MOUSE.PAN
+        };
+        controls.touches = {
+          ONE: THREE.TOUCH.PAN,
+          TWO: THREE.TOUCH.DOLLY_PAN
+        };
+
+        const mapObjects = {};
+        const mapLinks = [];
+        let currentPlayerNodeId = "";
+
+        starMapData.nodes.forEach(node => {
+          const x = node.x - STAR_MAP_CENTER.x;
+          const y = -(node.y - STAR_MAP_CENTER.y);
+          const z = getPseudoRandomZ(node.id);
+          const anchor = new THREE.Object3D();
+          anchor.position.set(x, y, z);
+          scene.add(anchor);
+
+          const el = document.createElement("div");
+          el.className = "map-node";
+          if (node.isWormhole) el.classList.add("node-wormhole");
+          if (currentName && (node.name === currentName || node.name.includes(currentName) || location.includes(node.name))) {
+            el.classList.add("node-player");
+            currentPlayerNodeId = node.id;
+            camera.position.set(x, y + 50, z + 430);
+            controls.target.set(x, y, z);
+          }
+          el.innerHTML = `<div class="node-dot"></div><div class="node-label">${escapeHtml(node.name)}</div>`;
+          el.addEventListener("click", () => showMapNodeDetails(node));
+          uiLayer.appendChild(el);
+          mapObjects[node.id] = { anchor, element: el, data: node, screenX: 0, screenY: 0 };
+        });
+
+        starMapData.links.forEach(link => {
+          if (!mapObjects[link.s] || !mapObjects[link.t]) return;
+          const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+          line.setAttribute("class", "connection-line");
+          if (link.type.includes("wormhole")) line.classList.add("line-wormhole");
+          else if (link.type === "jump") line.classList.add("line-jump");
+          else line.classList.add("line-pipe");
+          svgLayer.appendChild(line);
+          mapLinks.push({ from: link.s, to: link.t, element: line });
+        });
+
+        const buildings = collectBuildingsForMap(staticData, starMapData.nodes);
+        const buildingsByNode = new Map();
+        buildings.forEach(item => {
+          if (!buildingsByNode.has(item.nodeId)) buildingsByNode.set(item.nodeId, []);
+          buildingsByNode.get(item.nodeId).push(item);
+        });
+
+        buildingsByNode.forEach((items, nodeId) => {
+          const obj = mapObjects[nodeId];
+          if (!obj) return;
+          const icon = document.createElement("div");
+          icon.className = "building-icon";
+          icon.title = `建筑：${items.map(v => v.name).join("、")}`;
+          icon.innerHTML = `<span>${items.length > 1 ? items.length : ""}</span>`;
+          icon.addEventListener("click", event => {
+            event.stopPropagation();
+            showMapBuildingDetails(obj.data, items);
+          });
+          obj.element.appendChild(icon);
+        });
+
+        function focusPlayer() {
+          if (!currentPlayerNodeId || !mapObjects[currentPlayerNodeId]) return;
+          const pos = mapObjects[currentPlayerNodeId].anchor.position;
+          controls.target.copy(pos);
+          camera.position.set(pos.x, pos.y + 50, pos.z + 430);
+        }
+
+        const lockButton = $("btn-lock-player");
+        if (lockButton) lockButton.onclick = focusPlayer;
+
+        starmapRuntime = { scene, camera, renderer, controls, mapObjects, mapLinks, currentPlayerNodeId, buildingsByNode };
+        window.addEventListener("resize", refreshStarMapSize);
+        updateOverlayPositions();
+        animateStarmap();
+        if (currentPlayerNodeId) showMapNodeDetails(mapObjects[currentPlayerNodeId].data);
+      }
+
+      function refreshStarMapSize() {
+        if (!starmapRuntime) return;
+        const mapRoot = $("starmap-container");
+        if (!mapRoot || mapRoot.clientWidth < 20 || mapRoot.clientHeight < 20) return;
+        starmapRuntime.camera.aspect = mapRoot.clientWidth / mapRoot.clientHeight;
+        starmapRuntime.camera.updateProjectionMatrix();
+        starmapRuntime.renderer.setSize(mapRoot.clientWidth, mapRoot.clientHeight);
+        updateOverlayPositions();
+      }
+
+      function updateOverlayPositions() {
+        if (!starmapRuntime) return;
+        const mapRoot = $("starmap-container");
+        if (!mapRoot) return;
+        const width = mapRoot.clientWidth;
+        const height = mapRoot.clientHeight;
+        const halfWidth = width / 2;
+        const halfHeight = height / 2;
+
+        entries(starmapRuntime.mapObjects).forEach(([id, obj]) => {
+          const pos = obj.anchor.position.clone();
+          pos.project(starmapRuntime.camera);
+          obj.element.style.display = pos.z > 1 ? "none" : "flex";
+          const x = (pos.x * halfWidth) + halfWidth;
+          const y = -(pos.y * halfHeight) + halfHeight;
+          obj.element.style.left = `${x}px`;
+          obj.element.style.top = `${y}px`;
+          obj.screenX = x;
+          obj.screenY = y;
+        });
+
+        starmapRuntime.mapLinks.forEach(link => {
+          const source = starmapRuntime.mapObjects[link.from];
+          const target = starmapRuntime.mapObjects[link.to];
+          const hidden = source.element.style.display === "none" || target.element.style.display === "none";
+          link.element.style.opacity = hidden ? 0 : 1;
+          link.element.setAttribute("x1", source.screenX);
+          link.element.setAttribute("y1", source.screenY);
+          link.element.setAttribute("x2", target.screenX);
+          link.element.setAttribute("y2", target.screenY);
+        });
+      }
+
+      function animateStarmap() {
+        starmapAnimationId = requestAnimationFrame(animateStarmap);
+        if (!starmapRuntime) return;
+        starmapRuntime.controls.update();
+        if ($("map-view") && $("map-view").classList.contains("active")) {
+          updateOverlayPositions();
+          starmapRuntime.renderer.render(starmapRuntime.scene, starmapRuntime.camera);
+        }
+      }
+
+      function ensureStarMapReady() {
+        if (!pendingMapStaticData) return;
+        if (starmapRuntime) {
+          refreshStarMapSize();
+          return;
+        }
+        initStarMapEngine(pendingMapStaticData);
+        refreshStarMapSize();
+      }
+
+      function renderMap(staticData) {
+        pendingMapStaticData = staticData;
+        disposeStarmapRuntime();
+
+        $("map-view").innerHTML = `
+          <div class="map-wrap" id="starmap-container">
+            <div id="webgl-layer"></div>
+            <svg id="connection-svg"></svg>
+            <div id="ui-overlay"></div>
+            <div class="map-controls">
+              <div class="legend">
+                <span><span style="color:#d9b7ff;font-weight:bold;">━</span> 星门航路</span>
+                <span><span style="border-top:1px dashed #bda4d4;display:inline-block;width:16px;margin-right:5px;vertical-align:middle;"></span> 跃迁航线</span>
+                <span><span style="color:#c980ff;">---</span> 虫洞连接</span>
+                <span><span style="color:var(--gold);">◆</span> 自有建筑</span>
+              </div>
+              <button id="btn-lock-player" class="btn-center">⌖ 定位至玩家</button>
+            </div>
+            <div id="starmap-info-panel">
+              <div class="panel-close" onclick="closeMapPanel()">&times;</div>
+              <div id="starmap-panel-content">
+                <h2>星区情报</h2>
+                <p class="desc">拖拽平移，滚轮缩放；点击星区或建筑图标查看详细位置。</p>
+              </div>
+            </div>
+          </div>
+        `;
+
+        if ($("map-view").classList.contains("active")) {
+          requestAnimationFrame(ensureStarMapReady);
+        }
+      }
+
+
+      function setupVisualBindControls() {
+        const modal = $("visual-bind-modal");
+        const fileInput = $("visual-bind-file-input");
+        if (!modal || !fileInput) return;
+
+        modal.querySelectorAll("[data-visual-bind-action]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const action = btn.dataset.visualBindAction;
+            if (action === "cancel") closeVisualBindModal();
+            if (action === "local-profile") { pendingVisualBindField = "profile_link"; fileInput.click(); }
+            if (action === "local-illust") { pendingVisualBindField = "illust_link"; fileInput.click(); }
+            if (action === "online-profile") { pendingVisualBindField = "profile_link"; bindCharacterVisualFromOnlineUrl("profile_link"); }
+            if (action === "online-illust") { pendingVisualBindField = "illust_link"; bindCharacterVisualFromOnlineUrl("illust_link"); }
+          });
+        });
+
+        fileInput.addEventListener("change", () => {
+          const file = fileInput.files && fileInput.files[0];
+          if (file) bindCharacterVisualFromFile(file);
+        });
+
+        modal.addEventListener("click", event => {
+          if (event.target === modal) closeVisualBindModal();
+        });
+      }
+
+      async function init() {
+        const variables = await getVariables();
+        characterVisualBinds = await loadVisualBinds();
+        const staticData = variables.SAM_data.static;
+        currentStaticData = staticData;
+        setupVisualBindControls();
+        const gameTime = variables.SAM_data.time;
+        const mc = staticData.主角 || {};
+
+        $("top-meta").innerHTML = `
+          ${escapeHtml(gameTime)}<br>
+          ${escapeHtml(mc.位置 || "位置未同步")}
+        `;
+
+        renderHome(staticData, gameTime);
+        renderCharacters(staticData);
+        renderShips(staticData);
+        renderBases(staticData);
+        renderAssets(staticData);
+        renderMissions(staticData);
+        renderMap(staticData);
+
+        document.querySelectorAll(".nav-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            document.querySelectorAll(".nav-btn").forEach(v => v.classList.toggle("active", v === btn));
+            document.querySelectorAll(".view").forEach(v => v.classList.toggle("active", v.id === btn.dataset.view));
+            if (btn.dataset.view === "map-view") {
+              requestAnimationFrame(ensureStarMapReady);
+            }
+          });
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", init);
+    </script>
+  </body>
+  </html>
+    ```
+    </ui_sys>
+trimStrings: []
+placement:
+- 2
+disabled: false
+markdownOnly: true
+promptOnly: false
+runOnEdit: true
+substituteRegex: 0
+minDepth: 0
+maxDepth: 0

@@ -57,7 +57,7 @@ content: |-
 extensions:
   position: 4
   exclude_recursion: false
-  display_index: 9
+  display_index: 20
   probability: 100
   useProbability: true
   depth: 1
@@ -75,9 +75,9 @@ extensions:
   automation_id: ''
   role: 1
   vectorized: false
-  sticky: 0
-  cooldown: 0
-  delay: 0
+  sticky: null
+  cooldown: null
+  delay: null
   match_persona_description: false
   match_character_description: false
   match_character_personality: false
@@ -95,6 +95,6 @@ name: null
 priority: null
 id: 9685
 comment: 【SAM】变量列表
-selective: true
+selective: false
 secondary_keys: []
 position: after_char

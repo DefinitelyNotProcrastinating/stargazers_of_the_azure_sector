@@ -1,0 +1,100 @@
+keys:
+- CVT
+- 凤凰构型
+- 战术超级航母
+- 超级航母
+- 战术超级航母 (CVT)
+- 银河防御联盟
+- 先驱者
+content: |-
+  <ship_def>
+  级别: 凤凰构型
+  别名: ''
+  舰船类型: CVT
+  舰种: 战术超级航母 (CVT)
+  价格: 无法购买
+  制造商: 银河防御联盟 - 第三设计所
+  描述: 在巡航模式下，它的形态如同一只收拢翅膀的巨大金属飞鸟，舰体修长而紧凑。进入战斗模式后，层叠的结晶装甲板会如凤凰展翅般从前方两侧和上方展开成为前掠翼，露出内部密集的无人机弹射矩阵和散热结构，整个舰体在瞬间化为一座充满了致命美感的攻击平台。
+  舰船单位模板:
+    舰船类型: CVT
+    吨位: T
+    驾驶员: ''
+    是否旗舰: true
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 5
+    跃迁消耗: 4
+    制造商: 银河防御联盟 - 第三设计所
+    描述: 在巡航模式下，它的形态如同一只收拢翅膀的巨大金属飞鸟，舰体修长而紧凑。进入战斗模式后，层叠的结晶装甲板会如凤凰展翅般从前方两侧和上方展开成为前掠翼，露出内部密集的无人机弹射矩阵和散热结构，整个舰体在瞬间化为一座充满了致命美感的攻击平台。
+    炮位配置: 16C1T
+    装备槽位配置: 6H9L
+    船体护盾值: 7200
+    船体结构值: 16800
+    护盾值: 7200
+    结构值: 16800
+    装配资源:
+      PG: 1760
+      CPU: 2240
+    效果:
+      船体加成:
+      - 旗舰型舰船；依据舰级定位应用：战术超级航母 (CVT)。
+      - 装配资源与槽位由本舰船独立定义，不应用常规舰级倍率公式。
+      装配减免: []
+      内置电子系统:
+        基础CPU: 内置旗舰级舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置旗舰级多谱段侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+        旗舰指挥链: 内置多观星者并联与舰队级指挥链；具体接口需求见舰船条目。
+      特殊系统:
+      - 名称: 旗舰级战术变形结构
+        描述: 舰船的核心能力。允许其在“巡航模式”和“战斗模式”之间切换。在战斗模式下，机体展开，无人机出动效率提升150%，机动性降低至40，但解锁末日武器的使用权限。废热越高，无人机的发射速度就越快。
+      - 名称: 集成式物质抹除光束
+        描述: 一种独特的单舰末日武器。激活后，“凤凰”构型展开的“翅膀”上的所有分解炮节点会将能量聚焦于舰首，然后收束场将会将射线收束为同一条，对单个目标造成恐怖的伤害。
+    装备: {}
+    T槽种类: 银河防御联盟
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 209
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9712
+comment: 舰船|凤凰构型
+selective: true
+secondary_keys:
+- 银河防御联盟
+- 先驱者
+position: after_char

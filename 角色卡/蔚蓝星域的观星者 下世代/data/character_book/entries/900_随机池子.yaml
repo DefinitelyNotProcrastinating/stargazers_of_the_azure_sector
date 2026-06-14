@@ -8,7 +8,7 @@ content: |-
 extensions:
   position: 4
   exclude_recursion: true
-  display_index: 60
+  display_index: 109
   probability: 100
   useProbability: true
   depth: 1
@@ -26,9 +26,9 @@ extensions:
   automation_id: ''
   role: 1
   vectorized: false
-  sticky: 0
-  cooldown: 0
-  delay: 0
+  sticky: null
+  cooldown: null
+  delay: null
   match_persona_description: false
   match_character_description: false
   match_character_personality: false
@@ -46,6 +46,6 @@ name: null
 priority: null
 id: 9000
 comment: 随机池子
-selective: true
+selective: false
 secondary_keys: []
 position: after_char

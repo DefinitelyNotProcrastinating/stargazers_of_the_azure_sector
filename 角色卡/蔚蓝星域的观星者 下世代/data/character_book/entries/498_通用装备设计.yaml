@@ -86,7 +86,7 @@ content: |-
   甲抗船:
     原则: |
       通常拥有更多 L 槽与更少 H 槽，以安装装甲板、结构强化件与被动防御模块。
-  
+
   ## 标准模块模板
   ```json
   {
@@ -110,7 +110,7 @@ content: |-
 extensions:
   position: 1
   exclude_recursion: true
-  display_index: 133
+  display_index: 175
   probability: 100
   useProbability: true
   depth: 4
@@ -128,9 +128,9 @@ extensions:
   automation_id: ''
   role: 0
   vectorized: false
-  sticky: 0
-  cooldown: 0
-  delay: 0
+  sticky: null
+  cooldown: null
+  delay: null
   match_persona_description: false
   match_character_description: false
   match_character_personality: false

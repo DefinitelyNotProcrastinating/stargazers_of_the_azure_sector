@@ -63,7 +63,7 @@ content: |-
       - 盾抗船：船体护盾值 = 基础总血量 × 0.7；船体结构值 = 基础总血量 × 0.5。
       - 甲抗船：船体护盾值 = 基础总血量 × 0.3；船体结构值 = 基础总血量 × 0.7。
       - 均衡船：船体护盾值 = 基础总血量 × 0.5；船体结构值 = 基础总血量 × 0.6。
-  
+
     基础DR:
       护盾DR: 5%
       结构DR: 20%
@@ -104,7 +104,7 @@ content: |-
 extensions:
   position: 1
   exclude_recursion: true
-  display_index: 133
+  display_index: 176
   probability: 100
   useProbability: true
   depth: 4
@@ -128,6 +128,7 @@ extensions:
   match_persona_description: false
   match_character_description: false
   match_character_personality: false
+  match_character_depth_prompt: false
   match_scenario: false
   match_creator_notes: false
   triggers: []
