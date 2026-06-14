@@ -1,0 +1,98 @@
+keys:
+- 高级巡洋舰
+- 后勤巡洋舰
+- 爆发级
+- 爆发
+- 维修巡洋舰
+- 巡洋舰
+- RC
+- 后勤巡洋舰 (高级巡洋舰)
+- 自由世界共和国
+- 共和国
+content: |-
+  <ship_def>
+  级别: 爆发级
+  别名: Burst-class
+  舰船类型: RC
+  舰种: 后勤巡洋舰 (高级巡洋舰)
+  价格: 244M
+  制造商: 索鲁斯集团
+  描述: 船体方正而粗犷，充满了共和国舰船的实用主义风格。舰体两侧各有一个巨大的、可展开的半球形护盾投射器，在非工作状态下收纳于厚重的装甲板之内。舰身上布满了外露的能源导管和备用的反物质电池挂架，整艘船看起来就像一个移动的巨型电容器。
+  舰船单位模板:
+    舰船类型: RC
+    吨位: L
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 6
+    跃迁消耗: 2
+    制造商: 索鲁斯集团
+    描述: 船体方正而粗犷，充满了共和国舰船的实用主义风格。舰体两侧各有一个巨大的、可展开的半球形护盾投射器，在非工作状态下收纳于厚重的装甲板之内。舰身上布满了外露的能源导管和备用的反物质电池挂架，整艘船看起来就像一个移动的巨型电容器。
+    炮位配置: 6S
+    装备槽位配置: 5H3L
+    船体护盾值: 1540
+    船体结构值: 1100
+    护盾值: 1540
+    结构值: 1100
+    装配资源:
+      PG: 288
+      CPU: 608
+    效果:
+      船体加成:
+      - 特种巡洋舰；依据舰级定位应用：后勤巡洋舰 (高级巡洋舰)。
+      装配减免: []
+      内置电子系统:
+        基础CPU: 内置特种巡洋舰级舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置特种巡洋舰级多谱段侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+      - 名称: 能量辅助系统
+        描述: 该系统的核心由一台超大型护盾投射器和一套反物质电容器注电器组成。在常规模式下，它是一艘性能平庸的护盾维修舰。但一旦激活超大型护盾投射器的完整能力，舰长可以将舰上携带的一次性反物质电池接入注电器，瞬间为电容器充满远超常规上限的能量。这些能量会在数秒内通过超大型投射器释放，形成一道肉眼可见的、极其强大的能量洪流，能够瞬间补满一艘重型巡洋舰甚至战列巡洋舰的全部护盾。然而，这些反物质电池体积巨大且无法重复使用，一旦耗尽，“爆发”级在相当长一段时间内都将失去其最重要的战术价值。有经验的指挥官会提前准备好运输舰。
+    装备: {}
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 84
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 401
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 88
+comment: 舰船|RC爆发级
+selective: true
+secondary_keys:
+- 自由世界共和国
+- 共和国
+position: after_char

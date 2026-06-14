@@ -1,0 +1,68 @@
+keys:
+- 高级驱逐舰
+- 屏卫驱逐舰
+- 盾卫级
+- 盾卫
+- 驱逐舰
+- AD
+- 泰拉帝国
+- 帝国
+content: |-
+  <ship_def>
+  级别: 盾卫级
+  舰船类型: AD
+  舰种: 屏卫驱逐舰
+  舰体类别: 高级型
+  价格: 39M
+  制造商: 帝国海军设计局
+  舰体描述: 继承了帝国舰船一贯的威严风格，船体修长而优雅，呈矛头状。舰身两侧安装了多组水晶状的聚焦透镜阵列，在激活时会发出深红色的光芒。
+  跃迁充能: 0
+  最大充能: 7
+  跃迁消耗: 1
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 76
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 401
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 80
+comment: 舰船|AD盾卫级
+selective: true
+secondary_keys:
+- 泰拉帝国
+- 帝国
+position: after_char

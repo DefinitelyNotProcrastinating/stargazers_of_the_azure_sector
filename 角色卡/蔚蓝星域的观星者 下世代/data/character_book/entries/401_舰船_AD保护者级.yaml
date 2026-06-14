@@ -1,0 +1,68 @@
+keys:
+- 高级驱逐舰
+- 屏卫驱逐舰
+- 保护者
+- 驱逐舰
+- AD
+- 保护者级
+- 自由世界共和国
+- 共和国
+content: |-
+  <ship_def>
+  级别: 保护者级
+  舰船类型: AD
+  舰种: 屏卫驱逐舰
+  舰体类别: 高级型
+  价格: 34M
+  制造商: 索鲁斯集团
+  舰体描述: 船体设计坚固而厚重，呈对称状的楔形，舰首位置为锤头形，用于安装核心的护盾投射矩阵。舰身两侧是模块化的点防御导弹巢。整体涂装为共和国卫队的标准军灰色。
+  跃迁充能: 0
+  最大充能: 7
+  跃迁消耗: 1
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 77
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 401
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 81
+comment: 舰船|AD保护者级
+selective: true
+secondary_keys:
+- 自由世界共和国
+- 共和国
+position: after_char

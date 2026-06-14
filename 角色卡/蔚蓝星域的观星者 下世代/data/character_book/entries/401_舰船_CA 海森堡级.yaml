@@ -1,0 +1,95 @@
+keys:
+- 巡洋舰
+- 海森堡级
+- 海森堡
+- CA
+- 指挥巡洋舰 CA
+- 天鹅座技术联邦
+- 联邦
+content: |-
+  <ship_def>
+  级别: 海森堡级
+  别名: ''
+  舰船类型: CA
+  舰种: 指挥巡洋舰 CA
+  价格: 200M
+  制造商: 联邦先进系统实验室
+  描述: 复杂的球形与环形结构组合，像是一个漂浮的原子模型。核心舱室被层层传感器阵列包裹。
+  舰船单位模板:
+    舰船类型: CA
+    吨位: L
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 6
+    跃迁消耗: 2
+    制造商: 联邦先进系统实验室
+    描述: 复杂的球形与环形结构组合，像是一个漂浮的原子模型。核心舱室被层层传感器阵列包裹。
+    炮位配置: 4M4C
+    装备槽位配置: 5H3L
+    船体护盾值: 1260
+    船体结构值: 900
+    护盾值: 1260
+    结构值: 900
+    装配资源:
+      PG: 180
+      CPU: 380
+    效果:
+      船体加成:
+      - 依据舰级定位应用：指挥巡洋舰 CA。
+      装配减免: []
+      内置电子系统:
+        基础CPU: 内置巡洋舰级舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置巡洋舰级多谱段侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+        名称: 中央逻辑子节点
+        描述: 接入联邦的战术AI网络，能指挥战场上所有的己方无人机进行蜂群作战。
+    装备: {}
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 127
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 401
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 154
+comment: 舰船|CA 海森堡级
+selective: true
+secondary_keys:
+- 天鹅座技术联邦
+- 联邦
+position: after_char

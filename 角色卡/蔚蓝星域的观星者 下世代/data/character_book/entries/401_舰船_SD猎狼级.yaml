@@ -1,0 +1,68 @@
+keys:
+- 隐形轰炸舰
+- 高级驱逐舰
+- 猎狼级
+- 猎狼
+- 轰炸舰
+- SD
+- 自由世界共和国
+- 共和国
+content: |-
+  <ship_def>
+  级别: 猎狼级
+  舰船类型: SD
+  舰种: 隐形轰炸舰
+  舰体类别: 高级型
+  价格: 24M
+  制造商: 索鲁斯集团
+  舰体描述: 金属灰色的楔形，使用多边形以最大限度地减少反射面。
+  跃迁充能: 0
+  最大充能: 7
+  跃迁消耗: 1
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 72
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 401
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 76
+comment: 舰船|SD猎狼级
+selective: true
+secondary_keys:
+- 自由世界共和国
+- 共和国
+position: after_char

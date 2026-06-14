@@ -1,0 +1,105 @@
+keys:
+- 驱逐舰
+- 解放者级
+- 解放者
+- DD
+- 防空驱逐舰
+- 自由世界共和国
+- 共和国
+content: |-
+  <ship_def>
+  级别: 解放者级
+  别名: Liberator-class
+  舰船类型: DD
+  舰种: 防空驱逐舰
+  舰体类别: 特种型
+  价格: 4.8M
+  制造商: 共和国达科塔星港
+  描述: 小而方的舰体上布满了密密麻麻的小型炮塔，几乎没有死角。雷达天线阵列高高耸立。
+  舰船单位模板:
+    舰船类型: DD
+    吨位: M
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 7
+    跃迁消耗: 1
+    制造商: 共和国达科塔星港
+    描述: 小而方的舰体上布满了密密麻麻的小型炮塔，几乎没有死角。雷达天线阵列高高耸立。
+    炮位配置: 6S
+    装备槽位配置: 2H4L
+    船体护盾值: 900
+    船体结构值: 300
+    护盾值: 900
+    结构值: 300
+    装配资源:
+      PG: 72
+      CPU: 260
+    效果:
+      船体加成:
+      - 对导弹、鱼雷、战机与无人机目标的跟踪修正 +35%
+      - 点防御与防空武器循环时间 -20%
+      - 小型防空导弹飞行速度 +30%
+      - 对空拦截成功率 +20%
+      装配减免:
+      - 防空武器 CPU需求 -15%
+      - 导弹与火箭弹武器 PG需求 -1
+      内置电子系统:
+        基础CPU: 内置舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置基础侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+        名称: 饱和弹幕模式
+        效果:
+        - 锁定射速上限并制造无法穿越的拦截弹幕
+        - 对来袭鱼雷与战机形成高密度压制
+        代价:
+        - 使用后必须进行弹链补充
+    装备: {}
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 127
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 401
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 148
+comment: 舰船|DD 解放者级
+selective: true
+secondary_keys:
+- 自由世界共和国
+- 共和国
+position: after_char

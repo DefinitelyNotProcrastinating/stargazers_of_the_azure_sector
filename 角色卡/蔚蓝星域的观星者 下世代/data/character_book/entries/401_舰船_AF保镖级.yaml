@@ -1,0 +1,106 @@
+keys:
+- 突击护卫舰
+- 护卫舰
+- 保镖级
+- 保镖
+- AF
+- 猎户座辛迪加
+- 辛迪加
+content: |-
+  <ship_def>
+  级别: 保镖级
+  别名: Bodyguard-class
+  舰船类型: AF
+  舰种: 突击护卫舰
+  舰体类别: 高级型
+  价格: 10M
+  制造商: 星轨航天公司
+  描述: 保镖级的标准舰级档案。
+  舰船单位模板:
+    舰船类型: AF
+    吨位: S
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 8
+    跃迁消耗: 1
+    制造商: 星轨航天公司
+    描述: 保镖级的标准舰级档案。
+    炮位配置: 3S1C
+    装备槽位配置: 3H1L
+    船体护盾值: 1000
+    船体结构值: 600
+    护盾值: 1000
+    结构值: 600
+    装配资源:
+      PG: 48
+      CPU: 190
+    效果:
+      船体加成:
+      - 小型脉冲激光伤害 +20%
+      - 小型脉冲激光跟踪 +15%
+      - 轻型攻击无人机伤害 +20%
+      - 跃迁扰断器与跃迁扰频器作用距离 +25%
+      装配减免:
+      - 小型能量武器 PG需求 -1
+      - 轻型攻击无人机联队 CPU需求 -20%
+      - 跃迁干扰模块 CPU需求 -15%
+      内置电子系统:
+        基础CPU: 内置舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置基础侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+        名称: 堡垒协议护盾回充器
+        效果:
+        - 激活后受损护盾抗性 +30%
+        - 护盾回充速度显著提升
+        备注:
+        - 可选安装跃迁扰断器或跃迁扰频器接口
+    装备: {}
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 70
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 401
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 62
+comment: 舰船|AF保镖级
+selective: true
+secondary_keys:
+- 猎户座辛迪加
+- 辛迪加
+position: after_char

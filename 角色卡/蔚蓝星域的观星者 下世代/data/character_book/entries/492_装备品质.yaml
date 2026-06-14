@@ -1,0 +1,115 @@
+keys: []
+content: |-
+  <品质系统>
+  equipment_quality_system:
+    概述: |
+      所有可安装的舰船模块（武器、防御、工程、电子）均拥有品质等级。
+      品质影响两个核心维度：装配资源消耗倍率（PG/CPU）和效果倍率。
+      叙事中不直接提及品质编号，仅以"量产货""海军规格""原型装备"等口语描述。
+      规则层统一使用整数品质，也就是品质1、品质2、品质3……而不是T编号。
+
+    品质表:
+      品质0:
+        分类: 例外
+        描述: 不符合标准品质体系的物品，可能为任意效果。品质0模块不存在于整个游戏内，除非有特殊规则加入它们
+
+      品质1:
+        分类: 基础
+        装配倍率: 1.0x
+        效果倍率: 1.0x
+        描述: 量产蓝图制造。市场上最常见的模块，所有基准数值以此为标准。
+
+      品质2-品质5:
+        分类: 改装
+        装配倍率: 0.95x - 1.1x
+        效果倍率: ~1.15x
+        描述: 民间改装或小批量优化版本，可能附带小幅特殊效果（如射程微增、冷却缩短）。
+
+      品质6:
+        分类: 优良
+        装配倍率: 1.2x
+        效果倍率: 1.5x（或固定值+1）
+        描述: 专业军械商出品，工艺显著高于量产线。
+
+      品质7:
+        分类: 海军
+        装配倍率: 0.9x
+        效果倍率: 1.5x
+        描述: 各势力海军/军方专供。以低装配消耗著称，便于在军舰有限的装配余量中塞入更多装备。
+
+      品质8-品质10:
+        分类: 高级 / 原型
+        装配倍率: 0.7x - 1.4x
+        效果倍率: 2.6x - 3.0x
+        描述: 小批量实验室产出或精密工坊定制。性能跃升显著，但装配消耗波动大，需要仔细规划。
+
+      品质11-品质12:
+        分类: 定制
+        装配倍率: 0.9x - 1.6x
+        效果倍率: 3.0x - 4.0x
+        描述: 为特定舰船或特定舰长量身打造的模块。性能优异但通用性差。
+
+      品质13-品质15:
+        分类: 超前科技
+        装配倍率: 0.7x - 1.5x
+        效果倍率: 4.0x - 6.0x
+        描述: 代表当代科技极限的产物。极其稀有，通常只在先驱者遗迹打捞、绝密实验室或黑市拍卖中出现。
+
+      品质16:
+        分类: 先驱者
+        描述: 直接源自先驱者技术的模块，自适应处理单元可能使其在安装后自行优化。无法量产复制。
+
+      品质17-品质18:
+        分类: 保留
+        描述: 尚未定义的品质位。可能对应未来出现的全新技术体系。
+
+    叙事规则: |
+      正文中绝不出现"品质7装备""品质等级"等元数据措辞。
+      代之以：量产货、军用规格、原型机、定制件、先驱者遗物等自然语言。
+      品质仅在变量系统和装配计算中使用。
+
+  </品质系统>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 133
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 492
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 159
+comment: 装备品质
+selective: true
+secondary_keys: []
+position: after_char

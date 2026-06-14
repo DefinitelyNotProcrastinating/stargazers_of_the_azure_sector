@@ -1,0 +1,101 @@
+keys:
+- 猛禽级
+- 护卫舰
+- 猛禽
+- FF
+- 猎户座辛迪加
+- 辛迪加
+content: |-
+  <ship_def>
+  级别: 猛禽级
+  别名: ''
+  舰船类型: FF
+  舰种: 护卫舰
+  舰体类别: 特种型
+  价格: 0.6M
+  制造商: 联合工业集团
+  描述: 模块化设计的极致。舰体骨架外露，挂载着各种可更换的任务包，外挂大型护盾发生器。无论如何都是性价比之选。
+  舰船单位模板:
+    舰船类型: FF
+    吨位: S
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 8
+    跃迁消耗: 1
+    制造商: 联合工业集团
+    描述: 模块化设计的极致。舰体骨架外露，挂载着各种可更换的任务包，外挂大型护盾发生器。无论如何都是性价比之选。
+    炮位配置: 3S
+    装备槽位配置: 3H1L
+    船体护盾值: 350
+    船体结构值: 300
+    护盾值: 350
+    结构值: 300
+    装配资源:
+      PG: 32
+      CPU: 125
+    效果:
+      船体加成:
+      - 小型自动加农炮伤害 +15%
+      - 小型导弹与火箭弹跟踪修正 +15%
+      - 扫描与干扰模块效果 +20%
+      装配减免:
+      - 小型动能武器 PG需求 -1
+      - 辅助武器座上安装的电子战或采矿武器 CPU需求 -2
+      内置电子系统:
+        基础CPU: 内置舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置基础侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+        名称: 模块化火控覆盖
+        效果:
+        - 非战斗状态下更换 S1 与 S2 武器座武器所需时间缩短至 30 分钟
+        - 更换任务包时不需要重新校准基础火控
+    装备: {}
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 127
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 401
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 143
+comment: 舰船|FF 猛禽级
+selective: true
+secondary_keys:
+- 猎户座辛迪加
+- 辛迪加
+position: after_char

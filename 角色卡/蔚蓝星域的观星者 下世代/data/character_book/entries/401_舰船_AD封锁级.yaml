@@ -1,0 +1,68 @@
+keys:
+- 高级驱逐舰
+- 屏卫驱逐舰
+- 封锁者级
+- 封锁者
+- 驱逐舰
+- AD
+- 猎户座辛迪加
+- 辛迪加
+content: |-
+  <ship_def>
+  级别: 封锁者级
+  舰船类型: AD
+  舰种: 屏卫驱逐舰
+  舰体类别: 高级型
+  价格: 35M
+  制造商: 泰坦重工
+  舰体描述: 灰色的船体呈扁平的六边形，如同盾牌。舰体表面布满了密集的点防御炮塔和外露的散热管道，充满了工业化的实用美学。
+  跃迁充能: 0
+  最大充能: 7
+  跃迁消耗: 1
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 75
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 401
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 79
+comment: 舰船|AD封锁级
+selective: true
+secondary_keys:
+- 猎户座辛迪加
+- 辛迪加
+position: after_char

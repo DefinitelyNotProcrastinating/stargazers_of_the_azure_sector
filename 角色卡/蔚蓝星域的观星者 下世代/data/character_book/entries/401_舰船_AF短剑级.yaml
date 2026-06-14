@@ -1,0 +1,106 @@
+keys:
+- 突击护卫舰
+- 短剑级
+- 护卫舰
+- 短剑
+- AF
+- 泰拉帝国
+- 帝国
+content: |-
+  <ship_def>
+  级别: 短剑级
+  别名: Dagger-class
+  舰船类型: AF
+  舰种: 突击护卫舰
+  舰体类别: 高级型
+  价格: 10M
+  制造商: 赫克勒斯重工
+  描述: 短剑级的标准舰级档案。
+  舰船单位模板:
+    舰船类型: AF
+    吨位: S
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 8
+    跃迁消耗: 1
+    制造商: 赫克勒斯重工
+    描述: 短剑级的标准舰级档案。
+    炮位配置: 4S
+    装备槽位配置: 3H1L
+    船体护盾值: 400
+    船体结构值: 950
+    护盾值: 400
+    结构值: 950
+    装配资源:
+      PG: 50
+      CPU: 182
+    效果:
+      船体加成:
+      - 小型集束激光伤害 +18%
+      - 小型集束激光最佳射程 +15%
+      - 装甲回复与维修效果 +25%
+      - 跃迁扰断器作用距离 +20%
+      装配减免:
+      - 小型能量武器 PG需求 -1
+      - 装甲维修与损管模块 CPU需求 -15%
+      - 跃迁扰断模块 CPU需求 -10%
+      内置电子系统:
+        基础CPU: 内置舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置基础侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+        名称: 突击型损伤控制单元
+        效果:
+        - 当装甲低于 50% 时，回充 25% 装甲
+        附加系统:
+        - 名称: F-3型跃迁扰断力场发生器
+          效果: 在 30000 km 内指定单一目标并阻止其启动跃迁引擎
+    装备: {}
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 66
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 401
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9
+comment: 舰船|AF短剑级
+selective: true
+secondary_keys:
+- 泰拉帝国
+- 帝国
+position: after_char

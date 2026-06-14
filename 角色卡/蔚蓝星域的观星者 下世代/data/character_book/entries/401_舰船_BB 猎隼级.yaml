@@ -1,0 +1,95 @@
+keys:
+- 战列舰
+- 猎隼级
+- 猎隼
+- BB
+- 高速战列舰 BB
+- 自由世界共和国
+- 共和国
+content: |-
+  <ship_def>
+  级别: 猎隼级
+  别名: Falcon-class
+  舰船类型: BB
+  舰种: 高速战列舰 BB
+  价格: 6.5B
+  制造商: 自由之翼设计局
+  描述: 颠覆了共和国传统的厚重风格，舰体修长且充满了散热片。四台巨大的引擎占据了舰体后半部。
+  舰船单位模板:
+    舰船类型: BB
+    吨位: XL
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 4
+    跃迁消耗: 3
+    制造商: 自由之翼设计局
+    描述: 颠覆了共和国传统的厚重风格，舰体修长且充满了散热片。四台巨大的引擎占据了舰体后半部。
+    炮位配置: 8L12S
+    装备槽位配置: 7H5L
+    船体护盾值: 3920
+    船体结构值: 2800
+    护盾值: 3920
+    结构值: 2800
+    装配资源:
+      PG: 720
+      CPU: 1520
+    效果:
+      船体加成:
+      - 依据舰级定位应用：高速战列舰 BB。
+      装配减免: []
+      内置电子系统:
+        基础CPU: 内置主力舰级舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置主力舰级多谱段侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+      - 名称: 护盾回充增压器
+        描述: 牺牲武器能源，在短时间内极大提升护盾回充速度。
+    装备: {}
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 127
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 401
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 150
+comment: 舰船|BB 猎隼级
+selective: true
+secondary_keys:
+- 自由世界共和国
+- 共和国
+position: after_char

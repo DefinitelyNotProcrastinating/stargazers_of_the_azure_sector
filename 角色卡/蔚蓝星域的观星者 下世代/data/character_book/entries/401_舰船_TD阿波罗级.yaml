@@ -1,0 +1,69 @@
+keys:
+- 高级驱逐舰
+- 战术驱逐舰
+- 阿波罗级
+- 阿波罗
+- 驱逐舰
+- TD
+- 猎户座辛迪加
+- 辛迪加
+content: |-
+  <ship_def>
+  级别: 阿波罗级
+  别名: Apollo-class
+  舰船类型: TD
+  舰种: 战术驱逐舰
+  舰体类别: 高级型
+  价格: 94M
+  制造商: 星轨航天公司 (特别项目部)
+  舰体描述: 舰体线条充满了肌肉感，呈激进的扁平三角形。涂装通常是其所属公司的品牌色。九门中子炮管密集地布置在两侧，散发着危险的光芒。
+  跃迁充能: 0
+  最大充能: 7
+  跃迁消耗: 1
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 81
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 401
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 85
+comment: 舰船|TD阿波罗级
+selective: true
+secondary_keys:
+- 猎户座辛迪加
+- 辛迪加
+position: after_char

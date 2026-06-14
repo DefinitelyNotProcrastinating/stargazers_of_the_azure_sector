@@ -1,0 +1,104 @@
+keys:
+- 驱逐舰
+- 相对论级
+- 相对论
+- 高级驱逐舰
+- DD
+- 天鹅座技术联邦
+- 联邦
+content: |-
+  <ship_def>
+  级别: 相对论级
+  别名: ''
+  舰船类型: DD
+  舰种: 高级驱逐舰
+  舰体类别: 高级型
+  价格: 70M
+  制造商: 联邦联合动力
+  描述: 像一把手术刀，细长而锋利。为了容纳那门与其体型不符的主炮，舰体结构经过了特殊的强化。
+  舰船单位模板:
+    舰船类型: DD
+    吨位: M
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 7
+    跃迁消耗: 1
+    制造商: 联邦联合动力
+    描述: 像一把手术刀，细长而锋利。为了容纳那门与其体型不符的主炮，舰体结构经过了特殊的强化。
+    炮位配置: 3S1M
+    装备槽位配置: 4H2L
+    船体护盾值: 400
+    船体结构值: 500
+    护盾值: 400
+    结构值: 500
+    装配资源:
+      PG: 112
+      CPU: 352
+    效果:
+      船体加成:
+      - 低压阳电子光矛伤害 +25%
+      - 低压阳电子光矛最佳射程 +20%
+      - 跃迁结束后 1 轮内首次攻击伤害 +20%
+      - 隐形状态下锁定时间 -30%
+      装配减免:
+      - 超限主炮座上安装的主武器 PG需求 -15%
+      - 隐形模块 CPU需求 -20%
+      - 目标标记与火控模块 CPU需求 -15%
+      内置电子系统:
+        基础CPU: 内置舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置基础侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+        名称: 战术隐形装置
+        效果:
+        - 允许在跃迁结束后立即进入隐形状态
+        - 适用于伏击、首轮打击与脱离
+    装备: {}
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 127
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 401
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 153
+comment: 舰船|DD 相对论级
+selective: true
+secondary_keys:
+- 天鹅座技术联邦
+- 联邦
+position: after_char

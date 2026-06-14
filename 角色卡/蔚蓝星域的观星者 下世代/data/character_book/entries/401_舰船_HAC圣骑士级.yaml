@@ -1,0 +1,99 @@
+keys:
+- 高级巡洋舰
+- 突击巡洋舰
+- 圣骑士级
+- 圣骑士
+- 重型突击巡洋舰
+- 重突巡
+- 巡洋舰
+- HAC
+- 重型突击巡洋舰 (高级巡洋舰) CA
+- 泰拉帝国
+- 帝国
+content: |-
+  <ship_def>
+  级别: 圣骑士级
+  别名: ''
+  舰船类型: HAC
+  舰种: 重型突击巡洋舰 (高级巡洋舰) CA
+  价格: 254M
+  制造商: 赫克勒斯重工
+  描述: 舰体设计充满了帝国的庄重与威严，呈厚重的弓背型，舰首和舰体中轴线覆盖着额外的装甲层，如同古代骑士的全身板甲。主炮塔被整合在舰体背部，数个巨大的散热装置在非战斗状态下收纳于舰体两侧的装甲之下。整体涂装为帝国舰队标准的深灰色，并饰以金色的纹章。
+  舰船单位模板:
+    舰船类型: HAC
+    吨位: L
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 6
+    跃迁消耗: 2
+    制造商: 赫克勒斯重工
+    描述: 舰体设计充满了帝国的庄重与威严，呈厚重的弓背型，舰首和舰体中轴线覆盖着额外的装甲层，如同古代骑士的全身板甲。主炮塔被整合在舰体背部，数个巨大的散热装置在非战斗状态下收纳于舰体两侧的装甲之下。整体涂装为帝国舰队标准的深灰色，并饰以金色的纹章。
+    炮位配置: 4M8S
+    装备槽位配置: 4H4L
+    船体护盾值: 1200
+    船体结构值: 1440
+    护盾值: 1200
+    结构值: 1440
+    装配资源:
+      PG: 288
+      CPU: 608
+    效果:
+      船体加成:
+      - 依据舰级定位应用：重型突击巡洋舰 (高级巡洋舰) CA。
+      装配减免: []
+      内置电子系统:
+        基础CPU: 内置巡洋舰级舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置巡洋舰级多谱段侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+        名称: 紧急损害管制系统
+        描述: 当舰船结构完整度低于30%时，舰长可以激活此系统。激活后，舰载服务器会立即将反应堆的备用能源分流至结构完整力场发生器和内部的纳米体修复中继站。在接下来的30秒内，舰船的装甲抗性将临时提升50%，并立刻修复一部分关键系统损伤。这个系统无法完全修复舰船，但能为其在最危急的时刻争取到宝贵的生存时间，足以撑到后勤单位抵达或完成战术撤退。后勤舰修复完成后，战舰将可以继续战斗。
+    装备: {}
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 87
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 401
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 91
+comment: 舰船|HAC圣骑士级
+selective: true
+secondary_keys:
+- 泰拉帝国
+- 帝国
+position: after_char

@@ -1,0 +1,96 @@
+keys:
+- 战列舰
+- 无畏舰
+- 勇气级
+- BB
+- 无畏舰 BB (反旗舰特化)
+- 勇气
+- 自由世界共和国
+- 共和国
+content: |-
+  <ship_def>
+  级别: 勇气级
+  别名: Valor-class
+  舰船类型: BB
+  舰种: 无畏舰 BB (反旗舰特化)
+  价格: 9.5B
+  制造商: 共和国达科塔星港
+  描述: 一个巨大的长方形武器平台，纯粹为了搭载那门夸张的主炮而建。移动缓慢，气势压人。
+  舰船单位模板:
+    舰船类型: BB
+    吨位: XL
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    跃迁充能: 0
+    最大充能: 4
+    跃迁消耗: 3
+    制造商: 共和国达科塔星港
+    描述: 一个巨大的长方形武器平台，纯粹为了搭载那门夸张的主炮而建。移动缓慢，气势压人。
+    炮位配置: 4L20S
+    装备槽位配置: 7H5L
+    船体护盾值: 3920
+    船体结构值: 2800
+    护盾值: 3920
+    结构值: 2800
+    装配资源:
+      PG: 720
+      CPU: 1520
+    效果:
+      船体加成:
+      - 依据舰级定位应用：无畏舰 BB (反旗舰特化)。
+      装配减免: []
+      内置电子系统:
+        基础CPU: 内置主力舰级舰载CPU；跟踪与ECCM按电子战规则计算。
+        基础侦测器: 内置主力舰级多谱段侦测器；具体侦测范围与侦测值按电子战规则和舰级定位计算。
+      特殊系统:
+      - 名称: 护盾投射阵列
+        描述: 可以消耗电力将自身的护盾能量投射给友军主力舰，充当舰队的“牧师”。
+    装备: {}
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 127
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 401
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 151
+comment: 舰船|BB 勇气级
+selective: true
+secondary_keys:
+- 自由世界共和国
+- 共和国
+position: after_char

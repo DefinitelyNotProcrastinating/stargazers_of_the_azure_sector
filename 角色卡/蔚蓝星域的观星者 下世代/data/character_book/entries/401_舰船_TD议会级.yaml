@@ -1,0 +1,69 @@
+keys:
+- 高级驱逐舰
+- 战术驱逐舰
+- 议会级
+- 议会
+- 驱逐舰
+- TD
+- 猎户座辛迪加
+- 辛迪加
+content: |-
+  <ship_def>
+  级别: 议会级
+  别名: Parliament-class
+  舰船类型: TD
+  舰种: 战术驱逐舰
+  舰体类别: 高级型
+  价格: 89M
+  制造商: 远环星球动力
+  舰体描述: 舰体设计敦实可靠，呈长条方形并有上下两层引导天线，外层覆盖着厚重的六角形模块化装甲板。橄榄绿的涂装上印有共和国的星徽。十二个导弹发射单元如獠牙般分布在舰体两侧，充满了务实而强悍的气息。
+  跃迁充能: 0
+  最大充能: 7
+  跃迁消耗: 1
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 80
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 401
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 84
+comment: 舰船|TD议会级
+selective: true
+secondary_keys:
+- 猎户座辛迪加
+- 辛迪加
+position: after_char

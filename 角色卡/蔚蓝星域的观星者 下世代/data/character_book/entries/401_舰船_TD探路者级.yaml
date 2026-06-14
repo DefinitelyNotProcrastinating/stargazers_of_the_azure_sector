@@ -1,0 +1,68 @@
+keys:
+- 高级驱逐舰
+- 战术驱逐舰
+- 探路者级
+- 探路者
+- 驱逐舰
+- TD
+- 天鹅座技术联邦
+- 联邦
+content: |-
+  <ship_def>
+  级别: 探路者级
+  舰船类型: TD
+  舰种: 战术驱逐舰
+  舰体类别: 高级型
+  价格: 100M
+  制造商: 联邦航空航天局第51设计所
+  舰体描述: 舰体呈扁平的对称飞翼构型，通体为联邦标准的哑光白色涂装。舰身上分布着大量传感器阵列和可展开的探测器舱门，充满了科考船的特征，但隐藏在舰体腹部的武器模块暴露了其致命的本质。该战舰不仅仅是太空飞船，也可在大气层中高效飞行。
+  跃迁充能: 0
+  最大充能: 7
+  跃迁消耗: 1
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 79
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 401
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 83
+comment: 舰船|TD探路者级
+selective: true
+secondary_keys:
+- 天鹅座技术联邦
+- 联邦
+position: after_char
