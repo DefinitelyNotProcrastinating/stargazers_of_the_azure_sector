@@ -1,11 +1,5 @@
 keys:
-- 驱逐舰
 - 相对论级
-- 相对论
-- 高级驱逐舰
-- DD
-- 天鹅座技术联邦
-- 联邦
 content: |-
   <ship_def>
   级别: 相对论级
@@ -98,7 +92,5 @@ priority: null
 id: 153
 comment: 舰船|DD 相对论级
 selective: true
-secondary_keys:
-- 天鹅座技术联邦
-- 联邦
+secondary_keys: []
 position: after_char

@@ -1,15 +1,5 @@
 keys:
-- 高级巡洋舰
-- 突击巡洋舰
 - 宪法级
-- 宪法
-- 重型突击巡洋舰
-- 重突巡
-- 巡洋舰
-- HAC
-- 重型突击巡洋舰 (高级巡洋舰) CA
-- 天鹅座技术联邦
-- 联邦
 content: |-
   <ship_def>
   级别: 宪法级
@@ -93,7 +83,5 @@ priority: null
 id: 93
 comment: 舰船|HAC宪法级
 selective: true
-secondary_keys:
-- 天鹅座技术联邦
-- 联邦
+secondary_keys: []
 position: after_char

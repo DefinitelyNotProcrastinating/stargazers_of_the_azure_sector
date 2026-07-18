@@ -1,11 +1,5 @@
 keys:
-- FF
 - 刺鳍鱼级
-- 刺鳍鱼
-- 护卫舰
-- 拦截护卫舰
-- 铁血盟约
-- 残骸王座
 content: |-
   <ship_def>
   级别: 刺鳍鱼级
@@ -97,7 +91,5 @@ priority: null
 id: 9724
 comment: 舰船|刺鳍鱼级
 selective: true
-secondary_keys:
-- 铁血盟约
-- 残骸王座
+secondary_keys: []
 position: after_char

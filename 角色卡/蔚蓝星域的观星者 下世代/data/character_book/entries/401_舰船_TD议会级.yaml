@@ -1,12 +1,5 @@
 keys:
-- 高级驱逐舰
-- 战术驱逐舰
 - 议会级
-- 议会
-- 驱逐舰
-- TD
-- 猎户座辛迪加
-- 辛迪加
 content: |-
   <ship_def>
   级别: 议会级
@@ -63,7 +56,5 @@ priority: null
 id: 84
 comment: 舰船|TD议会级
 selective: true
-secondary_keys:
-- 猎户座辛迪加
-- 辛迪加
+secondary_keys: []
 position: after_char

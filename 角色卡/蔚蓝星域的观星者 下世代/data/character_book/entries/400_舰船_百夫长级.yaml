@@ -1,10 +1,5 @@
 keys:
-- DD
 - 百夫长级
-- 百夫长
-- 驱逐舰
-- 泰拉帝国
-- 帝国
 content: |-
   <ship_def>
   级别: 百夫长级
@@ -97,7 +92,5 @@ priority: null
 id: 9718
 comment: 舰船|百夫长级
 selective: true
-secondary_keys:
-- 泰拉帝国
-- 帝国
+secondary_keys: []
 position: after_char

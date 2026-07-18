@@ -1,12 +1,5 @@
 keys:
-- BC
 - 惩戒者级
-- 惩戒者
-- 战列巡洋舰
-- 战巡
-- 战列巡洋舰 BC
-- 泰拉帝国
-- 帝国
 content: |-
   <ship_def>
   级别: 惩戒者级
@@ -90,7 +83,5 @@ priority: null
 id: 9705
 comment: 舰船|惩戒者级
 selective: true
-secondary_keys:
-- 泰拉帝国
-- 帝国
+secondary_keys: []
 position: after_char

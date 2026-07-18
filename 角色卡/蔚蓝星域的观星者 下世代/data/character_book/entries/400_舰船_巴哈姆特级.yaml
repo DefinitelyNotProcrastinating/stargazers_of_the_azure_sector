@@ -1,12 +1,5 @@
 keys:
-- CV
 - 巴哈姆特级
-- 巴哈姆特
-- 航母
-- 超级航母
-- 超级航母 CV
-- 自由世界共和国
-- 共和国
 content: |-
   <ship_def>
   级别: 巴哈姆特级
@@ -92,7 +85,5 @@ priority: null
 id: 9715
 comment: 舰船|巴哈姆特级
 selective: true
-secondary_keys:
-- 自由世界共和国
-- 共和国
+secondary_keys: []
 position: after_char

@@ -1,12 +1,5 @@
 keys:
-- 高级驱逐舰
-- 战术驱逐舰
 - 探路者级
-- 探路者
-- 驱逐舰
-- TD
-- 天鹅座技术联邦
-- 联邦
 content: |-
   <ship_def>
   级别: 探路者级
@@ -62,7 +55,5 @@ priority: null
 id: 83
 comment: 舰船|TD探路者级
 selective: true
-secondary_keys:
-- 天鹅座技术联邦
-- 联邦
+secondary_keys: []
 position: after_char

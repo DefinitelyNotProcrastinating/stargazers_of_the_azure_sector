@@ -1,12 +1,5 @@
 keys:
-- CVL
 - 蛇怪级
-- 蛇怪
-- 轻型航母
-- 轻航
-- 航母
-- 猎户座辛迪加
-- 辛迪加
 content: |-
   <ship_def>
   “时刻注意目标的位置。”——辛迪加赏金猎人公会《行动手册》
@@ -104,7 +97,5 @@ priority: null
 id: 9711
 comment: 舰船|蛇怪级
 selective: true
-secondary_keys:
-- 猎户座辛迪加
-- 辛迪加
+secondary_keys: []
 position: after_char

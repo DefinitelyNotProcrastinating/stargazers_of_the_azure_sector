@@ -1,12 +1,5 @@
 keys:
-- 高级驱逐舰
-- 屏卫驱逐舰
 - 盾卫级
-- 盾卫
-- 驱逐舰
-- AD
-- 泰拉帝国
-- 帝国
 content: |-
   <ship_def>
   级别: 盾卫级
@@ -62,7 +55,5 @@ priority: null
 id: 80
 comment: 舰船|AD盾卫级
 selective: true
-secondary_keys:
-- 泰拉帝国
-- 帝国
+secondary_keys: []
 position: after_char

@@ -1,12 +1,5 @@
 keys:
-- 轻型航母
 - 开普勒级
-- 开普勒
-- 轻航
-- 航母
-- CVL
-- 天鹅座技术联邦
-- 联邦
 content: |2-
 
   <ship_def>
@@ -105,7 +98,5 @@ priority: null
 id: 9608
 comment: 舰船|CVL开普勒级
 selective: true
-secondary_keys:
-- 天鹅座技术联邦
-- 联邦
+secondary_keys: []
 position: after_char

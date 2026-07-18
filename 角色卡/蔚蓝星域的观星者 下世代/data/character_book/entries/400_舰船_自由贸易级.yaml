@@ -1,11 +1,5 @@
 keys:
-- TT
 - 自由贸易级
-- 自由贸易
-- 泰坦
-- 泰坦 (TT)
-- 猎户座辛迪加
-- 辛迪加
 content: |-
   <ship_def>
   级别: 自由贸易级
@@ -92,7 +86,5 @@ priority: null
 id: 9738
 comment: 舰船|自由贸易级
 selective: true
-secondary_keys:
-- 猎户座辛迪加
-- 辛迪加
+secondary_keys: []
 position: after_char

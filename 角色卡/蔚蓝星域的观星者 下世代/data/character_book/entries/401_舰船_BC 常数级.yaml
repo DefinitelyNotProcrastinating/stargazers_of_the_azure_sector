@@ -1,12 +1,5 @@
 keys:
 - 常数级
-- 常数
-- 战列巡洋舰
-- 战巡
-- BC
-- 战列巡洋舰 BC
-- 天鹅座技术联邦
-- 联邦
 content: |-
   <ship_def>
   级别: 常数级
@@ -90,7 +83,5 @@ priority: null
 id: 155
 comment: 舰船|BC 常数级
 selective: true
-secondary_keys:
-- 天鹅座技术联邦
-- 联邦
+secondary_keys: []
 position: after_char

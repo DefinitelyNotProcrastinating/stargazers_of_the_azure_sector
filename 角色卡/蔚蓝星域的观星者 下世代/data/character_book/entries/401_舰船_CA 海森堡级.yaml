@@ -1,11 +1,5 @@
 keys:
-- 巡洋舰
 - 海森堡级
-- 海森堡
-- CA
-- 指挥巡洋舰 CA
-- 天鹅座技术联邦
-- 联邦
 content: |-
   <ship_def>
   级别: 海森堡级
@@ -89,7 +83,5 @@ priority: null
 id: 154
 comment: 舰船|CA 海森堡级
 selective: true
-secondary_keys:
-- 天鹅座技术联邦
-- 联邦
+secondary_keys: []
 position: after_char

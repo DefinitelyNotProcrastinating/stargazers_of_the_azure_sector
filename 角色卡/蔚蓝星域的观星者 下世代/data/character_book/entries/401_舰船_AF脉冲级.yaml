@@ -1,11 +1,5 @@
 keys:
-- 突击护卫舰
-- 护卫舰
 - 脉冲级
-- 脉冲
-- AF
-- 天鹅座技术联邦
-- 联邦
 content: |-
   <ship_def>
   级别: 脉冲级
@@ -103,7 +97,5 @@ priority: null
 id: 61
 comment: 舰船|AF脉冲级
 selective: true
-secondary_keys:
-- 天鹅座技术联邦
-- 联邦
+secondary_keys: []
 position: after_char

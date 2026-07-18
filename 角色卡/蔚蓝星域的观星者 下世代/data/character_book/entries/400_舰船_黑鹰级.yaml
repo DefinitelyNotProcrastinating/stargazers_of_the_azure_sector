@@ -1,12 +1,5 @@
 keys:
-- DN
 - 黑鹰级
-- 黑鹰
-- 无畏舰
-- 无畏舰 DN (Dreadnought)
-- 人类技术联合
-- 联合体
-- HTC
 content: |-
   <ship_def>
   级别: 黑鹰级
@@ -94,8 +87,5 @@ priority: null
 id: 9719
 comment: 舰船|黑鹰级
 selective: true
-secondary_keys:
-- 人类技术联合
-- 联合体
-- HTC
+secondary_keys: []
 position: after_char

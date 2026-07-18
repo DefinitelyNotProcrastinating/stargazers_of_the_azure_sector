@@ -1,11 +1,5 @@
 keys:
-- MV
 - 富足级
-- 富足
-- 采矿驳船
-- 矿船
-- 泰拉帝国
-- 帝国
 content: |-
   <ship_def>
   舰船类型: MV
@@ -103,7 +97,5 @@ priority: null
 id: 9732
 comment: 舰船|富足级
 selective: true
-secondary_keys:
-- 泰拉帝国
-- 帝国
+secondary_keys: []
 position: after_char

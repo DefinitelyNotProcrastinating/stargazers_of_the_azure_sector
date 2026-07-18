@@ -1,12 +1,5 @@
 keys:
-- 高级驱逐舰
 - 阐释者级
-- 战术驱逐舰
-- 阐释者
-- 驱逐舰
-- TD
-- 泰拉帝国
-- 帝国
 content: |-
   <ship_def>
   级别: 阐释者级
@@ -62,7 +55,5 @@ priority: null
 id: 82
 comment: 舰船|TD阐释者级
 selective: true
-secondary_keys:
-- 泰拉帝国
-- 帝国
+secondary_keys: []
 position: after_char

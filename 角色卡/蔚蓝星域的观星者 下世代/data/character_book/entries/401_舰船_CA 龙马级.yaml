@@ -1,11 +1,5 @@
 keys:
-- 巡洋舰
-- 龙马
 - 龙马级
-- CA
-- 巡洋舰 CA
-- 猎户座辛迪加
-- 辛迪加
 content: |-
   <ship_def>
   级别: 龙马级
@@ -89,7 +83,5 @@ priority: null
 id: 144
 comment: 舰船|CA 龙马级
 selective: true
-secondary_keys:
-- 猎户座辛迪加
-- 辛迪加
+secondary_keys: []
 position: after_char

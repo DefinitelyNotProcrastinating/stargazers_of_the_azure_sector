@@ -1,12 +1,5 @@
 keys:
-- 超级航母
 - 克拉肯级
-- 克拉肯
-- 航母
-- CV
-- 工业旗舰 / 超级航母 CV
-- 猎户座辛迪加
-- 辛迪加
 content: |-
   <ship_def>
   级别: 克拉肯级
@@ -92,7 +85,5 @@ priority: null
 id: 146
 comment: 舰船|CV 克拉肯级
 selective: true
-secondary_keys:
-- 猎户座辛迪加
-- 辛迪加
+secondary_keys: []
 position: after_char

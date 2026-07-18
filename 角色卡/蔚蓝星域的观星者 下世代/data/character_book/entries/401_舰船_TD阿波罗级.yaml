@@ -1,12 +1,5 @@
 keys:
-- 高级驱逐舰
-- 战术驱逐舰
 - 阿波罗级
-- 阿波罗
-- 驱逐舰
-- TD
-- 猎户座辛迪加
-- 辛迪加
 content: |-
   <ship_def>
   级别: 阿波罗级
@@ -63,7 +56,5 @@ priority: null
 id: 85
 comment: 舰船|TD阿波罗级
 selective: true
-secondary_keys:
-- 猎户座辛迪加
-- 辛迪加
+secondary_keys: []
 position: after_char

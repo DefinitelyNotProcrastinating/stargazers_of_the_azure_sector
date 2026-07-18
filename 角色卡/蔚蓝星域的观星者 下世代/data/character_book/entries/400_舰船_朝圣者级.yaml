@@ -1,12 +1,5 @@
 keys:
-- CA
 - 朝圣者级
-- 朝圣者
-- 巡洋舰
-- 重型巡洋舰  CA
-- 塔伯里斯宪制帝国
-- 塔伯里斯
-- 塔伯里斯帝国
 content: |-
   <ship_def>
   级别: 朝圣者级
@@ -90,8 +83,5 @@ priority: null
 id: 9708
 comment: 舰船|朝圣者级
 selective: true
-secondary_keys:
-- 塔伯里斯宪制帝国
-- 塔伯里斯
-- 塔伯里斯帝国
+secondary_keys: []
 position: after_char

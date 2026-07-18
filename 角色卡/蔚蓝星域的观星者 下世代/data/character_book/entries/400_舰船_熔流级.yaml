@@ -1,12 +1,5 @@
 keys:
-- ICV
 - 熔流级
-- 熔流
-- 工业指挥舰
-- 采矿指挥舰
-- 自由世界共和国
-- 共和国
-- 索鲁斯集团
 content: |-
   <ship_def>
   舰船类型: ICV
@@ -104,8 +97,5 @@ priority: null
 id: 9727
 comment: 舰船|熔流级
 selective: true
-secondary_keys:
-- 自由世界共和国
-- 共和国
-- 索鲁斯集团
+secondary_keys: []
 position: after_char

@@ -1,13 +1,5 @@
 keys:
-- 实验性驱逐舰
-- 始源者
-- 战术驱逐舰
-- 驱逐舰
-- TD
-- 唯一科研舰
 - 未知 / 唯一
-- 银河防御联盟
-- 先驱者
 content: |-
   <ship_def>
   舰船类型: TD
@@ -106,7 +98,5 @@ priority: null
 id: 86
 comment: 舰船|TD数据删除级
 selective: true
-secondary_keys:
-- 先驱者
-- 银河防御联盟
+secondary_keys: []
 position: after_char

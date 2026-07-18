@@ -31,7 +31,7 @@ content: |-
   - 对象映射统一使用 `{"object_name": Object}`。名称外移为对象 key，不重复存储内部名称字段。
   - 禁止写入 `null`。空状态使用 `""`、`[]` 或 `{}`。
   - 禁止更新 `_` 开头的只读派生字段。
-  - 禁止使用旧版 `@.TIME`、`@.SET`、`@.ADD`、`@.DEL` 等指令。
+  - 变量更新只允许输出上述 JSON Patch 结构与操作。
   - 所有机制必须量化。随机机制必须写成 `D100 <= x`。
   </FORCE_FORMATTING>
 extensions:

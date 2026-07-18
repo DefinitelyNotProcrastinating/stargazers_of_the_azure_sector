@@ -1,11 +1,5 @@
 keys:
-- TT
 - 牛顿级
-- 牛顿
-- 泰坦
-- 泰坦 (TT)
-- 天鹅座技术联邦
-- 联邦
 content: |-
   <ship_def>
   级别: 牛顿级
@@ -89,7 +83,5 @@ priority: null
 id: 9737
 comment: 舰船|牛顿级
 selective: true
-secondary_keys:
-- 天鹅座技术联邦
-- 联邦
+secondary_keys: []
 position: after_char

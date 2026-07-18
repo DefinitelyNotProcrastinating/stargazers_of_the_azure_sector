@@ -1,11 +1,5 @@
 keys:
-- BB
 - 剑鱼级
-- 剑鱼
-- 战列舰
-- 战列舰 BB
-- 铁血盟约
-- 残骸王座
 content: |-
   <ship_def>
   级别: 剑鱼级
@@ -91,7 +85,5 @@ priority: null
 id: 9703
 comment: 舰船|剑鱼级
 selective: true
-secondary_keys:
-- 铁血盟约
-- 残骸王座
+secondary_keys: []
 position: after_char

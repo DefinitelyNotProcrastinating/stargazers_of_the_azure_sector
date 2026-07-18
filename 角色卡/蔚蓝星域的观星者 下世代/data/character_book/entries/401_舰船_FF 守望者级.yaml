@@ -1,10 +1,5 @@
 keys:
-- 护卫舰
-- 守望者
 - 守望者级
-- FF
-- 自由世界共和国
-- 共和国
 content: |-
   <ship_def>
   级别: 守望者级
@@ -95,7 +90,5 @@ priority: null
 id: 147
 comment: 舰船|FF 守望者级
 selective: true
-secondary_keys:
-- 自由世界共和国
-- 共和国
+secondary_keys: []
 position: after_char

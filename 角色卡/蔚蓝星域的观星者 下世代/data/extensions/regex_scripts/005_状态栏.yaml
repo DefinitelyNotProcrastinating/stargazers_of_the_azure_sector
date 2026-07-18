@@ -2314,7 +2314,7 @@ replaceString: |-
           `;
         }).join("");
 
-        const itemCards = entries(mc.个人物品 || {}).map(([itemName, item]) => {
+        const itemCards = entries(mc.物品栏 || {}).map(([itemName, item]) => {
           const meta = [];
           if (item && item.品质 !== undefined) meta.push(`<span class="entry-pill">品质 ${escapeHtml(item.品质)}</span>`);
           if (item && item.堆叠 !== undefined) meta.push(`<span class="entry-pill">数量 ${escapeHtml(item.堆叠)}</span>`);
@@ -2367,9 +2367,9 @@ replaceString: |-
           </details>
 
           <details class="collapse-section" open>
-            <summary>随身物品</summary>
+            <summary>物品栏</summary>
             <div class="collapse-body">
-              ${itemCards ? `<div class="item-list">${itemCards}</div>` : empty("暂无随身物品")}
+              ${itemCards ? `<div class="item-list">${itemCards}</div>` : empty("物品栏为空")}
             </div>
           </details>
 
@@ -3220,7 +3220,7 @@ replaceString: |-
 
       function renderAssets(staticData) {
         const mc = staticData.主角 || {};
-        const inventory = mc.个人库存 || mc.个人物品 || {};
+        const inventory = mc.物品栏 || {};
 
         $("assets-view").innerHTML = `
           <h1>资产与声望</h1>
@@ -3230,7 +3230,7 @@ replaceString: |-
             ${stat("当前余额", `${Number(mc.信用点 || 0).toLocaleString()} C`)}
           </div>
 
-          <div class="section-title">个人库存</div>
+          <div class="section-title">物品栏</div>
           <div class="panel">
             ${entries(inventory || {}).length ? `
               <div class="item-list">
@@ -3251,7 +3251,7 @@ replaceString: |-
                   `;
                 }).join("")}
               </div>
-            ` : empty("个人库存为空")}
+            ` : empty("物品栏为空")}
           </div>
 
           <div class="section-title">势力声望</div>
@@ -3548,7 +3548,7 @@ replaceString: |-
         if (!container || !uiLayer || !svgLayer || !mapRoot) return;
         if (starmapRuntime) return;
         if (!window.THREE || !THREE.OrbitControls) {
-          mapRoot.innerHTML = empty("Three.js 或 OrbitControls 未加载，无法渲染旧版交互星图");
+          mapRoot.innerHTML = empty("Three.js 或 OrbitControls 未加载，无法渲染交互星图");
           return;
         }
         if (mapRoot.clientWidth < 20 || mapRoot.clientHeight < 20) return;

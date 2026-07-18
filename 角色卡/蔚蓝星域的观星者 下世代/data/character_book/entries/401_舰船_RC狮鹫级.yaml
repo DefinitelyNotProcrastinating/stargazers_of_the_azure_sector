@@ -1,14 +1,5 @@
 keys:
-- 高级巡洋舰
-- 后勤巡洋舰
 - 狮鹫级
-- 狮鹫
-- 维修巡洋舰
-- 巡洋舰
-- RC
-- 后勤巡洋舰 (高级巡洋舰)
-- 猎户座辛迪加
-- 辛迪加
 content: |-
   <ship_def>
   级别: 狮鹫级
@@ -92,7 +83,5 @@ priority: null
 id: 90
 comment: 舰船|RC狮鹫级
 selective: true
-secondary_keys:
-- 猎户座辛迪加
-- 辛迪加
+secondary_keys: []
 position: after_char

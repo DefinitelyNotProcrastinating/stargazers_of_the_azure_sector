@@ -1,11 +1,5 @@
 keys:
-- 驱逐舰
 - 解放者级
-- 解放者
-- DD
-- 防空驱逐舰
-- 自由世界共和国
-- 共和国
 content: |-
   <ship_def>
   级别: 解放者级
@@ -99,7 +93,5 @@ priority: null
 id: 148
 comment: 舰船|DD 解放者级
 selective: true
-secondary_keys:
-- 自由世界共和国
-- 共和国
+secondary_keys: []
 position: after_char

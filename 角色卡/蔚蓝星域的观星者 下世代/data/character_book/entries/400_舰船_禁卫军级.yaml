@@ -1,11 +1,5 @@
 keys:
-- BB
 - 禁卫军级
-- 禁卫军
-- 战列舰
-- 战列舰 BB
-- 泰拉帝国
-- 帝国
 content: |-
   <ship_def>
   级别: 禁卫军级
@@ -89,7 +83,5 @@ priority: null
 id: 9701
 comment: 舰船|禁卫军级
 selective: true
-secondary_keys:
-- 泰拉帝国
-- 帝国
+secondary_keys: []
 position: after_char

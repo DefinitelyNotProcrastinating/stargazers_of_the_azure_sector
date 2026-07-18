@@ -1,11 +1,5 @@
 keys:
-- ICV
 - 开掘级
-- 开掘
-- 工业指挥舰
-- 采矿指挥舰
-- 天鹅座技术联邦
-- 联邦
 content: |-
   <ship_def>
   舰船类型: ICV
@@ -103,7 +97,5 @@ priority: null
 id: 9725
 comment: 舰船|开掘级
 selective: true
-secondary_keys:
-- 天鹅座技术联邦
-- 联邦
+secondary_keys: []
 position: after_char

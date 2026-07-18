@@ -1,11 +1,5 @@
 keys:
-- CA
 - 月鱼级
-- 月鱼
-- 巡洋舰
-- 重型巡洋舰 CA
-- 铁血盟约
-- 残骸王座
 content: |-
   <ship_def>
   级别: 月鱼级
@@ -89,7 +83,5 @@ priority: null
 id: 9707
 comment: 舰船|月鱼级
 selective: true
-secondary_keys:
-- 铁血盟约
-- 残骸王座
+secondary_keys: []
 position: after_char

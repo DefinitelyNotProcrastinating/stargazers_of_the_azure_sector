@@ -1,12 +1,5 @@
 keys:
-- 隐形轰炸舰
-- 高级驱逐舰
 - 乱序级
-- 乱序
-- 轰炸舰
-- SD
-- 天鹅座技术联邦
-- 联邦
 content: |-
   <ship_def>
   级别: 乱序级
@@ -62,7 +55,5 @@ priority: null
 id: 77
 comment: 舰船|SD乱序级
 selective: true
-secondary_keys:
-- 天鹅座技术联邦
-- 联邦
+secondary_keys: []
 position: after_char

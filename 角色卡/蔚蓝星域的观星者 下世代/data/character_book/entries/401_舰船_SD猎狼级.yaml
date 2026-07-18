@@ -1,12 +1,5 @@
 keys:
-- 隐形轰炸舰
-- 高级驱逐舰
 - 猎狼级
-- 猎狼
-- 轰炸舰
-- SD
-- 自由世界共和国
-- 共和国
 content: |-
   <ship_def>
   级别: 猎狼级
@@ -62,7 +55,5 @@ priority: null
 id: 76
 comment: 舰船|SD猎狼级
 selective: true
-secondary_keys:
-- 自由世界共和国
-- 共和国
+secondary_keys: []
 position: after_char

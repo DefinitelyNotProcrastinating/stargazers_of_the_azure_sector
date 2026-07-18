@@ -10,8 +10,8 @@ content: |-
       "func_params": []
     },
     {
-      "func_name": "clean_flagship_inventory",
-      "func_body": "if (!state.static['主角'] || !state.static['主角']['旗舰库存'] || typeof state.static['主角']['旗舰库存'] !== 'object') return;\nfor (const [name, item] of Object.entries(state.static['主角']['旗舰库存'])) {\n  if (!item || typeof item !== 'object' || (item['数量'] ?? 0) <= 0) {\n    delete state.static['主角']['旗舰库存'][name];\n  }\n}",
+      "func_name": "clean_inventory",
+      "func_body": "if (!state.static['主角'] || !state.static['主角']['物品栏'] || typeof state.static['主角']['物品栏'] !== 'object') return;\nfor (const [name, item] of Object.entries(state.static['主角']['物品栏'])) {\n  if (!item || typeof item !== 'object' || (item['堆叠'] ?? 0) <= 0) {\n    delete state.static['主角']['物品栏'][name];\n  }\n}",
       "periodic": true,
       "order": "last",
       "sequence": 20,

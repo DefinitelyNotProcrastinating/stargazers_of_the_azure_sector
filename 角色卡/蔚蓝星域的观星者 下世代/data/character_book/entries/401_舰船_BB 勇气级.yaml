@@ -1,12 +1,5 @@
 keys:
-- 战列舰
-- 无畏舰
 - 勇气级
-- BB
-- 无畏舰 BB (反旗舰特化)
-- 勇气
-- 自由世界共和国
-- 共和国
 content: |-
   <ship_def>
   级别: 勇气级
@@ -90,7 +83,5 @@ priority: null
 id: 151
 comment: 舰船|BB 勇气级
 selective: true
-secondary_keys:
-- 自由世界共和国
-- 共和国
+secondary_keys: []
 position: after_char

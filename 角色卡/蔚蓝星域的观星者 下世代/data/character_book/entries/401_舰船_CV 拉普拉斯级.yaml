@@ -1,12 +1,5 @@
 keys:
-- 拉普拉斯
 - 拉普拉斯级
-- 航母
-- 超级航母
-- CV
-- 战略武器运载舰 CV
-- 天鹅座技术联邦
-- 联邦
 content: |-
   <ship_def>
   级别: 拉普拉斯级
@@ -93,7 +86,5 @@ priority: null
 id: 156
 comment: 舰船|CV 拉普拉斯级
 selective: true
-secondary_keys:
-- 天鹅座技术联邦
-- 联邦
+secondary_keys: []
 position: after_char

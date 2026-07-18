@@ -1,12 +1,5 @@
 keys:
-- ICV
 - 锻炉级
-- 锻炉
-- 工业指挥舰
-- 采矿指挥舰
-- 泰拉帝国
-- 帝国
-- 赫克勒斯重工
 content: |-
   <ship_def>
   舰船类型: ICV
@@ -104,8 +97,5 @@ priority: null
 id: 9728
 comment: 舰船|锻炉级
 selective: true
-secondary_keys:
-- 泰拉帝国
-- 帝国
-- 赫克勒斯重工
+secondary_keys: []
 position: after_char

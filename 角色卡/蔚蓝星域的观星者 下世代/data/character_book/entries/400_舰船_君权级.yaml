@@ -1,11 +1,5 @@
 keys:
-- TT
 - 君权级
-- 君权
-- 泰坦
-- 泰坦 (Titan)
-- 泰拉帝国
-- 帝国
 content: |-
   <ship_def>
   级别: 君权级
@@ -92,7 +86,5 @@ priority: null
 id: 9736
 comment: 舰船|君权级
 selective: true
-secondary_keys:
-- 泰拉帝国
-- 帝国
+secondary_keys: []
 position: after_char

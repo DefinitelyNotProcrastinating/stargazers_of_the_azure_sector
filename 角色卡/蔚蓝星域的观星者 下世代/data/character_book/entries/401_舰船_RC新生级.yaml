@@ -1,14 +1,5 @@
 keys:
-- 高级巡洋舰
-- 后勤巡洋舰
 - 新生级
-- 新生
-- 维修巡洋舰
-- 巡洋舰
-- RC
-- 后勤巡洋舰 (高级巡洋舰)
-- 天鹅座技术联邦
-- 联邦
 content: |-
   <ship_def>
   级别: 新生级
@@ -92,7 +83,5 @@ priority: null
 id: 89
 comment: 舰船|RC新生级
 selective: true
-secondary_keys:
-- 天鹅座技术联邦
-- 联邦
+secondary_keys: []
 position: after_char

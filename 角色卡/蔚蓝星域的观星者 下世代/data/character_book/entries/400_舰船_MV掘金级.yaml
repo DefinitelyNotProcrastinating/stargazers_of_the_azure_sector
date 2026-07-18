@@ -1,12 +1,5 @@
 keys:
-- 采矿驳船
-- 掘金
-- 矿船
-- MV
 - 掘金级
-- 猎户座辛迪加
-- 辛迪加
-- 泰坦重工
 content: |-
   <ship_def>
   舰船类型: MV
@@ -103,8 +96,5 @@ priority: null
 id: 9643
 comment: 舰船|MV掘金级
 selective: true
-secondary_keys:
-- 猎户座辛迪加
-- 辛迪加
-- 泰坦重工
+secondary_keys: []
 position: after_char

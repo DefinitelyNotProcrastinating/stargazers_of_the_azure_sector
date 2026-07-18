@@ -1,11 +1,5 @@
 keys:
-- 战列舰
 - 猎隼级
-- 猎隼
-- BB
-- 高速战列舰 BB
-- 自由世界共和国
-- 共和国
 content: |-
   <ship_def>
   级别: 猎隼级
@@ -89,7 +83,5 @@ priority: null
 id: 150
 comment: 舰船|BB 猎隼级
 selective: true
-secondary_keys:
-- 自由世界共和国
-- 共和国
+secondary_keys: []
 position: after_char

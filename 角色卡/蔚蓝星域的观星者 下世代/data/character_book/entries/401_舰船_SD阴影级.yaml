@@ -1,12 +1,5 @@
 keys:
-- 隐形轰炸舰
-- 高级驱逐舰
 - 阴影级
-- 阴影
-- 轰炸舰
-- SD
-- 泰拉帝国
-- 帝国
 content: |-
   <ship_def>
   级别: 阴影级
@@ -63,7 +56,5 @@ priority: null
 id: 75
 comment: 舰船|SD阴影级
 selective: true
-secondary_keys:
-- 泰拉帝国
-- 帝国
+secondary_keys: []
 position: after_char

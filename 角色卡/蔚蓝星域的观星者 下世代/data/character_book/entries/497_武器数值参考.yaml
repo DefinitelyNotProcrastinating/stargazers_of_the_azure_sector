@@ -161,7 +161,7 @@ use_regex: true
 constant: true
 name: null
 priority: null
-id: 164
+id: 9744
 comment: 武器数值参考
 selective: false
 secondary_keys: []

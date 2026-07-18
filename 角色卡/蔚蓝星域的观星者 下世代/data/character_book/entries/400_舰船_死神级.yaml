@@ -1,13 +1,5 @@
 keys:
-- BBV
 - 死神级
-- 死神
-- 航空战列舰
-- 战列舰
-- 航空战列舰 (高级战列舰)
-- 猎户座辛迪加
-- 辛迪加
-- 奇戎基因
 content: |-
   <ship_def>
   级别: 死神级
@@ -91,8 +83,5 @@ priority: null
 id: 9702
 comment: 舰船|死神级
 selective: true
-secondary_keys:
-- 猎户座辛迪加
-- 辛迪加
-- 奇戎基因
+secondary_keys: []
 position: after_char

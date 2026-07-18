@@ -1,11 +1,5 @@
 keys:
-- 突击护卫舰
-- 护卫舰
 - 保镖级
-- 保镖
-- AF
-- 猎户座辛迪加
-- 辛迪加
 content: |-
   <ship_def>
   级别: 保镖级
@@ -100,7 +94,5 @@ priority: null
 id: 62
 comment: 舰船|AF保镖级
 selective: true
-secondary_keys:
-- 猎户座辛迪加
-- 辛迪加
+secondary_keys: []
 position: after_char

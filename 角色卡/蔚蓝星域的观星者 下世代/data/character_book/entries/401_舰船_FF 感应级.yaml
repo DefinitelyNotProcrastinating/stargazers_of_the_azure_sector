@@ -1,12 +1,5 @@
 keys:
-- 护卫舰
 - 感应级
-- “感应”级
-- FF
-- 电子战护卫舰
-- 感应
-- 天鹅座技术联邦
-- 联邦
 content: |-
   <ship_def>
   级别: 感应级
@@ -97,7 +90,5 @@ priority: null
 id: 152
 comment: 舰船|FF 感应级
 selective: true
-secondary_keys:
-- 天鹅座技术联邦
-- 联邦
+secondary_keys: []
 position: after_char

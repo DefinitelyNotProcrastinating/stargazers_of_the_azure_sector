@@ -1,14 +1,5 @@
 keys:
-- 高级巡洋舰
-- 干扰巡洋舰
 - 布道者级
-- 布道者
-- 电子战巡洋舰
-- 巡洋舰
-- ESC
-- 干扰巡洋舰 (特种巡洋舰)
-- 泰拉帝国
-- 帝国
 content: |-
   <ship_def>
   级别: 布道者级
@@ -92,7 +83,5 @@ priority: null
 id: 95
 comment: 舰船|ESC布道者级
 selective: true
-secondary_keys:
-- 泰拉帝国
-- 帝国
+secondary_keys: []
 position: after_char

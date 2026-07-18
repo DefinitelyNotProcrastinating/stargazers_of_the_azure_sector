@@ -1,12 +1,5 @@
 keys:
-- JF
 - 巨鲸级
-- 巨鲸
-- 超级货舰
-- Jumbo Freighter
-- 货舰
-- 猎户座辛迪加
-- 辛迪加
 content: |-
   <ship_def>
   舰船类型: JF
@@ -105,7 +98,5 @@ priority: null
 id: 9729
 comment: 舰船|巨鲸级
 selective: true
-secondary_keys:
-- 猎户座辛迪加
-- 辛迪加
+secondary_keys: []
 position: after_char

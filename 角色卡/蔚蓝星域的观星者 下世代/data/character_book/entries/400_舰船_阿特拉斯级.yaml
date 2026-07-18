@@ -1,13 +1,5 @@
 keys:
-- JF
 - 阿特拉斯级
-- 阿特拉斯
-- 超级货舰
-- Jumbo Freighter
-- 货舰
-- 泰拉帝国
-- 帝国
-- 赫克勒斯重工
 content: |-
   <ship_def>
   舰船类型: JF
@@ -105,8 +97,5 @@ priority: null
 id: 9731
 comment: 舰船|阿特拉斯级
 selective: true
-secondary_keys:
-- 泰拉帝国
-- 帝国
-- 赫克勒斯重工
+secondary_keys: []
 position: after_char

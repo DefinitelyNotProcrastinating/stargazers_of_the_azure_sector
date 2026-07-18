@@ -1,13 +1,5 @@
 keys:
-- ESC
 - 协和级
-- 协和
-- 干扰巡洋舰
-- 电子战巡洋舰
-- 巡洋舰
-- 干扰巡洋舰 (特种巡洋舰)
-- 天鹅座技术联邦
-- 联邦
 content: |-
   <ship_def>
   级别: 协和级
@@ -91,7 +83,5 @@ priority: null
 id: 9720
 comment: 舰船|协和级
 selective: true
-secondary_keys:
-- 天鹅座技术联邦
-- 联邦
+secondary_keys: []
 position: after_char

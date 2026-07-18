@@ -1,11 +1,5 @@
 keys:
-- 突击护卫舰
 - 短剑级
-- 护卫舰
-- 短剑
-- AF
-- 泰拉帝国
-- 帝国
 content: |-
   <ship_def>
   级别: 短剑级
@@ -100,7 +94,5 @@ priority: null
 id: 9
 comment: 舰船|AF短剑级
 selective: true
-secondary_keys:
-- 泰拉帝国
-- 帝国
+secondary_keys: []
 position: after_char

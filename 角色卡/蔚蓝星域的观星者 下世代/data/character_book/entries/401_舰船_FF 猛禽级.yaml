@@ -1,10 +1,5 @@
 keys:
 - 猛禽级
-- 护卫舰
-- 猛禽
-- FF
-- 猎户座辛迪加
-- 辛迪加
 content: |-
   <ship_def>
   级别: 猛禽级
@@ -95,7 +90,5 @@ priority: null
 id: 143
 comment: 舰船|FF 猛禽级
 selective: true
-secondary_keys:
-- 猎户座辛迪加
-- 辛迪加
+secondary_keys: []
 position: after_char

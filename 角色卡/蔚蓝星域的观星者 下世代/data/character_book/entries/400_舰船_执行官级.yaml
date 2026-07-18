@@ -1,12 +1,5 @@
 keys:
-- CV
 - 执行官级
-- 执行官
-- 航母
-- 超级航母
-- 超级航母 CV
-- 猎户座辛迪加
-- 辛迪加
 content: |-
   <ship_def>
   级别: 执行官级
@@ -92,7 +85,5 @@ priority: null
 id: 9716
 comment: 舰船|执行官级
 selective: true
-secondary_keys:
-- 猎户座辛迪加
-- 辛迪加
+secondary_keys: []
 position: after_char

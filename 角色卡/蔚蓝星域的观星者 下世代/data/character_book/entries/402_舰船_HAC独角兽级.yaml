@@ -1,15 +1,5 @@
 keys:
-- 高级巡洋舰
-- 突击巡洋舰
 - 独角兽级
-- 独角兽
-- 重型突击巡洋舰
-- 重突巡
-- 巡洋舰
-- HAC
-- 重型突击巡洋舰 (高级巡洋舰) CA
-- 猎户座辛迪加
-- 辛迪加
 content: |-
   <ship_def>
   级别: 独角兽级
@@ -93,7 +83,5 @@ priority: null
 id: 94
 comment: 舰船|HAC独角兽级
 selective: true
-secondary_keys:
-- 猎户座辛迪加
-- 辛迪加
+secondary_keys: []
 position: after_char

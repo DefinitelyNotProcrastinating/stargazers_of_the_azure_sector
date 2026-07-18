@@ -1,12 +1,5 @@
 keys:
-- ICV
 - 炼金术士级
-- 炼金术士
-- 工业指挥舰
-- 采矿指挥舰
-- 猎户座辛迪加
-- 辛迪加
-- 泰坦重工
 content: |-
   <ship_def>
   舰船类型: ICV
@@ -104,8 +97,5 @@ priority: null
 id: 9726
 comment: 舰船|炼金术士级
 selective: true
-secondary_keys:
-- 猎户座辛迪加
-- 辛迪加
-- 泰坦重工
+secondary_keys: []
 position: after_char

@@ -1,12 +1,5 @@
 keys:
-- 战列巡洋舰
-- 仲裁者
 - 仲裁者级
-- 战巡
-- BC
-- 战列巡洋舰 BC
-- 猎户座辛迪加
-- 辛迪加
 content: |-
   <ship_def>
   级别: 仲裁者级
@@ -90,7 +83,5 @@ priority: null
 id: 145
 comment: 舰船|BC 仲裁者级
 selective: true
-secondary_keys:
-- 猎户座辛迪加
-- 辛迪加
+secondary_keys: []
 position: after_char

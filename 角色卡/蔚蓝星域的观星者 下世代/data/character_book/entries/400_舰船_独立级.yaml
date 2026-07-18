@@ -1,12 +1,5 @@
 keys:
-- CVL
 - 独立级
-- 独立
-- 轻型航母
-- 轻航
-- 航母
-- 自由世界共和国
-- 共和国
 content: |-
   <ship_def>
   “自由必以鲜血换取。”
@@ -104,7 +97,5 @@ priority: null
 id: 9710
 comment: 舰船|独立级
 selective: true
-secondary_keys:
-- 自由世界共和国
-- 共和国
+secondary_keys: []
 position: after_char

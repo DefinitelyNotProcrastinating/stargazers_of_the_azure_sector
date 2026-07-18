@@ -1,11 +1,5 @@
 keys:
-- CVT
 - 凤凰构型
-- 战术超级航母
-- 超级航母
-- 战术超级航母 (CVT)
-- 银河防御联盟
-- 先驱者
 content: |-
   <ship_def>
   级别: 凤凰构型
@@ -94,7 +88,5 @@ priority: null
 id: 9712
 comment: 舰船|凤凰构型
 selective: true
-secondary_keys:
-- 银河防御联盟
-- 先驱者
+secondary_keys: []
 position: after_char

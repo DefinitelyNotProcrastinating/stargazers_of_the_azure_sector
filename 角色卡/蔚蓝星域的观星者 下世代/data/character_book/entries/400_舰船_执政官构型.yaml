@@ -1,11 +1,5 @@
 keys:
-- TC
 - 执政官构型
-- 自动化无人机巡洋舰
-- 无人机巡洋舰
-- 巡洋舰
-- 银河防御联盟
-- 先驱者
 content: |-
   <ship_def>
   -   级别: 执政官构型
@@ -103,7 +97,5 @@ priority: null
 id: 9735
 comment: 舰船|执政官构型
 selective: true
-secondary_keys:
-- 银河防御联盟
-- 先驱者
+secondary_keys: []
 position: after_char

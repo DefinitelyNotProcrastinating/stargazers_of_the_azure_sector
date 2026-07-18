@@ -1,14 +1,5 @@
 keys:
-- SC
 - 麦哲伦级
-- 麦哲伦
-- 隐形侦察巡洋舰
-- 侦察巡洋舰
-- 巡洋舰
-- 人类技术联合
-- 联合体
-- HTC
-- 麦考夫特设计局
 content: |-
   <ship_def>
   舰船类型: SC
@@ -105,9 +96,5 @@ priority: null
 id: 9734
 comment: 舰船|麦哲伦级
 selective: true
-secondary_keys:
-- 人类技术联合
-- 联合体
-- HTC
-- 麦考夫特设计局
+secondary_keys: []
 position: after_char

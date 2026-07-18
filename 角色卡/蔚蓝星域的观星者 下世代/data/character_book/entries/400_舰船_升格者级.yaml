@@ -1,12 +1,5 @@
 keys:
-- BB
 - 升格者级
-- 升格者
-- 战列舰
-- 战列舰 BB
-- 塔伯里斯宪制帝国
-- 塔伯里斯
-- 塔伯里斯帝国
 content: |-
   <ship_def>
   级别: 升格者级
@@ -90,8 +83,5 @@ priority: null
 id: 9704
 comment: 舰船|升格者级
 selective: true
-secondary_keys:
-- 塔伯里斯宪制帝国
-- 塔伯里斯
-- 塔伯里斯帝国
+secondary_keys: []
 position: after_char

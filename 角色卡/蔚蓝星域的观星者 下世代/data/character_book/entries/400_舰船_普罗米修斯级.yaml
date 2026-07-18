@@ -1,13 +1,5 @@
 keys:
-- JF
 - 普罗米修斯级
-- 普罗米修斯
-- 超级货舰
-- Jumbo Freighter
-- 货舰
-- 战略隐形货舰
-- 天鹅座技术联邦
-- 联邦
 content: |-
   <ship_def>
   舰船类型: JF
@@ -104,7 +96,5 @@ priority: null
 id: 9730
 comment: 舰船|普罗米修斯级
 selective: true
-secondary_keys:
-- 天鹅座技术联邦
-- 联邦
+secondary_keys: []
 position: after_char

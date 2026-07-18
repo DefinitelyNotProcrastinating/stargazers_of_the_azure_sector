@@ -1,12 +1,5 @@
 keys:
-- CV
 - 克劳德级
-- 克劳德
-- 航母
-- 超级航母
-- 联网感应舰 CV
-- 天鹅座技术联邦
-- 联邦
 content: |-
   <ship_def>
   级别: 克劳德级
@@ -92,7 +85,5 @@ priority: null
 id: 9714
 comment: 舰船|克劳德级
 selective: true
-secondary_keys:
-- 天鹅座技术联邦
-- 联邦
+secondary_keys: []
 position: after_char

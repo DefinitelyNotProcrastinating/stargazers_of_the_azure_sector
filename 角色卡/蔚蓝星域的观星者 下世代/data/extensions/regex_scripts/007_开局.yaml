@@ -32,6 +32,7 @@ replaceString: |-
               --radius-sm: 14px;
           }
           * { box-sizing: border-box; }
+          html { height: auto; min-height: 0; }
           body {
               background:
                   radial-gradient(circle at 16% 12%, rgba(255,255,255,0.95), rgba(255,255,255,0) 30%),
@@ -41,7 +42,8 @@ replaceString: |-
               color: var(--text-main);
               font-family: 'Noto Sans SC', sans-serif;
               margin: 0;
-              min-height: 100vh;
+              min-height: 0;
+              height: auto;
               overflow-y: auto;
               overflow-x: hidden;
           }
@@ -57,7 +59,7 @@ replaceString: |-
               mask-image: radial-gradient(circle at center, black, transparent 78%);
           }
           .font-mono { font-family: 'JetBrains Mono', monospace; }
-          .screen { display: none; min-height: 100vh; }
+          .screen { display: none; min-height: 680px; }
           .screen.active { display: flex; }
           .panel {
               background: var(--bg-panel);
@@ -587,7 +589,7 @@ replaceString: |-
               <h1 class="text-5xl font-bold text-[var(--accent-main)] mt-4">蔚蓝星域的观星者</h1>
               <p class="text-[var(--text-muted)] mt-5 leading-8">
                   载入新的开局协议。<br>
-                  你将先选择舰船，再完成三环装配，随后选择随身物品与开局剧情，并将结果注入聊天。
+                  你可以选择舰船并完成装配，也可以跳过舰船或观星者，以盲盒物资开始游戏；随后选择初始物资与开局剧情，并将结果注入聊天。
               </p>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 text-left">
                   <div>
@@ -603,7 +605,7 @@ replaceString: |-
           </div>
       </div>
 
-      <div id="main-ui" class="hidden flex-col min-h-screen p-4">
+      <div id="main-ui" class="hidden flex-col p-4">
           <div class="flex justify-between items-end border-b border-[var(--border-main)] pb-2 mb-4">
               <div>
                   <h2 class="text-2xl font-bold text-[var(--accent-main)]" id="phase-title">PHASE_1: 开局剧情</h2>
@@ -697,9 +699,9 @@ replaceString: |-
           var currentPhaseIndex = 0;
           var phases = ["ships", "fitting", "items", "init_stories"];
           var phaseTitles = [
-              { t: "PHASE_1: 起始舰船", d: "Select starting ship", help: "先选择一艘起始舰船。下一步将直接进入舰船装配。" },
-              { t: "PHASE_2: 舰船装配", d: "Fit your ship", help: "外环为武器拨码环，中环为 H/L 模块拨码环，中心显示剩余 PG/CPU，下方接口选择观星者。已装配槽位再次点击可查看信息或卸载。" },
-              { t: "PHASE_3: 随身物资", d: "Select personal items", help: "可多选个人物品。导出时会写入主角.个人物品。" },
+              { t: "PHASE_1: 起始舰船", d: "Select starting ship", help: "可选择一艘起始舰船，也可直接跳过以进行盲盒开局。下一步进入舰船装配与观星者选择。" },
+              { t: "PHASE_2: 舰船装配", d: "Fit your ship", help: "舰船与观星者均可跳过。已选择舰船时，外环为武器拨码环，中环为 H/L 模块拨码环；未选择舰船时仍可单独选择观星者。" },
+              { t: "PHASE_3: 初始物资", d: "Select inventory items", help: "可多选初始物品。导出时会写入主角.物品栏。" },
               { t: "PHASE_4: 开局剧情", d: "Select opening story", help: "最后选择开局剧情，它将作为时间、地点与初始叙事锚点。" }
           ];
           var selectionLimits = {
@@ -773,6 +775,16 @@ replaceString: |-
               currentCategory = phases[currentPhaseIndex];
               updateNavUI();
               renderPhase();
+              resetAutoHeight();
+          }
+
+          function resetAutoHeight() {
+              document.documentElement.style.height = "auto";
+              document.body.style.height = "auto";
+              window.scrollTo(0, 0);
+              requestAnimationFrame(function() {
+                  window.dispatchEvent(new Event("resize"));
+              });
           }
 
           function updateNavUI() {
@@ -785,7 +797,7 @@ replaceString: |-
                   document.getElementById('dot-' + (i + 1)).classList.toggle('active', i <= currentPhaseIndex);
               }
               document.getElementById('btn-prev').disabled = currentPhaseIndex === 0;
-              document.getElementById('btn-next').textContent = currentPhaseIndex === phases.length - 1 ? "生成协议 >>>" : "继续 >>>";
+              document.getElementById('btn-next').textContent = currentPhaseIndex === phases.length - 1 ? "生成协议 >>>" : (currentCategory === "ships" || currentCategory === "fitting" ? "继续 / 跳过 >>>" : "继续 >>>");
               renderSummary();
           }
 
@@ -1167,7 +1179,14 @@ replaceString: |-
               var weapons, modules, weaponPos, highSlots, lowSlots, highPos, lowPos;
               var i = 0, weaponHtml = [], moduleHtml = [], fitList = [], status, hpStatus, stargazerLabel, stargazerMeta;
               if (!ship) {
-                  grid.innerHTML = '<div class="panel p-6 text-[var(--text-muted)]">请先返回上一步选择舰船。</div>';
+                  stargazerLabel = state.fitting.stargazer ? state.fitting.stargazer._key : "未选择观星者";
+                  stargazerMeta = state.fitting.stargazer ? buildStargazerMeta(state.fitting.stargazer) : "可选择一名观星者，也可保持为空并继续盲盒开局。";
+                  grid.className = "flex-1";
+                  grid.innerHTML = buildCustomToolbar('fitting') +
+                      '<div class="panel p-6 mt-4"><div class="text-xl font-bold text-[var(--accent-main)]">已跳过起始舰船</div>' +
+                      '<div class="text-sm text-[var(--text-muted)] mt-3">无法进行武器与模块装配，但仍可独立选择观星者。</div>' +
+                      '<div class="stargazer-dock mt-5"><div><div class="label">STARGAZER INTERFACE</div><div class="name">' + escapeHtml(stargazerLabel) + '</div><div class="text-xs text-[var(--text-muted)] mt-1">' + escapeHtml(stargazerMeta) + '</div></div>' +
+                      '<div class="stargazer-actions"><button class="btn px-5 py-3" data-action="open-fitting-selector" data-kind="stargazer" data-slot-id="CENTER">选择观星者</button><button class="btn px-5 py-3" data-action="edit-selected-stargazer"' + (state.fitting.stargazer ? '' : ' disabled') + '>编辑观星者</button></div></div></div>';
                   return;
               }
               weapons = buildWeaponSlots(ship);
@@ -1260,7 +1279,7 @@ replaceString: |-
 
           function openFittingSelector(kind, slotId) {
               var ship = getSelectedShip(), title = "", candidates = [], i = 0, slotType = "";
-              if (!ship) return;
+              if (!ship && kind !== "stargazer") return;
               modalMode = "selector";
               selectorContext = { kind: kind, slotId: slotId };
               if (kind === "weapon") {
@@ -2009,8 +2028,6 @@ replaceString: |-
           }
 
           function nextPhase() {
-              if (currentCategory === "ships" && state.selections.ships.length === 0) { alert("必须先选择一艘起始舰船。"); return; }
-              if (currentCategory === "fitting" && !state.fitting.stargazer) { alert("必须在装配中心选择一名观星者。"); return; }
               if (currentCategory === "init_stories" && state.selections.init_stories.length === 0) { alert("必须选择一个开局剧情。"); return; }
               if (currentPhaseIndex < phases.length - 1) goToPhase(currentPhaseIndex + 1);
               else exportData();
@@ -2023,6 +2040,7 @@ replaceString: |-
           }
 
           function buildEquippedShip() {
+              if (!getSelectedShip()) return null;
               syncSelectedShipHpToMax();
               var ship = JSON.parse(JSON.stringify(getSelectedShip()));
               var weaponSlots = state.fitting.weapons, moduleSlots = state.fitting.modules, k = "", name, clone;
@@ -2036,6 +2054,7 @@ replaceString: |-
           }
 
           function buildEquippedStargazer() {
+              if (!state.fitting.stargazer) return null;
               var stargazer = normalizeStargazerRecord(state.fitting.stargazer._key, state.fitting.stargazer);
               stargazer["分配舰船"] = getSelectedShipName();
               delete stargazer._key;
@@ -2051,24 +2070,28 @@ replaceString: |-
               var cb = String.fromCharCode(96, 96, 96);
               var promptStr = "";
               var finalPayload = null;
-              if (!story || !ship || !stargazer) { alert("请完成舰船、装配、观星者与开局剧情后再生成协议。"); return; }
+              var selectedShips = {};
+              var selectedStargazers = {};
+              if (!story) { alert("请选择一个开局剧情后再生成协议。"); return; }
+              if (ship) selectedShips[getSelectedShipName()] = ship;
+              if (stargazer) selectedStargazers[state.fitting.stargazer._key] = JSON.parse(JSON.stringify(stargazer));
               finalPayload = {
                   System: { Module: "Azure_Sector_Init", Version: "2.3.0", StartingSkillLevel: 10 },
                   Captain: { Name: state.captain.name, Appearance: state.captain.appearance },
-                  ships: (function(){ var obj = {}; obj[getSelectedShipName()] = ship; return obj; })(),
-                  stargazers: (function(){ var obj = {}; obj[state.fitting.stargazer._key] = JSON.parse(JSON.stringify(stargazer)); return obj; })(),
+                  ships: selectedShips,
+                  stargazers: selectedStargazers,
                   items: items,
                   init_stories: formatSelection(state.selections.init_stories)
               };
               yamlStr = jsyaml.dump(finalPayload);
-              promptStr = `[系统指令：玩家已完成新版开局装配。请严格根据以下 YAML 初始化本次开局。]
+              promptStr = `[系统指令：玩家已完成开局装配。请严格根据以下 YAML 初始化本次开局。]
 
-              1. 先读取 ships 与 stargazers。舰船已经完成装配，必须原样使用其 装备、驾驶员、是否旗舰、观星者接口角色。
-              2. 将 ships 写入 主角.舰船，将 items 写入 主角.个人物品，将 stargazers 写入 主角.可攻略角色。
+              1. 先读取 ships 与 stargazers。只处理其中实际存在的条目；空对象表示玩家主动跳过该项，不得擅自补发舰船或观星者。已有舰船必须原样使用其 装备、驾驶员、是否旗舰、观星者接口角色。
+              2. 将非空 ships 写入 主角.舰船，将 items 写入 主角.物品栏，将非空 stargazers 写入 主角.可攻略角色。
               3. 开局剧情以 init_stories 为唯一叙事锚点，必须根据其中的 时间、地点、描述 开场。
               4. 主角姓名使用 Captain.Name。如果 Captain.Appearance 非空，则写入 主角.外貌。
               5. 将 主角.位置 设置为所选开局剧情中的 地点。
-              6. 移除旧版转生点设定；开局技能等级选择固定为 10 级，不允许选择其它等级。
+              6. 开局技能等级固定为 10 级，不允许选择其它等级。
               7. 输出开场叙事后，立刻进行相应的变量更新，并严格遵守当前世界书中的主角、舰船、角色、新闻更新规则。
 
               以下为初始化配置：

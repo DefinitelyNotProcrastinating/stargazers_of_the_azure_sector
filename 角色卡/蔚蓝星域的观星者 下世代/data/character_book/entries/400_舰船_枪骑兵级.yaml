@@ -1,10 +1,5 @@
 keys:
-- FF
 - 枪骑兵级
-- 枪骑兵
-- 护卫舰
-- 泰拉帝国
-- 帝国
 content: |-
   <ship_def>
   级别: 枪骑兵级
@@ -95,7 +90,5 @@ priority: null
 id: 9723
 comment: 舰船|枪骑兵级
 selective: true
-secondary_keys:
-- 泰拉帝国
-- 帝国
+secondary_keys: []
 position: after_char

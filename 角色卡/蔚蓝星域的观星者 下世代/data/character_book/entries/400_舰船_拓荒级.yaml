@@ -1,12 +1,5 @@
 keys:
-- MV
 - 拓荒级
-- 拓荒
-- 采矿驳船
-- 矿船
-- 自由世界共和国
-- 共和国
-- 索鲁斯集团
 content: |-
   <ship_def>
   舰船类型: MV
@@ -104,8 +97,5 @@ priority: null
 id: 9733
 comment: 舰船|拓荒级
 selective: true
-secondary_keys:
-- 自由世界共和国
-- 共和国
-- 索鲁斯集团
+secondary_keys: []
 position: after_char

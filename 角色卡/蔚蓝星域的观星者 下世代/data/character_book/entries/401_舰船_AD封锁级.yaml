@@ -1,12 +1,5 @@
 keys:
-- 高级驱逐舰
-- 屏卫驱逐舰
 - 封锁者级
-- 封锁者
-- 驱逐舰
-- AD
-- 猎户座辛迪加
-- 辛迪加
 content: |-
   <ship_def>
   级别: 封锁者级
@@ -62,7 +55,5 @@ priority: null
 id: 79
 comment: 舰船|AD封锁级
 selective: true
-secondary_keys:
-- 猎户座辛迪加
-- 辛迪加
+secondary_keys: []
 position: after_char

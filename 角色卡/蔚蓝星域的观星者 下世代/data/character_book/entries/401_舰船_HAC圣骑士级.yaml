@@ -1,15 +1,5 @@
 keys:
-- 高级巡洋舰
-- 突击巡洋舰
 - 圣骑士级
-- 圣骑士
-- 重型突击巡洋舰
-- 重突巡
-- 巡洋舰
-- HAC
-- 重型突击巡洋舰 (高级巡洋舰) CA
-- 泰拉帝国
-- 帝国
 content: |-
   <ship_def>
   级别: 圣骑士级
@@ -93,7 +83,5 @@ priority: null
 id: 91
 comment: 舰船|HAC圣骑士级
 selective: true
-secondary_keys:
-- 泰拉帝国
-- 帝国
+secondary_keys: []
 position: after_char

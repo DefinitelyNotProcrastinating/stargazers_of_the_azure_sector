@@ -1,12 +1,5 @@
 keys:
-- CV
 - 雅典娜级
-- 雅典娜
-- 航母
-- 超级航母
-- 超级航母 CV
-- 泰拉帝国
-- 帝国
 content: |-
   <ship_def>
   级别: 雅典娜级
@@ -92,7 +85,5 @@ priority: null
 id: 9717
 comment: 舰船|雅典娜级
 selective: true
-secondary_keys:
-- 泰拉帝国
-- 帝国
+secondary_keys: []
 position: after_char

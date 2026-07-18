@@ -1,12 +1,5 @@
 keys:
-- 隐形轰炸舰
-- 高级驱逐舰
 - 福尔克级
-- 福尔克
-- 轰炸舰
-- SD
-- 猎户座辛迪加
-- 辛迪加
 content: |-
   <ship_def>
   级别: 福尔克级
@@ -63,7 +56,5 @@ priority: null
 id: 78
 comment: 舰船|SD福尔克级
 selective: true
-secondary_keys:
-- 猎户座辛迪加
-- 辛迪加
+secondary_keys: []
 position: after_char

@@ -1,11 +1,5 @@
 keys:
-- 突击护卫舰
-- 护卫舰
 - 雨燕级
-- 雨燕
-- AF
-- 自由世界共和国
-- 共和国
 content: |-
   <ship_def>
   级别: 雨燕级
@@ -103,7 +97,5 @@ priority: null
 id: 11
 comment: 舰船|AF雨燕级
 selective: true
-secondary_keys:
-- 自由世界共和国
-- 共和国
+secondary_keys: []
 position: after_char

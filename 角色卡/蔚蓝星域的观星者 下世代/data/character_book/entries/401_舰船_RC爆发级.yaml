@@ -1,14 +1,5 @@
 keys:
-- 高级巡洋舰
-- 后勤巡洋舰
 - 爆发级
-- 爆发
-- 维修巡洋舰
-- 巡洋舰
-- RC
-- 后勤巡洋舰 (高级巡洋舰)
-- 自由世界共和国
-- 共和国
 content: |-
   <ship_def>
   级别: 爆发级
@@ -92,7 +83,5 @@ priority: null
 id: 88
 comment: 舰船|RC爆发级
 selective: true
-secondary_keys:
-- 自由世界共和国
-- 共和国
+secondary_keys: []
 position: after_char

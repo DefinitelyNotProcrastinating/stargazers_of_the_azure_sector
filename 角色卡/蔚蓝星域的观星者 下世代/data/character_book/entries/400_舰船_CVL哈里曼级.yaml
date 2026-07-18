@@ -1,12 +1,5 @@
 keys:
-- CVL
-- CVL哈里曼级
-- CVL哈里曼
-- 轻型航母
-- 轻航
-- 航母
-- 泰拉帝国
-- 帝国
+- 哈里曼级
 content: |-
   <ship_def>
   “当万虫之潮吞噬星辰，唯有哈里曼将军的座舰化作最后的防线。他将自己的丰碑，用敌人的残骸筑于帝国的疆界之上。”——帝国海军学院，战史教科书《暗红星区之战》节选
@@ -81,7 +74,5 @@ priority: null
 id: 9709
 comment: 舰船|CVL哈里曼级
 selective: true
-secondary_keys:
-- 泰拉帝国
-- 帝国
+secondary_keys: []
 position: after_char

@@ -211,7 +211,7 @@ use_regex: true
 constant: true
 name: null
 priority: null
-id: 9700
+id: 9743
 comment: 观星者总览列表
 selective: false
 secondary_keys: []

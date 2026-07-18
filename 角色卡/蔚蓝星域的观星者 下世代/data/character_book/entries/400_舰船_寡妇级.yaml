@@ -1,13 +1,5 @@
 keys:
-- ESC
 - 寡妇级
-- 寡妇
-- 干扰巡洋舰
-- 电子战巡洋舰
-- 巡洋舰
-- 干扰巡洋舰 (特种巡洋舰)
-- 猎户座辛迪加
-- 辛迪加
 content: |-
   <ship_def>
   级别: 寡妇级
@@ -91,7 +83,5 @@ priority: null
 id: 9722
 comment: 舰船|寡妇级
 selective: true
-secondary_keys:
-- 猎户座辛迪加
-- 辛迪加
+secondary_keys: []
 position: after_char

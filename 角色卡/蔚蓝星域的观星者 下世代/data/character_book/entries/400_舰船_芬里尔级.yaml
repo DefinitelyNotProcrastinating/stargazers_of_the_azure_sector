@@ -1,11 +1,5 @@
 keys:
-- TT
 - 芬里尔级
-- 芬里尔
-- 泰坦
-- 泰坦 (TT)
-- 自由世界共和国
-- 共和国
 content: |-
   <ship_def>
   级别: 芬里尔级
@@ -92,7 +86,5 @@ priority: null
 id: 9739
 comment: 舰船|芬里尔级
 selective: true
-secondary_keys:
-- 自由世界共和国
-- 共和国
+secondary_keys: []
 position: after_char
