@@ -3,6 +3,10 @@ scriptName: 舰船美化
 findRegex: /<ship_info>\s*(?:```[a-zA-Z]*\s*)?([\s\S]*?)(?:\s*```)?\s*<\/ship_info>/gi
 replaceString: |2-
 
+    <style>
+      ship { display: block !important; width: 100% !important; height: 900px !important; min-height: 900px !important; overflow: hidden !important; }
+      ship iframe { display: block !important; width: 100% !important; height: 900px !important; min-height: 900px !important; border: 0 !important; }
+    </style>
     <ship>
     ```html
     <!DOCTYPE html>
@@ -27,8 +31,9 @@ replaceString: |2-
           --accent-strong: rgba(123, 224, 255, 0.32);
         }
         * { box-sizing: border-box; }
-        html, body { margin: 0; background: transparent; color: var(--text); font-family: "Segoe UI", "Microsoft YaHei", sans-serif; }
+        html, body { margin: 0; height: 900px; min-height: 900px; overflow: hidden; background: transparent; color: var(--text); font-family: "Segoe UI", "Microsoft YaHei", sans-serif; }
         body { padding: 12px; }
+        #app { display: block; width: 100%; height: 100%; overflow-y: auto; overflow-x: hidden; }
         .ship-card {
           position: relative;
           overflow: hidden;
@@ -387,7 +392,7 @@ replaceString: |2-
           });
         }
         function init() {
-          const raw = document.getElementById("data-source").textContent.trim().replace(/^\s*```(?:json|yaml)?/i, "").replace(/```\s*$/i, "").trim();
+          const raw = document.getElementById("data-source").textContent.trim();
           const app = document.getElementById("app");
           try {
             const data = jsyaml.load(raw);

@@ -3,6 +3,10 @@ scriptName: 建筑美化
 findRegex: /<building_info>\s*(?:```[a-zA-Z]*\s*)?([\s\S]*?)(?:\s*```)?\s*<\/building_info>/gi
 replaceString: |2-
 
+    <style>
+      structure { display: block !important; width: 100% !important; height: 900px !important; min-height: 900px !important; overflow: hidden !important; }
+      structure iframe { display: block !important; width: 100% !important; height: 900px !important; min-height: 900px !important; border: 0 !important; }
+    </style>
     <structure>
     ```html
     <!DOCTYPE html>
@@ -26,8 +30,9 @@ replaceString: |2-
           --accent-strong: rgba(123, 224, 255, 0.32);
         }
         * { box-sizing: border-box; }
-        html, body { margin: 0; background: transparent; color: var(--text); font-family: "Segoe UI", "Microsoft YaHei", sans-serif; }
+        html, body { margin: 0; height: 900px; min-height: 900px; overflow: hidden; background: transparent; color: var(--text); font-family: "Segoe UI", "Microsoft YaHei", sans-serif; }
         body { padding: 12px; }
+        #app { display: block; width: 100%; height: 100%; overflow-y: auto; overflow-x: hidden; }
         .card {
           max-width: 900px;
           margin: 0 auto;
@@ -233,7 +238,7 @@ replaceString: |2-
           return `<div class="effect-grid">${Object.entries(effects).map(([k, v]) => `<div class="effect"><strong>${escapeHtml(k)}</strong><br>${formatValue(v)}</div>`).join("")}</div>`;
         }
         function init() {
-          const raw = document.getElementById("data-source").textContent.trim().replace(/^\s*```(?:json|yaml)?/i, "").replace(/```\s*$/i, "").trim();
+          const raw = document.getElementById("data-source").textContent.trim();
           const app = document.getElementById("app");
           try {
             const data = jsyaml.load(raw);
