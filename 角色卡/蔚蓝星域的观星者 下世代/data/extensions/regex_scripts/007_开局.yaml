@@ -108,6 +108,49 @@ replaceString: |-
               border-color: var(--accent-main);
               box-shadow: 0 0 0 4px rgba(76, 185, 224, 0.16), inset 0 1px 0 rgba(255,255,255,0.9);
           }
+          .skill-picker {
+              margin-top: 24px;
+              padding: 18px;
+              text-align: left;
+              background: rgba(255,255,255,0.5);
+              border: 1px solid var(--border-soft);
+              border-radius: var(--radius-md);
+          }
+          .skill-grid {
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+              gap: 12px;
+              margin-top: 14px;
+          }
+          .skill-control {
+              padding: 12px;
+              border: 1px solid rgba(98, 175, 210, 0.3);
+              border-radius: var(--radius-sm);
+              background: rgba(255,255,255,0.58);
+          }
+          .skill-control-head {
+              display: flex;
+              align-items: baseline;
+              justify-content: space-between;
+              gap: 10px;
+              margin-bottom: 8px;
+          }
+          .skill-level-value { color: var(--accent-deep); font-weight: 800; }
+          .skill-exp-value { color: var(--text-muted); font-size: 0.72rem; }
+          input.skill-slider {
+              width: 100%;
+              height: 6px;
+              padding: 0;
+              border: 0;
+              border-radius: 999px;
+              box-shadow: none;
+              accent-color: var(--accent-main);
+              cursor: pointer;
+          }
+          input.skill-slider:focus {
+              border: 0;
+              box-shadow: 0 0 0 4px rgba(76, 185, 224, 0.16);
+          }
           .grid-container {
               display: grid;
               grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -601,6 +644,28 @@ replaceString: |-
                       <input type="text" id="captain-appearance" class="w-full mt-1" placeholder="例如：穿着常服的年轻舰长，眼下带着轻微熬夜痕迹">
                   </div>
               </div>
+              <section class="skill-picker">
+                  <div class="flex flex-wrap items-end justify-between gap-2">
+                      <div>
+                          <div class="font-bold text-[var(--accent-deep)]">初始技能经验</div>
+                          <div class="text-xs text-[var(--text-muted)] mt-1">每项技能可独立选择 I–III 级；导出时会自动换算为累计 EXP。</div>
+                      </div>
+                      <div class="font-mono text-xs text-[var(--text-muted)]">I = 250 / II = 1,415 / III = 8,000 EXP</div>
+                  </div>
+                  <div class="skill-grid">
+                      <label class="skill-control"><span class="skill-control-head"><span>导弹</span><span><span class="skill-level-value" data-skill-level="导弹">I</span> <span class="skill-exp-value" data-skill-exp="导弹">250 EXP</span></span></span><input class="skill-slider" data-skill="导弹" type="range" min="1" max="3" step="1" value="1"></label>
+                      <label class="skill-control"><span class="skill-control-head"><span>炮术</span><span><span class="skill-level-value" data-skill-level="炮术">I</span> <span class="skill-exp-value" data-skill-exp="炮术">250 EXP</span></span></span><input class="skill-slider" data-skill="炮术" type="range" min="1" max="3" step="1" value="1"></label>
+                      <label class="skill-control"><span class="skill-control-head"><span>战机</span><span><span class="skill-level-value" data-skill-level="战机">I</span> <span class="skill-exp-value" data-skill-exp="战机">250 EXP</span></span></span><input class="skill-slider" data-skill="战机" type="range" min="1" max="3" step="1" value="1"></label>
+                      <label class="skill-control"><span class="skill-control-head"><span>算法</span><span><span class="skill-level-value" data-skill-level="算法">I</span> <span class="skill-exp-value" data-skill-exp="算法">250 EXP</span></span></span><input class="skill-slider" data-skill="算法" type="range" min="1" max="3" step="1" value="1"></label>
+                      <label class="skill-control"><span class="skill-control-head"><span>工程</span><span><span class="skill-level-value" data-skill-level="工程">I</span> <span class="skill-exp-value" data-skill-exp="工程">250 EXP</span></span></span><input class="skill-slider" data-skill="工程" type="range" min="1" max="3" step="1" value="1"></label>
+                      <label class="skill-control"><span class="skill-control-head"><span>工业</span><span><span class="skill-level-value" data-skill-level="工业">I</span> <span class="skill-exp-value" data-skill-exp="工业">250 EXP</span></span></span><input class="skill-slider" data-skill="工业" type="range" min="1" max="3" step="1" value="1"></label>
+                      <label class="skill-control"><span class="skill-control-head"><span>科学</span><span><span class="skill-level-value" data-skill-level="科学">I</span> <span class="skill-exp-value" data-skill-exp="科学">250 EXP</span></span></span><input class="skill-slider" data-skill="科学" type="range" min="1" max="3" step="1" value="1"></label>
+                      <label class="skill-control"><span class="skill-control-head"><span>驾驶</span><span><span class="skill-level-value" data-skill-level="驾驶">I</span> <span class="skill-exp-value" data-skill-exp="驾驶">250 EXP</span></span></span><input class="skill-slider" data-skill="驾驶" type="range" min="1" max="3" step="1" value="1"></label>
+                      <label class="skill-control"><span class="skill-control-head"><span>装甲</span><span><span class="skill-level-value" data-skill-level="装甲">I</span> <span class="skill-exp-value" data-skill-exp="装甲">250 EXP</span></span></span><input class="skill-slider" data-skill="装甲" type="range" min="1" max="3" step="1" value="1"></label>
+                      <label class="skill-control"><span class="skill-control-head"><span>护盾</span><span><span class="skill-level-value" data-skill-level="护盾">I</span> <span class="skill-exp-value" data-skill-exp="护盾">250 EXP</span></span></span><input class="skill-slider" data-skill="护盾" type="range" min="1" max="3" step="1" value="1"></label>
+                      <label class="skill-control"><span class="skill-control-head"><span>同调</span><span><span class="skill-level-value" data-skill-level="同调">I</span> <span class="skill-exp-value" data-skill-exp="同调">250 EXP</span></span></span><input class="skill-slider" data-skill="同调" type="range" min="1" max="3" step="1" value="1"></label>
+                  </div>
+              </section>
               <button class="btn px-8 py-3 text-xl tracking-widest mt-8" id="btn-start" data-action="start-game">建立连接 [CONNECT]</button>
           </div>
       </div>
@@ -697,6 +762,9 @@ replaceString: |-
       <script>
           var gameData = null;
           var currentPhaseIndex = 0;
+          var skillNames = ["导弹", "炮术", "战机", "算法", "工程", "工业", "科学", "驾驶", "装甲", "护盾", "同调"];
+          var skillExpByLevel = { 1: 250, 2: 1415, 3: 8000 };
+          var skillRomanByLevel = { 1: "I", 2: "II", 3: "III" };
           var phases = ["ships", "fitting", "items", "init_stories"];
           var phaseTitles = [
               { t: "PHASE_1: 起始舰船", d: "Select starting ship", help: "可选择一艘起始舰船，也可直接跳过以进行盲盒开局。下一步进入舰船装配与观星者选择。" },
@@ -712,6 +780,7 @@ replaceString: |-
           var fittingCatalog = { weaponsByMount: { S: [], M: [], L: [], XL: [] }, modulesBySlot: { H: [], L: [] } };
           var state = {
               captain: { name: "{{user}}", appearance: "" },
+              skills: { "导弹": 1, "炮术": 1, "战机": 1, "算法": 1, "工程": 1, "工业": 1, "科学": 1, "驾驶": 1, "装甲": 1, "护盾": 1, "同调": 1 },
               selections: { ships: [], items: [], init_stories: [] },
               fitting: { weapons: {}, modules: {}, stargazer: null }
           };
@@ -748,6 +817,29 @@ replaceString: |-
           function getSelectedShipName() { return getSelectedShip() ? getSelectedShip()._key : ""; }
           function getSelectedStargazer() { return state.fitting.stargazer; }
 
+          function clampStartingSkillLevel(value) {
+              return Math.max(1, Math.min(3, parseInt(value, 10) || 1));
+          }
+
+          function setStartingSkillLevel(skillName, value) {
+              var level = clampStartingSkillLevel(value);
+              var levelEl = document.querySelector('[data-skill-level="' + skillName + '"]');
+              var expEl = document.querySelector('[data-skill-exp="' + skillName + '"]');
+              state.skills[skillName] = level;
+              if (levelEl) levelEl.textContent = skillRomanByLevel[level];
+              if (expEl) expEl.textContent = skillExpByLevel[level].toLocaleString() + " EXP";
+          }
+
+          function buildStartingSkills() {
+              var result = {}, i = 0, skillName = "", level = 1;
+              for (i = 0; i < skillNames.length; i++) {
+                  skillName = skillNames[i];
+                  level = clampStartingSkillLevel(state.skills[skillName]);
+                  result[skillName] = { EXP: skillExpByLevel[level] };
+              }
+              return result;
+          }
+
           function resetFitting() {
               state.fitting.weapons = {};
               state.fitting.modules = {};
@@ -755,8 +847,10 @@ replaceString: |-
           }
 
           async function startGame() {
+              var sliders = document.querySelectorAll('.skill-slider'), i = 0;
               state.captain.name = document.getElementById('captain-name').value.replace(/^\s+|\s+$/g, "") || "{{user}}";
               state.captain.appearance = document.getElementById('captain-appearance').value.replace(/^\s+|\s+$/g, "");
+              for (i = 0; i < sliders.length; i++) setStartingSkillLevel(sliders[i].getAttribute('data-skill'), sliders[i].value);
               document.getElementById('screen-0').classList.remove('active');
               document.getElementById('main-ui').classList.add('flex');
               document.getElementById('main-ui').classList.remove('hidden');
@@ -1702,7 +1796,16 @@ replaceString: |-
 
 
           document.addEventListener('change', function(event) {
+              if (event.target && event.target.classList.contains('skill-slider')) {
+                  setStartingSkillLevel(event.target.getAttribute('data-skill'), event.target.value);
+                  return;
+              }
               if (event.target && event.target.id === 'custom-module-kind' && customFormatterContext.kind === 'module') fillCustomTemplate();
+          });
+          document.addEventListener('input', function(event) {
+              if (event.target && event.target.classList.contains('skill-slider')) {
+                  setStartingSkillLevel(event.target.getAttribute('data-skill'), event.target.value);
+              }
           });
 
 
@@ -2076,8 +2179,9 @@ replaceString: |-
               if (ship) selectedShips[getSelectedShipName()] = ship;
               if (stargazer) selectedStargazers[state.fitting.stargazer._key] = JSON.parse(JSON.stringify(stargazer));
               finalPayload = {
-                  System: { Module: "Azure_Sector_Init", Version: "2.3.0", StartingSkillLevel: 10 },
+                  System: { Module: "Azure_Sector_Init", Version: "2.4.0" },
                   Captain: { Name: state.captain.name, Appearance: state.captain.appearance },
+                  skills: buildStartingSkills(),
                   ships: selectedShips,
                   stargazers: selectedStargazers,
                   items: items,
@@ -2091,7 +2195,7 @@ replaceString: |-
               3. 开局剧情以 init_stories 为唯一叙事锚点，必须根据其中的 时间、地点、描述 开场。
               4. 主角姓名使用 Captain.Name。如果 Captain.Appearance 非空，则写入 主角.外貌。
               5. 将 主角.位置 设置为所选开局剧情中的 地点。
-              6. 开局技能等级固定为 10 级，不允许选择其它等级。
+              6. 将 skills 中每项技能的 EXP 写入对应的 主角.技能.技能名.EXP。skills 已将玩家选择的 I–III 级换算为实际累计 EXP；不得把所选数字再次当作 EXP 或统一改成其它等级。不要直接写入只读的 _等级，该字段由外部脚本根据 EXP 自动同步。
               7. 输出开场叙事后，立刻进行相应的变量更新，并严格遵守当前世界书中的主角、舰船、角色、新闻更新规则。
 
               以下为初始化配置：
