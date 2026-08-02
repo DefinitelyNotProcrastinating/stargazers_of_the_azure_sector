@@ -3028,6 +3028,7 @@ replaceString: |-
             舰船名称: name,
             舰船类型: ship.舰船类型,
             吨位: ship.吨位,
+            每日补给消耗: ship.每日补给消耗,
             制造商: ship.制造商,
             驾驶员: ship.驾驶员,
             是否旗舰: ship.是否旗舰,
@@ -3223,6 +3224,7 @@ replaceString: |-
       function renderAssets(staticData) {
         const mc = staticData.主角 || {};
         const inventory = mc.物品栏 || {};
+        const industrialInventory = mc.库存 || {};
 
         $("assets-view").innerHTML = `
           <h1>资产与声望</h1>
@@ -3230,6 +3232,11 @@ replaceString: |-
           <div class="section-title">信用点</div>
           <div class="grid">
             ${stat("当前余额", `${Number(mc.信用点 || 0).toLocaleString()} C`)}
+          </div>
+
+          <div class="section-title">工业库存</div>
+          <div class="grid">
+            ${["矿物", "食物", "金属", "补给"].map(resource => stat(resource, Number(industrialInventory[resource] || 0).toLocaleString())).join("")}
           </div>
 
           <div class="section-title">物品栏</div>

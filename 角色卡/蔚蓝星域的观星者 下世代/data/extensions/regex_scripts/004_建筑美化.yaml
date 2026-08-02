@@ -252,6 +252,9 @@ replaceString: |2-
             const stats = [
               ["类型", building["类型"]],
               ["吨位", building["吨位"]],
+              ["科技等级", building["科技等级"]],
+              ["产业模型", building["产业模型"]],
+              ["部署日", building["部署日"]],
               ["位置", building["位置"]],
               ["阵营", building["阵营"]],
               ["安等", building["安等"]],
@@ -285,7 +288,14 @@ replaceString: |2-
                   </div>
                   ${Array.isArray(building["标签"]) && building["标签"].length ? `<div><h2 class="section-title">标签</h2><div class="tag-row">${building["标签"].map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div></div>` : ""}
                   ${maxHp > 0 ? `<div class="panel"><h2 class="section-title">结构完整度</h2><div class="grid" style="grid-template-columns: 110px 1fr 90px;align-items:center;"><div class="label" style="margin:0;">HP</div><div class="bar"><div style="width:${hpRate}%"></div></div><div class="value" style="text-align:right;">${escapeHtml(String(hp))} / ${escapeHtml(String(maxHp))}</div></div></div>` : ""}
-                  ${building["工业属性"] ? `<div><h2 class="section-title">工业属性</h2>${renderStats(Object.entries(building["工业属性"]))}</div>` : ""}
+                  <div>
+                    <h2 class="section-title">每日产业结算</h2>
+                    ${renderStats([
+                      ["维护", building["每日维护"]],
+                      ["输入", building["每日输入"]],
+                      ["输出", building["每日输出"]]
+                    ])}
+                  </div>
                   <div>
                     <h2 class="section-title">设施效果</h2>
                     ${renderEffects(building["效果"])}

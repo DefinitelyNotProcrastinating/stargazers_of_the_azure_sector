@@ -14,7 +14,7 @@ content: |
       const WIDGET_ID = "sam-core-widget-root";
       const APP_NAME = "SAM 核心管理器";
 
-      const SCRIPT_VERSION = "6.2.12 'Lone star'";
+      const SCRIPT_VERSION = "6.2.14 'Lone star'";
       const JSON_REPAIR_URL = "https://cdn.jsdelivr.net/npm/jsonrepair/lib/umd/jsonrepair.min.js";
       //[RESTORED FROM V5] Key for cleaning up old instances on script reload
       const HANDLER_STORAGE_KEY = `__SAM_V6_EVENT_HANDLER_STORAGE__`;
@@ -1206,7 +1206,19 @@ content: |
               let messageContent = lastAIMessage.mes;
 
               const opsFromMessage = await extractOperationsFromText(messageContent);
-              const periodicOps = samFunctions.filter(f => f.periodic).map(f => ({ op: 'func', func_name: f.func_name, params:[] }));
+              const periodicOrderRank = { first: 0, normal: 1, last: 2 };
+              const periodicOps = samFunctions
+                  .map((func, index) => ({ func, index }))
+                  .filter(item => item.func.periodic)
+                  .sort((a, b) => {
+                      const rankA = periodicOrderRank[a.func.order] ?? periodicOrderRank.normal;
+                      const rankB = periodicOrderRank[b.func.order] ?? periodicOrderRank.normal;
+                      if (rankA !== rankB) return rankA - rankB;
+                      const sequenceA = Number.isFinite(Number(a.func.sequence)) ? Number(a.func.sequence) : 0;
+                      const sequenceB = Number.isFinite(Number(b.func.sequence)) ? Number(b.func.sequence) : 0;
+                      return sequenceA - sequenceB || a.index - b.index;
+                  })
+                  .map(item => ({ op: 'func', func_name: item.func.func_name, params:[] }));
 
               const { state: newState, generatedDiffs } = await applyOperationsToState([...opsFromMessage, ...periodicOps], state, true);
               samData = normalizeSamState(newState);

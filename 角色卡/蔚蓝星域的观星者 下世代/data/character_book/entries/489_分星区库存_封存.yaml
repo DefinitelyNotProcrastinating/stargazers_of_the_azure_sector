@@ -1,0 +1,77 @@
+keys: []
+content: |-
+  <archived_sector_inventory>
+  # 分星区库存系统（封存，当前不参与游戏）
+
+  封存原因:
+    - 当前阶段先使用玩家统一库存完成工业自动结算。
+    - 本条目只保留未来恢复分星区物流时需要的数据结构，不得被当前脚本读取。
+
+  原设计:
+    - 矿物、食物、金属与补给按星区分别储存，不得跨星区自动调用。
+    - 信用点使用玩家统一账户，但每笔维护、投入与产出归属发生结算的星区流水。
+    - AI只能通过 `resupply(星区名称, 资源名称, 数量)` 间接访问分区库存。
+
+  封存Schema:
+    ```json
+    {
+      "统一信用点账户": 0,
+      "星区": {
+        "星区名称": {
+          "资源": {"矿物": 0, "食物": 0, "金属": 0, "补给": 0},
+          "建筑实例": {},
+          "流水": []
+        }
+      },
+      "已处理结算ID": []
+    }
+    ```
+
+  恢复前提:
+    - 实现星区识别、跨区运输、物流在途状态、分区面板与存档迁移。
+    - 恢复时必须迁移统一库存，不能与当前库存同时作为资源真值。
+  </archived_sector_inventory>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 167
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: false
+insertion_order: 489
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 489
+comment: 分星区库存（封存）
+selective: false
+secondary_keys: []
+position: after_char
