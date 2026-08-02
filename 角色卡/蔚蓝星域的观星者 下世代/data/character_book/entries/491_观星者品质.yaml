@@ -1,0 +1,79 @@
+keys: []
+content: |-
+  <观星者品质>
+  # 观星者专用品质与充能规则
+
+  核心定义:
+    - 观星者品质使用独立的名称体系，不使用装备与其他造物的整数品质0-18。
+    - 观星者的比特率、稳态增益与爆发增益是舰船种类适配的核心参数；精度仍按舰船或特殊接口已有的独立要求判定。
+    - 观星者的 `充能数量` 决定一次有效同调能够为当前分配舰船增加多少点跃迁充能。
+    - 品质只提供常规默认充能数量；实际结算永远读取角色对象中明确记载的 `充能数量`。
+    - 品质与充能数量不是不可分割的固定对位。自研型号、改造型号、受损型号与特殊型号可以偏离默认值，但必须同时明确记录品质和充能数量。
+
+  常规品质表:
+    标准: {默认充能数量: 1}
+    衍生: {默认充能数量: 2}
+    精良: {默认充能数量: 3}
+    上等: {默认充能数量: 4}
+    先进: {默认充能数量: 5}
+    高级: {默认充能数量: 6}
+    唯一: {默认充能数量: "不绑定，必须单独填写"}
+
+  建模规则:
+    - 常规量产型号应按品质表填写默认充能数量。
+    - 若常规型号的充能数量偏离默认值，档案必须给出明确原因，不得根据品质擅自覆盖角色对象中的实值。
+    - `唯一` 表示该观星者不适用常规量产分级，不表示她必然比高级品质更强。
+    - `唯一` 不进入常规随机品质池，只能由明确的型号档案、项目回报或剧情结果创建。
+    - 唯一品质的充能数量可以高于、等于或低于任何常规品质，禁止使用 `X` 参与数值计算。
+    - 任何观星者角色都必须同时填写 `品质` 与 `充能数量`；充能数量必须是大于或等于0的有限数值。
+    - 比特率、精度与增益不得从品质或充能数量反推；充能数量也不得从比特率或增益反推。
+
+  结算规则:
+    - 一次有效同调的基础增量直接取该观星者的 `充能数量`。
+    - 同调技能、角色特殊效果、舰船效果等额外加成在此基础上另行计算。
+    - 最终跃迁充能仍不得超过舰船的 `最大充能`。
+  </观星者品质>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 169
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 491
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 491
+comment: 观星者品质
+selective: false
+secondary_keys: []
+position: after_char

@@ -2429,6 +2429,8 @@ replaceString: |-
           };
 
           const stargazer = {
+            品质: c.品质,
+            充能数量: c.充能数量,
             比特率: c.比特率,
             精度: c.精度,
             稳态增益: c.稳态增益,
