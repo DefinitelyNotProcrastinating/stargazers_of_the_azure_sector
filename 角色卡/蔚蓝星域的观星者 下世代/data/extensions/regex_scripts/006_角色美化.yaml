@@ -2,13 +2,8 @@ id: 5023d206-50b7-48ab-8168-da221e90c992
 scriptName: 角色美化
 findRegex: /<chara_info>\s*(?:```[a-zA-Z]*\s*)?([\s\S]*?)(?:\s*```)?\s*<\/chara_info>/gi
 replaceString: |2-
-
-    <style>
-      chara { display: block !important; width: 100% !important; height: 900px !important; min-height: 900px !important; overflow: hidden !important; }
-      chara iframe { display: block !important; width: 100% !important; height: 900px !important; min-height: 900px !important; border: 0 !important; }
-    </style>
-    <chara>
-    ```html
+  <chara>
+  ```html
     <!DOCTYPE html>
     <html lang="zh-CN">
     <head>
@@ -18,30 +13,29 @@ replaceString: |2-
       <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
       <style>
         :root {
-          color-scheme: dark;
-          --line: rgba(148, 223, 255, 0.22);
-          --text: #ecf9ff;
-          --muted: #8eb3c5;
-          --shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
-          --accent: #7be0ff;
-          --accent-soft: rgba(123, 224, 255, 0.18);
-          --accent-strong: rgba(123, 224, 255, 0.32);
-          --panel: rgba(7, 20, 34, 0.62);
-          --panel-soft: rgba(10, 30, 50, 0.4);
+          color-scheme: light;
+          --line: #e5e7eb;
+          --text: #111827;
+          --muted: #6b7280;
+          --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+          --accent: #3b82f6;
+          --accent-soft: rgba(59, 130, 246, 0.10);
+          --accent-strong: rgba(59, 130, 246, 0.35);
+          --panel: #ffffff;
+          --panel-soft: #f8fafc;
         }
         * { box-sizing: border-box; }
-        html, body { margin: 0; height: 900px; min-height: 900px; overflow: hidden; background: transparent; color: var(--text); font-family: "Segoe UI", "Microsoft YaHei", sans-serif; }
-        body { padding: 12px; }
-        #app { display: block; width: 100%; height: 100%; overflow-y: auto; overflow-x: hidden; }
+        html, body { margin: 0; min-height: 100%; background: transparent; color: var(--text); font-family: Inter, "Noto Serif SC", "Microsoft YaHei", sans-serif; }
+        body { padding: 20px; }
+        #app { display: block; width: 100%; }
         .sheet {
           max-width: 940px;
           margin: 0 auto;
           overflow: hidden;
           border: 1px solid var(--line);
-          border-radius: 24px;
-          background: linear-gradient(165deg, rgba(4, 12, 22, 0.72), rgba(8, 24, 40, 0.56));
+          border-radius: 4px;
+          background: #ffffff;
           box-shadow: var(--shadow);
-          backdrop-filter: blur(20px) saturate(145%);
           position: relative;
         }
         .sheet::before {
@@ -226,7 +220,14 @@ replaceString: |2-
       <div id="app"></div>
       <script>
         function escapeHtml(value) {
-          return String(value ?? "").replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
+          const map = {};
+          map["&"] = "&" + "amp;";
+          map["<"] = "&" + "lt;";
+          map[">"] = "&" + "gt;";
+          map['"'] = "&" + "quot;";
+          map["'"] = "&" + "#39;";
+          map["`"] = String.fromCharCode(92, 96);
+          return String(value ?? "").replace(/[&<>"'`]/g, (ch) => map[ch]);
         }
         function formatValue(value) {
           if (value === undefined || value === null || value === "") return "未记录";
@@ -341,7 +342,7 @@ replaceString: |2-
     </body>
     </html>
     ```
-    </chara>
+  </chara>
 trimStrings: []
 placement:
 - 2

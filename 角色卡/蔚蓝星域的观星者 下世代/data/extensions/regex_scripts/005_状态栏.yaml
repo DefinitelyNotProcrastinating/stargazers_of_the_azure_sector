@@ -1871,11 +1871,8 @@ replaceString: |-
 
       /*
         Important:
-        Do not use literal HTML entities like &quot; inside this script.
-        Some srcdoc pipelines decode entities before script execution, which can turn:
-            '"': "&quot;"
-        into invalid JavaScript:
-            '"': """
+        Do not write HTML entity tokens literally inside this script.
+        Some srcdoc pipelines decode them before script execution and corrupt JavaScript strings.
         Therefore entities are assembled through string concatenation.
       */
       function escapeHtml(value) {
@@ -1886,7 +1883,8 @@ replaceString: |-
         map[">"] = "&" + "gt;";
         map['"'] = "&" + "quot;";
         map["'"] = "&" + "#39;";
-        return str.replace(/[&<>"']/g, ch => map[ch]);
+        map["`"] = String.fromCharCode(92, 96);
+        return str.replace(/[&<>"'`]/g, ch => map[ch]);
       }
 
       const display = value => {
@@ -1966,7 +1964,7 @@ replaceString: |-
         }
         return `
           <aside class="character-illust">
-            <img src="${escapeHtml(bind.illust_link)}" alt="${escapeHtml(name)} 立绘" loading="lazy" onerror="this.closest('.character-illust').classList.add('empty');this.closest('.character-illust').innerHTML='<div class=&quot;illust-fallback&quot;><div class=&quot;illust-heart&quot;>♥</div><div>立绘加载失败</div></div>';">
+            <img src="${escapeHtml(bind.illust_link)}" alt="${escapeHtml(name)} 立绘" loading="lazy" onerror="this.closest('.character-illust').classList.add('empty');this.closest('.character-illust').textContent='立绘加载失败';">
             <div class="character-illust-caption">ILLUSTRATION / ${escapeHtml(name)}</div>
           </aside>
         `;

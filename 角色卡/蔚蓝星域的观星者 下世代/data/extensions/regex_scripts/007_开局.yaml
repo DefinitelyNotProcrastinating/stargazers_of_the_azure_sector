@@ -769,7 +769,7 @@ replaceString: |-
           var phaseTitles = [
               { t: "PHASE_1: 起始舰船", d: "Select starting ship", help: "可选择一艘起始舰船，也可直接跳过以进行盲盒开局。下一步进入舰船装配与观星者选择。" },
               { t: "PHASE_2: 舰船装配", d: "Fit your ship", help: "舰船与观星者均可跳过。已选择舰船时，外环为武器拨码环，中环为 H/L 模块拨码环；未选择舰船时仍可单独选择观星者。" },
-              { t: "PHASE_3: 初始物资", d: "Select inventory items", help: "可多选初始物品。导出时会写入主角.物品栏。" },
+              { t: "PHASE_3: 初始物资", d: "Select inventory items", help: "可多选初始物品。常规物品导出至主角.物品栏；资源类物资导出至主角.库存。" },
               { t: "PHASE_4: 开局剧情", d: "Select opening story", help: "最后选择开局剧情，它将作为时间、地点与初始叙事锚点。" }
           ];
           var selectionLimits = {
@@ -921,7 +921,8 @@ replaceString: |-
               map[">"] = "&" + "gt;";
               map['"'] = "&" + "quot;";
               map["'"] = "&" + "#39;";
-              return str.replace(/[&<>"']/g, function(ch) { return map[ch]; });
+              map["`"] = String.fromCharCode(92, 96);
+              return str.replace(/[&<>"'`]/g, function(ch) { return map[ch]; });
           }
 
           function formatValue(value) {
@@ -2150,7 +2151,7 @@ replaceString: |-
               ship["驾驶员"] = state.captain.name;
               ship["是否旗舰"] = true;
               ship["观星者接口角色"] = state.fitting.stargazer ? state.fitting.stargazer._key : "";
-              ship["装备"] = {};
+              ship["装备"] = ship["装备"] && typeof ship["装备"] === "object" ? JSON.parse(JSON.stringify(ship["装备"])) : {};
               for (k in weaponSlots) if (Object.prototype.hasOwnProperty.call(weaponSlots, k) && weaponSlots[k]) { name = k + " " + getEquipmentDisplayName(weaponSlots[k]); clone = JSON.parse(JSON.stringify(weaponSlots[k])); delete clone._key; ship["装备"][name] = clone; }
               for (k in moduleSlots) if (Object.prototype.hasOwnProperty.call(moduleSlots, k) && moduleSlots[k]) { name = k + " " + getEquipmentDisplayName(moduleSlots[k]); clone = JSON.parse(JSON.stringify(moduleSlots[k])); delete clone._key; ship["装备"][name] = clone; }
               return ship;
@@ -2169,6 +2170,7 @@ replaceString: |-
               var stargazer = buildEquippedStargazer();
               var story = state.selections.init_stories[0];
               var items = formatSelection(state.selections.items);
+              var inventory = { "补给": 0 };
               var yamlStr = "";
               var cb = String.fromCharCode(96, 96, 96);
               var promptStr = "";
@@ -2176,6 +2178,10 @@ replaceString: |-
               var selectedShips = {};
               var selectedStargazers = {};
               if (!story) { alert("请选择一个开局剧情后再生成协议。"); return; }
+              if (items["补给"]) {
+                  inventory["补给"] = Number(items["补给"]["堆叠"]) || 0;
+                  delete items["补给"];
+              }
               if (ship) selectedShips[getSelectedShipName()] = ship;
               if (stargazer) selectedStargazers[state.fitting.stargazer._key] = JSON.parse(JSON.stringify(stargazer));
               finalPayload = {
@@ -2185,13 +2191,14 @@ replaceString: |-
                   ships: selectedShips,
                   stargazers: selectedStargazers,
                   items: items,
+                  inventory: inventory,
                   init_stories: formatSelection(state.selections.init_stories)
               };
               yamlStr = jsyaml.dump(finalPayload);
               promptStr = `[系统指令：玩家已完成开局装配。请严格根据以下 YAML 初始化本次开局。]
 
               1. 先读取 ships 与 stargazers。只处理其中实际存在的条目；空对象表示玩家主动跳过该项，不得擅自补发舰船或观星者。已有舰船必须原样使用其 装备、驾驶员、是否旗舰、观星者接口角色。
-              2. 将非空 ships 写入 主角.舰船，将 items 写入 主角.物品栏，将非空 stargazers 写入 主角.可攻略角色。
+              2. 将非空 ships 写入 主角.舰船，将 items 写入 主角.物品栏，将非空 stargazers 写入 主角.可攻略角色。将 inventory 中的资源数值写入主角.库存同名字段；资源不得写入普通物品栏。
               3. 开局剧情以 init_stories 为唯一叙事锚点，必须根据其中的 时间、地点、描述 开场。
               4. 主角姓名使用 Captain.Name。如果 Captain.Appearance 非空，则写入 主角.外貌。
               5. 将 主角.位置 设置为所选开局剧情中的 地点。
