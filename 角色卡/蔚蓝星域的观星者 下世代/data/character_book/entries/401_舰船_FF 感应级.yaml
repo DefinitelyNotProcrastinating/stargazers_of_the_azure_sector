@@ -84,7 +84,7 @@ extensions:
 enabled: true
 insertion_order: 401
 case_sensitive: null
-use_regex: true
+use_regex: false
 constant: false
 name: null
 priority: null
