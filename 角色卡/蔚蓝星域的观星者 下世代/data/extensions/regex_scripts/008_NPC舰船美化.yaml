@@ -1,0 +1,149 @@
+id: 39d57bd4-5adf-47dc-856e-878b77d7a53f
+scriptName: NPC舰船美化
+findRegex: /<NPC_ship_info>\s*(?:```[a-zA-Z]*\s*)?([\s\S]*?)(?:\s*```)?\s*<\/NPC_ship_info>/gi
+replaceString: |2-
+  <unit>
+  ```html
+    <!DOCTYPE html>
+    <html lang="zh-CN">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1.0">
+      <title>NPC Tactical Contact</title>
+      <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+      <style>
+        :root {
+          color-scheme:light;
+          --bg:#ffffff; --panel:#ffffff; --panel2:#f8fafc; --line:#e5e7eb;
+          --text:#111827; --muted:#6b7280; --cyan:#3b82f6; --blue:#2563eb;
+          --shield:#3b82f6; --structure:#ef4444; --warning:#d97706; --good:#059669;
+        }
+        * { box-sizing:border-box; }
+        html,body { margin:0; min-height:100%; background:transparent; color:var(--text); font-family:"Segoe UI","Microsoft YaHei",sans-serif; }
+        body { padding:20px; }
+        .card { position:relative; max-width:800px; margin:auto; overflow:hidden; border:1px solid var(--line); border-radius:4px; background:#fff; box-shadow:0 10px 25px -5px rgba(0,0,0,.08); }
+        .card:before { content:""; position:absolute; inset:0; pointer-events:none; background:linear-gradient(rgba(87,214,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(87,214,255,.035) 1px,transparent 1px); background-size:28px 28px; mask-image:linear-gradient(to bottom,#000,transparent 65%); }
+        .header { position:relative; display:flex; justify-content:space-between; gap:20px; padding:24px 28px 20px; border-bottom:1px solid var(--line); background:linear-gradient(90deg,rgba(87,214,255,.10),transparent 55%); }
+        .kicker { color:var(--cyan); font:700 11px/1.2 Consolas,monospace; letter-spacing:.2em; text-transform:uppercase; }
+        h1 { margin:8px 0 9px; font-size:clamp(24px,4vw,40px); line-height:1.08; letter-spacing:.03em; }
+        .badges { display:flex; flex-wrap:wrap; gap:7px; }
+        .badge { padding:5px 10px; border:1px solid var(--line); border-radius:999px; color:#374151; background:#f8fafc; font-size:12px; }
+        .badge.hostile { color:#b91c1c; border-color:#fecaca; background:#fef2f2; }
+        .sigil { width:102px; height:102px; flex:0 0 102px; display:grid; place-items:center; border:1px solid rgba(87,214,255,.45); border-radius:50%; box-shadow:inset 0 0 25px rgba(87,214,255,.13),0 0 25px rgba(87,214,255,.08); color:var(--cyan); font:800 26px/1 Consolas,monospace; }
+        .content { position:relative; padding:20px 24px 26px; display:grid; gap:16px; }
+        .section { padding:17px; border:1px solid var(--line); border-radius:4px; background:#fff; }
+        .section-title { margin:0 0 14px; color:#1d4ed8; font:700 12px/1.2 Consolas,monospace; letter-spacing:.12em; text-transform:uppercase; }
+        .durability { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+        .layer { padding:14px; border-radius:4px; background:var(--panel2); border:1px solid var(--line); }
+        .layer-head { display:flex; justify-content:space-between; gap:10px; margin-bottom:9px; }
+        .layer-name { font-weight:750; }
+        .numbers { color:var(--muted); font:700 13px/1 Consolas,monospace; }
+        .track { height:12px; overflow:hidden; border-radius:999px; background:#e5e7eb; border:1px solid #d1d5db; }
+        .fill { height:100%; border-radius:inherit; transition:width .4s ease; }
+        .shield .fill { background:linear-gradient(90deg,#197fa8,var(--shield)); box-shadow:0 0 14px rgba(69,207,255,.45); }
+        .structure .fill { background:linear-gradient(90deg,#a63f34,var(--structure)); box-shadow:0 0 14px rgba(255,118,95,.35); }
+        .layer-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:11px; }
+        .mini { padding:8px; border-radius:4px; background:#fff; border:1px solid var(--line); }
+        .label { color:var(--muted); font-size:10px; letter-spacing:.05em; }
+        .value { margin-top:4px; color:var(--text); font:700 14px/1.25 Consolas,"Microsoft YaHei",monospace; overflow-wrap:anywhere; }
+        .grids { display:grid; grid-template-columns:1.2fr .8fr; gap:16px; }
+        .stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:9px; }
+        .stat { min-height:67px; padding:10px; border-radius:4px; border:1px solid var(--line); background:#f8fafc; }
+        .stat.hot .value { color:var(--warning); }
+        .stat.ecm .value { color:var(--cyan); }
+        .ability { min-height:70px; padding:11px; border-left:3px solid var(--good); background:#ecfdf5; border-radius:3px 4px 4px 3px; color:#065f46; font-size:13px; line-height:1.55; overflow-wrap:anywhere; }
+        .empty { color:var(--muted); }
+        .error { margin:20px; padding:20px; border:1px solid #fca5a5; border-radius:4px; background:#fef2f2; color:#991b1b; }
+        @media(max-width:760px) {
+          body { padding:6px; } .header { padding:18px; } .sigil { width:72px;height:72px;flex-basis:72px;font-size:18px; }
+          .content { padding:13px; } .durability,.grids { grid-template-columns:1fr; } .stats { grid-template-columns:repeat(2,minmax(0,1fr)); }
+        }
+      </style>
+    </head>
+    <body>
+      <script id="data-source" type="text/plain">$1</script>
+      <div id="app"></div>
+      <script>
+        function esc(v) {
+          const map = {};
+          map["&"] = "&" + "amp;";
+          map["<"] = "&" + "lt;";
+          map[">"] = "&" + "gt;";
+          map['"'] = "&" + "quot;";
+          map["'"] = "&" + "#39;";
+          map["`"] = String.fromCharCode(92, 96);
+          return String(v ?? "").replace(/[&<>"'`]/g, ch => map[ch]);
+        }
+        const shown = (v, fallback="未记录") => v === undefined || v === null || v === "" ? fallback : esc(v);
+        const num = (v) => { const n=Number(String(v ?? 0).replace(/[^0-9.+-]/g,"")); return Number.isFinite(n)?n:0; };
+        const ratio = (current,max) => Math.max(0,Math.min(100,max>0?current/max*100:0));
+        function formatAny(v) {
+          if (v === undefined || v === null || v === "") return '<span class="empty">无</span>';
+          if (Array.isArray(v)) return v.length ? v.map(formatAny).join(" / ") : '<span class="empty">无</span>';
+          if (typeof v === "object") return Object.keys(v).length ? Object.entries(v).map(([k,x])=>`<b>${esc(k)}</b>：${formatAny(x)}`).join("<br>") : '<span class="empty">无</span>';
+          return esc(v);
+        }
+        const stat = (label,value,klass="") => `<div class="stat ${klass}"><div class="label">${esc(label)}</div><div class="value">${shown(value)}</div></div>`;
+        function layer(kind,current,max,dr,armor,repair) {
+          const isShield=kind==="护盾";
+          return `<div class="layer ${isShield?'shield':'structure'}">
+            <div class="layer-head"><div class="layer-name">${kind}</div><div class="numbers">${shown(current,"0")} / ${shown(max,"0")}</div></div>
+            <div class="track"><div class="fill" style="width:${ratio(num(current),num(max))}%"></div></div>
+            <div class="layer-stats">
+              <div class="mini"><div class="label">减伤 DR</div><div class="value">${shown(dr)}</div></div>
+              <div class="mini"><div class="label">装甲</div><div class="value">${shown(armor)}</div></div>
+              <div class="mini"><div class="label">轮末修复</div><div class="value">${repair?shown(repair):"—"}</div></div>
+            </div>
+          </div>`;
+        }
+        function init() {
+          const app=document.getElementById("app");
+          try {
+            const data=jsyaml.load(document.getElementById("data-source").textContent.trim());
+            const name=Object.keys(data||{})[0], ship=name?data[name]:null;
+            if(!name||!ship||typeof ship!=="object"||Array.isArray(ship)) throw new Error("未读取到有效NPC舰船对象");
+            const repairLayer=String(ship["修复层"]??"");
+            const repair=ship["修量"];
+            app.innerHTML=`<article class="card">
+              <header class="header">
+                <div><div class="kicker">NPC Tactical Contact // 非玩家战术目标</div><h1>${esc(name)}</h1>
+                  <div class="badges"><span class="badge hostile">NPC 舰船</span><span class="badge">${shown(ship["舰船类型"],"未分类")}</span><span class="badge">${shown(ship["吨位"],"未知吨位")}</span><span class="badge">${shown(ship["防御倾向"],"未知防御")}</span><span class="badge">${shown(ship["战术定位"],"未知定位")}</span></div>
+                </div><div class="sigil">${shown(ship["舰船类型"],"?")}</div>
+              </header>
+              <main class="content">
+                <section class="section"><h2 class="section-title">Defense integrity // 防御完整度</h2><div class="durability">
+                  ${layer("护盾",ship["护盾值"],ship["船体护盾值"],ship["护盾DR"],ship["护盾装甲"],repairLayer.includes("护盾")?repair:null)}
+                  ${layer("结构",ship["结构值"],ship["船体结构值"],ship["结构DR"],ship["结构装甲"],repairLayer.includes("结构")?repair:null)}
+                </div></section>
+                <div class="grids">
+                  <section class="section"><h2 class="section-title">Weapons envelope // 武器包线</h2><div class="stats">
+                    ${stat("伤害表示 N×M",ship["伤害表示N×M"]??((ship["单武器伤害"]??"?")+"×"+(ship["武器数量"]??"?")),"hot")}
+                    ${stat("单武器伤害",ship["单武器伤害"],"hot")}${stat("武器数量",ship["武器数量"])}
+                    ${stat("有效射程",ship["射程"])}${stat("极限射程",ship["极限射程"],"")}${stat("跟踪",ship["跟踪"])}
+                  </div></section>
+                  <section class="section"><h2 class="section-title">Electronic warfare // 电子战</h2><div class="stats">
+                    ${stat("ECM 强度",ship["ECM"],"ecm")}${stat("ECM 射程",ship["ECM射程"],"ecm")}${stat("ECM 目标数",ship["ECM目标数"],"ecm")}
+                    ${stat("ECCM",ship["ECCM"],"ecm")}${stat("修复层",ship["修复层"])}${stat("修量",ship["修量"])}
+                  </div></section>
+                </div>
+                <section class="section"><h2 class="section-title">Special capabilities // 特殊能力</h2><div class="ability">${formatAny(ship["特殊能力"])}</div></section>
+              </main>
+            </article>`;
+          } catch(e) { app.innerHTML=`<div class="error">NPC舰船卡解析失败：${esc(e.message)}</div>`; }
+        }
+        if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",init); else init();
+      </script>
+    </body>
+    </html>
+    ```
+  </unit>
+trimStrings: []
+placement:
+- 2
+disabled: false
+markdownOnly: true
+promptOnly: false
+runOnEdit: true
+substituteRegex: 0
+minDepth: 0
+maxDepth: 2

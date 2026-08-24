@@ -693,16 +693,22 @@ replaceString: |-
 
       .character-visual-shell {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(180px, 280px);
+        grid-template-columns: minmax(0, 1fr);
         gap: 12px;
         align-items: stretch;
       }
 
       .character-identity {
         display: grid;
-        grid-template-columns: 82px minmax(0, 1fr) auto;
+        grid-template-columns: auto minmax(0, 1fr) auto;
         gap: 12px;
         align-items: center;
+      }
+
+      .character-avatar-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
       }
 
       .character-avatar {
@@ -813,6 +819,47 @@ replaceString: |-
         font-size: 42px;
         border: 1px solid rgba(221, 181, 255, .28);
         background: radial-gradient(circle at 35% 20%, rgba(255,255,255,.18), rgba(255,127,168,.18) 42%, rgba(65,21,77,.72));
+      }
+
+      .gallery-open-btn {
+        border: 1px solid rgba(226, 190, 255, .34);
+        border-radius: 14px;
+        padding: 8px 11px;
+        color: var(--cyan);
+        cursor: pointer;
+        background: rgba(145, 103, 255, .14);
+      }
+
+      .gallery-open-btn:hover,
+      .gallery-open-btn:focus-visible {
+        border-color: var(--line-hot);
+        outline: none;
+      }
+
+      .gallery-dialog { width: min(920px, 100%); }
+      .gallery-stage {
+        min-height: 320px;
+        max-height: 68vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: 18px;
+        background: rgba(8, 3, 18, .72);
+      }
+      .gallery-stage img { max-width: 100%; max-height: 68vh; object-fit: contain; }
+      .gallery-nav { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; }
+
+      .mapping-form { display: grid; gap: 10px; margin-top: 12px; }
+      .mapping-form label { display: grid; gap: 5px; color: var(--muted); font-size: 12px; }
+      .mapping-form input,
+      .mapping-form select {
+        width: 100%;
+        border: 1px solid rgba(226, 190, 255, .28);
+        border-radius: 12px;
+        padding: 9px 10px;
+        color: var(--text);
+        background: rgba(8, 3, 18, .72);
       }
 
 
@@ -1424,13 +1471,14 @@ replaceString: |-
         }
 
         .character-identity {
-          grid-template-columns: 74px minmax(0, 1fr);
+          grid-template-columns: 1fr;
         }
 
         .character-score {
           grid-column: 1 / -1;
           width: 100%;
         }
+
       }
 
       @media (max-width: 820px) {
@@ -1808,6 +1856,8 @@ replaceString: |-
           <button type="button" class="visual-bind-btn" data-visual-bind-action="local-illust">选择本地立绘</button>
           <button type="button" class="visual-bind-btn" data-visual-bind-action="online-profile">选择线上头像</button>
           <button type="button" class="visual-bind-btn" data-visual-bind-action="online-illust">选择线上立绘</button>
+          <button type="button" class="visual-bind-btn" data-visual-bind-action="create-avatar-mapping">创建头像映射</button>
+          <button type="button" class="visual-bind-btn" data-visual-bind-action="create-illust-mapping">创建插图库映射</button>
           <button type="button" class="visual-bind-btn" data-visual-bind-action="cancel">取消</button>
         </div>
         <div class="visual-bind-status" id="visual-bind-status"></div>
@@ -1815,14 +1865,53 @@ replaceString: |-
       </div>
     </div>
 
+    <div id="mapping-modal" class="visual-bind-overlay" aria-hidden="true">
+      <div class="visual-bind-dialog" role="dialog" aria-modal="true" aria-labelledby="mapping-title">
+        <h3 id="mapping-title">创建新映射</h3>
+        <p id="mapping-desc">图片需先上传到 Catbox 等图床，再在此填写映射。</p>
+        <div class="mapping-form">
+          <label>关键词<input id="mapping-keyword" type="text" list="mapping-keyword-history" maxlength="200" autocomplete="off" placeholder="选择过去使用的关键词，或输入新关键词"></label>
+          <datalist id="mapping-keyword-history"></datalist>
+          <label>ID 属性<input id="mapping-attribute" type="text" list="mapping-attribute-presets" maxlength="100" autocomplete="off" placeholder="名字、型号，或输入新的字段名"></label>
+          <datalist id="mapping-attribute-presets"><option value="名字"></option><option value="型号"></option></datalist>
+          <label>图片链接<input id="mapping-link" type="url" placeholder="在此粘贴图片链接" autocomplete="off"></label>
+        </div>
+        <div class="visual-bind-actions">
+          <button type="button" class="visual-bind-btn" id="mapping-save">保存映射</button>
+          <button type="button" class="visual-bind-btn" id="mapping-cancel">取消</button>
+        </div>
+        <div class="visual-bind-status" id="mapping-status"></div>
+      </div>
+    </div>
+
+    <div id="gallery-modal" class="visual-bind-overlay" aria-hidden="true">
+      <div class="visual-bind-dialog gallery-dialog" role="dialog" aria-modal="true" aria-labelledby="gallery-title">
+        <h3 id="gallery-title">插图库</h3>
+        <div class="gallery-stage"><img id="gallery-image" alt="" loading="lazy"></div>
+        <div class="gallery-nav">
+          <button type="button" class="visual-bind-btn" id="gallery-prev">上一张</button>
+          <span id="gallery-counter" class="muted"></span>
+          <button type="button" class="visual-bind-btn" id="gallery-next">下一张</button>
+          <button type="button" class="visual-bind-btn" id="gallery-close">关闭</button>
+        </div>
+      </div>
+    </div>
+
     <script>
       const SKILL_THRESHOLDS = [0, 250, 1415, 8000, 45255, 256000];
       const VISUAL_BINDS_ENTRY_NAME = "VISUAL_BINDS";
+      const AVATAR_MAPPINGS_ENTRY_NAME = "STARGAZER_AVATAR_MAPPINGS";
+      const ILLUST_MAPPINGS_ENTRY_NAME = "STARGAZER_ILLUST_MAPPINGS";
       const VISUAL_BINDS_WORLDBOOK_NAME = "蔚蓝星域的观星者 下世代";
       const LOCAL_VISUAL_MAX_DATA_URL_BYTES = 102400;
       let characterVisualBinds = {};
+      let avatarMappings = {};
+      let illustMappings = {};
       let currentStaticData = null;
       let pendingVisualBindCharacterName = "";
+      let pendingVisualBindField = "profile_link";
+      let pendingMappingEntryName = AVATAR_MAPPINGS_ENTRY_NAME;
+      let galleryState = { name: "", links: [], index: 0 };
 
       const MAP = {
         nodes: [
@@ -1883,7 +1972,7 @@ replaceString: |-
         map[">"] = "&" + "gt;";
         map['"'] = "&" + "quot;";
         map["'"] = "&" + "#39;";
-        map["`"] = String.fromCharCode(92, 96);
+        map["`"] = "&" + "#96;";
         return str.replace(/[&<>"'`]/g, ch => map[ch]);
       }
 
@@ -1932,12 +2021,92 @@ replaceString: |-
         };
       }
 
-      function getCharacterVisualBind(name) {
-        return normalizeVisualBind(characterVisualBinds && characterVisualBinds[name]);
+      function normalizeImageLink(value, allowDataUrl) {
+        const link = typeof value === "string" ? value.trim() : "";
+        if (/^https?:\/\/[^\s]+$/i.test(link)) return link;
+        if (allowDataUrl && /^data:image\/[a-z0-9.+-]+;base64,[a-z0-9+/=\s]+$/i.test(link)) return link;
+        return "";
       }
 
-      function renderCharacterAvatar(name, sizeClass, editable) {
-        const bind = getCharacterVisualBind(name);
+      function normalizeMapping(value) {
+        if (!value || typeof value !== "object") return null;
+        const keyword = typeof value["关键词"] === "string" ? value["关键词"].trim() : "";
+        const attribute = typeof value["id属性"] === "string" ? value["id属性"].trim() : "";
+        const link = normalizeImageLink(value["链接"], false);
+        return keyword && attribute && link ? { "关键词": keyword, "id属性": attribute, "链接": link } : null;
+      }
+
+      function parseMappingsContent(content) {
+        try {
+          const parsed = JSON.parse(content || "{}");
+          const out = {};
+          if (!parsed || Array.isArray(parsed) || typeof parsed !== "object") return out;
+          Object.keys(parsed).forEach(id => {
+            const normalized = normalizeMapping(parsed[id]);
+            if (normalized) out[String(id)] = normalized;
+          });
+          return out;
+        } catch (err) {
+          console.warn("观星者图片映射 JSON 解析失败", err);
+          return {};
+        }
+      }
+
+      function getCharacterData(name) {
+        const chars = currentStaticData && currentStaticData.主角 && currentStaticData.主角.可攻略角色;
+        return chars && chars[name] && typeof chars[name] === "object" ? chars[name] : {};
+      }
+
+      function mappingMatches(mapping, name, character) {
+        if (!mapping || !character || character.种族 !== "观星者") return false;
+        const keyword = String(mapping["关键词"] || "").toLocaleLowerCase();
+        if (!keyword) return false;
+        if (mapping["id属性"] === "名字") {
+          return String(name || "").toLocaleLowerCase().includes(keyword);
+        }
+        if (mapping["id属性"] === "型号") {
+          const modelText = [character.型号, character.型号ID, character.型号Id, character.型号id]
+            .filter(value => value !== undefined && value !== null)
+            .map(String).join(" ").toLocaleLowerCase();
+          return modelText.includes(keyword);
+        }
+        const customValue = character[mapping["id属性"]];
+        if (customValue === undefined || customValue === null) return false;
+        const customText = typeof customValue === "object" ? JSON.stringify(customValue) : String(customValue);
+        return customText.toLocaleLowerCase().includes(keyword);
+      }
+
+      function getMappedLinks(mappings, name, character) {
+        const seen = new Set();
+        const links = [];
+        entries(mappings).forEach(([, mapping]) => {
+          if (!mappingMatches(mapping, name, character)) return;
+          const link = normalizeImageLink(mapping["链接"], false);
+          if (link && !seen.has(link)) { seen.add(link); links.push(link); }
+        });
+        return links;
+      }
+
+      function getCharacterVisuals(name, character) {
+        const data = character && typeof character === "object" ? character : getCharacterData(name);
+        const own = normalizeVisualBind(characterVisualBinds && characterVisualBinds[name]);
+        const ownProfile = normalizeImageLink(own.profile_link, true);
+        const ownIllust = normalizeImageLink(own.illust_link, true);
+        const mappedProfiles = getMappedLinks(avatarMappings, name, data);
+        const mappedIllusts = getMappedLinks(illustMappings, name, data);
+        return {
+          profile_link: ownProfile || mappedProfiles[0] || "",
+          gallery_links: ownIllust ? [ownIllust].concat(mappedIllusts.filter(link => link !== ownIllust)) : mappedIllusts
+        };
+      }
+
+      function getCharacterVisualBind(name) {
+        const visuals = getCharacterVisuals(name);
+        return { profile_link: visuals.profile_link, illust_link: visuals.gallery_links[0] || "" };
+      }
+
+      function renderCharacterAvatar(name, sizeClass, editable, character) {
+        const bind = getCharacterVisuals(name, character);
         const cls = (sizeClass ? "character-avatar " + sizeClass : "character-avatar") + (editable ? " editable" : "");
         const fallbackStyle = bind.profile_link ? "display:none;" : "";
         const actionAttrs = editable
@@ -1949,42 +2118,34 @@ replaceString: |-
         return `<span class="${cls}"${actionAttrs}>${img}<span class="avatar-fallback" style="${fallbackStyle}">♥</span></span>`;
       }
 
-      function renderCharacterIllust(name) {
-        const bind = getCharacterVisualBind(name);
-        if (!bind.illust_link) {
-          return `
-            <aside class="character-illust empty" aria-label="${escapeHtml(name)} 立绘未绑定">
-              <div class="illust-fallback">
-                <div class="illust-heart">♥</div>
-                <div>未绑定立绘</div>
-                <div class="muted">点击角色头像可选择本地/线上头像与立绘</div>
-              </div>
-            </aside>
-          `;
-        }
-        return `
-          <aside class="character-illust">
-            <img src="${escapeHtml(bind.illust_link)}" alt="${escapeHtml(name)} 立绘" loading="lazy" onerror="this.closest('.character-illust').classList.add('empty');this.closest('.character-illust').textContent='立绘加载失败';">
-            <div class="character-illust-caption">ILLUSTRATION / ${escapeHtml(name)}</div>
-          </aside>
-        `;
+      function renderGalleryButton(name, character) {
+        const count = getCharacterVisuals(name, character).gallery_links.length;
+        return count
+          ? `<button type="button" class="gallery-open-btn" data-action="open-gallery" data-character-name="${escapeHtml(name)}">浏览插图库 (${escapeHtml(count)})</button>`
+          : "";
       }
 
-      async function loadVisualBinds() {
+      async function loadVisualLibraries() {
         try {
-          if (typeof getWorldbook !== "function") return {};
+          if (typeof getWorldbook !== "function") return { binds: {}, avatars: {}, illusts: {} };
           const worldbook = await getWorldbook(VISUAL_BINDS_WORLDBOOK_NAME);
-          const entry = (worldbook || []).find(item => item && (item.name === "VISUAL_BINDS" || item.comment === "VISUAL_BINDS"));
-          if (!entry || !entry.content) return {};
-          const parsed = JSON.parse(entry.content);
+          const findEntry = entryName => (worldbook || []).find(item => item && (item.name === entryName || item.comment === entryName));
+          const entry = findEntry(VISUAL_BINDS_ENTRY_NAME);
+          const parsed = entry && entry.content ? JSON.parse(entry.content) : {};
           const out = {};
           Object.keys(parsed || {}).forEach(name => {
             out[name] = normalizeVisualBind(parsed[name]);
           });
-          return out;
+          const avatarEntry = findEntry(AVATAR_MAPPINGS_ENTRY_NAME);
+          const illustEntry = findEntry(ILLUST_MAPPINGS_ENTRY_NAME);
+          return {
+            binds: out,
+            avatars: parseMappingsContent(avatarEntry && avatarEntry.content),
+            illusts: parseMappingsContent(illustEntry && illustEntry.content)
+          };
         } catch (err) {
-          console.warn("VISUAL_BINDS 读取失败", err);
-          return {};
+          console.warn("图片绑定与映射读取失败", err);
+          return { binds: {}, avatars: {}, illusts: {} };
         }
       }
 
@@ -2007,10 +2168,10 @@ replaceString: |-
         }
       }
 
-          function makeVisualBindsEntry(content, uid) {
+      function makeDataEntry(entryName, content, uid, purpose) {
         return {
           uid: uid,
-          name: VISUAL_BINDS_ENTRY_NAME,
+          name: entryName,
           enabled: false,
           strategy: {
             type: "constant",
@@ -2036,8 +2197,12 @@ replaceString: |-
             cooldown: null,
             delay: null
           },
-          extra: { purpose: "status_bar_visual_binds" }
+          extra: { purpose: purpose }
         };
+      }
+
+      function makeVisualBindsEntry(content, uid) {
+        return makeDataEntry(VISUAL_BINDS_ENTRY_NAME, content, uid, "status_bar_visual_binds");
       }
 
       function readFileAsDataUrl(file) {
@@ -2253,6 +2418,134 @@ replaceString: |-
         }
       }
 
+      function setMappingStatus(message) {
+        const el = $("mapping-status");
+        if (el) el.textContent = message || "";
+      }
+
+      function closeMappingModal() {
+        const modal = $("mapping-modal");
+        if (modal) { modal.style.display = "none"; modal.setAttribute("aria-hidden", "true"); }
+        setMappingStatus("");
+      }
+
+      function openMappingModal(entryName) {
+        pendingMappingEntryName = entryName === ILLUST_MAPPINGS_ENTRY_NAME ? ILLUST_MAPPINGS_ENTRY_NAME : AVATAR_MAPPINGS_ENTRY_NAME;
+        const isIllust = pendingMappingEntryName === ILLUST_MAPPINGS_ENTRY_NAME;
+        const title = $("mapping-title");
+        const keyword = $("mapping-keyword");
+        const attribute = $("mapping-attribute");
+        const link = $("mapping-link");
+        const keywordHistory = $("mapping-keyword-history");
+        if (title) title.textContent = isIllust ? "创建插图库映射" : "创建头像映射";
+        if (keyword) keyword.value = "";
+        if (attribute) attribute.value = "";
+        if (link) link.value = "";
+        if (keywordHistory) {
+          keywordHistory.replaceChildren();
+          const usedKeywords = new Set();
+          entries(avatarMappings).concat(entries(illustMappings)).forEach(([, mapping]) => {
+            const used = mapping && typeof mapping["关键词"] === "string" ? mapping["关键词"].trim() : "";
+            if (used) usedKeywords.add(used);
+          });
+          usedKeywords.forEach(used => {
+            const option = document.createElement("option");
+            option.value = used;
+            keywordHistory.appendChild(option);
+          });
+        }
+        setMappingStatus("");
+        const modal = $("mapping-modal");
+        if (modal) { modal.style.display = "flex"; modal.setAttribute("aria-hidden", "false"); }
+      }
+
+      function nextMappingId(mappings) {
+        let max = 0;
+        Object.keys(mappings || {}).forEach(id => {
+          const match = String(id).match(/(\d+)$/);
+          if (match) max = Math.max(max, Number(match[1]));
+        });
+        return String(max + 1);
+      }
+
+      async function createVisualMapping() {
+        const keyword = String($("mapping-keyword") && $("mapping-keyword").value || "").trim();
+        const attribute = String($("mapping-attribute") && $("mapping-attribute").value || "").trim();
+        const link = normalizeImageLink($("mapping-link") && $("mapping-link").value, false);
+        if (!keyword) { setMappingStatus("请填写关键词。"); return; }
+        if (!attribute) { setMappingStatus("请选择或填写 ID 属性。"); return; }
+        if (!link) { setMappingStatus("图片链接必须是有效的 http:// 或 https:// 地址。"); return; }
+        if (typeof updateWorldbookWith !== "function") { setMappingStatus("当前环境无法写入世界书。"); return; }
+
+        const entryName = pendingMappingEntryName;
+        const currentMappings = entryName === ILLUST_MAPPINGS_ENTRY_NAME ? illustMappings : avatarMappings;
+        const id = nextMappingId(currentMappings);
+        const mapping = { "关键词": keyword, "id属性": attribute, "链接": link };
+        setMappingStatus("正在保存映射...");
+
+        try {
+          let nextMappings = null;
+          await updateWorldbookWith(VISUAL_BINDS_WORLDBOOK_NAME, worldbook => {
+            const list = Array.isArray(worldbook) ? worldbook.slice() : [];
+            let entry = (list || []).find(item => item && (item.name === entryName || item.comment === entryName));
+            const mappings = entry ? parseMappingsContent(entry.content) : {};
+            mappings[id] = mapping;
+            nextMappings = mappings;
+            const content = JSON.stringify(mappings, null, 2);
+            if (entry) {
+              entry.content = content;
+              entry.name = entryName;
+              entry.enabled = false;
+            } else {
+              let maxUid = 0;
+              list.forEach(item => { if (item && Number(item.uid) > maxUid) maxUid = Number(item.uid); });
+              list.push(makeDataEntry(entryName, content, maxUid + 1, "status_bar_stargazer_visual_mappings"));
+            }
+            return list;
+          }, { render: "immediate" });
+
+          if (entryName === ILLUST_MAPPINGS_ENTRY_NAME) illustMappings = nextMappings || currentMappings;
+          else avatarMappings = nextMappings || currentMappings;
+          if (currentStaticData) renderCharacters(currentStaticData);
+          setMappingStatus("映射已保存，ID：" + id);
+          setTimeout(() => { closeMappingModal(); closeVisualBindModal(); }, 500);
+        } catch (err) {
+          console.error(err);
+          setMappingStatus("保存失败：" + (err && err.message ? err.message : String(err)));
+        }
+      }
+
+      function closeGallery() {
+        galleryState = { name: "", links: [], index: 0 };
+        const modal = $("gallery-modal");
+        if (modal) { modal.style.display = "none"; modal.setAttribute("aria-hidden", "true"); }
+        const image = $("gallery-image");
+        if (image) { image.removeAttribute("src"); image.alt = ""; }
+      }
+
+      function renderGalleryPage() {
+        if (!galleryState.links.length) { closeGallery(); return; }
+        galleryState.index = (galleryState.index + galleryState.links.length) % galleryState.links.length;
+        const image = $("gallery-image");
+        const counter = $("gallery-counter");
+        if (image) {
+          image.src = galleryState.links[galleryState.index];
+          image.alt = galleryState.name + " 插图 " + (galleryState.index + 1);
+        }
+        if (counter) counter.textContent = (galleryState.index + 1) + " / " + galleryState.links.length;
+      }
+
+      function openGallery(characterName) {
+        const visuals = getCharacterVisuals(characterName);
+        if (!visuals.gallery_links.length) return;
+        galleryState = { name: String(characterName || ""), links: visuals.gallery_links.slice(), index: 0 };
+        const title = $("gallery-title");
+        if (title) title.textContent = galleryState.name + " / 插图库";
+        const modal = $("gallery-modal");
+        if (modal) { modal.style.display = "flex"; modal.setAttribute("aria-hidden", "false"); }
+        renderGalleryPage();
+      }
+
       function activateCharacterPanel(target) {
         if (!target || !$("characters-view")) return;
         $("characters-view").querySelectorAll(".character-tab").forEach(v => {
@@ -2392,7 +2685,7 @@ replaceString: |-
 
         const tabs = characters.map(([name, c], index) => `
           <button class="character-tab ${index === 0 ? "active" : ""}" data-character-tab="${escapeHtml(name)}">
-            ${renderCharacterAvatar(name, "small")}<span>${escapeHtml(name)}</span>
+            ${renderCharacterAvatar(name, "small", false, c)}<span>${escapeHtml(name)}</span>
           </button>
         `).join("");
 
@@ -2449,7 +2742,10 @@ replaceString: |-
                   <div>
                     <div class="character-hero">
                       <div class="character-identity">
-                        ${renderCharacterAvatar(name, "", true)}
+                        <div class="character-avatar-actions">
+                          ${renderCharacterAvatar(name, "", true, c)}
+                          ${renderGalleryButton(name, c)}
+                        </div>
                         <div>
                           <div class="character-title">${escapeHtml(name)}</div>
                           <div class="character-subtitle">${escapeHtml(c.种族 || "未记录种族")} / ${escapeHtml(c.阵营 || "未记录阵营")} / ${escapeHtml(c.身份 || "未记录身份")}</div>
@@ -2493,7 +2789,6 @@ replaceString: |-
                   ${detail(allFields)}
                 </details>
                   </div>
-                  ${renderCharacterIllust(name)}
                 </div>
               </div>
             </section>
@@ -2523,6 +2818,10 @@ replaceString: |-
               openVisualBindModal(avatar.dataset.characterName || "");
             }
           });
+        });
+
+        $("characters-view").querySelectorAll('[data-action="open-gallery"]').forEach(button => {
+          button.addEventListener("click", () => openGallery(button.dataset.characterName || ""));
         });
       }
 
@@ -2904,7 +3203,7 @@ replaceString: |-
           <div class="stargazer-link">
             <div class="label">观星者接口 / 来自可攻略角色</div>
             <div class="ship-stargazer-card">
-              ${renderCharacterAvatar(sg.name, "small", false)}
+              ${renderCharacterAvatar(sg.name, "small", false, sg.data)}
               <div class="value">
                 <strong>${escapeHtml(sg.name)}</strong><br>
                 ${escapeHtml(sg.data && (sg.data.型号ID || sg.data.身份) || "未记录型号")} · ${escapeHtml(sg.data && sg.data.种族 || "未记录种族")}
@@ -3778,6 +4077,8 @@ replaceString: |-
             if (action === "local-illust") { pendingVisualBindField = "illust_link"; fileInput.click(); }
             if (action === "online-profile") { pendingVisualBindField = "profile_link"; bindCharacterVisualFromOnlineUrl("profile_link"); }
             if (action === "online-illust") { pendingVisualBindField = "illust_link"; bindCharacterVisualFromOnlineUrl("illust_link"); }
+            if (action === "create-avatar-mapping") openMappingModal(AVATAR_MAPPINGS_ENTRY_NAME);
+            if (action === "create-illust-mapping") openMappingModal(ILLUST_MAPPINGS_ENTRY_NAME);
           });
         });
 
@@ -3789,11 +4090,30 @@ replaceString: |-
         modal.addEventListener("click", event => {
           if (event.target === modal) closeVisualBindModal();
         });
+
+        const mappingModal = $("mapping-modal");
+        const mappingSave = $("mapping-save");
+        const mappingCancel = $("mapping-cancel");
+        if (mappingSave) mappingSave.addEventListener("click", createVisualMapping);
+        if (mappingCancel) mappingCancel.addEventListener("click", closeMappingModal);
+        if (mappingModal) mappingModal.addEventListener("click", event => { if (event.target === mappingModal) closeMappingModal(); });
+
+        const galleryModal = $("gallery-modal");
+        const galleryPrev = $("gallery-prev");
+        const galleryNext = $("gallery-next");
+        const galleryClose = $("gallery-close");
+        if (galleryPrev) galleryPrev.addEventListener("click", () => { galleryState.index--; renderGalleryPage(); });
+        if (galleryNext) galleryNext.addEventListener("click", () => { galleryState.index++; renderGalleryPage(); });
+        if (galleryClose) galleryClose.addEventListener("click", closeGallery);
+        if (galleryModal) galleryModal.addEventListener("click", event => { if (event.target === galleryModal) closeGallery(); });
       }
 
       async function init() {
         const variables = await getVariables();
-        characterVisualBinds = await loadVisualBinds();
+        const visualLibraries = await loadVisualLibraries();
+        characterVisualBinds = visualLibraries.binds;
+        avatarMappings = visualLibraries.avatars;
+        illustMappings = visualLibraries.illusts;
         const staticData = variables.SAM_data.static;
         currentStaticData = staticData;
         setupVisualBindControls();
