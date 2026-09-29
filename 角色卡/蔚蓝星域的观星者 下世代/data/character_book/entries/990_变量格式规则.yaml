@@ -1,39 +1,38 @@
 keys: []
 content: |-
-  <FORCE_FORMATTING>
-  每次回复必须严格使用以下格式：
+  <variable_patch_protocol>
+  # SAM V6 JSON Patch 共用协议
 
-  <content>
-  正文
-  </content>
+  本条目同时供合并更新与独立更新使用。回复的顶层包装由《合并更新模式格式》或《独立更新模式格式》决定；本条目只规定变量操作本身，不得据此强行在独立更新的主回复中加入变量块。
 
-  <summary>
-  YYYY:MM:DD HH:MM:SS <WEATHER> 位于 星域 | 星区或星座 | 星系 | 具体位置 | 子位置
-  本轮摘要，不超过100字。
-  </summary>
+  ## 固定协议字段
+  - 每条操作的协议字段固定为英文：`op`、`path`、`value`、`from`、`to`、`func_name`、`params`。这些是 SAM V6 指令关键字，禁止翻译。
+  - 游戏数据中的字段名与路径段使用世界书规定的中文名称。
+  - 模型可见的根目录就是静态游戏数据根；路径从 `/主角`、`/新闻`、`/势力声望` 等业务根字段开始，禁止添加 `/static` 或任何运行时前缀。
+  - JSON Pointer 路径段中的 `~` 写成 `~0`，`/` 写成 `~1`。
 
-  <UpdateVariable>
-  <Analysis>
-  English analysis, no more than 80 words.
-  </Analysis>
+  ## JSON Patch 规则
+  - 每轮必须包含一次 `{"op":"time","value":"ISO 8601 time"}`；时间值必须反映本轮实际经过的游戏时间。
+  - 允许操作：`replace`、`forced_set`、`delta`、`insert`、`remove`、`move`、`inc`、`mul`、`push`、`addToSet`、`pull`、`pop`、`min`、`max`、`time`。
+  - `replace` 只覆盖已有值；创建新字段或新对象使用 `insert`。
+  - `delta` / `inc` 只用于已存在的数值路径，`value` 必须是未加引号的数字。
+  - 数组末尾追加可使用 `insert` 且路径以 `/-` 结尾；集合去重追加优先使用 `addToSet`。
+  - `move` 使用 `from` 与 `to`，不得用复制后删除模拟重命名。
+  - 以 `_` 开头的字段是只读派生字段，普通操作不得写入；只有世界书明确要求脚本级强制修复时才允许 `forced_set`。
+  - 对象映射统一使用 `{"object_name": Object}`。名称外移为对象 key，不重复存储内部名称字段。
+  - 禁止写入 `null`。空状态使用 `""`、`[]` 或 `{}`。
+  - 禁止输出 V4 指令：`@.TIME`、`@.SET`、`@.ADD`、`@.DEL`、`@.SELECT_SET`、`@.SELECT_ADD`、`@.SELECT_DEL`。
+  - 所有机制必须量化；随机机制必须写成 `D100 <= x`。
+
+  ## 独立更新器输出
+  独立更新请求只输出一个 `<JSONPatch>` 块，块内是合法 JSON 数组；无变化时仍输出空数组。不得输出 `<content>`、`<summary>`、`<UpdateVariable>`、分析、解释或代码围栏。
+
   <JSONPatch>
   [
     {"op":"time","value":"ISO 8601 time"}
   ]
   </JSONPatch>
-  </UpdateVariable>
-
-  ## JSON Patch 规则
-  - 每轮必须包含一次 `{"op":"time","value":"ISO 8601 time"}`。
-  - 允许操作：`replace`、`delta`、`insert`、`remove`、`move`、`time`。
-  - `delta` 只用于已存在的数值路径，值必须是未加引号的数字。
-  - 数组末尾追加使用 `insert` 且路径以 `/-` 结尾。
-  - 对象映射统一使用 `{"object_name": Object}`。名称外移为对象 key，不重复存储内部名称字段。
-  - 禁止写入 `null`。空状态使用 `""`、`[]` 或 `{}`。
-  - 禁止更新 `_` 开头的只读派生字段。
-  - 变量更新只允许输出上述 JSON Patch 结构与操作。
-  - 所有机制必须量化。随机机制必须写成 `D100 <= x`。
-  </FORCE_FORMATTING>
+  </variable_patch_protocol>
 extensions:
   position: 4
   exclude_recursion: true
@@ -74,7 +73,7 @@ constant: true
 name: null
 priority: null
 id: 196
-comment: 变量格式规则
+comment: '[update_rule] 变量格式规则'
 selective: false
 secondary_keys: []
 position: after_char

@@ -115,7 +115,7 @@ constant: true
 name: null
 priority: null
 id: 194
-comment: 角色变量更新
+comment: '[update_rule] 角色变量更新'
 selective: true
 secondary_keys: []
 position: after_char

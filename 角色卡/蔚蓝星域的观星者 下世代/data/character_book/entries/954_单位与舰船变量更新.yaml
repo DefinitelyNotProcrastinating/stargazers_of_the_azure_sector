@@ -18,6 +18,8 @@ content: |-
       "舰船类型": "FF/DD/CA/BC/BB/CVL/CV/TT或其他世界书既有类型",
       "吨位": "S/M/L/XL",
       "每日补给消耗": 1,
+      "输入": {"矿物": 1},
+      "输出": {"金属": 1},
       "制造商": "string",
       "驾驶员": "string",
       "是否旗舰": false,
@@ -64,6 +66,9 @@ content: |-
   ## 舰船硬约束
   - 舰船必须拥有 `吨位` 字段。标准舰船吨位为 `S/M/L/XL`。
   - 每艘舰船必须拥有数值字段 `每日补给消耗`，允许为0，但不得为负数、NaN或无穷值。Worker每日直接读取该字段，不得在结算时根据舰级重新推导。
+  - 工业舰可选填稀疏的每日 `输入` 与 `输出` 映射；只写非零项，值必须是非负有限数。普通舰船可完全省略这两个字段。
+  - 舰船的 `输入` 与 `输出` 禁止包含 `补给`；舰船补给只由既有 `每日补给消耗` 机制处理。
+  - 舰船不会成为工业随机事件目标，也不会被SAM随机生成入侵。剧情需要敌舰攻击时，按正常NPC舰队与战斗规则生成。
   - 新建标准舰船时的默认值为：FF/DD 1，CA 5，BC 20，BB/CVL 50，CV/DN 100，TT 500。变体默认继承基础舰级，档案有明确实值时以档案为准。
   - `炮位配置` 必须是紧凑字符串。`${A}S${B}M${C}L` 表示 A 个 S、B 个 M、C 个 L 常规武器挂点。数量为 0 的尺寸可以省略，例如 `3S1M`。大型舰船可以继续使用 `XL/C/T`。
   - `装备槽位配置` 必须是紧凑字符串。`${A}H${B}L` 表示 A 个高功率槽位、B 个低功率槽位。
@@ -85,7 +90,7 @@ content: |-
 
   ## 当前数据
   <raw_ship_data>
-  <%-JSON.stringify(getvar("SAM_data.static.主角.舰船") || {}, null, 2)%>
+  舰船工业输入输出由UI与SAM读取；叙事模型只接收已裁剪掉输入输出的舰船状态。
   </raw_ship_data>
   </unit_and_ship_management>
 extensions:
@@ -128,7 +133,7 @@ constant: true
 name: null
 priority: null
 id: 192
-comment: 单位与舰船变量更新
+comment: '[update_rule] 单位与舰船变量更新'
 selective: false
 secondary_keys: []
 position: after_char

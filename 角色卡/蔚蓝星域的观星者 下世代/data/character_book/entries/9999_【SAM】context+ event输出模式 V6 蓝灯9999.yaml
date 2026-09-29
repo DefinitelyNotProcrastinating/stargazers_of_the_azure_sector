@@ -1,72 +1,31 @@
 keys: []
 content: |-
-  <FORCE_FORMATTING>
-  output_format:
-  - Always output in the following format, strictly, without no deviations or violations:
-  FOR EVERY REPLY YOU MUST HAVE THE <JSONPatch> BLOCK
+  <format_obligations mode="merged_update">
+  本条目是 SAM V6 合并更新的默认输出格式。若《【SAM】独立更新模式格式》条目启用，则以独立更新格式为准，本条目不适用。
+  合并更新模式下，每次回复严格按正文、每轮总结、变量更新的顺序输出以下三个顶层块，不加 Markdown 代码围栏或其他顶层块。
+
   <content>
-  main_story_content...
+  # 在这里输出实际剧情，以及本轮需要展示的角色、舰船、建筑、战斗或其他信息块。
   </content>
 
   <summary>
-  Current time and situation in the format
+  # 第一行使用以下格式：
   YYYY:MM:DD HH:MM:SS <WEATHER> 位于 <LOCATION>
-
-  Summary content, summarize this round in no more than 100 words.
+  # 随后用不超过100字的文字总结本轮已发生的重要事实、关系变化和待续线索。
+  # 即使本轮没有变量变化也必须输出总结；总结内不得写变量操作。
   </summary>
 
   <UpdateVariable>
-  Conduct all variable updates according to the structure requirements...
+  <Analysis>
+  # IN ENGLISH, no more than 80 words. Analyze elapsed time and variables that actually changed this round.
+  </Analysis>
   <JSONPatch>
-   # MUST update the time with op:time every round.
-   # IMPORTANT! UPDATE ALL VARIABLES INSIDE <UpdateVariable> BLOCK, **NOT** OUTSIDE!
+  [
+    {"op":"time","value":"ISO 8601 time"}
+  ]
   </JSONPatch>
   </UpdateVariable>
-
-
-  ---
-  <variables_update_format>
-  # Variable update formatting rules
-    rule:
-      - You MUST output the update analysis and the actual update commands at once in the end of the next reply, and ALWAYS put the JSONPatch INSIDE the <UpdateVariable>. The UpdateVariable contains exactly 2 parts, the <Analysis> AND the <JSONPatch>. Violation will cause a system error.
-      - The update commands works like the **JSON Patch (RFC 6902)** standard, must be a valid JSON array containing operation objects, but supports the following operations instead:
-          - replace: replace the value of existing paths
-          - delta: update the value of existing number paths by a delta value (the delta value MUST be a number without quotes)
-          - insert: insert new items into an object or array (using `-` as array index intends appending to the end)
-          - remove
-          - move
-          - time: sets the current in-game time to value, must be ISO string value, must be present in every patch
-      - Don't update field names starts with `_` as they are readonly, such as `_变量`
-      - When a typed variable requires an empty state (or is temporarily unassigned), you MUST assign it a concrete empty value. You MUST NOT use null
-      - When updating variables, preserve EVERY piece of information verbatim
-      - All former list[Object] variables have been migrated to `Object{"object_name": Object}` object maps
-      - The identifying name property has been externalized. Do NOT keep duplicate internal `name`, `designation`, or `item` fields when the object key already serves as the identifier
-      - No V4 update commands are allowed. Do NOT use `@.TIME`, `@.SET`, `@.ADD`, `@.DEL`, `@.SELECT_SET`, `@.SELECT_ADD`, or `@.SELECT_DEL`
-      - Every mechanic must be quantified numerically
-      - Every random mechanic must be described with `D100 <= x`
-    format: |-
-      <UpdateVariable>
-        <Analysis>/* IN ENGLISH, no more than 80 words */
-        - ${calculate time passed: ...}
-        - ${decide whether dramatic updates are allowed as it's in a special case or the time passed is more than usual: yes/no}
-        - ${analyze every variable based on its corresponding `check`, according only to current content instead of previous plots: ...}
-        </Analysis>
-        <JSONPatch>
-        [
-          {"op": "time", "value": "new ISO Time string"},
-          { "op": "replace", "path": "/path/to/variable", "value": "new_value" },
-          { "op": "delta", "path": "/path/to/number/variable", "value": 1 },
-          { "op": "insert", "path": "/path/to/object/new_key", "value": "new_value" },
-          { "op": "insert", "path": "/path/to/array/-", "value": "new_value" },
-          { "op": "remove", "path": "/path/to/object/key" },
-          { "op": "remove", "path": "/path/to/array/0" },
-          { "op": "move", "from": "/path/to/variable", "to": "/path/to/another/path" }
-        ]
-        </JSONPatch>
-      </UpdateVariable>
-
-  </variables_update_format>
-  </FORCE_FORMATTING>
+  </format_obligations>
 extensions:
   position: 4
   exclude_recursion: false
@@ -107,7 +66,7 @@ constant: true
 name: null
 priority: null
 id: 9688
-comment: 【SAM】context+ event输出模式 V6 蓝灯9999
+comment: 【SAM】合并更新模式格式
 selective: false
 secondary_keys: []
 position: after_char

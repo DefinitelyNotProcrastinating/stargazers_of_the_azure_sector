@@ -1,23 +1,31 @@
 keys: []
 content: |-
   <variables_update_format>
-  # Variable update formatting rules
+  # SAM V6 变量更新规则
+    mode_contract:
+      - 本条目同时服务于合并更新与独立更新。实际回复结构由《合并更新模式格式》或《独立更新模式格式》决定。
+      - 合并更新时，主回复在正文与总结之后输出 `<UpdateVariable>`，其中包含 `<Analysis>` 与一个 `<JSONPatch>`。
+      - 独立更新时，主回复不得输出变量块；独立更新器只输出一个 `<JSONPatch>`，不得输出 `<UpdateVariable>`、`<Analysis>`、正文、总结、解释或 Markdown 代码围栏。
+      - 无变量变化时，独立更新器输出 `<JSONPatch>`、空 JSON 数组 `[]` 与 `</JSONPatch>`；合并更新仍按合并模式格式输出空数组。
     rule:
-      - You MUST output the update analysis and the actual update commands at once in the end of the next reply, and ALWAYS put the JSONPatch INSIDE the <UpdateVariable>. The UpdateVariable contains exactly 2 parts, the <Analysis> AND the <JSONPatch>. Violation will cause a system error.
-      - The update commands works like the **JSON Patch (RFC 6902)** standard, must be a valid JSON array containing operation objects, but supports the following operations instead:
+      - 更新命令采用 JSON Patch 风格，必须是由操作对象组成的合法 JSON 数组。支持操作：
           - replace: replace the value of existing paths
+          - forced_set: only when a rule explicitly requires writing a readonly derived field
           - delta: update the value of existing number paths by a delta value
           - insert: insert new items into an object or array (using `-` as array index intends appending to the end)
           - remove
           - move
+          - inc, mul, push, addToSet, pull, pop, min, max
           - time: sets the current in-game time to value, must be ISO string value, must be present in every patch
       - Use JSON Pointer paths such as `/主角/位置` and `/主角/可攻略角色/艾琳/好感度`
-      - Use Chinese variable names. Do not emit old English-root paths such as `/mc/...`
-      - Don't update field names starts with `_` as they are readonly, such as `_变量`
-      - When a typed variable requires an empty state (or is temporarily unassigned), you MUST assign it a concrete empty value. You MUST NOT use null
-      - When updating variables, preserve EVERY piece of information verbatim
-      - All former list[Object] variables have been migrated to object maps in the form `{"object_name": Object}`. Their identifying fields must stay outside as object keys unless the schema explicitly says so
-    format: |-
+      - 根节点就是更新前的静态状态，禁止添加 `/static`、`/SAM_data/static` 或旧英文根路径 `/mc/...`
+      - 使用中文业务变量名；`op`、`path`、`value`、`from`、`to`、`func_name`、`params` 等协议字段保持英文
+      - 不得更新以 `_` 开头的只读派生字段；只有规则明确要求脚本级修复时才允许 `forced_set`
+      - 类型化变量需要空状态时，必须写入具体空值 `""`、`[]` 或 `{}`，禁止使用 `null`
+      - 更新变量时保留所有未发生变化的信息，不得用局部信息覆盖整个父对象
+      - 原 list[Object] 集合均已迁移为 `{"object_name": Object}` 对象映射；名称留在对象键，不得在对象内部重复名称字段
+      - 禁止使用任何 V4 `@.*` 更新命令
+    merged_example: |-
       <UpdateVariable>
         <Analysis>/* IN ENGLISH, no more than 80 words */
         - ${calculate time passed: ...}
@@ -37,6 +45,13 @@ content: |-
         ]
         </JSONPatch>
       </UpdateVariable>
+    independent_example: |-
+      <JSONPatch>
+      [
+        {"op": "time", "value": "new ISO Time string"},
+        {"op": "replace", "path": "/path/to/variable", "value": "new_value"}
+      ]
+      </JSONPatch>
 
   </variables_update_format>
 extensions:
@@ -79,7 +94,7 @@ constant: true
 name: null
 priority: null
 id: 9687
-comment: 【SAM】变量更新规则
+comment: '[update_rule] 【SAM】变量更新规则'
 selective: false
 secondary_keys: []
 position: after_char

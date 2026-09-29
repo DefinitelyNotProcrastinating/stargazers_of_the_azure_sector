@@ -223,7 +223,6 @@ replaceString: |-
       .stat,
       .card,
       details,
-      .skill-card,
       .map-wrap,
       .ship-orbital,
       .module-node,
@@ -285,25 +284,6 @@ replaceString: |-
         letter-spacing: 2px;
       }
 
-      .skill-card {
-        padding: 10px;
-        background: rgba(35, 13, 59, .86);
-      }
-
-      .skill-card.learning {
-        border-color: rgba(255,212,121,.55);
-        background: rgba(255,212,121,.08);
-      }
-
-      .skill-head {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 8px;
-        font-size: 12px;
-      }
-
-      .level { color: var(--gold); }
-
       .bar {
         height: 5px;
         overflow: hidden;
@@ -315,14 +295,6 @@ replaceString: |-
         height: 100%;
         background: linear-gradient(90deg, #7b5cff, #dfb5ff);
         box-shadow: 0 0 16px rgba(221,181,255,.72);
-      }
-
-      .skill-foot {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 6px;
-        color: var(--muted);
-        font-size: 10px;
       }
 
       .cards {
@@ -682,7 +654,6 @@ replaceString: |-
       .detail-grid { gap: 6px; margin-top: 7px; }
       .desc { line-height: 1.55; }
       .hero { padding: 13px; gap: 10px; }
-      .skill-card { padding: 8px; }
       .collapse-section { margin-top: 12px; }
       .collapse-section > summary { padding: 10px 12px; }
       .collapse-body { margin-top: 7px; }
@@ -1810,6 +1781,104 @@ replaceString: |-
         overflow-y: auto;
       }
 
+      /* Unified Azure glass system v2 — status workspace */
+      :root {
+        color-scheme: dark;
+        --bg: rgba(5, 16, 30, .72);
+        --panel: rgba(12, 29, 49, .62);
+        --panel-strong: rgba(18, 41, 65, .82);
+        --line: rgba(166, 222, 255, .24);
+        --line-hot: rgba(194, 235, 255, .62);
+        --cyan: #7be0ff;
+        --blue: #7f99ff;
+        --gold: #ffd078;
+        --danger: #ff7d8f;
+        --text: #f4f9ff;
+        --muted: #adc2d5;
+        --shadow: 0 28px 90px rgba(0, 7, 18, .58), 0 10px 34px rgba(23, 106, 158, .18), inset 0 1px 0 rgba(255,255,255,.12);
+      }
+
+      html, body { height: auto; min-height: 900px; }
+      body {
+        overflow: auto;
+        background:
+          radial-gradient(circle at 14% 8%, rgba(43, 168, 221, .30), transparent 32%),
+          radial-gradient(circle at 88% 12%, rgba(118, 105, 255, .22), transparent 31%),
+          radial-gradient(circle at 68% 88%, rgba(25, 103, 170, .24), transparent 40%),
+          linear-gradient(145deg, #020912, #07182b 54%, #030b16);
+      }
+      body::before { opacity: .72; background-size: 32px 32px; mask-image: radial-gradient(circle at center,#000,transparent 82%); -webkit-mask-image: radial-gradient(circle at center,#000,transparent 82%); }
+      body::after { background: linear-gradient(135deg,rgba(255,255,255,.09),transparent 38%,rgba(88,156,255,.08)); }
+
+      .shell {
+        width: min(1440px, 100%);
+        height: 900px;
+        min-height: 900px;
+        border: 1px solid rgba(166,222,255,.28);
+        background: rgba(4, 15, 28, .70);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(24px) saturate(1.28);
+        -webkit-backdrop-filter: blur(24px) saturate(1.28);
+      }
+      .side, .topbar {
+        background: rgba(8, 24, 41, .72);
+        backdrop-filter: blur(20px) saturate(1.24);
+        -webkit-backdrop-filter: blur(20px) saturate(1.24);
+      }
+      .nav-btn:hover { background: rgba(123,224,255,.10); }
+      .nav-btn.active { background: linear-gradient(90deg,rgba(63,151,211,.30),rgba(127,153,255,.10)); box-shadow: inset 0 1px 0 rgba(255,255,255,.08); }
+
+      .panel, .stat, .card, details, .map-wrap, .ship-orbital, .module-node,
+      .stargazer-link, .character-block, .character-identity, .character-score, .index-card,
+      .ship-tab, .character-tab, .map-detail-row {
+        border-color: var(--line);
+        background-color: rgba(12, 29, 49, .62);
+        box-shadow: 0 16px 44px rgba(0,7,18,.28), inset 0 1px 0 rgba(255,255,255,.09);
+        backdrop-filter: blur(16px) saturate(1.22);
+        -webkit-backdrop-filter: blur(16px) saturate(1.22);
+      }
+      .panel, .card, details, .character-block, .index-card { position: relative; }
+      .panel::before, .card::before, .index-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        border-radius: inherit;
+        background: linear-gradient(145deg, rgba(255,255,255,.055), transparent 42%);
+      }
+      .stat, .module-node, .map-detail-row { background-color: rgba(19, 43, 68, .58); }
+      .fill { background: linear-gradient(90deg,#379ed8,#7be0ff 64%,#9c9dff); box-shadow: 0 0 16px rgba(123,224,255,.58); }
+      .badge, .tag { color: #cae9f8; border-color: rgba(166,222,255,.30); background: rgba(123,224,255,.075); }
+      .character-tab:hover, .ship-tab:hover, .index-card:hover { border-color: var(--line-hot); background-color: rgba(24,55,83,.72); }
+      .character-tab.active, .ship-tab.active, .index-card.active { border-color: rgba(123,224,255,.64); background: linear-gradient(135deg,rgba(42,133,190,.28),rgba(127,153,255,.13)); }
+      button:focus-visible, [tabindex]:focus-visible, summary:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+
+      #starmap-container { background: radial-gradient(circle at 30% 20%,rgba(45,151,210,.18),transparent 28%),radial-gradient(circle at 72% 78%,rgba(127,153,255,.15),transparent 35%),#010713; }
+      .line-pipe { stroke: #7be0ff; }
+      .line-wormhole { stroke: #9c9dff; }
+      .node-wormhole .node-dot { background-color:#9c9dff; box-shadow:0 0 14px rgba(156,157,255,.82); }
+      .node-label, .map-controls, #starmap-info-panel { border-color:var(--line); background:rgba(4,16,30,.76); backdrop-filter:blur(18px) saturate(1.22); -webkit-backdrop-filter:blur(18px) saturate(1.22); }
+
+      @supports not ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) {
+        .shell { background: #061529; }
+        .side, .topbar { background: #0a2037; }
+        .panel, .stat, .card, details, .map-wrap, .ship-orbital, .module-node, .stargazer-link, .character-block, .character-identity, .character-score, .index-card, .ship-tab, .character-tab, .map-detail-row { background-color: #102b46; }
+      }
+      @media (max-width: 820px) {
+        html, body { min-height: 860px; }
+        .shell { height: 860px; min-height: 860px; }
+        .nav-btn { min-height: 42px; }
+        .top-meta { display: none; }
+      }
+      @media (max-width: 520px) {
+        .top-title { font-size: 13px; letter-spacing: 1px; }
+        .hero { grid-template-columns: 1fr; align-items: start; }
+        .credits { text-align: left; }
+        .cards { grid-template-columns: 1fr; }
+        .view { padding: 10px; }
+      }
+      @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior:auto!important; transition-duration:.01ms!important; animation-duration:.01ms!important; } }
+
     </style>
   </head>
 
@@ -1898,7 +1967,6 @@ replaceString: |-
     </div>
 
     <script>
-      const SKILL_THRESHOLDS = [0, 250, 1415, 8000, 45255, 256000];
       const VISUAL_BINDS_ENTRY_NAME = "VISUAL_BINDS";
       const AVATAR_MAPPINGS_ENTRY_NAME = "STARGAZER_AVATAR_MAPPINGS";
       const ILLUST_MAPPINGS_ENTRY_NAME = "STARGAZER_ILLUST_MAPPINGS";
@@ -2556,54 +2624,9 @@ replaceString: |-
         });
       }
 
-      function expProgress(exp) {
-        const total = Number(exp) || 0;
-        let level = 0;
-
-        for (let i = 1; i < SKILL_THRESHOLDS.length; i++) {
-          if (total >= SKILL_THRESHOLDS[i]) level = i;
-        }
-
-        if (level >= SKILL_THRESHOLDS.length - 1) {
-          return { level, percent: 100, caption: `${total.toLocaleString()} EXP / MAX` };
-        }
-
-        const start = SKILL_THRESHOLDS[level];
-        const end = SKILL_THRESHOLDS[level + 1];
-        const percent = ((total - start) / (end - start)) * 100;
-
-        return {
-          level,
-          percent: Math.max(0, Math.min(100, percent)),
-          caption: `${total.toLocaleString()} / ${end.toLocaleString()} EXP`
-        };
-      }
-
       function renderHome(staticData, gameTime) {
         const mc = staticData.主角 || {};
-        const learning = mc.学习 || {};
         const path = text(mc.位置).split("|").map(v => v.trim());
-
-        const skills = entries(mc.技能).map(([name, item]) => {
-          const progress = expProgress(item && item.EXP);
-          const isLearning = learning.当前技能 === name && learning.状态 === "学习中";
-
-          return `
-            <div class="skill-card ${isLearning ? "learning" : ""}">
-              <div class="skill-head">
-                <strong>${escapeHtml(name)}</strong>
-                <span class="level">LV ${item && item._等级 !== undefined ? item._等级 : progress.level}${isLearning ? " · 学习中" : ""}</span>
-              </div>
-              <div class="bar">
-                <div class="fill" style="width:${progress.percent}%"></div>
-              </div>
-              <div class="skill-foot">
-                <span>${progress.caption}</span>
-                <span>${progress.percent.toFixed(1)}%</span>
-              </div>
-            </div>
-          `;
-        }).join("");
 
         const itemCards = entries(mc.物品栏 || {}).map(([itemName, item]) => {
           const meta = [];
@@ -2646,16 +2669,7 @@ replaceString: |-
           <div class="grid">
             ${stat("当前外貌", mc.外貌 || mc.外观)}
             ${stat("游戏时间", gameTime)}
-            ${stat("训练状态", `${learning.状态 || "未学习"}${learning.当前技能 ? ` / ${learning.当前技能}` : ""}`)}
-            ${stat("训练速率", `${learning._实际每小时EXP || 0} EXP / 小时`)}
           </div>
-
-          <details class="collapse-section" open>
-            <summary>技能许可与经验</summary>
-            <div class="collapse-body">
-              <div class="grid wide">${skills || empty("尚未登记技能")}</div>
-            </div>
-          </details>
 
           <details class="collapse-section" open>
             <summary>物品栏</summary>
@@ -3460,10 +3474,58 @@ replaceString: |-
       function renderBases(staticData) {
         const mc = staticData.主角 || {};
         const buildings = entries(mc.建筑 || {});
+        const ships = entries(mc.舰船 || {});
+        const events = entries(mc.特殊事件 || {});
+        const research = mc.科研进展 || {};
+        const finiteRate = value => Number.isFinite(Number(value)) && Number(value) > 0 ? Number(value) : 0;
+        const ratePairs = value => entries(value || {}).filter(([, amount]) => finiteRate(amount) > 0);
+        const rateText = value => {
+          const pairs = ratePairs(value);
+          return pairs.length ? pairs.map(([name, amount]) => `${escapeHtml(name)} ${escapeHtml(finiteRate(amount))}`).join(" / ") : "无";
+        };
+        const totals = { 输入: {}, 输出: {} };
+        [...buildings, ...ships].forEach(([, asset]) => {
+          ["输入", "输出"].forEach(kind => ratePairs(asset && asset[kind]).forEach(([name, amount]) => {
+            if (asset && asset.状态 && !["运行", "现役", "可用"].includes(asset.状态)) return;
+            if (ships.some(([, ship]) => ship === asset) && name === "补给") return;
+            totals[kind][name] = (totals[kind][name] || 0) + finiteRate(amount);
+          }));
+        });
+        const allResources = [...new Set([...Object.keys(totals.输入), ...Object.keys(totals.输出)])].sort();
+        const balanceHtml = allResources.length ? allResources.map(name => {
+          const net = (totals.输出[name] || 0) - (totals.输入[name] || 0);
+          return `<span class="entry-pill">${escapeHtml(name)} ${net >= 0 ? "+" : ""}${escapeHtml(Number(net.toFixed(6)))}/日</span>`;
+        }).join("") : `<span class="entry-pill">暂无运行中的产业流量</span>`;
+        const eventHtml = events.length ? events.map(([id, event]) => `
+          <div class="panel" style="margin-top:10px;">
+            <div class="detail-title">${escapeHtml(id)}</div>
+            <div class="index-card-meta">
+              <span class="entry-pill">${escapeHtml(event.类型 || "事件")}</span>
+              <span class="entry-pill">${escapeHtml(event.阶段 || "进行中")}</span>
+              ${event.目标 ? `<span class="entry-pill">目标 ${escapeHtml(event.目标)}</span>` : ""}
+            </div>
+            ${event.下一阶段时间 ? `<div class="muted">下一阶段：${escapeHtml(event.下一阶段时间)}</div>` : ""}
+            ${event.自动关闭时间 ? `<div class="muted">自动结束：${escapeHtml(event.自动关闭时间)}</div>` : ""}
+          </div>
+        `).join("") : `<div class="muted">当前无特殊事件。</div>`;
+        const industryOverview = `
+          <div class="panel" style="margin-bottom:12px;">
+            <div class="section-title">产业净流量（理论日产）</div>
+            <div class="index-card-meta">${balanceHtml}</div>
+            <div class="muted">实际产量由SAM按输入满足比例、完整经过日与事件状态结算。</div>
+          </div>
+          <div class="panel" style="margin-bottom:12px;">
+            <div class="section-title">科研进展</div>
+            <div class="index-card-meta"><span class="entry-pill">全局效率 ×${escapeHtml(research.全局效率倍率 ?? 1)}</span></div>
+          </div>
+          <div class="section-title">特殊事件</div>
+          ${eventHtml}
+        `;
 
         if (!buildings.length) {
           $("bases-view").innerHTML = `
             <h1>建筑</h1>
+            ${industryOverview}
             ${empty("暂无建筑记录")}
           `;
           return;
@@ -3497,6 +3559,10 @@ replaceString: |-
                 </div>
                 <span class="badge">${escapeHtml(item.品质 !== undefined ? `品质 ${item.品质}` : "建筑资产")}</span>
               </div>
+              <div class="panel" style="margin-top:10px;">
+                <div><span class="muted">每日输入：</span>${rateText(item.输入)}</div>
+                <div><span class="muted">每日输出：</span>${rateText(item.输出)}</div>
+              </div>
               <div class="prop-list">${propRows(item || {})}</div>
             </div>
           </section>
@@ -3504,7 +3570,8 @@ replaceString: |-
 
         $("bases-view").innerHTML = `
           <h1>建筑</h1>
-          <p class="desc">建筑以 3×N 列表显示；点击建筑卡片后查看具体信息。</p>
+          <p class="desc">建筑与工业舰的固定输入/输出由SAM按完整经过日结算；随机事件只会选择建筑。</p>
+          ${industryOverview}
           <div id="building-index-root">
             <div class="index-grid">${cards}</div>
             ${panels}

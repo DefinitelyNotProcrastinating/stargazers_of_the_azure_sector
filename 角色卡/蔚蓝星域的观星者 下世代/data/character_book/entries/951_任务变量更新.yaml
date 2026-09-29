@@ -68,7 +68,7 @@ constant: true
 name: null
 priority: null
 id: 191
-comment: 任务变量更新
+comment: '[update_rule] 任务变量更新'
 selective: false
 secondary_keys: []
 position: after_char

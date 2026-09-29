@@ -178,6 +178,47 @@ replaceString: |2-
           .head-top { flex-direction: column; }
           .crest { min-width: 100%; min-height: 84px; }
         }
+
+        /* Unified Azure glass system: keep this block aligned across every visual card. */
+        :root {
+          color-scheme: dark;
+          --panel: rgba(12, 29, 49, 0.72);
+          --panel-soft: rgba(22, 45, 70, 0.58);
+          --line: rgba(166, 222, 255, 0.24);
+          --text: #f4f9ff;
+          --muted: #adc2d5;
+          --shadow: 0 24px 72px rgba(0, 7, 18, 0.48), 0 8px 24px rgba(23, 106, 158, 0.16), inset 0 1px 0 rgba(255,255,255,0.12);
+        }
+        body { padding: clamp(8px, 2.6vw, 22px); }
+        .card {
+          position: relative;
+          border-color: var(--line);
+          border-radius: 24px;
+          background:
+            radial-gradient(circle at 12% 0%, var(--accent-soft), transparent 34%),
+            radial-gradient(circle at 92% 12%, rgba(127,153,255,0.16), transparent 30%),
+            linear-gradient(145deg, rgba(15,35,58,0.84), rgba(5,17,32,0.76));
+          box-shadow: var(--shadow);
+          backdrop-filter: blur(22px) saturate(1.28);
+          -webkit-backdrop-filter: blur(22px) saturate(1.28);
+        }
+        .card::before { content:""; position:absolute; inset:0; pointer-events:none; background-image:linear-gradient(rgba(123,224,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(123,224,255,.045) 1px,transparent 1px); background-size:28px 28px; mask-image:linear-gradient(#000,transparent 88%); -webkit-mask-image:linear-gradient(#000,transparent 88%); }
+        .head { position: relative; background: linear-gradient(115deg, rgba(255,255,255,0.06), transparent 60%); }
+        .body { position: relative; }
+        .badge, .tag, .desc, .panel, .stat, .effect {
+          background-color: rgba(18, 41, 65, 0.58);
+          border-color: var(--line);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+          backdrop-filter: blur(14px) saturate(1.2);
+          -webkit-backdrop-filter: blur(14px) saturate(1.2);
+        }
+        .crest { background: linear-gradient(155deg, rgba(255,255,255,0.11), var(--accent-soft)); box-shadow: 0 16px 40px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.14); }
+        .bar { background: rgba(2, 12, 24, 0.62); border: 1px solid rgba(166,222,255,0.12); }
+        @supports not ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) {
+          .card { background: #0b1d31; }
+          .badge, .tag, .desc, .panel, .stat, .effect { background: #142c46; }
+        }
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; } }
       </style>
     </head>
     <body>
@@ -251,7 +292,7 @@ replaceString: |2-
               ["类型", building["类型"]],
               ["吨位", building["吨位"]],
               ["科技等级", building["科技等级"]],
-              ["产业模型", building["产业模型"]],
+              ["防御指数", building["防御指数"]],
               ["部署日", building["部署日"]],
               ["位置", building["位置"]],
               ["阵营", building["阵营"]],
@@ -289,9 +330,8 @@ replaceString: |2-
                   <div>
                     <h2 class="section-title">每日产业结算</h2>
                     ${renderStats([
-                      ["维护", building["每日维护"]],
-                      ["输入", building["每日输入"]],
-                      ["输出", building["每日输出"]]
+                      ["输入", building["输入"]],
+                      ["输出", building["输出"]]
                     ])}
                   </div>
                   <div>

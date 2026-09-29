@@ -108,49 +108,6 @@ replaceString: |-
               border-color: var(--accent-main);
               box-shadow: 0 0 0 4px rgba(76, 185, 224, 0.16), inset 0 1px 0 rgba(255,255,255,0.9);
           }
-          .skill-picker {
-              margin-top: 24px;
-              padding: 18px;
-              text-align: left;
-              background: rgba(255,255,255,0.5);
-              border: 1px solid var(--border-soft);
-              border-radius: var(--radius-md);
-          }
-          .skill-grid {
-              display: grid;
-              grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-              gap: 12px;
-              margin-top: 14px;
-          }
-          .skill-control {
-              padding: 12px;
-              border: 1px solid rgba(98, 175, 210, 0.3);
-              border-radius: var(--radius-sm);
-              background: rgba(255,255,255,0.58);
-          }
-          .skill-control-head {
-              display: flex;
-              align-items: baseline;
-              justify-content: space-between;
-              gap: 10px;
-              margin-bottom: 8px;
-          }
-          .skill-level-value { color: var(--accent-deep); font-weight: 800; }
-          .skill-exp-value { color: var(--text-muted); font-size: 0.72rem; }
-          input.skill-slider {
-              width: 100%;
-              height: 6px;
-              padding: 0;
-              border: 0;
-              border-radius: 999px;
-              box-shadow: none;
-              accent-color: var(--accent-main);
-              cursor: pointer;
-          }
-          input.skill-slider:focus {
-              border: 0;
-              box-shadow: 0 0 0 4px rgba(76, 185, 224, 0.16);
-          }
           .grid-container {
               display: grid;
               grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -623,6 +580,86 @@ replaceString: |-
               .center-core { top: 40%; }
               .fitting-stage::before, .fitting-stage::after, .dial-ring { top: 40%; }
           }
+
+          /* Unified Azure glass system v2 — initialization workspace */
+          :root {
+              color-scheme: dark;
+              --bg-dark: #030d19;
+              --bg-panel: rgba(12, 29, 49, 0.62);
+              --bg-panel-strong: rgba(18, 41, 65, 0.82);
+              --border-main: rgba(166, 222, 255, 0.28);
+              --border-soft: rgba(166, 222, 255, 0.20);
+              --accent-main: #7be0ff;
+              --accent-deep: #a9ecff;
+              --accent-soft: rgba(123, 224, 255, 0.18);
+              --text-main: #f4f9ff;
+              --text-muted: #adc2d5;
+              --danger: #ff7d8f;
+              --glow-main: 0 20px 56px rgba(21, 137, 196, 0.26), 0 0 0 1px rgba(194,235,255,.26) inset;
+          }
+          body {
+              background:
+                  radial-gradient(circle at 14% 8%, rgba(43,168,221,.30), transparent 32%),
+                  radial-gradient(circle at 88% 12%, rgba(118,105,255,.22), transparent 31%),
+                  radial-gradient(circle at 68% 88%, rgba(25,103,170,.24), transparent 40%),
+                  linear-gradient(145deg, #020912, #07182b 54%, #030b16);
+          }
+          html { background: #020912; }
+          body::before { opacity:.78; mask-image:radial-gradient(circle at center,#000,transparent 82%); -webkit-mask-image:radial-gradient(circle at center,#000,transparent 82%); }
+          .screen { min-height: 720px; }
+          .panel, .modal-content, .item-card, .fitting-stage,
+          .ring-slot, .stargazer-dock, .formatter-hint, .gacha-card {
+              color: var(--text-main);
+              border-color: var(--border-main);
+              background-color: rgba(12,29,49,.62);
+              box-shadow: 0 22px 68px rgba(0,7,18,.38), inset 0 1px 0 rgba(255,255,255,.10);
+              backdrop-filter: blur(18px) saturate(1.24);
+              -webkit-backdrop-filter: blur(18px) saturate(1.24);
+          }
+          .panel, .modal-content {
+              background: linear-gradient(145deg,rgba(19,43,68,.76),rgba(5,18,34,.70));
+          }
+          .panel { position:relative; isolation:isolate; }
+          .panel::before { content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit; background:linear-gradient(145deg,rgba(255,255,255,.07),transparent 42%); }
+          .panel > * { position:relative; }
+          .btn {
+              color: var(--accent-deep);
+              border-color: rgba(123,224,255,.34);
+              background: linear-gradient(135deg,rgba(28,68,100,.78),rgba(12,39,66,.72));
+              box-shadow: 0 10px 26px rgba(0,7,18,.24), inset 0 1px 0 rgba(255,255,255,.11);
+          }
+          .btn:hover:not(:disabled), .btn:focus-visible, .btn.touch-active {
+              color:#02121e; border-color:#b9efff;
+              background:linear-gradient(135deg,#b9efff,#7be0ff 58%,#a3adff);
+          }
+          input, textarea { color:var(--text-main); border-color:var(--border-main); background:rgba(3,17,31,.66); box-shadow:inset 0 1px 0 rgba(255,255,255,.06); }
+          input::placeholder, textarea::placeholder { color:#8299ad; }
+          .item-card { background:linear-gradient(150deg,rgba(23,51,78,.66),rgba(8,26,45,.58)); }
+          .item-card:hover, .item-card:focus-visible, .item-card.touch-active { border-color:rgba(123,224,255,.66); }
+          .item-card.selected { border-color:rgba(123,224,255,.82); background:linear-gradient(150deg,rgba(32,78,112,.82),rgba(20,48,82,.72)); box-shadow:0 20px 58px rgba(32,143,198,.24),inset 0 0 0 1px rgba(194,235,255,.14); }
+          .kv-row { border-bottom-color:rgba(166,222,255,.16); }
+          .modal-overlay { background:rgba(0,8,18,.70); }
+          .fitting-stage { background:radial-gradient(circle at 50% 42%,rgba(123,224,255,.14),transparent 22%),radial-gradient(circle at 50% 45%,rgba(127,153,255,.10),transparent 44%),rgba(3,15,29,.74); }
+          .ring-slot { background:rgba(13,37,61,.78); }
+          .ring-slot.filled { background:linear-gradient(145deg,rgba(35,88,120,.86),rgba(23,47,83,.80)); }
+          .stargazer-dock { background:linear-gradient(135deg,rgba(19,48,75,.84),rgba(11,31,53,.78)); }
+          .formatter-error { color:#ffd8de; border-color:rgba(255,125,143,.46); background:rgba(100,22,40,.64); }
+          .formatter-hint { color:var(--text-muted); background:rgba(16,43,68,.64); }
+          .gacha-card { color:var(--text-main); background:radial-gradient(circle at 50% 24%,rgba(255,255,255,.10),transparent 28%),radial-gradient(circle at 35% 42%,rgba(127,153,255,.18),transparent 36%),linear-gradient(145deg,rgba(24,55,83,.82),rgba(10,28,49,.74)); }
+          .gacha-card::before { color:rgba(123,224,255,.20); filter:drop-shadow(0 8px 18px rgba(39,155,210,.20)); }
+          .gacha-card.revealed { background:linear-gradient(145deg,rgba(31,72,103,.88),rgba(16,38,65,.82)); }
+          .gacha-rarity { color:#9c9dff; }
+          .gacha-name { color:#f4f9ff; }
+          .gacha-meta { color:var(--text-muted); }
+          .gacha-card.selected { border-color:rgba(123,224,255,.88); background:linear-gradient(145deg,rgba(35,88,120,.90),rgba(24,48,85,.84)); }
+          .gacha-card.selected::after { color:#d7f6ff; border-color:rgba(123,224,255,.52); background:rgba(11,45,70,.88); }
+          .step-dot { background:rgba(93,135,163,.42); box-shadow:inset 0 1px 0 rgba(255,255,255,.08); }
+          .step-dot.active { background:linear-gradient(90deg,#4ab5e7,#7be0ff); box-shadow:0 0 18px rgba(123,224,255,.46); }
+          button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--accent-main); outline-offset:3px; }
+          @supports not ((backdrop-filter:blur(2px)) or (-webkit-backdrop-filter:blur(2px))) {
+              .panel,.modal-content{background:#0b1d31}.item-card,.fitting-stage,.ring-slot,.stargazer-dock,.formatter-hint,.gacha-card{background:#142c46}
+          }
+          @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition-duration:.01ms!important; animation-duration:.01ms!important; } }
       </style>
   </head>
   <body>
@@ -632,7 +669,7 @@ replaceString: |-
               <h1 class="text-5xl font-bold text-[var(--accent-main)] mt-4">蔚蓝星域的观星者</h1>
               <p class="text-[var(--text-muted)] mt-5 leading-8">
                   载入新的开局协议。<br>
-                  你可以选择舰船并完成装配，也可以跳过舰船或观星者，以盲盒物资开始游戏；随后选择初始物资与开局剧情，并将结果注入聊天。
+                  你可以建立个人档案，选择舰船并完成装配，配置初始物资、开局剧情、工业基地与势力声望，再将结果注入聊天。
               </p>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 text-left">
                   <div>
@@ -643,29 +680,12 @@ replaceString: |-
                       <label class="text-xs text-[var(--text-muted)]">主角外貌</label>
                       <input type="text" id="captain-appearance" class="w-full mt-1" placeholder="例如：穿着常服的年轻舰长，眼下带着轻微熬夜痕迹">
                   </div>
+                  <div class="md:col-span-2">
+                      <label class="text-xs text-[var(--text-muted)]">背景故事 / 个人档案</label>
+                      <textarea id="captain-background" class="w-full mt-1" maxlength="1200" rows="6" placeholder="写下主角已经真实拥有的职业、训练、长期经历、人际关系或重要往事。明确写出的经历会在相关行动中成为叙事优势；无需填写技能等级。"></textarea>
+                      <div class="text-[11px] text-[var(--text-muted)] mt-2">建议保持在 100–300 字。档案会被永久提供给叙事 AI，因此只写值得长期记住的内容。</div>
+                  </div>
               </div>
-              <section class="skill-picker">
-                  <div class="flex flex-wrap items-end justify-between gap-2">
-                      <div>
-                          <div class="font-bold text-[var(--accent-deep)]">初始技能经验</div>
-                          <div class="text-xs text-[var(--text-muted)] mt-1">每项技能可独立选择 I–III 级；导出时会自动换算为累计 EXP。</div>
-                      </div>
-                      <div class="font-mono text-xs text-[var(--text-muted)]">I = 250 / II = 1,415 / III = 8,000 EXP</div>
-                  </div>
-                  <div class="skill-grid">
-                      <label class="skill-control"><span class="skill-control-head"><span>导弹</span><span><span class="skill-level-value" data-skill-level="导弹">I</span> <span class="skill-exp-value" data-skill-exp="导弹">250 EXP</span></span></span><input class="skill-slider" data-skill="导弹" type="range" min="1" max="3" step="1" value="1"></label>
-                      <label class="skill-control"><span class="skill-control-head"><span>炮术</span><span><span class="skill-level-value" data-skill-level="炮术">I</span> <span class="skill-exp-value" data-skill-exp="炮术">250 EXP</span></span></span><input class="skill-slider" data-skill="炮术" type="range" min="1" max="3" step="1" value="1"></label>
-                      <label class="skill-control"><span class="skill-control-head"><span>战机</span><span><span class="skill-level-value" data-skill-level="战机">I</span> <span class="skill-exp-value" data-skill-exp="战机">250 EXP</span></span></span><input class="skill-slider" data-skill="战机" type="range" min="1" max="3" step="1" value="1"></label>
-                      <label class="skill-control"><span class="skill-control-head"><span>算法</span><span><span class="skill-level-value" data-skill-level="算法">I</span> <span class="skill-exp-value" data-skill-exp="算法">250 EXP</span></span></span><input class="skill-slider" data-skill="算法" type="range" min="1" max="3" step="1" value="1"></label>
-                      <label class="skill-control"><span class="skill-control-head"><span>工程</span><span><span class="skill-level-value" data-skill-level="工程">I</span> <span class="skill-exp-value" data-skill-exp="工程">250 EXP</span></span></span><input class="skill-slider" data-skill="工程" type="range" min="1" max="3" step="1" value="1"></label>
-                      <label class="skill-control"><span class="skill-control-head"><span>工业</span><span><span class="skill-level-value" data-skill-level="工业">I</span> <span class="skill-exp-value" data-skill-exp="工业">250 EXP</span></span></span><input class="skill-slider" data-skill="工业" type="range" min="1" max="3" step="1" value="1"></label>
-                      <label class="skill-control"><span class="skill-control-head"><span>科学</span><span><span class="skill-level-value" data-skill-level="科学">I</span> <span class="skill-exp-value" data-skill-exp="科学">250 EXP</span></span></span><input class="skill-slider" data-skill="科学" type="range" min="1" max="3" step="1" value="1"></label>
-                      <label class="skill-control"><span class="skill-control-head"><span>驾驶</span><span><span class="skill-level-value" data-skill-level="驾驶">I</span> <span class="skill-exp-value" data-skill-exp="驾驶">250 EXP</span></span></span><input class="skill-slider" data-skill="驾驶" type="range" min="1" max="3" step="1" value="1"></label>
-                      <label class="skill-control"><span class="skill-control-head"><span>装甲</span><span><span class="skill-level-value" data-skill-level="装甲">I</span> <span class="skill-exp-value" data-skill-exp="装甲">250 EXP</span></span></span><input class="skill-slider" data-skill="装甲" type="range" min="1" max="3" step="1" value="1"></label>
-                      <label class="skill-control"><span class="skill-control-head"><span>护盾</span><span><span class="skill-level-value" data-skill-level="护盾">I</span> <span class="skill-exp-value" data-skill-exp="护盾">250 EXP</span></span></span><input class="skill-slider" data-skill="护盾" type="range" min="1" max="3" step="1" value="1"></label>
-                      <label class="skill-control"><span class="skill-control-head"><span>同调</span><span><span class="skill-level-value" data-skill-level="同调">I</span> <span class="skill-exp-value" data-skill-exp="同调">250 EXP</span></span></span><input class="skill-slider" data-skill="同调" type="range" min="1" max="3" step="1" value="1"></label>
-                  </div>
-              </section>
               <button class="btn px-8 py-3 text-xl tracking-widest mt-8" id="btn-start" data-action="start-game">建立连接 [CONNECT]</button>
           </div>
       </div>
@@ -683,6 +703,8 @@ replaceString: |-
               <div class="step-dot" id="dot-2"></div>
               <div class="step-dot" id="dot-3"></div>
               <div class="step-dot" id="dot-4"></div>
+              <div class="step-dot" id="dot-5"></div>
+              <div class="step-dot" id="dot-6"></div>
           </div>
           <div class="panel p-4 mb-4">
               <div class="text-sm text-[var(--text-muted)]" id="phase-help"></div>
@@ -762,27 +784,28 @@ replaceString: |-
       <script>
           var gameData = null;
           var currentPhaseIndex = 0;
-          var skillNames = ["导弹", "炮术", "战机", "算法", "工程", "工业", "科学", "驾驶", "装甲", "护盾", "同调"];
-          var skillExpByLevel = { 1: 250, 2: 1415, 3: 8000 };
-          var skillRomanByLevel = { 1: "I", 2: "II", 3: "III" };
-          var phases = ["ships", "fitting", "items", "init_stories"];
+          var phases = ["ships", "fitting", "items", "init_stories", "industries", "reputations"];
           var phaseTitles = [
-              { t: "PHASE_1: 起始舰船", d: "Select starting ship", help: "可选择一艘起始舰船，也可直接跳过以进行盲盒开局。下一步进入舰船装配与观星者选择。" },
+              { t: "PHASE_1: 起始舰船", d: "Select starting ship", help: "只能选择一艘护卫舰（FF）或矿船（MV）。下一步进入舰船装配与观星者选择。" },
               { t: "PHASE_2: 舰船装配", d: "Fit your ship", help: "舰船与观星者均可跳过。已选择舰船时，外环为武器拨码环，中环为 H/L 模块拨码环；未选择舰船时仍可单独选择观星者。" },
               { t: "PHASE_3: 初始物资", d: "Select inventory items", help: "可多选初始物品。常规物品导出至主角.物品栏；资源类物资导出至主角.库存。" },
-              { t: "PHASE_4: 开局剧情", d: "Select opening story", help: "最后选择开局剧情，它将作为时间、地点与初始叙事锚点。" }
+              { t: "PHASE_4: 开局类型", d: "Select opening", help: "选择开局剧情。殖民者开局会自动取得至少一座工业基地。" },
+              { t: "PHASE_5: 工业基地", d: "Configure industries", help: "从预设增加任意数量的基地，并编辑名称、位置、防御指数、每日输入与每日输出。" },
+              { t: "PHASE_6: 势力声望", d: "Set reputations", help: "设定与各势力的初始声望。海盗势力与铁血盟约固定从 -50 开始。" }
           ];
           var selectionLimits = {
               ships: 1,
               items: null,
-              init_stories: 1
+              init_stories: 1,
+              industries: null
           };
           var fittingCatalog = { weaponsByMount: { S: [], M: [], L: [], XL: [] }, modulesBySlot: { H: [], L: [] } };
           var state = {
-              captain: { name: "{{user}}", appearance: "" },
-              skills: { "导弹": 1, "炮术": 1, "战机": 1, "算法": 1, "工程": 1, "工业": 1, "科学": 1, "驾驶": 1, "装甲": 1, "护盾": 1, "同调": 1 },
+              captain: { name: "{{user}}", appearance: "", background: "" },
               selections: { ships: [], items: [], init_stories: [] },
-              fitting: { weapons: {}, modules: {}, stargazer: null }
+              fitting: { weapons: {}, modules: {}, stargazer: null },
+              industries: [],
+              reputations: {}
           };
           var currentViewingItem = null;
           var currentCategory = "";
@@ -817,27 +840,16 @@ replaceString: |-
           function getSelectedShipName() { return getSelectedShip() ? getSelectedShip()._key : ""; }
           function getSelectedStargazer() { return state.fitting.stargazer; }
 
-          function clampStartingSkillLevel(value) {
-              return Math.max(1, Math.min(3, parseInt(value, 10) || 1));
+          function normalizeStartingShipType(value) {
+              var type = String(value === undefined || value === null ? "" : value).replace(/^\s+|\s+$/g, "").toUpperCase();
+              if (type === "FF" || type === "护卫舰") return "FF";
+              if (type === "MV" || type === "矿船" || type === "采矿船" || type === "采矿驳船") return "MV";
+              return type;
           }
 
-          function setStartingSkillLevel(skillName, value) {
-              var level = clampStartingSkillLevel(value);
-              var levelEl = document.querySelector('[data-skill-level="' + skillName + '"]');
-              var expEl = document.querySelector('[data-skill-exp="' + skillName + '"]');
-              state.skills[skillName] = level;
-              if (levelEl) levelEl.textContent = skillRomanByLevel[level];
-              if (expEl) expEl.textContent = skillExpByLevel[level].toLocaleString() + " EXP";
-          }
-
-          function buildStartingSkills() {
-              var result = {}, i = 0, skillName = "", level = 1;
-              for (i = 0; i < skillNames.length; i++) {
-                  skillName = skillNames[i];
-                  level = clampStartingSkillLevel(state.skills[skillName]);
-                  result[skillName] = { EXP: skillExpByLevel[level] };
-              }
-              return result;
+          function isAllowedStartingShip(ship) {
+              var type = ship && normalizeStartingShipType(ship["舰船类型"]);
+              return type === "FF" || type === "MV";
           }
 
           function resetFitting() {
@@ -847,10 +859,9 @@ replaceString: |-
           }
 
           async function startGame() {
-              var sliders = document.querySelectorAll('.skill-slider'), i = 0;
               state.captain.name = document.getElementById('captain-name').value.replace(/^\s+|\s+$/g, "") || "{{user}}";
               state.captain.appearance = document.getElementById('captain-appearance').value.replace(/^\s+|\s+$/g, "");
-              for (i = 0; i < sliders.length; i++) setStartingSkillLevel(sliders[i].getAttribute('data-skill'), sliders[i].value);
+              state.captain.background = document.getElementById('captain-background').value.replace(/^\s+|\s+$/g, "");
               document.getElementById('screen-0').classList.remove('active');
               document.getElementById('main-ui').classList.add('flex');
               document.getElementById('main-ui').classList.remove('hidden');
@@ -859,8 +870,11 @@ replaceString: |-
               } catch (e) {
                   alert("无法读取 INIT_DATA。装配界面不会使用任何 fallback data，请检查世界书中 __INIT_DATA__ 是否存在且为合法 JSON。\n" + (e && e.message ? e.message : e));
                   console.error(e);
-                  gameData = { init_stories: {}, ships: {}, items: {}, stargazers: {}, weapons: {}, equipment: {}, gacha_data: {}, fittingCatalog: buildEmptyFittingCatalog() };
+                  gameData = { init_stories: {}, industries: {}, reputations: {}, ships: {}, items: {}, stargazers: {}, weapons: {}, equipment: {}, gacha_data: {}, fittingCatalog: buildEmptyFittingCatalog() };
               }
+              state.reputations = JSON.parse(JSON.stringify(gameData.reputations || {}));
+              state.reputations["铁血盟约"] = -50;
+              state.reputations["海盗势力"] = -50;
               goToPhase(0);
           }
 
@@ -891,7 +905,7 @@ replaceString: |-
                   document.getElementById('dot-' + (i + 1)).classList.toggle('active', i <= currentPhaseIndex);
               }
               document.getElementById('btn-prev').disabled = currentPhaseIndex === 0;
-              document.getElementById('btn-next').textContent = currentPhaseIndex === phases.length - 1 ? "生成协议 >>>" : (currentCategory === "ships" || currentCategory === "fitting" ? "继续 / 跳过 >>>" : "继续 >>>");
+              document.getElementById('btn-next').textContent = currentPhaseIndex === phases.length - 1 ? "生成协议 >>>" : (currentCategory === "fitting" ? "继续 / 跳过 >>>" : "继续 >>>");
               renderSummary();
           }
 
@@ -904,6 +918,7 @@ replaceString: |-
               summary.push("观星者: " + (state.fitting.stargazer ? state.fitting.stargazer._key : "未装配"));
               summary.push("物品: " + state.selections.items.length);
               summary.push("剧情: " + state.selections.init_stories.length);
+              summary.push("工业基地: " + state.industries.length);
               document.getElementById('selection-summary').innerHTML = summary.join("<br>");
           }
 
@@ -952,8 +967,78 @@ replaceString: |-
               return html.join(" ");
           }
 
+          function getSelectedStory() {
+              return state.selections.init_stories.length ? state.selections.init_stories[0] : null;
+          }
+
+          function uniqueIndustryName(base) {
+              var name = base || "新工业基地", suffix = 2, exists = true, i = 0;
+              while (exists) {
+                  exists = false;
+                  for (i = 0; i < state.industries.length; i++) if (state.industries[i]._key === name) { exists = true; break; }
+                  if (exists) name = (base || "新工业基地") + suffix++;
+              }
+              return name;
+          }
+
+          function addIndustryPreset(presetName) {
+              var preset = gameData && gameData.industries && gameData.industries[presetName];
+              if (!preset) return;
+              var clone = JSON.parse(JSON.stringify(preset));
+              clone._key = uniqueIndustryName(presetName);
+              var story = getSelectedStory();
+              if (story && story["地点"] && (!clone["位置"] || clone["位置"].indexOf("未指定") >= 0)) clone["位置"] = story["地点"];
+              state.industries.push(clone);
+              renderSummary();
+              renderIndustries();
+          }
+
+          function ensureColonistIndustry() {
+              var story = getSelectedStory();
+              if (!story || story["开局类型"] !== "殖民者" || state.industries.length) return;
+              var preset = story["默认工业"] || Object.keys(gameData.industries || {})[0];
+              addIndustryPreset(preset);
+          }
+
+          function renderIndustries() {
+              var grid = document.getElementById('catalog-grid');
+              var presets = gameData.industries || {}, presetButtons = [], cards = [], key = "", i = 0, item;
+              ensureColonistIndustry();
+              for (key in presets) if (Object.prototype.hasOwnProperty.call(presets, key)) {
+                  presetButtons.push('<button class="btn px-4 py-2" data-action="add-industry" data-preset="' + escapeHtml(encodeURIComponent(key)) + '">+ ' + escapeHtml(key) + '</button>');
+              }
+              for (i = 0; i < state.industries.length; i++) {
+                  item = state.industries[i];
+                  cards.push('<section class="panel p-5" style="display:grid;gap:12px;">' +
+                    '<div class="flex justify-between gap-3"><strong class="text-[var(--accent-main)]">工业基地 ' + (i + 1) + '</strong><button class="btn px-3 py-1" data-action="remove-industry" data-index="' + i + '">移除</button></div>' +
+                    '<label>名称<input class="w-full mt-1" data-industry-index="' + i + '" data-industry-field="_key" value="' + escapeHtml(item._key || '') + '"></label>' +
+                    '<label>位置<input class="w-full mt-1" data-industry-index="' + i + '" data-industry-field="位置" value="' + escapeHtml(item["位置"] || '') + '"></label>' +
+                    '<div class="grid grid-cols-1 md:grid-cols-3 gap-3"><label>类型<input class="w-full mt-1" data-industry-index="' + i + '" data-industry-field="类型" value="' + escapeHtml(item["类型"] || '') + '"></label><label>状态<input class="w-full mt-1" data-industry-index="' + i + '" data-industry-field="状态" value="' + escapeHtml(item["状态"] || '运行') + '"></label><label>防御指数 0-100<input type="number" min="0" max="100" class="w-full mt-1" data-industry-index="' + i + '" data-industry-field="防御指数" value="' + escapeHtml(item["防御指数"] || 0) + '"></label></div>' +
+                    '<label>描述<textarea class="w-full mt-1" data-industry-index="' + i + '" data-industry-field="描述">' + escapeHtml(item["描述"] || '') + '</textarea></label>' +
+                    '<div class="grid grid-cols-1 md:grid-cols-2 gap-3"><label>每日输入 JSON<textarea class="w-full mt-1" data-industry-index="' + i + '" data-industry-map="输入">' + escapeHtml(JSON.stringify(item["输入"] || {})) + '</textarea></label><label>每日输出 JSON<textarea class="w-full mt-1" data-industry-index="' + i + '" data-industry-map="输出">' + escapeHtml(JSON.stringify(item["输出"] || {})) + '</textarea></label></div>' +
+                  '</section>');
+              }
+              grid.className = "grid-container flex-1";
+              grid.innerHTML = '<div class="panel p-4" style="grid-column:1/-1;"><div class="font-bold mb-3">工业预设</div><div class="flex flex-wrap gap-2">' + presetButtons.join('') + '</div><div class="text-xs text-[var(--text-muted)] mt-3">输入与输出使用稀疏 JSON，例如 {"矿物":2}。殖民者至少保留一座基地。</div></div>' + (cards.join('') || '<div class="panel p-6 text-[var(--text-muted)]">当前没有初始工业基地；可从上方预设添加。</div>');
+          }
+
+          function renderReputations() {
+              var grid = document.getElementById('catalog-grid');
+              var html = [], name = "", locked;
+              state.reputations["铁血盟约"] = -50;
+              state.reputations["海盗势力"] = -50;
+              for (name in state.reputations) if (Object.prototype.hasOwnProperty.call(state.reputations, name)) {
+                  locked = name === "铁血盟约" || name === "海盗势力";
+                  html.push('<label class="panel p-4"><div class="flex justify-between gap-3"><strong>' + escapeHtml(name) + '</strong><span class="font-mono">' + escapeHtml(state.reputations[name]) + '</span></div><input class="w-full mt-3" type="number" min="-100" max="100" step="1" data-reputation="' + escapeHtml(name) + '" value="' + escapeHtml(state.reputations[name]) + '" ' + (locked ? 'disabled' : '') + '></label>');
+              }
+              grid.className = "grid-container flex-1";
+              grid.innerHTML = '<div class="panel p-4" style="grid-column:1/-1;"><strong>初始势力声望</strong><div class="text-sm text-[var(--text-muted)] mt-2">范围 -100 至 100。海盗势力与铁血盟约固定为 -50。</div></div>' + html.join('');
+          }
+
           function renderPhase() {
               if (currentCategory === "fitting") renderFitting();
+              else if (currentCategory === "industries") renderIndustries();
+              else if (currentCategory === "reputations") renderReputations();
               else renderCatalog();
           }
 
@@ -963,7 +1048,10 @@ replaceString: |-
               var selected = state.selections[currentCategory] || [];
               var entries = [], html = [], key = "", i = 0, j = 0;
               grid.className = currentCategory === "ships" ? "ship-grid-container flex-1" : "grid-container flex-1";
-              for (key in data) if (Object.prototype.hasOwnProperty.call(data, key)) entries.push([key, data[key]]);
+              for (key in data) if (Object.prototype.hasOwnProperty.call(data, key)) {
+                  if (currentCategory === "ships" && !isAllowedStartingShip(data[key])) continue;
+                  entries.push([key, data[key]]);
+              }
               if (!entries.length) {
                   grid.innerHTML = buildCustomToolbar(currentCategory) + '<div class="panel p-6 text-[var(--text-muted)]">当前分类没有可用数据。</div>';
                   return;
@@ -1518,6 +1606,14 @@ replaceString: |-
               if (action === 'start-game') { startGame(); return; }
               if (action === 'prev-phase') { prevPhase(); return; }
               if (action === 'next-phase') { nextPhase(); return; }
+              if (action === 'add-industry') { addIndustryPreset(decodeURIComponent(el.getAttribute('data-preset') || "")); return; }
+              if (action === 'remove-industry') {
+                  var removeIndex = parseInt(el.getAttribute('data-index') || '-1', 10);
+                  var selectedStory = getSelectedStory();
+                  if (selectedStory && selectedStory["开局类型"] === "殖民者" && state.industries.length <= 1) { alert("殖民者开局必须保留至少一座工业基地。"); return; }
+                  if (removeIndex >= 0) state.industries.splice(removeIndex, 1);
+                  renderSummary(); renderIndustries(); return;
+              }
               if (action === 'close-modal') { closeModal(); return; }
               if (action === 'select-current-item') { selectCurrentItem(); return; }
               if (action === 'open-detail') { openDetailModal(el.getAttribute('data-payload') || ""); return; }
@@ -1570,8 +1666,8 @@ replaceString: |-
 
           function getCustomShipTemplate() {
               return {
-                  "舰船类型": "自定义舰船",
-                  "吨位": "护卫舰",
+                  "舰船类型": "FF",
+                  "吨位": "S",
                   "描述": "填写舰船外观、定位、背景与开局状态。",
                   "炮位配置": "2S 1M",
                   "装备槽位配置": "2H 2L",
@@ -1676,8 +1772,8 @@ replaceString: |-
 
           function normalizeCustomShip(obj) {
               var ship = JSON.parse(JSON.stringify(obj || {}));
-              ship["舰船类型"] = ship["舰船类型"] || "自定义舰船";
-              ship["吨位"] = ship["吨位"] || "自定义吨位";
+              ship["舰船类型"] = normalizeStartingShipType(ship["舰船类型"] || "FF");
+              ship["吨位"] = ship["吨位"] || (ship["舰船类型"] === "MV" ? "M" : "S");
               ship["描述"] = ship["描述"] || "玩家自定义舰船。";
               ship["炮位配置"] = ship["炮位配置"] || "0S";
               ship["装备槽位配置"] = ship["装备槽位配置"] || "0H 0L";
@@ -1695,6 +1791,7 @@ replaceString: |-
 
           function validateCustomShip(ship) {
               if (!ship || typeof ship !== "object" || Array.isArray(ship)) return "舰船内容必须是对象。";
+              if (!isAllowedStartingShip(ship)) return "开局舰船类型只能是 FF（护卫舰）或 MV（矿船）。";
               if (!ship["炮位配置"]) return "缺少 炮位配置，例如：2S 1M。";
               if (!ship["装备槽位配置"]) return "缺少 装备槽位配置，例如：2H 2L。";
               if (!ship["装配资源"] || parsePlainNumber(ship["装配资源"]["PG"]) <= 0 || parsePlainNumber(ship["装配资源"]["CPU"]) <= 0) return "装配资源.PG 与 装配资源.CPU 必须大于 0。";
@@ -1797,15 +1894,32 @@ replaceString: |-
 
 
           document.addEventListener('change', function(event) {
-              if (event.target && event.target.classList.contains('skill-slider')) {
-                  setStartingSkillLevel(event.target.getAttribute('data-skill'), event.target.value);
+              var target = event.target, index, field, parsed;
+              if (target && target.hasAttribute('data-industry-map')) {
+                  index = parseInt(target.getAttribute('data-industry-index') || '-1', 10);
+                  field = target.getAttribute('data-industry-map');
+                  try {
+                      parsed = JSON.parse(target.value || '{}');
+                      if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('必须是对象');
+                      state.industries[index][field] = parsed;
+                      target.style.borderColor = '';
+                  } catch (e) { target.style.borderColor = 'var(--danger)'; alert(field + " 必须是合法 JSON 对象。"); }
                   return;
               }
               if (event.target && event.target.id === 'custom-module-kind' && customFormatterContext.kind === 'module') fillCustomTemplate();
           });
           document.addEventListener('input', function(event) {
-              if (event.target && event.target.classList.contains('skill-slider')) {
-                  setStartingSkillLevel(event.target.getAttribute('data-skill'), event.target.value);
+              var target = event.target, index, field, value;
+              if (target && target.hasAttribute('data-industry-field')) {
+                  index = parseInt(target.getAttribute('data-industry-index') || '-1', 10);
+                  field = target.getAttribute('data-industry-field');
+                  value = field === '防御指数' ? Math.max(0, Math.min(100, parseInt(target.value || '0', 10) || 0)) : target.value;
+                  if (state.industries[index]) state.industries[index][field] = value;
+                  return;
+              }
+              if (target && target.hasAttribute('data-reputation')) {
+                  field = target.getAttribute('data-reputation');
+                  state.reputations[field] = Math.max(-100, Math.min(100, parseInt(target.value || '0', 10) || 0));
               }
           });
 
@@ -2132,7 +2246,13 @@ replaceString: |-
           }
 
           function nextPhase() {
+              if (currentCategory === "ships" && (!getSelectedShip() || !isAllowedStartingShip(getSelectedShip()))) { alert("必须选择一艘护卫舰（FF）或矿船（MV）作为开局舰船。"); return; }
               if (currentCategory === "init_stories" && state.selections.init_stories.length === 0) { alert("必须选择一个开局剧情。"); return; }
+              if (currentCategory === "init_stories") ensureColonistIndustry();
+              if (currentCategory === "industries") {
+                  ensureColonistIndustry();
+                  if (getSelectedStory() && getSelectedStory()["开局类型"] === "殖民者" && state.industries.length === 0) { alert("殖民者开局必须拥有至少一座工业基地。"); return; }
+              }
               if (currentPhaseIndex < phases.length - 1) goToPhase(currentPhaseIndex + 1);
               else exportData();
           }
@@ -2165,6 +2285,42 @@ replaceString: |-
               return stargazer;
           }
 
+          function buildStartingEvents(story) {
+              var events = {};
+              var openingType = story && story["开局类型"] ? String(story["开局类型"]) : "自定义";
+              var openingEvent = story && story["启动事件"] ? String(story["启动事件"]) : "【事件】自定义开局";
+              events["【事件】初入星区"] = {
+                  "阶段": 1
+              };
+              events[openingEvent] = { "阶段": 1 };
+              return events;
+          }
+
+          function buildStartingIndustries() {
+              var result = {}, used = {}, i = 0, clone, name, mapName, cleanMap, resource, amount;
+              for (i = 0; i < state.industries.length; i++) {
+                  clone = JSON.parse(JSON.stringify(state.industries[i] || {}));
+                  name = String(clone._key || ("工业基地" + (i + 1))).replace(/^\s+|\s+$/g, "") || ("工业基地" + (i + 1));
+                  while (used[name]) name += "副站";
+                  used[name] = true;
+                  delete clone._key;
+                  clone["状态"] = clone["状态"] || "运行";
+                  clone["防御指数"] = Math.max(0, Math.min(100, Number(clone["防御指数"]) || 0));
+                  for (mapName of ["输入", "输出"]) {
+                      cleanMap = {};
+                      if (clone[mapName] && typeof clone[mapName] === "object" && !Array.isArray(clone[mapName])) {
+                          for (resource in clone[mapName]) if (Object.prototype.hasOwnProperty.call(clone[mapName], resource)) {
+                              amount = Number(clone[mapName][resource]);
+                              if (Number.isFinite(amount) && amount > 0) cleanMap[resource] = amount;
+                          }
+                      }
+                      if (Object.keys(cleanMap).length) clone[mapName] = cleanMap; else delete clone[mapName];
+                  }
+                  result[name] = clone;
+              }
+              return result;
+          }
+
           function exportData() {
               var ship = buildEquippedShip();
               var stargazer = buildEquippedStargazer();
@@ -2178,6 +2334,9 @@ replaceString: |-
               var selectedShips = {};
               var selectedStargazers = {};
               if (!story) { alert("请选择一个开局剧情后再生成协议。"); return; }
+              ensureColonistIndustry();
+              if (story["开局类型"] === "殖民者" && state.industries.length === 0) { alert("殖民者开局必须拥有至少一座工业基地。"); return; }
+              if (ship && !isAllowedStartingShip(ship)) { alert("开局舰船只能是护卫舰（FF）或矿船（MV）。"); return; }
               if (items["补给"]) {
                   inventory["补给"] = Number(items["补给"]["堆叠"]) || 0;
                   delete items["补给"];
@@ -2185,25 +2344,30 @@ replaceString: |-
               if (ship) selectedShips[getSelectedShipName()] = ship;
               if (stargazer) selectedStargazers[state.fitting.stargazer._key] = JSON.parse(JSON.stringify(stargazer));
               finalPayload = {
-                  System: { Module: "Azure_Sector_Init", Version: "2.4.0" },
-                  Captain: { Name: state.captain.name, Appearance: state.captain.appearance },
-                  skills: buildStartingSkills(),
+                  System: { Module: "Azure_Sector_Init", Version: "3.1.0" },
+                  Captain: { Name: state.captain.name, Appearance: state.captain.appearance, Background: state.captain.background },
                   ships: selectedShips,
                   stargazers: selectedStargazers,
                   items: items,
                   inventory: inventory,
+                  buildings: buildStartingIndustries(),
+                  reputations: JSON.parse(JSON.stringify(state.reputations)),
+                  events: buildStartingEvents(story),
                   init_stories: formatSelection(state.selections.init_stories)
               };
               yamlStr = jsyaml.dump(finalPayload);
               promptStr = `[系统指令：玩家已完成开局装配。请严格根据以下 YAML 初始化本次开局。]
 
               1. 先读取 ships 与 stargazers。只处理其中实际存在的条目；空对象表示玩家主动跳过该项，不得擅自补发舰船或观星者。已有舰船必须原样使用其 装备、驾驶员、是否旗舰、观星者接口角色。
-              2. 将非空 ships 写入 主角.舰船，将 items 写入 主角.物品栏，将非空 stargazers 写入 主角.可攻略角色。将 inventory 中的资源数值写入主角.库存同名字段；资源不得写入普通物品栏。
-              3. 开局剧情以 init_stories 为唯一叙事锚点，必须根据其中的 时间、地点、描述 开场。
-              4. 主角姓名使用 Captain.Name。如果 Captain.Appearance 非空，则写入 主角.外貌。
-              5. 将 主角.位置 设置为所选开局剧情中的 地点。
-              6. 将 skills 中每项技能的 EXP 写入对应的 主角.技能.技能名.EXP。skills 已将玩家选择的 I–III 级换算为实际累计 EXP；不得把所选数字再次当作 EXP 或统一改成其它等级。不要直接写入只读的 _等级，该字段由外部脚本根据 EXP 自动同步。
-              7. 输出开场叙事后，立刻进行相应的变量更新，并严格遵守当前世界书中的主角、舰船、角色、新闻更新规则。
+              2. 将非空 ships 写入 主角.舰船，将 items 写入 主角.物品栏，将非空 stargazers 写入 主角.可攻略角色，将 buildings 原样写入 主角.建筑。将 inventory 中的资源数值写入主角.库存同名字段；资源不得写入普通物品栏。
+              3. 开局剧情以 init_stories 为唯一叙事锚点，必须根据其中的 时间、地点、开局类型、描述 开场。
+              4. 主角姓名使用 Captain.Name。如果 Captain.Appearance 非空，则写入 主角.外貌。将 Captain.Background 原样写入 主角.背景故事；它是玩家确认的既定经历，不得自行扩写或改写。
+              5. 背景故事中明确记载的职业、训练与长期经历可在直接相关的行动中体现为更可靠的判断、更少的低级失误或更有利的判定条件；不得据此生成技能、等级、经验值或技能树，高风险与对抗行动仍按既有规则结算。
+              6. 将 主角.位置 设置为所选开局剧情中的 地点。
+              7. 将 reputations 中每个数值写入 主角.势力声望 的同名字段。海盗势力与铁血盟约必须保持 -50，不得被叙事擅自改成中立。
+              8. buildings 中每座基地的名称、位置、防御指数、输入与输出均为玩家已经确认的最终值，不得套用其他产业模板或自行改写。
+              9. 将 events 中每个对象原样写入根变量 /事件/同名事件。事件名称已经包含【事件】前缀，不得改名；【事件】初入星区与所选开局专属事件必须同时建立。
+              10. 输出开场叙事后，立刻进行相应的变量更新，并严格遵守当前世界书中的主角、舰船、建筑、角色、新闻与事件更新规则。
 
               以下为初始化配置：
               ${cb}yaml
