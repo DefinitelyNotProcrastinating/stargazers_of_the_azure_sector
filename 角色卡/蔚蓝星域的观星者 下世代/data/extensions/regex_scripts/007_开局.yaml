@@ -709,7 +709,7 @@ replaceString: |-
               <h1 class="text-5xl font-bold text-[var(--accent-main)] mt-4">蔚蓝星域的观星者</h1>
               <p class="text-[var(--text-muted)] mt-5 leading-8">
                   载入新的开局协议。<br>
-                  你可以建立个人档案，选择舰船并完成装配，配置初始物资、开局剧情、工业基地与势力声望。确认后直接写入变量，聊天框只填入你的背景故事，不发送配置或数值。
+                  你可以建立个人档案，选择舰船并完成装配，配置初始物资、开局剧情、工业基地与势力声望。读取开局预设可以自动填写这些选择。确认后直接写入变量，聊天框填入背景故事与预设开局行动，不发送配置或数值。
               </p>
               <section class="panel p-5 mt-6 text-left"><h2 class="text-lg font-bold">开局预选</h2><div class="preset-controls">
                   <div><label for="welcome-preset-select">已保存的开局预选</label><select id="welcome-preset-select"><option value="">选择已保存的开局</option></select></div>
@@ -841,10 +841,10 @@ replaceString: |-
           var currentPhaseIndex = 0;
           var phases = ["ships", "fitting", "items", "init_stories", "industries", "reputations"];
           var phaseTitles = [
-              { t: "PHASE_1: 起始舰船", d: "Select starting ship", help: "默认候选为护卫舰与矿船。自定义舰船不限舰级，可保存到世界书供以后开局选择。下一步进入舰船装配与观星者选择。" },
+              { t: "PHASE_1: 起始舰船", d: "Select starting ship", help: "选择起始舰船。所有开局预选共用候选库与装配界面，自定义舰船不限舰级，可保存到世界书供以后开局选择。" },
               { t: "PHASE_2: 舰船装配", d: "Fit your ship", help: "舰船与观星者均可跳过。已选择舰船时，外环为武器拨码环，中环为 H/L 模块拨码环；未选择舰船时仍可单独选择观星者。" },
               { t: "PHASE_3: 初始物资", d: "Select inventory items", help: "先按名称或标签筛选，再用选择框加入物品。已选物品可取消或修改数量，也可创建新物品；资源类物资计入库存。" },
-              { t: "PHASE_4: 开局类型", d: "Select opening", help: "选择开局剧情。殖民者开局会自动取得至少一座工业基地；古代冷冻舱预设会默认改选残损节点单元「序列10101111」，并重置先前装配。" },
+              { t: "PHASE_4: 开局类型", d: "Select opening", help: "选择开局剧情。读取开局预选可一并恢复舰船、装配、背景、物资与声望；在此更换剧情不会重置其他选择。" },
               { t: "PHASE_5: 工业基地", d: "Configure industries", help: "从预设增加任意数量的基地，并编辑名称、位置、防御指数、每日输入与每日输出。" },
               { t: "PHASE_6: 势力声望", d: "Set reputations", help: "设定与各势力的初始声望。海盗势力与铁血盟约固定从 -50 开始。" }
           ];
@@ -998,7 +998,6 @@ replaceString: |-
                   restoredData.fittingCatalog = buildFittingCatalog(restoredData);
                   gameData = restoredData;
                   state = copyOpening(preset.state);
-                  syncStoryShip();
                   gachaSessionCards = Array.isArray(preset.gachaCards) ? copyOpening(preset.gachaCards) : [];
                   selectedGachaIndex = Number.isInteger(preset.gachaSelectedIndex) ? preset.gachaSelectedIndex : -1;
                   itemFilters = openingObject(preset.itemFilters) && Array.isArray(preset.itemFilters.tags) ? copyOpening(preset.itemFilters) : { query: '', tags: [] };
@@ -1106,27 +1105,9 @@ replaceString: |-
           function getSelectedShip() { return state.selections.ships.length ? state.selections.ships[0] : null; }
           function getSelectedShipName() { return getSelectedShip() ? getSelectedShip()._key : ""; }
           function getSelectedStargazer() { return state.fitting.stargazer; }
-
-          function syncStoryShip(story) {
-              story = story || getSelectedStory();
-              var key = story && story._key, name = story && story['默认舰船名称'];
-              var ship = name && gameData.ships && gameData.ships[name];
-              if (state.storyShipBinding === key && key) return;
-              if (state.storyShipBinding) {
-                  if (getSelectedShipName() === state.storyShipName && state.storyShipBackup) {
-                      state.selections.ships = copyOpening(state.storyShipBackup.ships);
-                      state.fitting = copyOpening(state.storyShipBackup.fitting);
-                  }
-                  delete state.storyShipBinding;
-                  delete state.storyShipName;
-                  delete state.storyShipBackup;
-              }
-              if (!openingObject(ship) || !name || !key) return;
-              state.storyShipBackup = { ships: copyOpening(state.selections.ships), fitting: copyOpening(state.fitting) };
-              state.storyShipBinding = key;
-              state.storyShipName = name;
-              state.selections.ships = [Object.assign(copyOpening(ship), { _key: name })];
-              resetFitting();
+          function isBuiltinEquipment(item) { return itemTags(item).includes('内置'); }
+          function getFittingItem(kind, slotId) {
+              return kind === 'weapon' ? state.fitting.weapons[slotId] : state.fitting.modules[slotId];
           }
 
           function normalizeStartingShipType(value) {
@@ -1145,6 +1126,20 @@ replaceString: |-
               state.fitting.weapons = {};
               state.fitting.modules = {};
               state.fitting.stargazer = null;
+              var ship = getSelectedShip();
+              if (!ship) return;
+              var slots = buildWeaponSlots(ship).map(function(slot) { return { id: slot.id, type: slot.mount, kind: 'weapon' }; })
+                  .concat(buildModuleSlots(ship).map(function(slot) { return { id: slot.id, type: slot.slotType, kind: 'module' }; }));
+              Object.keys(ship['装备'] || {}).forEach(function(name) {
+                  var item = ship['装备'][name], req = parseRequirement(item['装配要求']);
+                  var kind = req['炮位'] && req['炮位'] !== '无' ? 'weapon' : 'module';
+                  var type = kind === 'weapon' ? getRequirementMount(req) : getRequirementSlotType(req);
+                  var map = kind === 'weapon' ? state.fitting.weapons : state.fitting.modules;
+                  var prefix = name.match(/^([A-Z]+\d+)\s+/);
+                  var slot = slots.find(function(slot) { return slot.kind === kind && slot.type === type && !map[slot.id] && prefix && slot.id === prefix[1]; })
+                      || slots.find(function(slot) { return slot.kind === kind && slot.type === type && !map[slot.id]; });
+                  if (slot) map[slot.id] = Object.assign(copyOpening(item), { _key: name.replace(/^[A-Z]+\d+\s+/, '') });
+              });
           }
 
           async function startGame() {
@@ -1457,14 +1452,14 @@ replaceString: |-
           }
 
           function parseBitrate(value) {
-              var num = parseFloat(String(value || "").replace(/[^0-9.]/g, ""));
+              var num = parseFloat(String(value || "").replace(/[^0-9.+-]/g, ""));
               if (!num) return 0;
               if (String(value).indexOf("PB") > -1) return num * 1000;
               return num;
           }
 
           function parsePlainNumber(value) {
-              var num = parseFloat(String(value || "").replace(/[^0-9.]/g, ""));
+              var num = parseFloat(String(value || "").replace(/[^0-9.+-]/g, ""));
               return num || 0;
           }
 
@@ -1568,10 +1563,10 @@ replaceString: |-
                   bonusStructure += getEquipmentNumber(entries[i], ["结构", "结构值", "船体结构值", "结构上限"]);
               }
               return {
-                  currentShield: ship && ship['开局保留残损'] ? Math.max(0, Math.min(parsePlainNumber(ship['护盾值']), baseShield + bonusShield)) : baseShield + bonusShield,
-                  maxShield: baseShield + bonusShield,
-                  currentStructure: ship && ship['开局保留残损'] ? Math.max(0, Math.min(parsePlainNumber(ship['结构值']), baseStructure + bonusStructure)) : baseStructure + bonusStructure,
-                  maxStructure: baseStructure + bonusStructure,
+                  currentShield: Math.max(0, Math.min(ship && ship['护盾值'] !== undefined ? parsePlainNumber(ship['护盾值']) : baseShield + bonusShield, Math.max(0, baseShield + bonusShield))),
+                  maxShield: Math.max(0, baseShield + bonusShield),
+                  currentStructure: Math.max(0, Math.min(ship && ship['结构值'] !== undefined ? parsePlainNumber(ship['结构值']) : baseStructure + bonusStructure, Math.max(0, baseStructure + bonusStructure))),
+                  maxStructure: Math.max(0, baseStructure + bonusStructure),
                   bonusShield: bonusShield,
                   bonusStructure: bonusStructure
               };
@@ -1647,7 +1642,6 @@ replaceString: |-
           function renderFitting() {
               var ship = getSelectedShip();
               var grid = document.getElementById('catalog-grid');
-              if (ship && ship['开局封存装配']) document.getElementById('phase-help').textContent = '序列10101111以残骸状态开局：无可用武器或舰载机，观星者接口与超空间引擎尚不可用。此处保留空装配与残损耐久，维修和核心移植由开局后的实际行动完成。';
               var centerX = 50, centerY = 41;
               var weapons, modules, weaponPos, highSlots, lowSlots, highPos, lowPos;
               var i = 0, weaponHtml = [], moduleHtml = [], fitList = [], status, hpStatus, stargazerLabel, stargazerMeta;
@@ -1719,6 +1713,7 @@ replaceString: |-
               document.getElementById('modal-body').innerHTML = formatValue(clone);
               document.getElementById('modal-primary-action').style.display = 'inline-block';
               document.getElementById('modal-primary-action').textContent = '选择';
+              document.getElementById('modal-primary-action').disabled = false;
               document.getElementById('modal-primary-action').setAttribute('data-action', 'select-current-item');
               document.getElementById('modal-details').style.display = 'flex';
           }
@@ -1739,13 +1734,15 @@ replaceString: |-
               selectorContext = { kind: kind, slotId: slotId };
               currentViewingItem = clone;
               document.getElementById('modal-title').textContent = slotId + " / " + getEquipmentDisplayName(clone);
+              delete clone._key;
               document.getElementById('modal-body').innerHTML =
                   '<div class="mb-4 p-3 border border-[var(--border-main)] bg-[rgba(232,248,255,0.74)]">' +
                   '<div class="text-[var(--accent-main)] mb-2">装配资源</div>' +
-                  '<div class="font-mono text-xs text-[var(--text-muted)]">当前占用 PG ' + req.PG + ' / CPU ' + req.CPU + '。卸载后剩余 PG ' + statusIfRemoved.remainPG + ' / CPU ' + statusIfRemoved.remainCPU + '。</div>' +
+                  '<div class="font-mono text-xs text-[var(--text-muted)]">当前占用 PG ' + req.PG + ' / CPU ' + req.CPU + '。' + (isBuiltinEquipment(item) ? '内置装备不能在装配界面拆卸。' : '卸载后剩余 PG ' + statusIfRemoved.remainPG + ' / CPU ' + statusIfRemoved.remainCPU + '。') + '</div>' +
                   '</div>' + formatValue(clone);
               document.getElementById('modal-primary-action').style.display = 'inline-block';
-              document.getElementById('modal-primary-action').textContent = '卸载';
+              document.getElementById('modal-primary-action').textContent = isBuiltinEquipment(item) ? '内置（不可拆卸）' : '卸载';
+              document.getElementById('modal-primary-action').disabled = isBuiltinEquipment(item);
               document.getElementById('modal-primary-action').setAttribute('data-action', 'unequip-current-slot');
               document.getElementById('modal-details').style.display = 'flex';
           }
@@ -1753,6 +1750,10 @@ replaceString: |-
           function openFittingSelector(kind, slotId) {
               var ship = getSelectedShip(), title = "", candidates = [], i = 0, slotType = "";
               if (!ship && kind !== "stargazer") return;
+              if (kind !== 'stargazer' && isBuiltinEquipment(getFittingItem(kind, slotId))) {
+                  openEquippedModal(kind, slotId, getFittingItem(kind, slotId));
+                  return;
+              }
               modalMode = "selector";
               selectorContext = { kind: kind, slotId: slotId };
               if (kind === "weapon") {
@@ -1812,12 +1813,13 @@ replaceString: |-
 
           function evaluateCandidate(kind, candidate) {
               var ship = getSelectedShip(), resourceStatus, req, compatible, removedRequirement, uniqueGroup, slotId, fitted;
-              if (ship && ship['开局封存装配']) return { ok: false, reason: '本预设保留残骸状态，装配和接口需在游戏中实际修复。' };
               if (kind === "stargazer") {
                   compatible = isStargazerCompatible(getSelectedShipName(), candidate);
                   if (compatible) return { ok: false, reason: compatible };
                   return { ok: true, reason: "" };
               }
+              if (!selectorContext) return { ok: false, reason: '请选择装配槽位。' };
+              if (isBuiltinEquipment(getFittingItem(kind, selectorContext.slotId))) return { ok: false, reason: '内置装备不能拆卸或替换。' };
               req = parseRequirement(candidate["装配要求"]);
               removedRequirement = getSlotCurrentRequirement(kind, selectorContext.slotId);
               resourceStatus = getResourceStatus(req, removedRequirement);
@@ -1843,6 +1845,7 @@ replaceString: |-
 
           function applyFittingSelection(kind, encoded) {
               var candidate = JSON.parse(decodeURIComponent(encoded));
+              if (!evaluateCandidate(kind, candidate).ok) return;
               if (kind === "weapon") state.fitting.weapons[selectorContext.slotId] = sanitizeEquipment(candidate);
               else if (kind === "module") state.fitting.modules[selectorContext.slotId] = sanitizeEquipment(candidate);
               else state.fitting.stargazer = candidate;
@@ -1863,6 +1866,7 @@ replaceString: |-
 
           function clearFittingSlot() {
               if (!selectorContext) return;
+              if (isBuiltinEquipment(getFittingItem(selectorContext.kind, selectorContext.slotId))) return;
               if (selectorContext.kind === "weapon") delete state.fitting.weapons[selectorContext.slotId];
               else delete state.fitting.modules[selectorContext.slotId];
               syncSelectedShipHpToMax();
@@ -2608,7 +2612,6 @@ replaceString: |-
                   state.selections[currentCategory] = [currentViewingItem];
                   if (currentCategory === "ships") { resetFitting(); syncSelectedShipHpToMax(); }
               } else list.push(currentViewingItem);
-              if (currentCategory === 'init_stories') syncStoryShip();
               closeModal();
               renderSummary();
               renderPhase();
@@ -2644,15 +2647,13 @@ replaceString: |-
               syncSelectedShipHpToMax();
               var ship = JSON.parse(JSON.stringify(getSelectedShip()));
               var weaponSlots = state.fitting.weapons, moduleSlots = state.fitting.modules, k = "", name, clone;
-              ship["驾驶员"] = ship['开局封存装配'] ? '' : state.captain.name;
-              if (ship['开局封存装配'] && ship['效果'] && ship['效果']['内部控制']) ship['效果']['内部控制']['上级单元'] = state.captain.name;
-              delete ship['开局保留残损'];
-              delete ship['开局封存装配'];
+              ship["驾驶员"] = getCurrentFittingEntries().some(function(item) { return item['效果'] && item['效果']['无人控制'] === true; }) ? '' : state.captain.name;
               ship["是否旗舰"] = true;
               ship["观星者接口角色"] = state.fitting.stargazer ? state.fitting.stargazer._key : "";
-              ship["装备"] = ship["装备"] && typeof ship["装备"] === "object" ? JSON.parse(JSON.stringify(ship["装备"])) : {};
+              ship["装备"] = {};
               for (k in weaponSlots) if (Object.prototype.hasOwnProperty.call(weaponSlots, k) && weaponSlots[k]) { name = k + " " + getEquipmentDisplayName(weaponSlots[k]); clone = JSON.parse(JSON.stringify(weaponSlots[k])); delete clone._key; ship["装备"][name] = clone; }
               for (k in moduleSlots) if (Object.prototype.hasOwnProperty.call(moduleSlots, k) && moduleSlots[k]) { name = k + " " + getEquipmentDisplayName(moduleSlots[k]); clone = JSON.parse(JSON.stringify(moduleSlots[k])); delete clone._key; ship["装备"][name] = clone; }
+              delete ship._key;
               return ship;
           }
 
@@ -2702,7 +2703,6 @@ replaceString: |-
           }
 
           function buildOpeningState(base, story) {
-              syncStoryShip(story);
               var ship = buildEquippedShip();
               var stargazer = buildEquippedStargazer();
               var items = formatSelection(state.selections.items);
@@ -2745,7 +2745,9 @@ replaceString: |-
           }
 
           function openingDraft() {
-              // 开局数值只保存在 SAM；聊天输入仅包含玩家原样填写的背景故事。
+              var story = getSelectedStory();
+              if (story && story['开局行动']) return state.captain.background + '\n\n开局行动：\n' + story['开局行动'];
+              // 开局数值只保存在 SAM；普通开局保留玩家原样填写的背景故事。
               return state.captain.background;
           }
 
@@ -2795,6 +2797,7 @@ replaceString: |-
                       .replace(/<UpdateVariable>[\s\S]*?<\/UpdateVariable>/g, '')
                       .replace(/<JSONPatch>[\s\S]*?<\/JSONPatch>/g, '')
                       .replace('$开始游戏$', '').trim();
+                  if (story && story['开局行动']) narrative = '蔚蓝星域 · 开局预设「' + story._key + '」\n\n' + story['开局行动'];
                   updated = (narrative || "蔚蓝星域 · 开局档案已建立。")
                       + '\n\n<UpdateVariables>\n<JSONPatch>\n' + serializeOpeningState(patch)
                       + '\n</JSONPatch>\n</UpdateVariables>\n\n'
@@ -2824,7 +2827,7 @@ replaceString: |-
               } finally {
                   openingBusy = false;
                   button.disabled = openingDone;
-                  button.textContent = openingDone ? (state.captain.background ? "开局已写入，背景故事已填入聊天框" : "开局已写入，请自行输入开场内容") : "确认并开始游戏 >>>";
+                  button.textContent = openingDone ? (openingDraft() ? "开局已写入，开场内容已填入聊天框" : "开局已写入，请自行输入开场内容") : "确认并开始游戏 >>>";
               }
           }
 
