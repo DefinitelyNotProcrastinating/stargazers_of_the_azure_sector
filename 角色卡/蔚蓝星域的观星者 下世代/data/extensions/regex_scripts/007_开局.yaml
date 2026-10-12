@@ -122,6 +122,11 @@ replaceString: |-
           .ship-grid-container .item-card {
               min-height: 190px;
           }
+          .ship-grid-container > .custom-toolbar {
+              grid-column: 1 / -1;
+              align-items: center;
+              justify-content: flex-start;
+          }
           .item-card {
               background: linear-gradient(150deg, rgba(255,255,255,0.82), rgba(222,246,255,0.58));
               border: 1px solid var(--border-soft);
@@ -677,6 +682,24 @@ replaceString: |-
               .panel,.modal-content{background:#0b1d31}.item-card,.fitting-stage,.ring-slot,.stargazer-dock,.formatter-hint,.gacha-card,.candidate-card{background:#142c46}
           }
           @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition-duration:.01ms!important; animation-duration:.01ms!important; } }
+          .preset-controls { display:flex; flex-wrap:wrap; align-items:end; gap:10px; margin-top:14px; }
+          .preset-controls > div { flex:1 1 210px; display:grid; gap:6px; }
+          .preset-controls label,.picker-label { font-size:12px; color:var(--text-muted); }
+          .preset-controls select,.preset-controls input { width:100%; min-width:0; }
+          .inventory-layout { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:18px; align-items:start; }
+          .inventory-layout h3 { font-weight:700; color:var(--accent-main); font-size:18px; }
+          .picker-label { display:block; margin:16px 0 6px; }
+          .tag-filter { display:flex; flex-wrap:wrap; gap:6px; margin:14px 0; }
+          .tag-filter .btn { font-size:12px; padding:6px 10px; }
+          .tag-filter .tag-active { border-color:var(--accent-main); background:rgba(40,111,150,.6); color:var(--text-main); }
+          .picker-preview { background:var(--bg-inset); padding:16px; border-radius:12px; margin:14px 0; min-height:96px; line-height:1.8; overflow-wrap:anywhere; }
+          .selected-item-list { display:grid; gap:12px; margin-top:16px; }
+          .selected-item-row { display:grid; grid-template-columns:minmax(0,1fr) 80px auto; align-items:center; gap:10px; border-bottom:1px solid var(--border-soft); padding-bottom:12px; }
+          .selected-item-row strong { overflow-wrap:anywhere; }
+          .selected-item-row input { width:100%; padding:8px; }
+          .selected-item-row label { font-size:12px; color:var(--text-muted); }
+          details summary { cursor:pointer; color:var(--accent-main); }
+          @media(max-width:720px) { .inventory-layout { grid-template-columns:1fr; } .preset-controls > .btn { flex:1 1 auto; } .selected-item-row { grid-template-columns:minmax(0,1fr) 70px; } .selected-item-row > .btn { grid-column:1/-1; } }
       </style>
   </head>
   <body>
@@ -688,6 +711,13 @@ replaceString: |-
                   载入新的开局协议。<br>
                   你可以建立个人档案，选择舰船并完成装配，配置初始物资、开局剧情、工业基地与势力声望。确认后直接写入变量，聊天框只填入你的背景故事，不发送配置或数值。
               </p>
+              <section class="panel p-5 mt-6 text-left"><h2 class="text-lg font-bold">开局预选</h2><div class="preset-controls">
+                  <div><label for="welcome-preset-select">已保存的开局预选</label><select id="welcome-preset-select"><option value="">选择已保存的开局</option></select></div>
+                  <button class="btn px-4 py-2" data-action="load-opening-preset" data-prefix="welcome">读取预选</button>
+                  <button class="btn px-4 py-2" data-action="reload-opening-presets">刷新</button>
+                  <div><label for="welcome-preset-name">预选名称</label><input id="welcome-preset-name" placeholder="例如：远征舰长 / 采矿队"></div>
+                  <button class="btn px-4 py-2" data-action="save-opening-preset" data-prefix="welcome">保存 / 覆盖当前设置</button>
+              </div><p id="welcome-preset-status" class="text-sm text-[var(--text-muted)] mt-3" role="status" aria-live="polite">预选会保存全部开局设置，读取后仍可继续编辑。</p></section>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 text-left">
                   <div>
                       <label class="text-xs text-[var(--text-muted)]">舰长名称</label>
@@ -715,6 +745,13 @@ replaceString: |-
               </div>
               <div class="text-right font-mono text-xs text-[var(--text-muted)]" id="selection-summary"></div>
           </div>
+          <details class="panel p-4 mb-4"><summary>保存 / 读取完整开局预选</summary><div class="preset-controls">
+                  <div><label for="setup-preset-select">已保存的开局预选</label><select id="setup-preset-select"><option value="">选择已保存的开局</option></select></div>
+                  <button class="btn px-4 py-2" data-action="load-opening-preset" data-prefix="setup">读取预选</button>
+                  <button class="btn px-4 py-2" data-action="reload-opening-presets">刷新</button>
+                  <div><label for="setup-preset-name">预选名称</label><input id="setup-preset-name" placeholder="例如：远征舰长 / 采矿队"></div>
+                  <button class="btn px-4 py-2" data-action="save-opening-preset" data-prefix="setup">保存 / 覆盖当前设置</button>
+              </div><p id="setup-preset-status" class="text-sm text-[var(--text-muted)] mt-3" role="status" aria-live="polite">预选会保存全部开局设置，读取后仍可继续编辑。</p></details>
           <div class="flex gap-2 mb-4">
               <div class="step-dot" id="dot-1"></div>
               <div class="step-dot" id="dot-2"></div>
@@ -773,6 +810,7 @@ replaceString: |-
               </div>
               <div class="mt-6 pt-4 border-t border-[var(--border-main)] flex justify-end gap-2">
                   <button class="btn px-4 py-2" data-action="close-custom-formatter">取消</button>
+                  <button class="btn px-4 py-2" id="save-custom-ship-button" style="display:none;" data-action="save-custom-ship-worldbook">保存到世界书并选用</button>
                   <button class="btn px-4 py-2" data-action="apply-custom-formatter">加入列表</button>
               </div>
           </div>
@@ -803,10 +841,10 @@ replaceString: |-
           var currentPhaseIndex = 0;
           var phases = ["ships", "fitting", "items", "init_stories", "industries", "reputations"];
           var phaseTitles = [
-              { t: "PHASE_1: 起始舰船", d: "Select starting ship", help: "只能选择一艘护卫舰（FF）或矿船（MV）。下一步进入舰船装配与观星者选择。" },
+              { t: "PHASE_1: 起始舰船", d: "Select starting ship", help: "默认候选为护卫舰与矿船。自定义舰船不限舰级，可保存到世界书供以后开局选择。下一步进入舰船装配与观星者选择。" },
               { t: "PHASE_2: 舰船装配", d: "Fit your ship", help: "舰船与观星者均可跳过。已选择舰船时，外环为武器拨码环，中环为 H/L 模块拨码环；未选择舰船时仍可单独选择观星者。" },
-              { t: "PHASE_3: 初始物资", d: "Select inventory items", help: "可多选初始物品。常规物品导出至主角.物品栏；资源类物资导出至主角.库存。" },
-              { t: "PHASE_4: 开局类型", d: "Select opening", help: "选择开局剧情。殖民者开局会自动取得至少一座工业基地。" },
+              { t: "PHASE_3: 初始物资", d: "Select inventory items", help: "先按名称或标签筛选，再用选择框加入物品。已选物品可取消或修改数量，也可创建新物品；资源类物资计入库存。" },
+              { t: "PHASE_4: 开局类型", d: "Select opening", help: "选择开局剧情。殖民者开局会自动取得至少一座工业基地；古代冷冻舱预设会默认改选残损节点单元「序列10101111」，并重置先前装配。" },
               { t: "PHASE_5: 工业基地", d: "Configure industries", help: "从预设增加任意数量的基地，并编辑名称、位置、防御指数、每日输入与每日输出。" },
               { t: "PHASE_6: 势力声望", d: "Set reputations", help: "设定与各势力的初始声望。海盗势力与铁血盟约固定从 -50 开始。" }
           ];
@@ -816,7 +854,7 @@ replaceString: |-
               init_stories: 1,
               industries: null
           };
-          var fittingCatalog = { weaponsByMount: { S: [], M: [], L: [], XL: [] }, modulesBySlot: { H: [], L: [] } };
+          var fittingCatalog = { weaponsByMount: { S: [], M: [], L: [], XL: [], C: [], T: [] }, modulesBySlot: { H: [], L: [] } };
           var state = {
               captain: { name: "{{user}}", appearance: "", background: "" },
               selections: { ships: [], items: [], init_stories: [] },
@@ -833,6 +871,216 @@ replaceString: |-
           var selectedGachaIndex = -1;
           var openingBusy = false;
           var openingDone = false;
+
+          var openingWorldbookName = "蔚蓝星域的观星者 下世代";
+          var presetStore = {};
+          var presetBusy = false;
+          var openingDataPromise = null;
+          var itemFilters = { query: "", tags: [] };
+
+          function copyOpening(value) { return JSON.parse(JSON.stringify(value)); }
+          function openingObject(value) { return !!value && typeof value === 'object' && !Array.isArray(value); }
+          function findOpeningEntry(worldbook) {
+              return worldbook.find(function(entry) { return entry.comment === '__INIT_DATA__' || entry.name === '__INIT_DATA__'; });
+          }
+          async function ensureOpeningData() {
+              if (gameData) return gameData;
+              if (!openingDataPromise) openingDataPromise = fetchGameData().then(function(data) {
+                  gameData = data;
+                  state.reputations = copyOpening(data.reputations || {});
+                  state.reputations['铁血盟约'] = -50;
+                  state.reputations['海盗势力'] = -50;
+                  return data;
+              }).finally(function() { openingDataPromise = null; });
+              return openingDataPromise;
+          }
+          function presetStatus(message, failed) {
+              ['welcome-preset-status', 'setup-preset-status'].forEach(function(id) {
+                  var node = document.getElementById(id);
+                  if (node) { node.textContent = message; node.style.color = failed ? 'var(--danger)' : ''; }
+              });
+          }
+          function renderOpeningPresets(selectedName) {
+              ['welcome-preset-select', 'setup-preset-select'].forEach(function(id) {
+                  var select = document.getElementById(id);
+                  if (!select) return;
+                  var previous = selectedName || select.value;
+                  select.innerHTML = '<option value="">选择已保存的开局</option>' + Object.keys(presetStore).map(function(name) {
+                      return '<option value="' + escapeHtml(name) + '">' + escapeHtml(name) + '</option>';
+                  }).join('');
+                  if (Object.prototype.hasOwnProperty.call(presetStore, previous)) select.value = previous;
+              });
+          }
+          async function refreshOpeningPresets() {
+              var entry = findOpeningEntry(await getWorldbook(openingWorldbookName));
+              if (!entry || !entry.content) throw new Error('找不到开局数据条目。');
+              var data = JSON.parse(entry.content);
+              if (data.opening_presets !== undefined && !openingObject(data.opening_presets)) throw new Error('预选库格式错误。');
+              presetStore = copyOpening(data.opening_presets || {});
+              renderOpeningPresets();
+              return presetStore;
+          }
+          function validateItemQuantities() {
+              if (typeof document.querySelector === 'function') {
+                  var invalid = document.querySelector('[data-item-index]:invalid');
+                  if (invalid) { invalid.reportValidity(); throw new Error('物品数量必须是正整数。'); }
+              }
+              if (state.selections.items.some(function(item) { return !Number.isSafeInteger(Number(item['堆叠'] === undefined ? 1 : item['堆叠'])) || Number(item['堆叠'] === undefined ? 1 : item['堆叠']) < 1; })) throw new Error('物品数量必须是正整数。');
+          }
+          function captureOpeningPreset() {
+              validateItemQuantities();
+              ['name', 'appearance', 'background'].forEach(function(field) {
+                  var input = document.getElementById('captain-' + field);
+                  if (input) state.captain[field] = input.value;
+              });
+              var catalogs = {};
+              ['ships', 'items', 'weapons', 'equipment', 'stargazers', 'init_stories', 'industries'].forEach(function(key) {
+                  catalogs[key] = copyOpening(gameData[key] || {});
+              });
+              return { version: 1, state: copyOpening(state), catalogs: catalogs,
+                  gachaCards: copyOpening(gachaSessionCards), gachaSelectedIndex: selectedGachaIndex,
+                  itemFilters: copyOpening(itemFilters) };
+          }
+          function validateOpeningPreset(preset) {
+              if (!openingObject(preset) || preset.version !== 1 || !openingObject(preset.state) || !openingObject(preset.catalogs)) throw new Error('无法识别此预选格式。');
+              var restored = preset.state;
+              if (!openingObject(restored.captain) || !openingObject(restored.selections) || !openingObject(restored.fitting) || !Array.isArray(restored.industries) || !openingObject(restored.reputations)) throw new Error('预选缺少完整开局设置。');
+              ['ships', 'items', 'init_stories'].forEach(function(key) {
+                  if (!Array.isArray(restored.selections[key]) || restored.selections[key].some(function(item) { return !openingObject(item) || typeof item._key !== 'string' || !item._key.trim(); })) throw new Error('预选中的选择列表无效。');
+              });
+              if (restored.selections.items.some(function(item) { return !Number.isSafeInteger(Number(item['堆叠'] === undefined ? 1 : item['堆叠'])) || Number(item['堆叠'] === undefined ? 1 : item['堆叠']) < 1; })) throw new Error('预选中的物品数量无效。');
+              if (restored.selections.ships.length > 1 || restored.selections.init_stories.length > 1) throw new Error('预选只能选择一艘舰船和一个剧情。');
+              if (!openingObject(restored.fitting.weapons) || !openingObject(restored.fitting.modules) || (restored.fitting.stargazer !== null && (!openingObject(restored.fitting.stargazer) || !restored.fitting.stargazer._key))) throw new Error('预选中的装配或观星者无效。');
+              ['ships', 'items', 'weapons', 'equipment', 'stargazers', 'init_stories', 'industries'].forEach(function(key) {
+                  if (!openingObject(preset.catalogs[key])) throw new Error('预选缺少候选库：' + key);
+              });
+              if (restored.industries.some(function(item) { return !openingObject(item) || !item._key; })) throw new Error('预选中的工业基地无效。');
+              ['name', 'appearance', 'background'].forEach(function(field) { if (typeof restored.captain[field] !== 'string') throw new Error('舰长档案无效。'); });
+          }
+          async function saveOpeningPreset(prefix) {
+              if (presetBusy || openingBusy || openingDone) return;
+              presetBusy = true;
+              try {
+                  await ensureOpeningData();
+                  var name = document.getElementById(prefix + '-preset-name').value.trim();
+                  if (!name) throw new Error('请输入预选名称。');
+                  var preset = captureOpeningPreset();
+                  validateOpeningPreset(preset);
+                  if (typeof updateWorldbookWith !== 'function') throw new Error('当前环境无法保存世界书，请启用酒馆助手。');
+                  await updateWorldbookWith(openingWorldbookName, function(worldbook) {
+                      var entry = findOpeningEntry(worldbook);
+                      if (!entry) throw new Error('找不到开局数据条目。');
+                      var data = JSON.parse(entry.content);
+                      if (data.opening_presets !== undefined && !openingObject(data.opening_presets)) throw new Error('预选库格式错误。');
+                      var presets = data.opening_presets || {};
+                      Object.defineProperty(presets, name, { value: copyOpening(preset), enumerable: true, configurable: true, writable: true });
+                      data.opening_presets = presets;
+                      return worldbook.map(function(item) { return item === entry ? Object.assign({}, item, { content: JSON.stringify(data, null, 2), enabled: false }) : item; });
+                  }, { render: 'none' });
+                  await refreshOpeningPresets();
+                  renderOpeningPresets(name);
+                  presetStatus('已保存预选「' + name + '」，之后的新开局可以读取。');
+              } catch (error) { presetStatus('保存失败：' + error.message, true); }
+              finally { presetBusy = false; }
+          }
+          async function loadOpeningPreset(prefix) {
+              if (presetBusy || openingBusy || openingDone) return;
+              var name = document.getElementById(prefix + '-preset-select').value;
+              if (!name) { presetStatus('请先选择一个预选。', true); return; }
+              presetBusy = true;
+              try {
+                  await ensureOpeningData();
+                  await refreshOpeningPresets();
+                  var preset = copyOpening(presetStore[name]);
+                  validateOpeningPreset(preset);
+                  var restoredData = await fetchGameData();
+                  Object.keys(preset.catalogs).forEach(function(key) { restoredData[key] = Object.assign({}, restoredData[key] || {}, copyOpening(preset.catalogs[key])); });
+                  restoredData.fittingCatalog = buildFittingCatalog(restoredData);
+                  gameData = restoredData;
+                  state = copyOpening(preset.state);
+                  syncStoryShip();
+                  gachaSessionCards = Array.isArray(preset.gachaCards) ? copyOpening(preset.gachaCards) : [];
+                  selectedGachaIndex = Number.isInteger(preset.gachaSelectedIndex) ? preset.gachaSelectedIndex : -1;
+                  itemFilters = openingObject(preset.itemFilters) && Array.isArray(preset.itemFilters.tags) ? copyOpening(preset.itemFilters) : { query: '', tags: [] };
+                  ['name', 'appearance', 'background'].forEach(function(field) { document.getElementById('captain-' + field).value = state.captain[field]; });
+                  ['welcome', 'setup'].forEach(function(place) { document.getElementById(place + '-preset-name').value = name; });
+                  renderOpeningPresets(name);
+                  if (currentCategory) { closeModal(); closeCustomFormatter(); document.getElementById('modal-gacha-results').style.display = 'none'; renderPhase(); renderSummary(); }
+                  presetStatus('已读取「' + name + '」的完整设置；可以继续修改后开始游戏。');
+              } catch (error) { presetStatus('读取失败：' + error.message, true); }
+              finally { presetBusy = false; }
+          }
+          async function reloadOpeningPresets() {
+              try { await ensureOpeningData(); await refreshOpeningPresets(); presetStatus('已读取 ' + Object.keys(presetStore).length + ' 份预选。'); }
+              catch (error) { presetStatus('预选读取失败：' + error.message, true); }
+          }
+
+          function itemTags(item) {
+              var tags = item && item['标签'];
+              var normalized = (Array.isArray(tags) ? tags : typeof tags === 'string' ? tags.split(/[,，]/) : []).map(function(tag) { return String(tag).trim(); }).filter(Boolean);
+              return normalized.length ? normalized : ['未分类'];
+          }
+          function getFilteredItems() {
+              var query = itemFilters.query.trim().toLowerCase();
+              return Object.keys(gameData.items || {}).filter(function(key) {
+                  var item = gameData.items[key], tags = itemTags(item);
+                  return (!query || (key + ' ' + (item['描述'] || '') + ' ' + tags.join(' ')).toLowerCase().includes(query)) && itemFilters.tags.every(function(tag) { return tags.includes(tag); });
+              });
+          }
+          function renderItemChoices() {
+              var select = document.getElementById('item-choice');
+              if (!select) return;
+              var previous = select.value, names = getFilteredItems();
+              select.innerHTML = '<option value="">选择一种物品（' + names.length + '项）</option>' + names.map(function(name) { return '<option value="' + escapeHtml(name) + '">' + escapeHtml(name) + '</option>'; }).join('');
+              if (names.includes(previous)) select.value = previous;
+              renderItemPreview();
+          }
+          function renderItemPreview() {
+              var select = document.getElementById('item-choice'), box = document.getElementById('item-choice-preview');
+              if (!select || !box) return;
+              var item = gameData.items[select.value];
+              box.innerHTML = item ? '<strong>' + escapeHtml(select.value) + '</strong><p>' + escapeHtml(item['描述'] || '未记录描述') + '</p><small>' + escapeHtml(itemTags(item).join(' / ')) + '</small>' : '使用名称搜索或标签缩小范围，再选择物品。多个标签需同时匹配。';
+              var button = document.getElementById('item-add-button');
+              if (button) { button.disabled = !item; button.textContent = state.selections.items.some(function(selected) { return selected._key === select.value; }) ? '已选择' : '加入开局'; }
+          }
+          function renderItems() {
+              var grid = document.getElementById('catalog-grid'), tags = [];
+              Object.keys(gameData.items || {}).forEach(function(key) { itemTags(gameData.items[key]).forEach(function(tag) { if (!tags.includes(tag)) tags.push(tag); }); });
+              grid.className = 'inventory-layout flex-1';
+              grid.innerHTML = '<section class="panel p-5"><h3>选择物品</h3><label class="picker-label" for="item-search">搜索名称或描述</label><input id="item-search" class="w-full" type="search" placeholder="例如：补给、急救、冷却" value="' + escapeHtml(itemFilters.query) + '"><div class="tag-filter">' +
+                  '<button class="btn ' + (!itemFilters.tags.length ? 'tag-active' : '') + '" data-action="clear-item-tags">全部</button>' + tags.sort().map(function(tag) { return '<button class="btn ' + (itemFilters.tags.includes(tag) ? 'tag-active' : '') + '" data-action="toggle-item-tag" data-tag="' + escapeHtml(encodeURIComponent(tag)) + '">' + escapeHtml(tag) + '</button>'; }).join('') +
+                  '</div><label class="picker-label" for="item-choice">候选物品</label><select id="item-choice" class="w-full"></select><div id="item-choice-preview" class="picker-preview"></div><div class="flex flex-wrap gap-2"><button class="btn px-4 py-2" id="item-add-button" data-action="add-opening-item">加入开局</button><button class="btn px-4 py-2" data-action="open-custom-item-formatter">+ 创建新物品</button></div></section>' +
+                  '<section class="panel p-5"><h3>已选物品 · ' + state.selections.items.length + '</h3><div class="selected-item-list">' + (state.selections.items.length ? state.selections.items.map(function(item, index) {
+                      return '<article class="selected-item-row"><div><strong>' + escapeHtml(item._key) + '</strong><div class="text-sm text-[var(--text-muted)]">' + escapeHtml(itemTags(item).join(' / ')) + '</div></div><label>数量<input type="number" min="1" step="1" data-item-index="' + index + '" value="' + escapeHtml(item['堆叠'] === undefined ? 1 : item['堆叠']) + '"></label><button class="btn px-3 py-2" data-action="remove-opening-item" data-index="' + index + '">取消选择</button></article>';
+                  }).join('') : '<p class="text-[var(--text-muted)]">尚未选择物品，可直接继续。</p>') + '</div></section>';
+              renderItemChoices();
+          }
+          function addOpeningItem() {
+              var key = document.getElementById('item-choice').value;
+              if (!Object.prototype.hasOwnProperty.call(gameData.items, key) || state.selections.items.some(function(item) { return item._key === key; })) return;
+              var item = copyOpening(gameData.items[key]);
+              item._key = key;
+              if (item['堆叠'] === undefined) item['堆叠'] = 1;
+              state.selections.items.push(item);
+              renderItems(); renderSummary();
+          }
+          function getCustomItemTemplate() { return { '品质': 1, '堆叠': 1, '标签': ['杂项'], '描述': '填写用途、外观和来源。', '效果': {} }; }
+          function normalizeCustomItem(item) {
+              if (!openingObject(item)) throw new Error('物品内容必须是对象。');
+              var result = copyOpening(item);
+              var amount = Number(result['堆叠'] === undefined ? 1 : result['堆叠']);
+              if (!Number.isSafeInteger(amount) || amount < 1) throw new Error('物品数量必须是正整数。');
+              result['堆叠'] = amount;
+              result['标签'] = itemTags(result);
+              result['品质'] = result['品质'] === undefined ? 1 : result['品质'];
+              result['效果'] = result['效果'] || {};
+              return result;
+          }
+          function formatMetric(value, suffix) {
+              var text = String(value === undefined || value === null ? '' : value);
+              return !text || text.endsWith(suffix) ? text : text + suffix;
+          }
+          document.addEventListener('DOMContentLoaded', function() { reloadOpeningPresets(); });
 
           async function fetchGameData() {
               var wb = await getWorldbook("蔚蓝星域的观星者 下世代");
@@ -859,6 +1107,28 @@ replaceString: |-
           function getSelectedShipName() { return getSelectedShip() ? getSelectedShip()._key : ""; }
           function getSelectedStargazer() { return state.fitting.stargazer; }
 
+          function syncStoryShip(story) {
+              story = story || getSelectedStory();
+              var key = story && story._key, name = story && story['默认舰船名称'];
+              var ship = name && gameData.ships && gameData.ships[name];
+              if (state.storyShipBinding === key && key) return;
+              if (state.storyShipBinding) {
+                  if (getSelectedShipName() === state.storyShipName && state.storyShipBackup) {
+                      state.selections.ships = copyOpening(state.storyShipBackup.ships);
+                      state.fitting = copyOpening(state.storyShipBackup.fitting);
+                  }
+                  delete state.storyShipBinding;
+                  delete state.storyShipName;
+                  delete state.storyShipBackup;
+              }
+              if (!openingObject(ship) || !name || !key) return;
+              state.storyShipBackup = { ships: copyOpening(state.selections.ships), fitting: copyOpening(state.fitting) };
+              state.storyShipBinding = key;
+              state.storyShipName = name;
+              state.selections.ships = [Object.assign(copyOpening(ship), { _key: name })];
+              resetFitting();
+          }
+
           function normalizeStartingShipType(value) {
               var type = String(value === undefined || value === null ? "" : value).replace(/^\s+|\s+$/g, "").toUpperCase();
               if (type === "FF" || type === "护卫舰") return "FF";
@@ -868,7 +1138,7 @@ replaceString: |-
 
           function isAllowedStartingShip(ship) {
               var type = ship && normalizeStartingShipType(ship["舰船类型"]);
-              return type === "FF" || type === "MV";
+              return !!ship && typeof ship === "object" && !Array.isArray(ship) && !!type;
           }
 
           function resetFitting() {
@@ -885,13 +1155,12 @@ replaceString: |-
               document.getElementById('main-ui').classList.add('flex');
               document.getElementById('main-ui').classList.remove('hidden');
               try {
-                  gameData = await fetchGameData();
+                  await ensureOpeningData();
               } catch (e) {
                   alert("无法读取 INIT_DATA。装配界面不会使用任何 fallback data，请检查世界书中 __INIT_DATA__ 是否存在且为合法 JSON。\n" + (e && e.message ? e.message : e));
                   console.error(e);
                   gameData = { init_stories: {}, industries: {}, reputations: {}, ships: {}, items: {}, stargazers: {}, weapons: {}, equipment: {}, gacha_data: {}, fittingCatalog: buildEmptyFittingCatalog() };
               }
-              state.reputations = JSON.parse(JSON.stringify(gameData.reputations || {}));
               state.reputations["铁血盟约"] = -50;
               state.reputations["海盗势力"] = -50;
               goToPhase(0);
@@ -1057,6 +1326,7 @@ replaceString: |-
 
           function renderPhase() {
               if (currentCategory === "fitting") renderFitting();
+              else if (currentCategory === "items") renderItems();
               else if (currentCategory === "industries") renderIndustries();
               else if (currentCategory === "reputations") renderReputations();
               else renderCatalog();
@@ -1069,7 +1339,6 @@ replaceString: |-
               var entries = [], html = [], key = "", i = 0, j = 0;
               grid.className = currentCategory === "ships" ? "ship-grid-container flex-1" : "grid-container flex-1";
               for (key in data) if (Object.prototype.hasOwnProperty.call(data, key)) {
-                  if (currentCategory === "ships" && !isAllowedStartingShip(data[key])) continue;
                   entries.push([key, data[key]]);
               }
               if (!entries.length) {
@@ -1136,12 +1405,12 @@ replaceString: |-
           }
 
           function buildEmptyFittingCatalog() {
-              return { weaponsByMount: { S: [], M: [], L: [], XL: [] }, modulesBySlot: { H: [], L: [] } };
+              return { weaponsByMount: { S: [], M: [], L: [], XL: [], C: [], T: [] }, modulesBySlot: { H: [], L: [] } };
           }
 
           function getRequirementMount(req) {
               var value = String((req || {})["炮位"] || "").toUpperCase();
-              var m = value.match(/(XL|S|M|L)/);
+              var m = value.match(/(XL|S|M|L|C|T)/);
               return m ? m[1] : "";
           }
 
@@ -1234,9 +1503,9 @@ replaceString: |-
                   "外貌": firstNonEmpty([src["外貌"], profile["外貌"]]),
                   "身份标识": firstNonEmpty([src["身份标识"], (profile["身份标识"] || {})["类型"] ? ((profile["身份标识"] || {})["类型"] + " / " + ((profile["身份标识"] || {})["位置"] || "未记录位置")) : ""]),
                   "比特率": firstNonEmpty([src["比特率"], perf["比特率"]]),
-                  "精度": firstNonEmpty([src["精度"], perf["精度"]]) + "/MOps",
-                  "稳态增益": firstNonEmpty([src["稳态增益"], perf["稳态增益"]]) + "TW/mV",
-                  "爆发增益": firstNonEmpty([src["爆发增益"], perf["爆发增益"]]) + "TW/mV",
+                  "精度": formatMetric(firstNonEmpty([src["精度"], perf["精度"]]), "/MOps"),
+                  "稳态增益": formatMetric(firstNonEmpty([src["稳态增益"], perf["稳态增益"]]), "TW/mV"),
+                  "爆发增益": formatMetric(firstNonEmpty([src["爆发增益"], perf["爆发增益"]]), "TW/mV"),
                   "特殊效果": src["特殊效果"] || profile["特殊能力"] || {},
                   "性格": src["性格"] || profile["性格"] || [],
                   "喜欢": src["喜欢"] || prefs["喜欢"] || [],
@@ -1299,9 +1568,9 @@ replaceString: |-
                   bonusStructure += getEquipmentNumber(entries[i], ["结构", "结构值", "船体结构值", "结构上限"]);
               }
               return {
-                  currentShield: baseShield + bonusShield,
+                  currentShield: ship && ship['开局保留残损'] ? Math.max(0, Math.min(parsePlainNumber(ship['护盾值']), baseShield + bonusShield)) : baseShield + bonusShield,
                   maxShield: baseShield + bonusShield,
-                  currentStructure: baseStructure + bonusStructure,
+                  currentStructure: ship && ship['开局保留残损'] ? Math.max(0, Math.min(parsePlainNumber(ship['结构值']), baseStructure + bonusStructure)) : baseStructure + bonusStructure,
                   maxStructure: baseStructure + bonusStructure,
                   bonusShield: bonusShield,
                   bonusStructure: bonusStructure
@@ -1313,8 +1582,8 @@ replaceString: |-
               var hpStatus = null;
               if (!ship) return;
               hpStatus = getFittingHpStatus(ship);
-              ship["护盾值"] = hpStatus.maxShield;
-              ship["结构值"] = hpStatus.maxStructure;
+              ship["护盾值"] = hpStatus.currentShield;
+              ship["结构值"] = hpStatus.currentStructure;
           }
 
           function getSlotCurrentRequirement(kind, slotId) {
@@ -1378,6 +1647,7 @@ replaceString: |-
           function renderFitting() {
               var ship = getSelectedShip();
               var grid = document.getElementById('catalog-grid');
+              if (ship && ship['开局封存装配']) document.getElementById('phase-help').textContent = '序列10101111以残骸状态开局：无可用武器或舰载机，观星者接口与超空间引擎尚不可用。此处保留空装配与残损耐久，维修和核心移植由开局后的实际行动完成。';
               var centerX = 50, centerY = 41;
               var weapons, modules, weaponPos, highSlots, lowSlots, highPos, lowPos;
               var i = 0, weaponHtml = [], moduleHtml = [], fitList = [], status, hpStatus, stargazerLabel, stargazerMeta;
@@ -1542,6 +1812,7 @@ replaceString: |-
 
           function evaluateCandidate(kind, candidate) {
               var ship = getSelectedShip(), resourceStatus, req, compatible, removedRequirement, uniqueGroup, slotId, fitted;
+              if (ship && ship['开局封存装配']) return { ok: false, reason: '本预设保留残骸状态，装配和接口需在游戏中实际修复。' };
               if (kind === "stargazer") {
                   compatible = isStargazerCompatible(getSelectedShipName(), candidate);
                   if (compatible) return { ok: false, reason: compatible };
@@ -1553,6 +1824,9 @@ replaceString: |-
               if (resourceStatus.remainPG < 0) return { ok: false, reason: "PG 不足" };
               if (resourceStatus.remainCPU < 0) return { ok: false, reason: "CPU 不足" };
               if (kind === "weapon") {
+                  var mount = selectorContext.slotId.replace(/[0-9]/g, "");
+                  if (getRequirementMount(req) !== mount) return { ok: false, reason: "炮位尺寸不匹配" };
+                  if (mount === 'T' && (!candidate['T槽种类'] || candidate['T槽种类'] !== ship['T槽种类'])) return { ok: false, reason: '超级武器种类不匹配' };
                   if ((req["炮位"] || "").indexOf(selectorContext.slotId.replace(/[0-9]/g, "")) === -1 && req["炮位"] !== "无") return { ok: false, reason: "炮位尺寸不匹配" };
               } else {
                   if ((req["装备槽位"] || "").indexOf(selectorContext.slotId.charAt(0)) === -1 && req["装备槽位"] !== "无") return { ok: false, reason: "装备槽位不匹配" };
@@ -1630,6 +1904,15 @@ replaceString: |-
               var action = "";
               if (!el) return;
               action = el.getAttribute('data-action');
+              if (action === 'save-opening-preset') { saveOpeningPreset(el.getAttribute('data-prefix')); return; }
+              if (action === 'save-custom-ship-worldbook') { saveCustomShipToWorldbook(); return; }
+              if (action === 'load-opening-preset') { loadOpeningPreset(el.getAttribute('data-prefix')); return; }
+              if (action === 'reload-opening-presets') { reloadOpeningPresets(); return; }
+              if (action === 'add-opening-item') { addOpeningItem(); return; }
+              if (action === 'remove-opening-item') { state.selections.items.splice(parseInt(el.getAttribute('data-index'), 10), 1); renderItems(); renderSummary(); return; }
+              if (action === 'open-custom-item-formatter') { openCustomFormatter('item'); return; }
+              if (action === 'clear-item-tags') { itemFilters.tags = []; renderItems(); return; }
+              if (action === 'toggle-item-tag') { var tag = decodeURIComponent(el.getAttribute('data-tag')), tagIndex = itemFilters.tags.indexOf(tag); if (tagIndex < 0) itemFilters.tags.push(tag); else itemFilters.tags.splice(tagIndex, 1); renderItems(); return; }
               if (action === 'start-game') { startGame(); return; }
               if (action === 'prev-phase') { prevPhase(); return; }
               if (action === 'next-phase') { nextPhase(); return; }
@@ -1672,7 +1955,7 @@ replaceString: |-
 
           function buildCustomToolbar(category) {
               if (category === "ships") {
-                  return '<div class="custom-toolbar"><button class="btn px-4 py-2" data-action="open-custom-ship-formatter">+ 自定义舰船</button></div>';
+                  return '<div class="custom-toolbar"><button class="btn px-4 py-2" data-action="open-custom-ship-formatter">+ 自定义舰船</button><span id="custom-ship-save-status" role="status" aria-live="polite"></span></div>';
               }
               if (category === "fitting") {
                   return '<div class="custom-toolbar"><button class="btn px-4 py-2" data-action="open-gacha-results">观星者十连抽</button><button class="btn px-4 py-2" data-action="open-custom-stargazer-formatter">+ 自定义观星者</button><button class="btn px-4 py-2" data-action="open-custom-module-formatter">+ 自定义模块</button></div>';
@@ -1734,11 +2017,17 @@ replaceString: |-
               document.getElementById('custom-formatter-error').textContent = '';
               document.getElementById('custom-name-input').value = '';
               document.getElementById('custom-module-kind-row').style.display = kind === 'module' ? 'grid' : 'none';
+              document.getElementById('save-custom-ship-button').style.display = kind === 'ship' ? '' : 'none';
               if (kind === 'ship') {
                   document.getElementById('custom-formatter-title').textContent = '自定义舰船 Formatter';
-                  document.getElementById('custom-formatter-hint').innerHTML = '填写舰船名称与 JSON/YAML 内容。必须包含 <b>炮位配置</b>、<b>装备槽位配置</b>、<b>装配资源.PG</b>、<b>装配资源.CPU</b>。加入后会直接进入舰船列表并自动选中。';
+                  document.getElementById('custom-formatter-hint').innerHTML = '填写舰船名称与 JSON/YAML 内容，舰级不限。必须包含 <b>炮位配置</b>、<b>装备槽位配置</b>、<b>装配资源.PG</b>、<b>装配资源.CPU</b>。“加入列表”用于本次开局；“保存到世界书并选用”会永久加入开局候选库，同名舰船自动添加编号。';
                   document.getElementById('custom-name-input').placeholder = '例如：苍蓝试作护卫舰';
                   document.getElementById('custom-json-input').value = JSON.stringify(sourceItem || getCustomShipTemplate(), null, 2);
+              } else if (kind === 'item') {
+                  document.getElementById('custom-formatter-title').textContent = '创建新物品';
+                  document.getElementById('custom-formatter-hint').innerHTML = '填写物品名称、数量、标签和效果。创建后加入候选库并选入开局，保存预选后可在其他开局继续使用。';
+                  document.getElementById('custom-name-input').placeholder = '例如：便携观测工具箱';
+                  document.getElementById('custom-json-input').value = JSON.stringify(sourceItem || getCustomItemTemplate(), null, 2);
               } else if (kind === 'stargazer') {
                   document.getElementById('custom-formatter-title').textContent = sourceItem ? '编辑观星者 Formatter' : '自定义观星者 Formatter';
                   document.getElementById('custom-formatter-hint').innerHTML = '填写观星者名称与 JSON/YAML 内容。必须包含 <b>比特率</b>、<b>精度</b>、<b>稳态增益</b>、<b>爆发增益</b>。保存后会写入本 session 的观星者列表，可立即装配。';
@@ -1759,6 +2048,7 @@ replaceString: |-
           }
 
           function fillCustomTemplate() {
+              if (customFormatterContext.kind === 'item') { document.getElementById('custom-json-input').value = JSON.stringify(getCustomItemTemplate(), null, 2); return; }
               if (customFormatterContext.kind === 'ship') {
                   document.getElementById('custom-json-input').value = JSON.stringify(getCustomShipTemplate(), null, 2);
                   return;
@@ -1800,7 +2090,8 @@ replaceString: |-
           function normalizeCustomShip(obj) {
               var ship = JSON.parse(JSON.stringify(obj || {}));
               ship["舰船类型"] = normalizeStartingShipType(ship["舰船类型"] || "FF");
-              ship["吨位"] = ship["吨位"] || (ship["舰船类型"] === "MV" ? "M" : "S");
+              var tonnages = { FF:'S', AF:'S', DD:'M', AD:'M', SD:'M', TD:'M', MV:'M', CA:'L', HAC:'L', ESC:'L', RC:'L', SC:'L', BC:'XL', BB:'XL', BBV:'XL', CVL:'XL', ICV:'XL', JF:'XL', DN:'T', CV:'T', CVT:'T', TT:'T' };
+              ship["吨位"] = ship["吨位"] || tonnages[ship["舰船类型"]] || "S";
               ship["描述"] = ship["描述"] || "玩家自定义舰船。";
               ship["炮位配置"] = ship["炮位配置"] || "0S";
               ship["装备槽位配置"] = ship["装备槽位配置"] || "0H 0L";
@@ -1818,7 +2109,7 @@ replaceString: |-
 
           function validateCustomShip(ship) {
               if (!ship || typeof ship !== "object" || Array.isArray(ship)) return "舰船内容必须是对象。";
-              if (!isAllowedStartingShip(ship)) return "开局舰船类型只能是 FF（护卫舰）或 MV（矿船）。";
+              if (!isAllowedStartingShip(ship)) return "请填写舰船类型。";
               if (!ship["炮位配置"]) return "缺少 炮位配置，例如：2S 1M。";
               if (!ship["装备槽位配置"]) return "缺少 装备槽位配置，例如：2H 2L。";
               if (!ship["装配资源"] || parsePlainNumber(ship["装配资源"]["PG"]) <= 0 || parsePlainNumber(ship["装配资源"]["CPU"]) <= 0) return "装配资源.PG 与 装配资源.CPU 必须大于 0。";
@@ -1844,17 +2135,63 @@ replaceString: |-
               if (!item["装配要求"]) return "缺少 装配要求。";
               req = parseRequirement(item["装配要求"]);
               if (req.PG < 0 || req.CPU < 0) return "PG/CPU 不能为负数。";
-              if (moduleKind === "weapon" && !getRequirementMount(req)) return "武器模块必须在 装配要求 中填写炮位：S、M、L 或 XL。";
+              if (moduleKind === "weapon" && !getRequirementMount(req)) return "武器模块必须在 装配要求 中填写炮位：S、M、L、XL、C 或 T。";
               if (moduleKind === "equipment" && !getRequirementSlotType(req)) return "装备模块必须在 装配要求 中填写装备槽位：H 或 L。";
               return "";
           }
 
+          async function saveCustomShipToWorldbook() {
+              if (presetBusy || openingBusy || openingDone || customFormatterContext.kind !== 'ship') return;
+              presetBusy = true;
+              var button = document.getElementById('save-custom-ship-button');
+              button.disabled = true;
+              try {
+                  await ensureOpeningData();
+                  var name = document.getElementById('custom-name-input').value.trim();
+                  if (!name) throw new Error('条目名称不能为空。');
+                  var input = parseCustomFormatterInput();
+                  if (!openingObject(input)) throw new Error('舰船内容必须是对象。');
+                  var ship = normalizeCustomShip(input), error = validateCustomShip(ship), key = '';
+                  if (error) throw new Error(error);
+                  delete ship._key;
+                  if (typeof updateWorldbookWith !== 'function') throw new Error('当前环境无法保存世界书，请启用酒馆助手。');
+                  await updateWorldbookWith(openingWorldbookName, function(worldbook) {
+                      var entry = findOpeningEntry(worldbook);
+                      if (!entry) throw new Error('找不到开局数据条目。');
+                      var data = JSON.parse(entry.content);
+                      if (!openingObject(data.ships)) throw new Error('世界书舰船候选库格式错误。');
+                      key = makeKeyUnique(Object.assign({}, gameData.ships, data.ships), name);
+                      Object.defineProperty(data.ships, key, { value: copyOpening(ship), enumerable: true, configurable: true, writable: true });
+                      return worldbook.map(function(item) { return item === entry ? Object.assign({}, item, { content: JSON.stringify(data, null, 2), enabled: false }) : item; });
+                  }, { render: 'none' });
+                  Object.defineProperty(gameData.ships, key, { value: copyOpening(ship), enumerable: true, configurable: true, writable: true });
+                  state.selections.ships = [Object.assign(copyOpening(ship), { _key: key })];
+                  resetFitting();
+                  closeCustomFormatter();
+                  goToPhase(0);
+                  presetStatus('舰船「' + key + '」已保存到世界书，以后开局可以直接选择。');
+                  document.getElementById('custom-ship-save-status').textContent = '「' + key + '」已保存到世界书。';
+              } catch (error) { showCustomFormatterError('保存失败：' + error.message); }
+              finally { presetBusy = false; button.disabled = false; }
+          }
+
           function applyCustomFormatter() {
+              if (presetBusy || openingBusy || openingDone) return;
               var name = document.getElementById('custom-name-input').value.replace(/^\s+|\s+$/g, "");
               var obj, err, key, moduleKind;
               try { obj = parseCustomFormatterInput(); }
               catch (e) { showCustomFormatterError("无法解析 JSON/YAML：" + (e && e.message ? e.message : e)); return; }
               if (!name) { showCustomFormatterError("条目名称不能为空。"); return; }
+              if (customFormatterContext.kind === 'item') {
+                  try { obj = normalizeCustomItem(obj); }
+                  catch (error) { showCustomFormatterError(error.message); return; }
+                  key = makeKeyUnique(gameData.items, name);
+                  gameData.items[key] = copyOpening(obj);
+                  obj._key = key;
+                  state.selections.items.push(obj);
+                  closeCustomFormatter(); renderSummary(); renderPhase();
+                  return;
+              }
               if (customFormatterContext.kind === 'ship') {
                   obj = normalizeCustomShip(obj);
                   err = validateCustomShip(obj);
@@ -1933,10 +2270,18 @@ replaceString: |-
                   } catch (e) { target.style.borderColor = 'var(--danger)'; alert(field + " 必须是合法 JSON 对象。"); }
                   return;
               }
+              if (target && target.id === 'item-choice') { renderItemPreview(); return; }
               if (event.target && event.target.id === 'custom-module-kind' && customFormatterContext.kind === 'module') fillCustomTemplate();
           });
           document.addEventListener('input', function(event) {
               var target = event.target, index, field, value;
+              if (target && target.id === 'item-search') { itemFilters.query = target.value; renderItemChoices(); return; }
+              if (target && target.hasAttribute('data-item-index')) {
+                  index = parseInt(target.getAttribute('data-item-index'), 10); value = Number(target.value);
+                  if (Number.isSafeInteger(value) && value >= 1 && state.selections.items[index]) { state.selections.items[index]['堆叠'] = value; target.setCustomValidity(''); }
+                  else target.setCustomValidity('数量必须是正整数');
+                  return;
+              }
               if (target && target.hasAttribute('data-industry-field')) {
                   index = parseInt(target.getAttribute('data-industry-index') || '-1', 10);
                   field = target.getAttribute('data-industry-field');
@@ -2263,6 +2608,7 @@ replaceString: |-
                   state.selections[currentCategory] = [currentViewingItem];
                   if (currentCategory === "ships") { resetFitting(); syncSelectedShipHpToMax(); }
               } else list.push(currentViewingItem);
+              if (currentCategory === 'init_stories') syncStoryShip();
               closeModal();
               renderSummary();
               renderPhase();
@@ -2275,7 +2621,8 @@ replaceString: |-
 
           function nextPhase() {
               if (openingBusy || openingDone) return;
-              if (currentCategory === "ships" && (!getSelectedShip() || !isAllowedStartingShip(getSelectedShip()))) { alert("必须选择一艘护卫舰（FF）或矿船（MV）作为开局舰船。"); return; }
+              try { validateItemQuantities(); } catch (error) { alert(error.message); return; }
+              if (currentCategory === "ships" && (!getSelectedShip() || !isAllowedStartingShip(getSelectedShip()))) { alert("请选择一艘开局舰船，舰级不限。"); return; }
               if (currentCategory === "init_stories" && state.selections.init_stories.length === 0) { alert("必须选择一个开局剧情。"); return; }
               if (currentCategory === "init_stories") ensureColonistIndustry();
               if (currentCategory === "industries") {
@@ -2297,7 +2644,10 @@ replaceString: |-
               syncSelectedShipHpToMax();
               var ship = JSON.parse(JSON.stringify(getSelectedShip()));
               var weaponSlots = state.fitting.weapons, moduleSlots = state.fitting.modules, k = "", name, clone;
-              ship["驾驶员"] = state.captain.name;
+              ship["驾驶员"] = ship['开局封存装配'] ? '' : state.captain.name;
+              if (ship['开局封存装配'] && ship['效果'] && ship['效果']['内部控制']) ship['效果']['内部控制']['上级单元'] = state.captain.name;
+              delete ship['开局保留残损'];
+              delete ship['开局封存装配'];
               ship["是否旗舰"] = true;
               ship["观星者接口角色"] = state.fitting.stargazer ? state.fitting.stargazer._key : "";
               ship["装备"] = ship["装备"] && typeof ship["装备"] === "object" ? JSON.parse(JSON.stringify(ship["装备"])) : {};
@@ -2316,6 +2666,7 @@ replaceString: |-
 
           function buildStartingEvents(story) {
               var events = {};
+              if (story && story['仅开局预设']) return events;
               var openingType = story && story["开局类型"] ? String(story["开局类型"]) : "自定义";
               var openingEvent = story && story["启动事件"] ? String(story["启动事件"]) : "【事件】自定义开局";
               events["【事件】初入星区"] = {
@@ -2351,6 +2702,7 @@ replaceString: |-
           }
 
           function buildOpeningState(base, story) {
+              syncStoryShip(story);
               var ship = buildEquippedShip();
               var stargazer = buildEquippedStargazer();
               var items = formatSelection(state.selections.items);
@@ -2362,7 +2714,7 @@ replaceString: |-
               if (!story["时间"] || !Number.isFinite(Date.parse(story["时间"]))) throw new Error("开局剧情必须包含有效的初始时间。");
               ensureColonistIndustry();
               if (story["开局类型"] === "殖民者" && state.industries.length === 0) throw new Error("殖民者开局必须拥有至少一座工业基地。");
-              if (ship && !isAllowedStartingShip(ship)) throw new Error("开局舰船只能是护卫舰（FF）或矿船（MV）。");
+              if (ship && !isAllowedStartingShip(ship)) throw new Error("开局舰船缺少有效舰船类型。");
               for (resource in inventory) if (Object.prototype.hasOwnProperty.call(items, resource)) {
                   amount = Number(items[resource]["堆叠"]);
                   if (!Number.isFinite(amount) || amount < 0) throw new Error(resource + "的初始数量无效。");
@@ -2406,6 +2758,7 @@ replaceString: |-
 
           async function exportData() {
               if (openingBusy || openingDone) return;
+              try { validateItemQuantities(); } catch (error) { alert(error.message); return; }
               var button = document.getElementById('btn-next');
               var written = false, committed = false, original, updated, chat;
               openingBusy = true;

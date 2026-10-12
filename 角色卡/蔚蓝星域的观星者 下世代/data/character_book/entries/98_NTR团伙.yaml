@@ -4,10 +4,10 @@ keys:
 content: |-
   <nest_pirate_desc>
 
-  <%var nest_raiders_str = "";%>
+  <%var wb_55_nest_raiders_str = "";%>
   <%if (! getvar("SAM_data.static.nest_raiders_destroyed")) {
 
-  nest_raiders_str = `
+  wb_55_nest_raiders_str = `
   **组织名称:** 爱巢掠夺者 (The Nest Raiders)
   **主要活动区域:** 蛮荒边界 | 巨蛇之喉；贸易风走廊 (隐秘活动)
   **组织概述:**
@@ -52,10 +52,10 @@ content: |-
 
 
   }else{
-  nest_raiders_str = "昔日臭名昭著的海盗组织爱巢掠夺者已经被摧毁。虽然对观星者的抢夺和劫掠事件依然在继续，但该海盗组织已经不复存在。";
+  wb_55_nest_raiders_str = "昔日臭名昭著的海盗组织爱巢掠夺者已经被摧毁。虽然对观星者的抢夺和劫掠事件依然在继续，但该海盗组织已经不复存在。";
   }
   %>
-  <%-nest_raiders_str;%>
+  <%-wb_55_nest_raiders_str;%>
 
   </nest_pirate_desc>
 extensions:
