@@ -439,7 +439,7 @@ replaceString: |2-
             if (!shipName || !ship || typeof ship !== "object") throw new Error("未读取到有效舰船对象。");
             const quality = pickShipQuality(ship);
             const theme = setTheme(quality);
-            const currentCharge = Number(ship["跃迁充能"] || 0);
+            const currentCharge = Number(ship["超空间充能"] || 0);
             const maxCharge = Math.max(Number(ship["最大充能"] || 0), 1);
             const chargeRate = Math.max(0, Math.min(100, currentCharge / maxCharge * 100));
             const tonnage = ship["吨位"] || "S";
@@ -454,7 +454,7 @@ replaceString: |2-
               ["炮位配置", ship["炮位配置"] || "未登记"],
               ["T槽种类", ship["T槽种类"] || "无"],
               ["装备槽位配置", ship["装备槽位配置"] || "未登记"],
-              ["跃迁消耗", ship["跃迁消耗"] ?? "未登记"]
+              ["超空间消耗", ship["超空间消耗"] ?? "未登记"]
             ];
             const resourceStats = [
               ["PG", ship["装配资源"] && ship["装配资源"]["PG"]],
@@ -492,18 +492,18 @@ replaceString: |2-
                       ${renderStats(overviewStats)}
                     </div>
                     <div>
-                      <h2 class="section-title">跃迁状态</h2>
+                      <h2 class="section-title">超空间状态</h2>
                       <div class="subcard">
                         <div class="energy">
                           <div class="bar-row">
-                            <div class="label" style="margin:0;">跃迁充能</div>
+                            <div class="label" style="margin:0;">超空间充能</div>
                             <div class="bar-track"><div class="bar-fill" style="width:${chargeRate}%"></div></div>
                             <div class="mini" style="text-align:right;">${escapeHtml(String(currentCharge))} / ${escapeHtml(String(maxCharge))}</div>
                           </div>
                           <div class="grid">
                             <div class="stat"><div class="label">当前充能</div><div class="value">${escapeHtml(String(currentCharge))}</div></div>
                             <div class="stat"><div class="label">最大充能</div><div class="value">${escapeHtml(String(ship["最大充能"] ?? "未登记"))}</div></div>
-                            <div class="stat"><div class="label">单次跃迁消耗</div><div class="value">${escapeHtml(String(ship["跃迁消耗"] ?? "未登记"))}</div></div>
+                            <div class="stat"><div class="label">单次超空间消耗</div><div class="value">${escapeHtml(String(ship["超空间消耗"] ?? "未登记"))}</div></div>
                           </div>
                         </div>
                       </div>

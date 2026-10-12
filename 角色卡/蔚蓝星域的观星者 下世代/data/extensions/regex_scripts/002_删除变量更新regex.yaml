@@ -7,7 +7,7 @@ placement:
 - 2
 disabled: false
 markdownOnly: true
-promptOnly: false
+promptOnly: true
 runOnEdit: true
 substituteRegex: 0
 minDepth: null

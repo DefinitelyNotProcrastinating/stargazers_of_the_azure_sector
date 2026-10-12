@@ -45,7 +45,6 @@ content: |-
       ESC: 1800
       RC: 1700
       SC: 1800
-      TC: 2200
       BC: 2800
       BB: 5200
       BBV: 5600
@@ -82,7 +81,7 @@ content: |-
       DN: {"护盾装甲": 95, "结构装甲": 320}
       TT: {"护盾装甲": 180, "结构装甲": 650}
       变体继承: |
-        AF 继承 FF，AD/SD/TD/MV 继承 DD，HAC/ESC/RC/SC/TC 继承 CA，BBV 继承 BB，ICV/JF 继承 CVL，CVT 继承 CV。
+        AF 继承 FF，AD/SD/TD/MV 继承 DD，HAC/ESC/RC/SC 继承 CA，BBV 继承 BB，ICV/JF 继承 CVL，CVT 继承 CV。
         具体舰船可因船体特性、势力风格或品质上调/下调 10%-30%。
 
     品质修正: |

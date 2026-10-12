@@ -9,7 +9,7 @@ replaceString: |-
   <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>蔚蓝星域初始化 // 浅蓝装配界面</title>
+      <title>蔚蓝星域初始化 // 深蓝装配界面</title>
       <script src="https://cdn.tailwindcss.com"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
       <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
@@ -581,12 +581,17 @@ replaceString: |-
               .fitting-stage::before, .fitting-stage::after, .dial-ring { top: 40%; }
           }
 
-          /* Unified Azure glass system v2 — initialization workspace */
+          /* Unified Azure glass system v3 — all controls and interaction states */
           :root {
               color-scheme: dark;
               --bg-dark: #030d19;
               --bg-panel: rgba(12, 29, 49, 0.62);
               --bg-panel-strong: rgba(18, 41, 65, 0.82);
+              --bg-control: rgba(3, 17, 31, 0.78);
+              --bg-control-hover: linear-gradient(135deg, rgba(32, 77, 108, 0.92), rgba(18, 49, 78, 0.92));
+              --bg-inset: rgba(5, 22, 39, 0.76);
+              --bg-card: linear-gradient(145deg, rgba(23, 51, 78, 0.82), rgba(8, 26, 45, 0.80));
+              --shadow-soft: 0 12px 32px rgba(0, 7, 18, 0.28), inset 0 1px 0 rgba(194, 235, 255, 0.08);
               --border-main: rgba(166, 222, 255, 0.28);
               --border-soft: rgba(166, 222, 255, 0.20);
               --accent-main: #7be0ff;
@@ -629,10 +634,13 @@ replaceString: |-
               box-shadow: 0 10px 26px rgba(0,7,18,.24), inset 0 1px 0 rgba(255,255,255,.11);
           }
           .btn:hover:not(:disabled), .btn:focus-visible, .btn.touch-active {
-              color:#02121e; border-color:#b9efff;
-              background:linear-gradient(135deg,#b9efff,#7be0ff 58%,#a3adff);
+              color:var(--text-main); border-color:rgba(123,224,255,.66);
+              background:var(--bg-control-hover);
+              box-shadow:0 12px 32px rgba(14,91,132,.24),inset 0 0 0 1px rgba(194,235,255,.12);
           }
-          input, textarea { color:var(--text-main); border-color:var(--border-main); background:rgba(3,17,31,.66); box-shadow:inset 0 1px 0 rgba(255,255,255,.06); }
+          input, textarea, select { color:var(--text-main); border:1px solid var(--border-main); border-radius:var(--radius-sm); background:var(--bg-control); box-shadow:inset 0 1px 0 rgba(194,235,255,.06); padding:11px 13px; font-family:'JetBrains Mono',monospace; outline:none; }
+          select option { color:var(--text-main); background:#0b1d31; }
+          input:focus, textarea:focus, select:focus { border-color:var(--accent-main); box-shadow:0 0 0 3px rgba(76,185,224,.14),inset 0 1px 0 rgba(194,235,255,.06); }
           input::placeholder, textarea::placeholder { color:#8299ad; }
           .item-card { background:linear-gradient(150deg,rgba(23,51,78,.66),rgba(8,26,45,.58)); }
           .item-card:hover, .item-card:focus-visible, .item-card.touch-active { border-color:rgba(123,224,255,.66); }
@@ -641,7 +649,13 @@ replaceString: |-
           .modal-overlay { background:rgba(0,8,18,.70); }
           .fitting-stage { background:radial-gradient(circle at 50% 42%,rgba(123,224,255,.14),transparent 22%),radial-gradient(circle at 50% 45%,rgba(127,153,255,.10),transparent 44%),rgba(3,15,29,.74); }
           .ring-slot { background:rgba(13,37,61,.78); }
-          .ring-slot.filled { background:linear-gradient(145deg,rgba(35,88,120,.86),rgba(23,47,83,.80)); }
+          .ring-slot:hover, .ring-slot:focus-visible, .ring-slot.touch-active { background:var(--bg-control-hover); border-color:rgba(123,224,255,.66); box-shadow:var(--shadow-soft),0 0 0 1px rgba(123,224,255,.16); }
+          .ring-slot.filled { background:linear-gradient(145deg,rgba(35,88,120,.86),rgba(23,47,83,.80)); box-shadow:var(--shadow-soft),inset 0 0 0 1px rgba(123,224,255,.18); }
+          .center-core { background:radial-gradient(circle at 32% 20%,rgba(37,85,116,.92),rgba(17,44,71,.94) 55%,rgba(8,27,47,.96)); border-color:var(--border-main); box-shadow:0 20px 50px rgba(0,7,18,.36),inset 0 1px 0 rgba(194,235,255,.10); }
+          .core-resource div, .resource-box, .fit-row { background:var(--bg-inset); border-color:var(--border-soft); box-shadow:inset 0 1px 0 rgba(194,235,255,.06); }
+          .candidate-card { background:var(--bg-card); border-color:var(--border-soft); box-shadow:var(--shadow-soft); }
+          .fitting-stage::before { box-shadow:inset 0 0 42px rgba(46,156,205,.08),0 0 0 22px rgba(123,224,255,.035); }
+          .modal-content .bg-\[rgba\(0\,212\,255\,0\.05\)\] { background:var(--bg-inset) !important; }
           .stargazer-dock { background:linear-gradient(135deg,rgba(19,48,75,.84),rgba(11,31,53,.78)); }
           .formatter-error { color:#ffd8de; border-color:rgba(255,125,143,.46); background:rgba(100,22,40,.64); }
           .formatter-hint { color:var(--text-muted); background:rgba(16,43,68,.64); }
@@ -651,13 +665,16 @@ replaceString: |-
           .gacha-rarity { color:#9c9dff; }
           .gacha-name { color:#f4f9ff; }
           .gacha-meta { color:var(--text-muted); }
-          .gacha-card.selected { border-color:rgba(123,224,255,.88); background:linear-gradient(145deg,rgba(35,88,120,.90),rgba(24,48,85,.84)); }
+          .gacha-card.selected { border-color:rgba(123,224,255,.88); background:linear-gradient(145deg,rgba(35,88,120,.90),rgba(24,48,85,.84)); box-shadow:0 20px 50px rgba(14,91,132,.24),inset 0 0 0 1px rgba(123,224,255,.20); }
           .gacha-card.selected::after { color:#d7f6ff; border-color:rgba(123,224,255,.52); background:rgba(11,45,70,.88); }
+          .gacha-card:hover, .gacha-card:focus-visible, .gacha-card.touch-active { border-color:rgba(123,224,255,.66); box-shadow:0 20px 50px rgba(0,7,18,.36),inset 0 1px 0 rgba(194,235,255,.10); }
           .step-dot { background:rgba(93,135,163,.42); box-shadow:inset 0 1px 0 rgba(255,255,255,.08); }
-          .step-dot.active { background:linear-gradient(90deg,#4ab5e7,#7be0ff); box-shadow:0 0 18px rgba(123,224,255,.46); }
+          .step-dot.active { background:linear-gradient(90deg,#398bb4,#60b9d7); box-shadow:0 0 12px rgba(123,224,255,.20); }
+          ::-webkit-scrollbar-track { background:rgba(3,17,31,.70); }
+          ::-webkit-scrollbar-thumb { background:rgba(91,145,177,.46); }
           button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--accent-main); outline-offset:3px; }
           @supports not ((backdrop-filter:blur(2px)) or (-webkit-backdrop-filter:blur(2px))) {
-              .panel,.modal-content{background:#0b1d31}.item-card,.fitting-stage,.ring-slot,.stargazer-dock,.formatter-hint,.gacha-card{background:#142c46}
+              .panel,.modal-content{background:#0b1d31}.item-card,.fitting-stage,.ring-slot,.stargazer-dock,.formatter-hint,.gacha-card,.candidate-card{background:#142c46}
           }
           @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition-duration:.01ms!important; animation-duration:.01ms!important; } }
       </style>
@@ -669,7 +686,7 @@ replaceString: |-
               <h1 class="text-5xl font-bold text-[var(--accent-main)] mt-4">蔚蓝星域的观星者</h1>
               <p class="text-[var(--text-muted)] mt-5 leading-8">
                   载入新的开局协议。<br>
-                  你可以建立个人档案，选择舰船并完成装配，配置初始物资、开局剧情、工业基地与势力声望，再将结果注入聊天。
+                  你可以建立个人档案，选择舰船并完成装配，配置初始物资、开局剧情、工业基地与势力声望。确认后直接写入变量，聊天框只填入你的背景故事，不发送配置或数值。
               </p>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 text-left">
                   <div>
@@ -742,7 +759,7 @@ replaceString: |-
                   </div>
                   <div class="formatter-row" id="custom-module-kind-row" style="display:none;">
                       <label for="custom-module-kind">模块类型</label>
-                      <select id="custom-module-kind" class="w-full mt-1" style="background:rgba(255,255,255,0.72);border:1px solid rgba(98,175,210,0.44);border-radius:var(--radius-sm);padding:11px 13px;color:var(--text-main);font-family:'JetBrains Mono', monospace;">
+                      <select id="custom-module-kind" class="w-full mt-1">
                           <option value="equipment">装备模块 / H-L 槽</option>
                           <option value="weapon">武器模块 / S-M-L-XL 炮位</option>
                       </select>
@@ -814,6 +831,8 @@ replaceString: |-
           var customFormatterContext = { kind: "ship", source: "manual", index: -1, key: "" };
           var gachaSessionCards = [];
           var selectedGachaIndex = -1;
+          var openingBusy = false;
+          var openingDone = false;
 
           async function fetchGameData() {
               var wb = await getWorldbook("蔚蓝星域的观星者 下世代");
@@ -905,7 +924,8 @@ replaceString: |-
                   document.getElementById('dot-' + (i + 1)).classList.toggle('active', i <= currentPhaseIndex);
               }
               document.getElementById('btn-prev').disabled = currentPhaseIndex === 0;
-              document.getElementById('btn-next').textContent = currentPhaseIndex === phases.length - 1 ? "生成协议 >>>" : (currentCategory === "fitting" ? "继续 / 跳过 >>>" : "继续 >>>");
+              document.getElementById('btn-next').textContent = openingDone ? "开局已写入" : (currentPhaseIndex === phases.length - 1 ? "确认并开始游戏 >>>" : (currentCategory === "fitting" ? "继续 / 跳过 >>>" : "继续 >>>"));
+              document.getElementById('btn-next').disabled = openingBusy || openingDone;
               renderSummary();
           }
 
@@ -1521,7 +1541,7 @@ replaceString: |-
           }
 
           function evaluateCandidate(kind, candidate) {
-              var ship = getSelectedShip(), resourceStatus, req, compatible, removedRequirement;
+              var ship = getSelectedShip(), resourceStatus, req, compatible, removedRequirement, uniqueGroup, slotId, fitted;
               if (kind === "stargazer") {
                   compatible = isStargazerCompatible(getSelectedShipName(), candidate);
                   if (compatible) return { ok: false, reason: compatible };
@@ -1536,6 +1556,13 @@ replaceString: |-
                   if ((req["炮位"] || "").indexOf(selectorContext.slotId.replace(/[0-9]/g, "")) === -1 && req["炮位"] !== "无") return { ok: false, reason: "炮位尺寸不匹配" };
               } else {
                   if ((req["装备槽位"] || "").indexOf(selectorContext.slotId.charAt(0)) === -1 && req["装备槽位"] !== "无") return { ok: false, reason: "装备槽位不匹配" };
+                  uniqueGroup = String(candidate["唯一组"] || "").replace(/^\s+|\s+$/g, "");
+                  if (uniqueGroup) {
+                      for (slotId in state.fitting.modules) if (Object.prototype.hasOwnProperty.call(state.fitting.modules, slotId) && slotId !== selectorContext.slotId) {
+                          fitted = state.fitting.modules[slotId];
+                          if (fitted && String(fitted["唯一组"] || "").replace(/^\s+|\s+$/g, "") === uniqueGroup) return { ok: false, reason: "唯一装备组“" + uniqueGroup + "”已安装" };
+                      }
+                  }
               }
               return { ok: true, reason: "" };
           }
@@ -2242,10 +2269,12 @@ replaceString: |-
           }
 
           function prevPhase() {
+              if (openingBusy || openingDone) return;
               if (currentPhaseIndex > 0) goToPhase(currentPhaseIndex - 1);
           }
 
           function nextPhase() {
+              if (openingBusy || openingDone) return;
               if (currentCategory === "ships" && (!getSelectedShip() || !isAllowedStartingShip(getSelectedShip()))) { alert("必须选择一艘护卫舰（FF）或矿船（MV）作为开局舰船。"); return; }
               if (currentCategory === "init_stories" && state.selections.init_stories.length === 0) { alert("必须选择一个开局剧情。"); return; }
               if (currentCategory === "init_stories") ensureColonistIndustry();
@@ -2321,64 +2350,129 @@ replaceString: |-
               return result;
           }
 
-          function exportData() {
+          function buildOpeningState(base, story) {
               var ship = buildEquippedShip();
               var stargazer = buildEquippedStargazer();
-              var story = state.selections.init_stories[0];
               var items = formatSelection(state.selections.items);
-              var inventory = { "补给": 0 };
-              var yamlStr = "";
-              var cb = String.fromCharCode(96, 96, 96);
-              var promptStr = "";
-              var finalPayload = null;
+              var inventory = { "矿物": 0, "食物": 0, "金属": 0, "补给": 0 };
               var selectedShips = {};
               var selectedStargazers = {};
-              if (!story) { alert("请选择一个开局剧情后再生成协议。"); return; }
+              var resource, amount;
+              if (!story) throw new Error("请选择一个开局剧情。");
+              if (!story["时间"] || !Number.isFinite(Date.parse(story["时间"]))) throw new Error("开局剧情必须包含有效的初始时间。");
               ensureColonistIndustry();
-              if (story["开局类型"] === "殖民者" && state.industries.length === 0) { alert("殖民者开局必须拥有至少一座工业基地。"); return; }
-              if (ship && !isAllowedStartingShip(ship)) { alert("开局舰船只能是护卫舰（FF）或矿船（MV）。"); return; }
-              if (items["补给"]) {
-                  inventory["补给"] = Number(items["补给"]["堆叠"]) || 0;
-                  delete items["补给"];
+              if (story["开局类型"] === "殖民者" && state.industries.length === 0) throw new Error("殖民者开局必须拥有至少一座工业基地。");
+              if (ship && !isAllowedStartingShip(ship)) throw new Error("开局舰船只能是护卫舰（FF）或矿船（MV）。");
+              for (resource in inventory) if (Object.prototype.hasOwnProperty.call(items, resource)) {
+                  amount = Number(items[resource]["堆叠"]);
+                  if (!Number.isFinite(amount) || amount < 0) throw new Error(resource + "的初始数量无效。");
+                  inventory[resource] = amount;
+                  delete items[resource];
               }
               if (ship) selectedShips[getSelectedShipName()] = ship;
               if (stargazer) selectedStargazers[state.fitting.stargazer._key] = JSON.parse(JSON.stringify(stargazer));
-              finalPayload = {
-                  System: { Module: "Azure_Sector_Init", Version: "3.1.0" },
-                  Captain: { Name: state.captain.name, Appearance: state.captain.appearance, Background: state.captain.background },
-                  ships: selectedShips,
-                  stargazers: selectedStargazers,
-                  items: items,
-                  inventory: inventory,
-                  buildings: buildStartingIndustries(),
-                  reputations: JSON.parse(JSON.stringify(state.reputations)),
-                  events: buildStartingEvents(story),
-                  init_stories: formatSelection(state.selections.init_stories)
-              };
-              yamlStr = jsyaml.dump(finalPayload);
-              promptStr = `[系统指令：玩家已完成开局装配。请严格根据以下 YAML 初始化本次开局。]
+              var result = JSON.parse(JSON.stringify(base));
+              var hero = result.static["主角"];
+              hero["姓名"] = state.captain.name;
+              hero["外貌"] = state.captain.appearance;
+              hero["背景故事"] = state.captain.background;
+              hero["位置"] = story["地点"] || "";
+              hero["舰船"] = selectedShips;
+              hero["可攻略角色"] = selectedStargazers;
+              hero["物品栏"] = items;
+              hero["库存"] = inventory;
+              hero["建筑"] = buildStartingIndustries();
+              hero["势力声望"] = JSON.parse(JSON.stringify(state.reputations));
+              hero["势力声望"]["铁血盟约"] = -50;
+              hero["势力声望"]["海盗势力"] = -50;
+              result.static["事件"] = buildStartingEvents(story);
+              result.time = story["时间"];
+              // 初始化不是时间推进，不应产生工业产出或消耗。
+              result.dtime = 0;
+              return result;
+          }
 
-              1. 先读取 ships 与 stargazers。只处理其中实际存在的条目；空对象表示玩家主动跳过该项，不得擅自补发舰船或观星者。已有舰船必须原样使用其 装备、驾驶员、是否旗舰、观星者接口角色。
-              2. 将非空 ships 写入 主角.舰船，将 items 写入 主角.物品栏，将非空 stargazers 写入 主角.可攻略角色，将 buildings 原样写入 主角.建筑。将 inventory 中的资源数值写入主角.库存同名字段；资源不得写入普通物品栏。
-              3. 开局剧情以 init_stories 为唯一叙事锚点，必须根据其中的 时间、地点、开局类型、描述 开场。
-              4. 主角姓名使用 Captain.Name。如果 Captain.Appearance 非空，则写入 主角.外貌。将 Captain.Background 原样写入 主角.背景故事；它是玩家确认的既定经历，不得自行扩写或改写。
-              5. 背景故事中明确记载的职业、训练与长期经历可在直接相关的行动中体现为更可靠的判断、更少的低级失误或更有利的判定条件；不得据此生成技能、等级、经验值或技能树，高风险与对抗行动仍按既有规则结算。
-              6. 将 主角.位置 设置为所选开局剧情中的 地点。
-              7. 将 reputations 中每个数值写入 主角.势力声望 的同名字段。海盗势力与铁血盟约必须保持 -50，不得被叙事擅自改成中立。
-              8. buildings 中每座基地的名称、位置、防御指数、输入与输出均为玩家已经确认的最终值，不得套用其他产业模板或自行改写。
-              9. 将 events 中每个对象原样写入根变量 /事件/同名事件。事件名称已经包含【事件】前缀，不得改名；【事件】初入星区与所选开局专属事件必须同时建立。
-              10. 输出开场叙事后，立刻进行相应的变量更新，并严格遵守当前世界书中的主角、舰船、建筑、角色、新闻与事件更新规则。
+          function openingDraft() {
+              // 开局数值只保存在 SAM；聊天输入仅包含玩家原样填写的背景故事。
+              return state.captain.background;
+          }
 
-              以下为初始化配置：
-              ${cb}yaml
-              ${yamlStr}
-              ${cb}
-              请开始输出：`;
-              if (typeof createChatMessages !== "undefined") {
-                  try { createChatMessages([{ role: "user", message: promptStr }]); document.getElementById('btn-next').textContent = "已注入"; } catch (e) { console.error(e); }
-              } else if (navigator.clipboard) {
-                  navigator.clipboard.writeText(promptStr).then(function() { alert("协议已复制到剪贴板，请手动粘贴到聊天框。"); }).catch(function() { console.log(promptStr); alert("无法写入剪贴板，请按 F12 从控制台复制。"); });
-              } else console.log(promptStr);
+          function serializeOpeningState(value) {
+              // 玩家文本中的标签或状态标记不能截断更新块/检查点；JSON 解析会还原原文。
+              return JSON.stringify(value, null, 2).replace(/[<>$]/g, function(character) {
+                  return '\\u' + character.charCodeAt(0).toString(16).padStart(4, '0');
+              });
+          }
+
+          async function exportData() {
+              if (openingBusy || openingDone) return;
+              var button = document.getElementById('btn-next');
+              var written = false, committed = false, original, updated, chat;
+              openingBusy = true;
+              button.disabled = true;
+              button.textContent = "正在写入开局……";
+              try {
+                  if (typeof setChatMessages !== "function" || typeof updateVariablesWith !== "function") throw new Error("缺少酒馆助手变量写入接口，请检查扩展是否启用。");
+                  var input = window.parent.document.querySelector('#send_textarea');
+                  if (!input) throw new Error("找不到酒馆聊天输入框。");
+                  if (input.value.trim()) throw new Error("聊天输入框已有内容，请先发送或清空。");
+                  chat = SillyTavern.getContext().chat;
+                  if (!chat || chat.length !== 1 || chat[0].is_user) throw new Error("只能在尚未开始的首楼设置开局，请使用新聊天。");
+                  original = String(chat[0].mes || "");
+                  if (original.indexOf('$开始游戏$') === -1) throw new Error("本聊天的开局已经写入，不能重复初始化。");
+                  var marker = String.fromCharCode(36, 36, 36, 36, 36, 36);
+                  var escapedMarker = marker.replace(/\$/g, '\\$');
+                  var blockPattern = escapedMarker + 'data_block' + escapedMarker + '\\s*([\\s\\S]*?)\\s*' + escapedMarker + 'data_block_end' + escapedMarker;
+                  var match = original.match(new RegExp(blockPattern));
+                  if (!match) throw new Error("首楼缺少 SAM 初始状态块，未写入开局。");
+                  var base = JSON.parse(match[1]);
+                  if (!base.static || !base.static["主角"]) throw new Error("SAM 初始状态缺少主角对象。");
+                  var story = state.selections.init_stories[0];
+                  var initialized = buildOpeningState(base, story);
+                  var draft = openingDraft();
+                  // 逐字段记录，遵守主角更新规则；完整检查点保证重载时不重复执行。
+                  var patch = Object.keys(initialized.static["主角"]).map(function(key) {
+                      return { op: Object.prototype.hasOwnProperty.call(base.static["主角"], key) ? "replace" : "insert", path: "/主角/" + key.replace(/~/g, '~0').replace(/\//g, '~1'), value: initialized.static["主角"][key] };
+                  });
+                  patch.push({ op: "replace", path: "/事件", value: initialized.static["事件"] });
+                  patch.push({ op: "time", value: initialized.time });
+                  var narrative = original.replace(new RegExp(blockPattern, 'g'), '')
+                      .replace(/(?:<!-- SAM_CHECKPOINT -->\s*)?<SAMCheckpoint>[\s\S]*?<\/SAMCheckpoint>/g, '')
+                      .replace(/<UpdateVariables>[\s\S]*?<\/UpdateVariables>/g, '')
+                      .replace(/<UpdateVariable>[\s\S]*?<\/UpdateVariable>/g, '')
+                      .replace(/<JSONPatch>[\s\S]*?<\/JSONPatch>/g, '')
+                      .replace('$开始游戏$', '').trim();
+                  updated = (narrative || "蔚蓝星域 · 开局档案已建立。")
+                      + '\n\n<UpdateVariables>\n<JSONPatch>\n' + serializeOpeningState(patch)
+                      + '\n</JSONPatch>\n</UpdateVariables>\n\n'
+                      + marker + 'data_block' + marker + '\n' + serializeOpeningState(initialized)
+                      + '\n' + marker + 'data_block_end' + marker;
+                  if (SillyTavern.getContext().chat !== chat || chat.length !== 1 || chat[0].mes !== original) throw new Error("聊天已变化，停止开局写入。");
+                  await setChatMessages([{ message_id: 0, message: updated }], { refresh: 'none' });
+                  written = true;
+                  if (SillyTavern.getContext().chat !== chat || chat.length !== 1 || chat[0].mes !== updated) throw new Error("聊天已变化，停止变量写入。");
+                  await updateVariablesWith(function(vars) { vars.SAM_data = initialized; return vars; });
+                  committed = true;
+                  openingDone = true;
+                  if (SillyTavern.getContext().chat !== chat) throw new Error("聊天已切换；开局已保存到原聊天，请返回原聊天继续。");
+                  if (input.value.trim()) throw new Error("聊天框在写入期间出现新内容，未覆盖；请手动输入开场请求。");
+                  input.value = draft;
+                  input.dispatchEvent(new window.parent.Event('input', { bubbles: true }));
+                  input.focus();
+                  if (typeof eventEmit === "function") await eventEmit('REFRESH_SAM_VARIABLES');
+                  await setChatMessages([{ message_id: 0 }], { refresh: 'affected' });
+              } catch (e) {
+                  console.error(e);
+                  if (written && !committed && SillyTavern.getContext().chat === chat && chat.length === 1 && chat[0].mes === updated) {
+                      try { await setChatMessages([{ message_id: 0, message: original }], { refresh: 'none' }); }
+                      catch (rollbackError) { console.error("开局首楼恢复失败", rollbackError); }
+                  }
+                  alert((committed ? "开局数值已写入，但界面刷新失败，请刷新聊天。\n" : "开局写入失败：") + (e && e.message ? e.message : e));
+              } finally {
+                  openingBusy = false;
+                  button.disabled = openingDone;
+                  button.textContent = openingDone ? (state.captain.background ? "开局已写入，背景故事已填入聊天框" : "开局已写入，请自行输入开场内容") : "确认并开始游戏 >>>";
+              }
           }
 
       </script>
