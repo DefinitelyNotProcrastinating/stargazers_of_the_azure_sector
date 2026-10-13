@@ -3055,63 +3055,31 @@ replaceString: |-
       }
 
       function assignEquipmentToSlots(slots, ship) {
-        const equipment = entries((ship && ship.装备) || {}).sort(([a], [b]) => Number(/^[A-Z]+\d+\s+/.test(b)) - Number(/^[A-Z]+\d+\s+/.test(a)));
-        const used = new Set();
-
-        equipment.forEach(([moduleName, moduleData]) => {
-          const req = parseEquipRequirementSlot(moduleData, ship);
-          let index = -1;
-          const namedSlot = moduleName.match(/^([A-Z]+\d+)\s+/);
-          if (namedSlot) index = slots.findIndex(slot => !used.has(slot.id) && slot.slot === namedSlot[1] && slot.sourceKind === req.sourceKind && slot.slotType === req.type);
-
-          /*
-            第一优先级：精确匹配来源类型 + 槽位 ID。
-            武器必须匹配炮位配置中真实存在的槽位 ID。
-          */
-          if (index < 0 && req.type && req.sourceKind) {
-            index = slots.findIndex(slot =>
-              !used.has(slot.id) &&
-              slot.sourceKind === req.sourceKind &&
-              slot.slotType === req.type
-            );
-          }
-
-          /*
-            第二优先级：只匹配槽位 ID。
-            仅用于明确给出了 type 的情况。
-          */
-          if (index < 0 && req.type) {
-            index = slots.findIndex(slot =>
-              !used.has(slot.id) &&
-              slot.slotType === req.type
-            );
-          }
-
-          /*
-            第三优先级：
-            只允许模块使用大类兜底。
-            武器不允许用 sourceKind=weapon 兜底，否则装备无法识别槽位时可能错误占用。
-          */
-          if (index < 0 && req.sourceKind === "module" && !req.strict) {
-            index = slots.findIndex(slot =>
-              !used.has(slot.id) &&
-              slot.sourceKind === "module" &&
-              (slot.kind === req.kind || req.kind === "module")
-            );
-          }
-
-          /*
-            关键约束：
-            找不到可兼容槽位时，不创建额外节点。
-            槽位总数永远等于舰船配置解析出的槽位总数。
-          */
-          if (index >= 0) {
-            slots[index].module = moduleName;
-            slots[index].empty = false;
-            used.add(slots[index].id);
+        const records = entries(ship && ship.装备 || {}).map(([name, item]) => ({ name, item,
+          req: parseEquipRequirementSlot(item, ship), remaining: moduleStackCount(item) }));
+        const claim = (record, slot) => {
+          slot.module = record.name; slot.empty = false; record.remaining--;
+        };
+        const compatible = (record, slot) => slot.empty && (record.req.type
+          ? slot.sourceKind === record.req.sourceKind && slot.slotType === record.req.type
+          : record.req.sourceKind === 'module' && !record.req.strict && slot.sourceKind === 'module' &&
+            (slot.kind === record.req.kind || record.req.kind === 'module'));
+        // Reserve recorded positions before filling any unspecified copies.
+        records.forEach(record => {
+          const prefix = record.name.match(/^([A-Z]+\d+)\s+/);
+          const positions = Array.isArray(record.item.装配槽位) ? record.item.装配槽位 : prefix ? [prefix[1]] : [];
+          positions.forEach(position => {
+            const slot = slots.find(slot => slot.slot === position && compatible(record, slot));
+            if (slot && record.remaining > 0) claim(record, slot);
+          });
+        });
+        records.forEach(record => {
+          while (record.remaining > 0) {
+            const slot = slots.find(slot => compatible(record, slot));
+            if (!slot) break;
+            claim(record, slot);
           }
         });
-
         return slots;
       }
 
@@ -3246,32 +3214,15 @@ replaceString: |-
       }
 
       function sumEquipmentField(equipment, key) {
-        return entries(equipment || {}).reduce((sum, [, item]) => sum + numericField(item || {}, key), 0);
+        return entries(equipment || {}).reduce((sum, [, item]) => sum + numericField(item || {}, key) * moduleStackCount(item), 0);
       }
 
-      function shipHpStatus(ship) {
-        const baseShield = numericField(ship, "船体护盾值");
-        const baseStructure = numericField(ship, "船体结构值");
-        const bonusShield = sumEquipmentField(ship && ship.装备, "护盾");
-        const bonusStructure = sumEquipmentField(ship && ship.装备, "结构值");
-        const maxShield = Math.max(0, baseShield + bonusShield);
-        const maxStructure = Math.max(0, baseStructure + bonusStructure);
-        const currentShield = Math.max(0, Math.min(maxShield, ship && ship.护盾值 !== undefined ? numericField(ship, "护盾值") : baseShield));
-        const currentStructure = Math.max(0, Math.min(maxStructure, ship && ship.结构值 !== undefined ? numericField(ship, "结构值") : baseStructure));
+      function shipHpStatus(ship) { return moduleStackHpStatus(ship); }
 
-        return {
-          currentShield,
-          maxShield,
-          bonusShield,
-          currentStructure,
-          maxStructure,
-          bonusStructure
-        };
-      }
-
-      function hpBar(label, current, max, bonus, kind) {
+      function hpBar(label, current, max, bonus, kind, limit) {
         const pct = max > 0 ? Math.max(0, Math.min(100, current / max * 100)) : 0;
-        const bonusText = bonus !== 0 ? `装备 ${bonus > 0 ? '+' : ''}${bonus}` : "无装备容量修正";
+        const bonusText = (bonus !== 0 ? `装备 ${bonus > 0 ? '+' : ''}${bonus}` : "无装备容量修正")
+          + (Number.isFinite(limit) ? ` · 最大护盾上限 ${limit}` : '');
         return `
           <div class="ship-health-card">
             <div class="ship-health-head">
@@ -3290,11 +3241,101 @@ replaceString: |-
         const hp = shipHpStatus(ship || {});
         return `
           <div class="ship-health-grid">
-            ${hpBar("护盾", hp.currentShield, hp.maxShield, hp.bonusShield, "shield")}
+            ${hpBar("护盾", hp.currentShield, hp.maxShield, hp.bonusShield, "shield", hp.shieldLimit)}
             ${hpBar("结构", hp.currentStructure, hp.maxStructure, hp.bonusStructure, "structure")}
           </div>
         `;
       }
+
+      // MODULE_STACKING_HELPERS_BEGIN
+      function moduleStackCount(item) {
+        const value = item && item.堆叠 !== undefined ? Number(item.堆叠) : 1;
+        return Number.isSafeInteger(value) && value > 0 ? value : 0;
+      }
+
+      function moduleStackSignature(item) {
+        if (!item || typeof item !== 'object' || Array.isArray(item)) return '';
+        const canonical = (value, field) => {
+          if (Array.isArray(value)) {
+            const array = value.map(entry => canonical(entry));
+            return field === '标签' ? Array.from(new Set(array)).sort() : array;
+          }
+          if (value && typeof value === 'object') {
+            return Object.fromEntries(Object.keys(value).sort().map(key => [key, canonical(value[key], key)]));
+          }
+          return value;
+        };
+        const copy = Object.assign({}, item);
+        delete copy.堆叠;
+        delete copy._key;
+        delete copy.装配槽位;
+        return JSON.stringify(canonical(copy));
+      }
+
+      function stackModuleDictionary(dictionary, equipped = false) {
+        if (!dictionary || typeof dictionary !== 'object' || Array.isArray(dictionary)) return;
+        const groups = new Map();
+        for (const name of Object.keys(dictionary)) {
+          const item = dictionary[name];
+          if (!item || typeof item !== 'object' || Array.isArray(item) || typeof item.装配要求 !== 'string') continue;
+          const count = moduleStackCount(item);
+          if (!count) continue;
+          if (!equipped) delete item.装配槽位;
+          const signature = moduleStackSignature(item);
+          const firstName = groups.get(signature);
+          if (firstName !== undefined) {
+            const first = dictionary[firstName];
+            const total = moduleStackCount(first) + count;
+            if (!Number.isSafeInteger(total)) continue;
+            if (equipped) {
+              const positions = (key, value) => {
+                if (Array.isArray(value.装配槽位) && value.装配槽位.length === moduleStackCount(value)) return value.装配槽位;
+                const slot = key.match(/^([A-Z]+\d+)\s+/);
+                return slot && moduleStackCount(value) === 1 ? [slot[1]] : [];
+              };
+              const slots = positions(firstName, first).concat(positions(name, item));
+              if (slots.length === total && new Set(slots).size === total) first.装配槽位 = slots;
+              else delete first.装配槽位;
+            }
+            first.堆叠 = total;
+            delete dictionary[name];
+          } else groups.set(signature, name);
+        }
+      }
+
+      function moduleStackHpStatus(ship) {
+        ship = ship || {};
+        const number = value => {
+          const parsed = typeof value === 'number' ? value : parseFloat(String(value ?? '').replace(/[^0-9.+-]/g, ''));
+          return Number.isFinite(parsed) ? parsed : 0;
+        };
+        const equipment = Object.values(ship.装备 || {});
+        const sum = key => equipment.reduce((total, item) => total + number(item && item[key]) * moduleStackCount(item), 0);
+        const baseShield = number(ship.船体护盾值), baseStructure = number(ship.船体结构值);
+        const bonusShield = sum('护盾'), bonusStructure = sum('结构值');
+        const shieldLimit = equipment.reduce((limit, item) => item && item.最大护盾上限 !== undefined
+          ? Math.min(limit, Math.max(0, number(item.最大护盾上限))) : limit, Infinity);
+        const maxShield = Math.max(0, Math.min(baseShield + bonusShield, shieldLimit));
+        const maxStructure = Math.max(0, baseStructure + bonusStructure);
+        return { maxShield, maxStructure, bonusShield, bonusStructure, shieldLimit,
+          currentShield: Math.max(0, Math.min(maxShield, ship.护盾值 === undefined ? baseShield : number(ship.护盾值))),
+          currentStructure: Math.max(0, Math.min(maxStructure, ship.结构值 === undefined ? baseStructure : number(ship.结构值))) };
+      }
+
+      function stackPlayerModules(state) {
+        const hero = state && state.static && state.static.主角;
+        if (!hero || typeof hero !== 'object') return;
+        stackModuleDictionary(hero.物品栏);
+        for (const ship of Object.values(hero.舰船 || {})) {
+          if (ship && typeof ship === 'object' && !Array.isArray(ship)) {
+            stackModuleDictionary(ship.装备, true);
+            const hp = moduleStackHpStatus(ship);
+            if (ship.船体护盾值 !== undefined && ship.护盾值 !== undefined) ship.护盾值 = hp.currentShield;
+            if (ship.船体结构值 !== undefined && ship.结构值 !== undefined) ship.结构值 = hp.currentStructure;
+          }
+        }
+      }
+      // MODULE_STACKING_HELPERS_END
 
       function isBuiltinEquipment(item) {
         const tags = item && item.标签;
@@ -3304,8 +3345,8 @@ replaceString: |-
       function shipResourceStatus(ship) {
         let usedPG = 0, usedCPU = 0;
         entries(ship.装备 || {}).forEach(([, item]) => {
-          usedPG += numericField({ value: extractRequirementField(item.装配要求, ['PG']) }, 'value');
-          usedCPU += numericField({ value: extractRequirementField(item.装配要求, ['CPU']) }, 'value');
+          usedPG += numericField({ value: extractRequirementField(item.装配要求, ['PG']) }, 'value') * moduleStackCount(item);
+          usedCPU += numericField({ value: extractRequirementField(item.装配要求, ['CPU']) }, 'value') * moduleStackCount(item);
         });
         return { usedPG, usedCPU, remainPG: numericField(ship.装配资源, 'PG') - usedPG,
           remainCPU: numericField(ship.装配资源, 'CPU') - usedCPU };
@@ -3343,7 +3384,8 @@ replaceString: |-
           }
         }
         const trial = JSON.parse(JSON.stringify(ship));
-        trial.装备 = Object.assign({}, trial.装备 || {}, { __candidate: item });
+        const one = JSON.parse(JSON.stringify(item)); delete one.堆叠; delete one.装配槽位;
+        trial.装备 = Object.assign({}, trial.装备 || {}, { __candidate: one });
         const resources = shipResourceStatus(trial);
         if (resources.remainPG < 0 || resources.remainCPU < 0) throw Error('PG或CPU不足。');
         return slot;
@@ -3359,11 +3401,12 @@ replaceString: |-
           const item = ship.装备[itemName];
           if (!item) throw Error('装备已不存在。');
           if (isBuiltinEquipment(item)) throw Error('内置装备不能拆卸。');
+          if (!moduleStackCount(item)) throw Error('装备堆叠数量无效。');
           const returned = JSON.parse(JSON.stringify(item));
-          delete returned._key;
+          delete returned._key; delete returned.装配槽位;
           returned.堆叠 = 1;
           let name = itemName.replace(/^[A-Z]+\d+\s+/, '');
-          const withoutQuantity = value => { const clone = Object.assign({}, value); delete clone.堆叠; return JSON.stringify(clone); };
+          const withoutQuantity = moduleStackSignature;
           if (hero.物品栏[name] && withoutQuantity(hero.物品栏[name]) === withoutQuantity(returned)) {
             const quantity = hero.物品栏[name].堆叠 === undefined ? 1 : Number(hero.物品栏[name].堆叠);
             if (!Number.isSafeInteger(quantity) || quantity < 1) throw Error('物品栏数量无效。');
@@ -3374,7 +3417,11 @@ replaceString: |-
             while (Object.prototype.hasOwnProperty.call(hero.物品栏, name)) name = baseName + ' #' + suffix++;
             hero.物品栏[name] = returned;
           }
-          delete ship.装备[itemName];
+          const count = moduleStackCount(item);
+          if (count > 1) {
+            item.堆叠 = count - 1;
+            if (Array.isArray(item.装配槽位)) item.装配槽位 = item.装配槽位.slice(0, count - 1);
+          } else delete ship.装备[itemName];
         } else if (action === 'install') {
           const item = hero.物品栏[itemName];
           const quantity = item && (item.堆叠 === undefined ? 1 : Number(item.堆叠));
@@ -3382,12 +3429,14 @@ replaceString: |-
           const slot = validateShipEquipment(ship, item, slotId);
           const installed = JSON.parse(JSON.stringify(item));
           delete installed.堆叠; delete installed._key;
+          installed.装配槽位 = [slot.slot];
           const name = slot.slot + ' ' + itemName;
           if (Object.prototype.hasOwnProperty.call(ship.装备, name)) throw Error('该装备名称已被占用。');
           ship.装备[name] = installed;
           if (quantity === 1) delete hero.物品栏[itemName];
           else hero.物品栏[itemName].堆叠 = quantity - 1;
         } else throw Error('未知装配操作。');
+        stackPlayerModules(state);
         const hp = shipHpStatus(ship);
         ship.护盾值 = hp.currentShield;
         ship.结构值 = hp.currentStructure;
@@ -3478,8 +3527,8 @@ replaceString: |-
           <div class="equipment-list">
             ${list.map(([name, item]) => `
               <article class="equipment-entry">
-                <div class="equipment-entry-title">${escapeHtml(name)}</div>
-                ${isBuiltinEquipment(item) ? '<span class="muted">内置 · 不可拆卸</span>' : `<button class="visual-bind-btn" data-ship-equipment-action="remove" data-ship-name="${escapeHtml(shipName)}" data-item-name="${escapeHtml(name)}">拆卸至物品栏</button>`}
+                <div class="equipment-entry-title">${escapeHtml(name)}${moduleStackCount(item) > 1 ? ' ×' + moduleStackCount(item) : ''}</div>
+                ${isBuiltinEquipment(item) ? '<span class="muted">内置 · 不可拆卸</span>' : `<button class="visual-bind-btn" data-ship-equipment-action="remove" data-ship-name="${escapeHtml(shipName)}" data-item-name="${escapeHtml(name)}">${moduleStackCount(item) > 1 ? '拆卸一件至物品栏' : '拆卸至物品栏'}</button>`}
                 <div class="prop-list">
                   ${propRows(item || {})}
                 </div>

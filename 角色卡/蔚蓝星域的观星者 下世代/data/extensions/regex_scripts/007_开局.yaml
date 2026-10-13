@@ -1105,6 +1105,96 @@ replaceString: |-
           function getSelectedShip() { return state.selections.ships.length ? state.selections.ships[0] : null; }
           function getSelectedShipName() { return getSelectedShip() ? getSelectedShip()._key : ""; }
           function getSelectedStargazer() { return state.fitting.stargazer; }
+          // MODULE_STACKING_HELPERS_BEGIN
+          function moduleStackCount(item) {
+            const value = item && item.堆叠 !== undefined ? Number(item.堆叠) : 1;
+            return Number.isSafeInteger(value) && value > 0 ? value : 0;
+          }
+
+          function moduleStackSignature(item) {
+            if (!item || typeof item !== 'object' || Array.isArray(item)) return '';
+            const canonical = (value, field) => {
+              if (Array.isArray(value)) {
+                const array = value.map(entry => canonical(entry));
+                return field === '标签' ? Array.from(new Set(array)).sort() : array;
+              }
+              if (value && typeof value === 'object') {
+                return Object.fromEntries(Object.keys(value).sort().map(key => [key, canonical(value[key], key)]));
+              }
+              return value;
+            };
+            const copy = Object.assign({}, item);
+            delete copy.堆叠;
+            delete copy._key;
+            delete copy.装配槽位;
+            return JSON.stringify(canonical(copy));
+          }
+
+          function stackModuleDictionary(dictionary, equipped = false) {
+            if (!dictionary || typeof dictionary !== 'object' || Array.isArray(dictionary)) return;
+            const groups = new Map();
+            for (const name of Object.keys(dictionary)) {
+              const item = dictionary[name];
+              if (!item || typeof item !== 'object' || Array.isArray(item) || typeof item.装配要求 !== 'string') continue;
+              const count = moduleStackCount(item);
+              if (!count) continue;
+              if (!equipped) delete item.装配槽位;
+              const signature = moduleStackSignature(item);
+              const firstName = groups.get(signature);
+              if (firstName !== undefined) {
+                const first = dictionary[firstName];
+                const total = moduleStackCount(first) + count;
+                if (!Number.isSafeInteger(total)) continue;
+                if (equipped) {
+                  const positions = (key, value) => {
+                    if (Array.isArray(value.装配槽位) && value.装配槽位.length === moduleStackCount(value)) return value.装配槽位;
+                    const slot = key.match(/^([A-Z]+\d+)\s+/);
+                    return slot && moduleStackCount(value) === 1 ? [slot[1]] : [];
+                  };
+                  const slots = positions(firstName, first).concat(positions(name, item));
+                  if (slots.length === total && new Set(slots).size === total) first.装配槽位 = slots;
+                  else delete first.装配槽位;
+                }
+                first.堆叠 = total;
+                delete dictionary[name];
+              } else groups.set(signature, name);
+            }
+          }
+
+          function moduleStackHpStatus(ship) {
+            ship = ship || {};
+            const number = value => {
+              const parsed = typeof value === 'number' ? value : parseFloat(String(value ?? '').replace(/[^0-9.+-]/g, ''));
+              return Number.isFinite(parsed) ? parsed : 0;
+            };
+            const equipment = Object.values(ship.装备 || {});
+            const sum = key => equipment.reduce((total, item) => total + number(item && item[key]) * moduleStackCount(item), 0);
+            const baseShield = number(ship.船体护盾值), baseStructure = number(ship.船体结构值);
+            const bonusShield = sum('护盾'), bonusStructure = sum('结构值');
+            const shieldLimit = equipment.reduce((limit, item) => item && item.最大护盾上限 !== undefined
+              ? Math.min(limit, Math.max(0, number(item.最大护盾上限))) : limit, Infinity);
+            const maxShield = Math.max(0, Math.min(baseShield + bonusShield, shieldLimit));
+            const maxStructure = Math.max(0, baseStructure + bonusStructure);
+            return { maxShield, maxStructure, bonusShield, bonusStructure, shieldLimit,
+              currentShield: Math.max(0, Math.min(maxShield, ship.护盾值 === undefined ? baseShield : number(ship.护盾值))),
+              currentStructure: Math.max(0, Math.min(maxStructure, ship.结构值 === undefined ? baseStructure : number(ship.结构值))) };
+          }
+
+          function stackPlayerModules(state) {
+            const hero = state && state.static && state.static.主角;
+            if (!hero || typeof hero !== 'object') return;
+            stackModuleDictionary(hero.物品栏);
+            for (const ship of Object.values(hero.舰船 || {})) {
+              if (ship && typeof ship === 'object' && !Array.isArray(ship)) {
+                stackModuleDictionary(ship.装备, true);
+                const hp = moduleStackHpStatus(ship);
+                if (ship.船体护盾值 !== undefined && ship.护盾值 !== undefined) ship.护盾值 = hp.currentShield;
+                if (ship.船体结构值 !== undefined && ship.结构值 !== undefined) ship.结构值 = hp.currentStructure;
+              }
+            }
+          }
+          // MODULE_STACKING_HELPERS_END
+
           function isBuiltinEquipment(item) { return itemTags(item).includes('内置'); }
           function getFittingItem(kind, slotId) {
               return kind === 'weapon' ? state.fitting.weapons[slotId] : state.fitting.modules[slotId];
@@ -1130,15 +1220,32 @@ replaceString: |-
               if (!ship) return;
               var slots = buildWeaponSlots(ship).map(function(slot) { return { id: slot.id, type: slot.mount, kind: 'weapon' }; })
                   .concat(buildModuleSlots(ship).map(function(slot) { return { id: slot.id, type: slot.slotType, kind: 'module' }; }));
-              Object.keys(ship['装备'] || {}).forEach(function(name) {
+              var records = Object.keys(ship['装备'] || {}).map(function(name) {
                   var item = ship['装备'][name], req = parseRequirement(item['装配要求']);
                   var kind = req['炮位'] && req['炮位'] !== '无' ? 'weapon' : 'module';
-                  var type = kind === 'weapon' ? getRequirementMount(req) : getRequirementSlotType(req);
-                  var map = kind === 'weapon' ? state.fitting.weapons : state.fitting.modules;
-                  var prefix = name.match(/^([A-Z]+\d+)\s+/);
-                  var slot = slots.find(function(slot) { return slot.kind === kind && slot.type === type && !map[slot.id] && prefix && slot.id === prefix[1]; })
-                      || slots.find(function(slot) { return slot.kind === kind && slot.type === type && !map[slot.id]; });
-                  if (slot) map[slot.id] = Object.assign(copyOpening(item), { _key: name.replace(/^[A-Z]+\d+\s+/, '') });
+                  return { name: name, item: item, kind: kind, remaining: moduleStackCount(item),
+                      type: kind === 'weapon' ? getRequirementMount(req) : getRequirementSlotType(req) };
+              });
+              function mapFor(record) { return record.kind === 'weapon' ? state.fitting.weapons : state.fitting.modules; }
+              function claim(record, slot) {
+                  var item = copyOpening(record.item); delete item.堆叠; delete item.装配槽位;
+                  item._key = record.name.replace(/^[A-Z]+\d+\s+/, '');
+                  mapFor(record)[slot.id] = item; record.remaining--;
+              }
+              records.forEach(function(record) {
+                  var prefix = record.name.match(/^([A-Z]+\d+)\s+/);
+                  var positions = Array.isArray(record.item.装配槽位) ? record.item.装配槽位 : prefix ? [prefix[1]] : [];
+                  positions.forEach(function(position) {
+                      var slot = slots.find(function(slot) { return slot.kind === record.kind && slot.type === record.type && !mapFor(record)[slot.id] && slot.id === position; });
+                      if (slot && record.remaining > 0) claim(record, slot);
+                  });
+              });
+              records.forEach(function(record) {
+                  while (record.remaining > 0) {
+                      var slot = slots.find(function(slot) { return slot.kind === record.kind && slot.type === record.type && !mapFor(record)[slot.id]; });
+                      if (!slot) break;
+                      claim(record, slot);
+                  }
               });
           }
 
@@ -1468,7 +1575,7 @@ replaceString: |-
               for (i = 0; i < keys.length; i++) {
                   if (item && item[keys[i]] !== undefined) total += parsePlainNumber(item[keys[i]]);
               }
-              return total;
+              return total * moduleStackCount(item);
           }
 
           function firstNonEmpty(values) {
@@ -1554,22 +1661,9 @@ replaceString: |-
           }
 
           function getFittingHpStatus(ship) {
-              var entries = getCurrentFittingEntries();
-              var baseShield = parsePlainNumber(ship && ship["船体护盾值"]);
-              var baseStructure = parsePlainNumber(ship && ship["船体结构值"]);
-              var bonusShield = 0, bonusStructure = 0, i = 0;
-              for (i = 0; i < entries.length; i++) {
-                  bonusShield += getEquipmentNumber(entries[i], ["护盾", "护盾值", "船体护盾值", "护盾上限"]);
-                  bonusStructure += getEquipmentNumber(entries[i], ["结构", "结构值", "船体结构值", "结构上限"]);
-              }
-              return {
-                  currentShield: Math.max(0, Math.min(ship && ship['护盾值'] !== undefined ? parsePlainNumber(ship['护盾值']) : baseShield + bonusShield, Math.max(0, baseShield + bonusShield))),
-                  maxShield: Math.max(0, baseShield + bonusShield),
-                  currentStructure: Math.max(0, Math.min(ship && ship['结构值'] !== undefined ? parsePlainNumber(ship['结构值']) : baseStructure + bonusStructure, Math.max(0, baseStructure + bonusStructure))),
-                  maxStructure: Math.max(0, baseStructure + bonusStructure),
-                  bonusShield: bonusShield,
-                  bonusStructure: bonusStructure
-              };
+              var items = getCurrentFittingEntries();
+              var equipped = Object.fromEntries(items.map(function(item, index) { return [String(index), item]; }));
+              return moduleStackHpStatus(Object.assign({}, ship || {}, { '装备': equipped }));
           }
 
           function syncSelectedShipHpToMax() {
@@ -1597,8 +1691,8 @@ replaceString: |-
               var totalCPU = ship ? parsePlainNumber(ship["装配资源"] && ship["装配资源"]["CPU"]) : 0;
               for (i = 0; i < entries.length; i++) {
                   req = parseRequirement(entries[i]["装配要求"]);
-                  usedPG += req.PG;
-                  usedCPU += req.CPU;
+                  usedPG += req.PG * moduleStackCount(entries[i]);
+                  usedCPU += req.CPU * moduleStackCount(entries[i]);
               }
               if (removedRequirement) {
                   usedPG -= removedRequirement.PG;
@@ -1819,6 +1913,7 @@ replaceString: |-
                   return { ok: true, reason: "" };
               }
               if (!selectorContext) return { ok: false, reason: '请选择装配槽位。' };
+              if (moduleStackCount(candidate) !== 1) return { ok: false, reason: '请在每个槽位逐件装配；相同装备会自动堆叠保存。' };
               if (isBuiltinEquipment(getFittingItem(kind, selectorContext.slotId))) return { ok: false, reason: '内置装备不能拆卸或替换。' };
               req = parseRequirement(candidate["装配要求"]);
               removedRequirement = getSlotCurrentRequirement(kind, selectorContext.slotId);
@@ -2653,6 +2748,7 @@ replaceString: |-
               ship["装备"] = {};
               for (k in weaponSlots) if (Object.prototype.hasOwnProperty.call(weaponSlots, k) && weaponSlots[k]) { name = k + " " + getEquipmentDisplayName(weaponSlots[k]); clone = JSON.parse(JSON.stringify(weaponSlots[k])); delete clone._key; ship["装备"][name] = clone; }
               for (k in moduleSlots) if (Object.prototype.hasOwnProperty.call(moduleSlots, k) && moduleSlots[k]) { name = k + " " + getEquipmentDisplayName(moduleSlots[k]); clone = JSON.parse(JSON.stringify(moduleSlots[k])); delete clone._key; ship["装备"][name] = clone; }
+              stackModuleDictionary(ship["装备"], true);
               delete ship._key;
               return ship;
           }
@@ -2722,6 +2818,7 @@ replaceString: |-
                   delete items[resource];
               }
               if (ship) selectedShips[getSelectedShipName()] = ship;
+              stackModuleDictionary(items);
               if (stargazer) selectedStargazers[state.fitting.stargazer._key] = JSON.parse(JSON.stringify(stargazer));
               var result = JSON.parse(JSON.stringify(base));
               var hero = result.static["主角"];
