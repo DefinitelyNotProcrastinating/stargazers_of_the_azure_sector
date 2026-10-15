@@ -1,0 +1,148 @@
+keys:
+- 拦截单元
+- 集群拦截单元
+content: |-
+  <ship_def>
+  级别: 拦截单元
+  文明: 漂泊集群
+  舰船类型: FF
+  舰种: 护卫舰
+  舰体全长: 95米
+  船体类型: 例外型
+  原生标准船员: 0
+  形态: 扁平菱形框架包裹致密计算核心，四角嵌入推进与护盾节点，几乎没有可供人体进入的空腔。
+  定位: 快速截击、追踪逃逸目标与牵制。结构简单，炮位少但原生护盾与装配资源充裕。
+  分布: 外环集群原生遗迹。
+  驾驶限制: 原生版本无人，内部没有可用乘员空间，原生传送会杀死生物乘客。
+  观星者需求: 原生无人版本无需观星者；不能将人类观星者直接接入其原生传送系统。
+  超空间说明: 缓存、短距传送、节点减耗和稳定性规则见漂泊集群触发区。模板保存基础消耗，动态支援不得永久改写船体白值。
+  参考满编火力每dt: 700
+  火力说明: 仅为全部默认武器可同时攻击时的未命中/防御结算前合计，不能作为额外武器重复造成伤害；机群伤害另受减员与接敌限制。
+  舰船单位模板:
+    文明: 漂泊集群
+    舰船类型: FF
+    每日补给消耗: 2
+    吨位: S
+    驾驶员: ''
+    是否旗舰: false
+    观星者接口角色: ''
+    超空间充能: 0
+    最大充能: 8
+    超空间消耗: 1
+    制造商: 漂泊集群标准化工业平台
+    描述: 快速截击、追踪逃逸目标与牵制。结构简单，炮位少但原生护盾与装配资源充裕。
+    炮位配置: 2S
+    装备槽位配置: 3H1L
+    船体护盾值: 1800
+    船体结构值: 450
+    护盾值: 1800
+    结构值: 450
+    护盾DR: 25%
+    结构DR: 20%
+    护盾装甲: 10
+    结构装甲: 12
+    装配资源:
+      PG: 60
+      CPU: 240
+    效果:
+      船体加成:
+      - 原生无人战体；最终白值按本档案读取，不重复乘人类品质或国家倍率。
+      - 两条血条：护盾与结构；H/L槽数按现行舰级上限。
+      装配减免: []
+      内部结构:
+        光子凝聚器: 完好
+      内置电子系统:
+        电子品质: 8
+        内置跟踪: 18
+        内置ECCM: 6
+        侦测值: 12
+        侦测距离km: 100000
+        叠加规则: 内置跟踪已包含CPU和侦测器，不重复计算；外装模块另计。
+      机动评级: 95
+      闪避值: 20
+      超空间核心稳定强度: 1
+      原生超空间准备时间秒: 20
+      特殊系统:
+        推进响应: 亚光速推进速度×1.25；闪避20已包含本舰机动特性，不重复加值。
+    装备:
+      轻型光粒_1:
+        品质: 12
+        效果:
+          伤害: 350
+          冷却: 1dt
+          基础命中: 4
+          跟踪: 0.22
+          稳定射程: 18000km
+          AP: 0%
+          DRP: 0%
+          衰竭: 稳定射程外伤害0；射程内不散射
+          结算: 最终原生白值，不再乘品质倍率
+        安装限定:
+          船体文明: 漂泊集群
+          所需内部结构:
+          - 光子凝聚器
+        装配要求: PG：8 | CPU：16 | 吨位：S | 炮位：1S | 装备槽位：无
+        描述: 集群原生光粒发射器；只能安装在保有完好内部光子凝聚器的集群舰船上，不能跨文明移植。
+      轻型光粒_2:
+        品质: 12
+        效果:
+          伤害: 350
+          冷却: 1dt
+          基础命中: 4
+          跟踪: 0.22
+          稳定射程: 18000km
+          AP: 0%
+          DRP: 0%
+          衰竭: 稳定射程外伤害0；射程内不散射
+          结算: 最终原生白值，不再乘品质倍率
+        安装限定:
+          船体文明: 漂泊集群
+          所需内部结构:
+          - 光子凝聚器
+        装配要求: PG：8 | CPU：16 | 吨位：S | 炮位：1S | 装备槽位：无
+        描述: 集群原生光粒发射器；只能安装在保有完好内部光子凝聚器的集群舰船上，不能跨文明移植。
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 237
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: false
+constant: false
+name: null
+priority: null
+id: 10002
+comment: 舰船|集群拦截单元
+selective: true
+secondary_keys: []
+position: after_char

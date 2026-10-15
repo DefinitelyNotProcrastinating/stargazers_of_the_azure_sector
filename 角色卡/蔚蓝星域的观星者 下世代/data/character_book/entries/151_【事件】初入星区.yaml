@@ -1,0 +1,104 @@
+keys: []
+content: |-
+  <%
+  var wb_9902_eventName = "【事件】初入星区";
+  var wb_9902_eventRoot = "SAM_data.static.事件";
+  var wb_9902_eventState = getvar(wb_9902_eventRoot + "." + wb_9902_eventName, { defaults: undefined });
+  var wb_9902_rawProgress = wb_9902_eventState && typeof wb_9902_eventState === "object" ? wb_9902_eventState["阶段"] : undefined;
+  var wb_9902_progress = null;
+  var wb_9902_eventPrompt = "";
+
+  try {
+    if (wb_9902_rawProgress !== null && wb_9902_rawProgress !== undefined && typeof wb_9902_rawProgress !== "boolean" && typeof wb_9902_rawProgress !== "symbol") {
+      var wb_9902_progressNumber = Number(wb_9902_rawProgress);
+      if (Number.isInteger(wb_9902_progressNumber)) wb_9902_progress = wb_9902_progressNumber;
+    }
+  } catch (wb_9902_error) {
+    wb_9902_progress = null;
+  }
+
+  if (wb_9902_eventState && wb_9902_progress === 5) {
+    if (typeof runType !== "undefined" && runType === "generate" && typeof delvar === "function") {
+      delvar(wb_9902_eventRoot, wb_9902_eventName, { scope: "message", flags: "xx" });
+    }
+  } else if (wb_9902_eventState) {
+    switch (wb_9902_progress) {
+      case 1:
+        wb_9902_eventPrompt = [
+          "【事件】初入星区｜进度1",
+          "任务：完成第一次超空间并抵达一个空间站。",
+          "简短引导玩家选择附近空间站并执行超空间。只有玩家实际抵达后，才把 /事件/【事件】初入星区/阶段 replace 为 2。"
+        ].join("\n");
+        break;
+      case 2:
+        wb_9902_eventPrompt = [
+          "【事件】初入星区｜进度2",
+          "任务：击毁一个训练靶标。",
+          "在空间站训练区安排一个简单靶标。只有玩家实际将它击毁后，才把 /事件/【事件】初入星区/阶段 replace 为 3。"
+        ].join("\n");
+        break;
+      case 3:
+        wb_9902_eventPrompt = [
+          "【事件】初入星区｜进度3",
+          "任务：生产一单位标准补给。",
+          "依据现有工业规则引导生产。只有 /主角/库存/补给 因本次生产增加1后，才把 /事件/【事件】初入星区/阶段 replace 为 4。"
+        ].join("\n");
+        break;
+      case 4:
+        wb_9902_eventPrompt = [
+          "【事件】初入星区｜进度4",
+          "任务：击败一小股海盗并领取1800信用点赏金。",
+          "直接参考上文开局剧情、玩家当前所在星域与具体位置，生成符合当地势力和环境的小股海盗。敌人必须适合由一艘入门护卫舰或矿船应对，不得出现巡洋舰及以上舰体。",
+          "海盗被击毁、俘获或明确击退后，在同一个 JSON Patch 中 delta /主角/信用点 增加1800，并把 /事件/【事件】初入星区/阶段 replace 为 5。赏金只结算一次。"
+        ].join("\n");
+        break;
+      default:
+        wb_9902_eventPrompt = "";
+        break;
+    }
+  }
+  %><%- wb_9902_eventPrompt ? JSON.stringify(wb_9902_eventPrompt) : "" %>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 183
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 151
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 9902
+comment: 【事件】初入星区
+selective: false
+secondary_keys: []
+position: after_char

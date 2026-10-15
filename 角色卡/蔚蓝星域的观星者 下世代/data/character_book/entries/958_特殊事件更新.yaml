@@ -1,0 +1,63 @@
+keys: []
+content: |-
+  <special_event_management>
+  # 特殊事件更新规程
+  - `主角.特殊事件` 是SAM生成的只读叙事投影。不得使用replace、insert、remove或其他JSONPatch直接改写事件。
+  - 每个事件以可读文本ID作为唯一键，例如 `工业站入侵事件1`；引用时必须逐字复制完整ID。
+  - AI唯一可调用的事件函数是 `close_event(id)`，格式：
+    `{"op":"func","func_name":"close_event","params":["工业站入侵事件1"]}`
+  - 只有当剧情已经明确解决、拦截、放弃或清除该事件时才调用。重复关闭不存在的ID不会产生副作用。
+  - 自动事件（研究突破、机遇、缺货等）通常由SAM到期删除，无需主动关闭；若剧情提前结束也可调用close_event。
+  - 手动终态事件（入侵、破坏、掠夺）会持续存在直到close_event。关闭只移除事件和临时效果，不回滚损毁、接管、永久产能损失或已支付资源。
+  - 若玩家修复建筑或从敌方手中夺回建筑，应另行更新 `/主角/建筑/建筑名/状态`；close_event本身不代表修复或夺回。
+  - AI不得调用、虚构或输出 `create_event`、`resolve_event` 等函数。随机事件只能由SAM创建；舰船不会成为随机事件目标。
+
+  当前特殊事件:
+  <%-JSON.stringify(getvar("SAM_data.static.主角.特殊事件") || {}, null, 2)%>
+  当前科研进展:
+  <%-JSON.stringify(getvar("SAM_data.static.主角.科研进展") || {}, null, 2)%>
+  </special_event_management>
+extensions:
+  position: 4
+  exclude_recursion: true
+  display_index: 103
+  probability: 100
+  useProbability: true
+  depth: 1
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 1
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 958
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 10001
+comment: '[update_rule] 特殊事件更新'
+selective: false
+secondary_keys: []
+position: after_char

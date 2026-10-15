@@ -1,0 +1,63 @@
+keys: []
+content: |-
+  <format_obligations mode="independent_update">
+  本条目启用时，以此处的 SAM V6 独立更新格式覆盖《【SAM】合并更新模式格式》及其他要求主回复输出变量块的格式指令。
+  每次主回复严格按正文、每轮总结的顺序输出以下两个顶层块，不加 Markdown 代码围栏或其他顶层块。主回复不得输出 `<UpdateVariable>`、`<JSONPatch>`、变量分析或变量操作；变量变化由 SAM 在主回复结束后通过已选择的 Connection Profile 独立计算并写回。
+
+  <content>
+  # 在这里输出实际剧情，以及本轮需要展示的角色、舰船、建筑、战斗或其他信息块。
+  </content>
+
+  <summary>
+  # 第一行使用以下格式：
+  YYYY:MM:DD HH:MM:SS <WEATHER> 位于 <LOCATION>
+  # 随后用不超过100字的文字总结本轮已发生的重要事实、关系变化和待续线索。
+  # 即使本轮没有变量变化也必须输出总结；总结内不得写变量操作。
+  </summary>
+
+  不输出格式说明、创作计划或面向玩家的系统操作说明。
+  </format_obligations>
+extensions:
+  position: 4
+  exclude_recursion: false
+  display_index: 23
+  probability: 100
+  useProbability: true
+  depth: 1
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 1
+  vectorized: false
+  sticky: 9999
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: false
+insertion_order: 10000
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 10000
+comment: 【SAM】独立更新模式格式
+selective: false
+secondary_keys: []
+position: after_char

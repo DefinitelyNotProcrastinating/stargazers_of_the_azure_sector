@@ -1,0 +1,187 @@
+keys: []
+content: |-
+  # 项目维护指南：EJS 事件与 HTML
+
+  > 本条目只供直接修改本项目的 AI Agent 阅读，必须永久保持关闭。
+  > 你是拥有项目管理员权限的“修改 Agent”，不是参与游戏的叙事 AI。请直接维护当前实现；无需保留旧版本、兼容旧字段、制作 legacy support 或把废弃实现留作封存。需要替换时，迁移当前有效数据后删除旧实现，保证只有一个真值来源。
+
+  ## 1. EJS 的职责边界
+
+  - EJS 在内容进入叙事 AI 的提示词之前执行；`<% ... %>` 内的计算过程不会进入提示词，只有显式输出会进入。
+  - 用 EJS 读取当前变量、判断事件是否激活、选择阶段提示词、组织需要输出的变量快照；不要让叙事 AI 自行猜测这些机械状态。
+  - EJS 负责“显示什么”，叙事 AI 负责“如何叙述”。状态写入仍通过项目规定的 `<UpdateVariable>` JSON Patch 完成，不在展示模板里暗中制造第二套状态。
+  - 默认失败关闭：变量缺失、阶段非法或条件不满足时不输出事件提示，不能退回一个看似合理但未定义的阶段。
+
+  ## 2. 事件变量与固定状态机
+
+  - 所有事件 trigger 与事件运行状态统一藏在 `/事件` 根对象下，禁止散落到 `/主角`、角色、任务或其他根路径。
+  - 每个事件使用 `/事件/<事件名称>/阶段` 作为唯一阶段真值；`阶段` 必须是整数。
+  - 在 EJS 的 SAM 数据读取路径中，JSON Pointer `/事件/示例事件/阶段` 对应 `getvar("SAM_data.static.事件.示例事件.阶段")`。
+  - 每个事件必须先写出允许的有向迁移表。简单线性事件默认使用连续整数，例如 `1 -> 2 -> 3 -> 4 -> 5`；只有确有分支需求时才增加分支。只能前往表中明确列出的阶段。
+  - 阶段可以是 `1、2、3、4……`，无需刻意使用10的倍数。禁止无条件执行 `阶段 + 1`、任意跳转、依据模型臆测跳转，或从未知阶段自动修复到某个阶段。
+  - trigger、激活条件、一次性标记、分支选择等事件专属机械量也必须位于 `/事件/<事件名称>/...`。
+  - 进入下一阶段时，对既有阶段使用 `replace`；首次建立事件对象使用 `insert`。只有满足当前阶段的出边条件时才允许更新。
+  - 终止阶段完成后使用 `remove /事件/<事件名称>` 删除整个事件，不保留“已完成事件对象”。若世界确实需要永久后果，应把结果写入其所属的正式世界变量，再删除事件。
+  - 事件删除后不得因普通叙事关键词自行复活；重新创建必须有明确、独立且可验证的 trigger。
+
+  推荐的事件对象保持最小化：
+
+  ```json
+  {
+    "事件": {
+      "【事件】示例事件": {
+        "阶段": 1,
+        "trigger": "已激活",
+        "分支": "A"
+      }
+    }
+  }
+  ```
+
+  ## 3. 使用一个大 EJS 块集中计算
+
+  优先采用“一个计算块 + 若干纯输出槽”的包裹方式。不要把读取、条件和赋值拆成许多穿插于固定提示词之间的小 EJS 块。所有输出变量都先给安全默认值，并在同一个块中完成决定：
+
+  ```ejs
+  <%
+  const wb_9901_eventName = "【事件】示例事件";
+  const wb_9901_stageRaw = getvar(`SAM_data.static.事件.${wb_9901_eventName}.阶段`);
+  const wb_9901_stageNumber = wb_9901_stageRaw !== null && typeof wb_9901_stageRaw !== "boolean" ? Number(wb_9901_stageRaw) : NaN;
+  const wb_9901_stage = Number.isInteger(wb_9901_stageNumber) ? wb_9901_stageNumber : null;
+
+  let wb_9901_activationPrompt = "";
+  let wb_9901_stagePrompt = "";
+  let wb_9901_stateSnapshot = {};
+
+  if (wb_9901_stage !== null) {
+    switch (wb_9901_stage) {
+      case 1:
+        wb_9901_activationPrompt = "阶段1：执行第一项任务；完成后只允许把阶段更新为2。";
+        wb_9901_stateSnapshot = { eventName: wb_9901_eventName, stage: wb_9901_stage, allowedNextStages: [2] };
+        break;
+      case 2:
+        wb_9901_stagePrompt = "阶段2：执行第二项任务；完成后只允许把阶段更新为3。";
+        wb_9901_stateSnapshot = { eventName: wb_9901_eventName, stage: wb_9901_stage, allowedNextStages: [3] };
+        break;
+      case 3:
+        wb_9901_stagePrompt = "阶段3：执行第三项任务；完成后只允许把阶段更新为4。";
+        wb_9901_stateSnapshot = { eventName: wb_9901_eventName, stage: wb_9901_stage, allowedNextStages: [4] };
+        break;
+      case 4:
+        wb_9901_stagePrompt = "阶段4：执行最后一项任务；完成结算后只允许把阶段更新为5。";
+        wb_9901_stateSnapshot = { eventName: wb_9901_eventName, stage: wb_9901_stage, allowedNextStages: [5] };
+        break;
+      case 5:
+        wb_9901_stagePrompt = "终止阶段：不得继续叙述新的事件阶段；删除事件对象并停止输出。";
+        wb_9901_stateSnapshot = { eventName: wb_9901_eventName, stage: wb_9901_stage, cleanup: true };
+        break;
+      default:
+        // 非法阶段：失败关闭，不向叙事 AI 注入伪造的阶段说明。
+        break;
+    }
+  }
+  %>
+  固定提示词：只依据下列已计算结果处理事件，不得自行创造阶段。
+  <%- JSON.stringify(wb_9901_activationPrompt) %>
+  固定提示词2：当前阶段规则与允许的下一阶段如下。
+  <%- JSON.stringify(wb_9901_stagePrompt) %>
+  <%- JSON.stringify(wb_9901_stateSnapshot, null, 2) %>
+  ```
+
+  关键规则：
+
+  - 每个条目的EJS局部变量、函数与参数统一使用 `wb_<条目id>_` 前缀；跨计算块和输出槽的引用必须同步更新。前缀只用于JavaScript标识符，不改写getvar/setvar的存档路径、JSON字段名或输出文案。复制示例到新条目时，必须替换为该条目的唯一id。
+  - 计算块本身使用 `<% ... %>`，不产生提示词文本。
+  - 对要交给叙事 AI 的动态结果显式使用 `JSON.stringify(...)` 后再输出，避免换行、引号、标签或对象的隐式转换破坏提示词边界。
+  - 固定提示词可以放在输出槽之间；固定文字与动态文字的边界必须一眼可见。
+  - 同一阶段的“阶段性提示词”应包含：本阶段要做什么、允许检查哪些条件、条件满足时允许提交哪一条变量更新、不能前往哪些阶段。
+  - 激活逻辑也放在同一大块中。未激活时让相关输出保持空字符串或空对象，而不是输出一段让叙事 AI 猜测是否激活的说明。
+  - 当事件复杂时，可在大块内调用纯函数，但不要建立另一个互相竞争的阶段来源。
+
+  ## 4. HTML：所有动态值必须按上下文转义
+
+  HTML 部分默认把一切动态数据视为不可信输入。能转义的内容必须转义；不得把 `getvar`、角色名、描述、模型输出或用户文本直接拼进标签、属性、CSS、脚本或事件处理器。
+
+  HTML 文本与普通带引号属性至少完整转义 `& < > " '`：
+
+  ```ejs
+  <%
+  const wb_9901_escapeHtml = wb_9901_value => String(wb_9901_value ?? "").replace(/[&<>"']/g, wb_9901_char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#39;"
+  })[wb_9901_char]);
+
+  const wb_9901_safeTitle = wb_9901_escapeHtml(getvar("SAM_data.static.界面.标题"));
+  const wb_9901_safeBody = wb_9901_escapeHtml(getvar("SAM_data.static.界面.正文"));
+  %>
+  <section class="event-card" aria-label="<%- wb_9901_safeTitle %>">
+    <h2><%- wb_9901_safeTitle %></h2>
+    <p><%- wb_9901_safeBody %></p>
+  </section>
+  ```
+
+  - 属性值一律加引号，并在输出前转义；布尔、数字也先规范化再输出。
+  - URL 不只做 HTML 转义：先解析并仅允许明确协议（通常只允许 `https:`，项目内资源按既定方案），拒绝 `javascript:`、危险的 `data:` 与未知协议，然后再做属性转义。
+  - 不把动态内容拼入 `onclick` 等内联事件、`style`、CSS 选择器、标签名或属性名。改用固定结构、固定 class 与 `data-*` 值，再由固定脚本读取。
+  - HTML 转义不能代替 JavaScript、CSS、URL 或 JSON 上下文的专用编码。无法可靠编码某个上下文时，不把动态值放入该上下文。
+  - 不把未处理的 `JSON.stringify` 结果直接塞进 `<script>`。优先放进转义后的 `data-*` 或安全文本节点；确需脚本数据时，还必须处理 `<`、`>`、`&`、U+2028、U+2029，并避免形成 `</script>`。
+  - 若动态文本需要有限富文本，使用明确标签/属性 allowlist 的 sanitizer；不得通过关闭转义来“保留格式”。
+  - EJS 源码若位于 JavaScript 模板字符串内，还要额外处理反斜杠、反引号和 `${...}`；这是 JavaScript 源码转义，不能由 HTML 转义替代。
+
+  ## 5. 修改 Agent 的交付检查
+
+  1. 确认所有事件状态及 trigger 都在 `/事件/<事件名称>/...`。
+  2. 确认 `阶段` 是整数，且每个阶段只有预先声明的出边。
+  3. 确认非法/缺失阶段失败关闭，完成后删除事件对象。
+  4. 确认主要逻辑集中在一个大 EJS 块，外部只有固定提示词和显式 stringify 输出。
+  5. 确认所有输出变量有默认值，EJS 不会把 `undefined`、异常栈或计算源码送入提示词。
+  6. 确认 HTML 中每个动态值都按所在上下文完成转义或验证，没有动态内联脚本/样式。
+  7. 直接更新当前实现并清除被替代代码；不制作备份条目、旧字段兼容层或 legacy 分支。
+  8. 保持文件为 UTF-8，并验证 YAML、EJS、HTML 及变量路径在最终构建产物中仍然正确。
+extensions:
+  position: 0
+  exclude_recursion: true
+  display_index: 182
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: false
+insertion_order: -1
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9901
+comment: 【开发指南】EJS事件与HTML维护（永久关闭）
+selective: true
+secondary_keys: []
+position: before_char

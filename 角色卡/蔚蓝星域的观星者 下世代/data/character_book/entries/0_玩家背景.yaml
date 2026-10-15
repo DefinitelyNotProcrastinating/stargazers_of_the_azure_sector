@@ -1,0 +1,50 @@
+keys: []
+content: |-
+  <玩家档案>
+  背景故事：<%-JSON.stringify(getvar("SAM_data.static.主角.背景故事") ?? "");%>
+  能力原则：主角背景，以及其他人物已经确立的职业、训练与长期经历，可在直接相关的行动中体现为更可靠的判断、更少的低级失误或更有利的判定条件；不得凭空扩张成未记载的专长，一次偶然成功也不会生成永久能力。不存在技能等级、经验值或技能树，高风险与对抗行动仍按既有规则结算。
+  </玩家档案>
+extensions:
+  position: 4
+  exclude_recursion: false
+  display_index: 1
+  probability: 100
+  useProbability: true
+  depth: 0
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: 0
+  cooldown: 0
+  delay: 0
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 0
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 1903
+comment: 玩家背景
+selective: true
+secondary_keys: []
+position: after_char

@@ -1,0 +1,82 @@
+keys:
+- 漂泊集群
+- 集群遗迹
+- 集群战体
+- 光粒
+- 拦截单元
+- 强袭单元
+- 攻击单元
+- 攻坚单元
+- 节点单元
+- 网络单元
+content: |-
+  <大型设定简介>
+  设定: 漂泊集群 / 集群
+  命名: 后世考古者将这一河外机械文明称为“漂泊集群”，简称集群；其原始自称尚未完成可靠译解。
+  定位: 具有自主机械意识的河外文明。舰船、计算节点和工业设施共同构成其社会；集群战体没有生物船员，与先驱者自动舰队属于不同技术谱系。
+  历史速览: 在故乡星系被迫进入时空裂缝，沿超空间漂流至银河外环；与先驱者发生战争，停战后在外环定居。天灾战争期间协助银河防御联盟，文明最终与先驱者一同消亡。
+  遗迹分布: 集群原生遗迹只出现在外环。内环以先驱者文明遗迹为主，中环以先驱者自动舰队遗迹为主；战场遗迹可出现在所有位置。人类搬运的集群残骸或收藏改造舰不构成当地原生集群遗迹。
+  舰队设定:
+    设计哲学: 与先驱者一样重视“产能：质量”的比例，在高科技与大量生产之间取平衡；盾抗、机动、集中打击和网络协同是其核心。
+    舰队依赖: 各单元分担火力、拦截、机动、维修与迁移，独立行动时均有短板。天灾能接管机器与意识；这种分工在天灾战争中也有利于正常舰队隔离并集中清理异常单元，避免一个单元掌握全部作战功能。核验并非绝对可靠，也不意味着集群免疫天灾。
+    美学形态: 深灰色致密多面体与分离式框架，蓝白色护盾节点和光粒约束器嵌入表面；轮廓由任务决定，几乎没有舷窗、舰桥与乘员舱。
+    防御原则: 高原生护盾和充裕PG/CPU用于护盾装配；护盾失效后结构较脆弱。网络单元具有额外高额护盾抗性。
+    武器原则: 中等射程光粒，在有效射程内精准且破坏力极强，超出稳定射程即衰竭；不继承先驱者裂解射线的无视装甲能力。光粒炮只能安装在保有完好光子凝聚器的集群舰船上，不能移植到先驱者舰或人类舰。
+    操作原则: 拦截、强袭、攻击、攻坚、节点单元均为无人舰船；内部空间过小，不能直接安装驾驶舱。早期网络单元亦为无人舰船，晚期兼容型网络单元可使用先驱者FTL引擎并容纳联盟生物船员。
+    人类改造: 极少数富豪或黑帮以近乎重造的方式加装人类复制的先驱者超空间引擎、观星者接口与乘员舱，封停会杀死生物乘客的原生传送引擎；通常失去原生光粒、网络和机动功能，仅作昂贵身份摆设。
+    舰型索引:
+      - 拦截单元FF: 95m，快速且结构简单的截击战体；炮位少，原生护盾与PG/CPU充裕。
+      - 强袭单元CA: 480m，盾抗机动主力；基础护盾16800、初始护盾DR30%，装配资源优先支持更强的护盾系统，不使用护盾扩展器倍率加成。
+      - 攻击单元CA: 620m，远距离火力平台；内置能量武器增压器，能量武器伤害×1.30。
+      - 攻坚单元BB: 2100m，无人战列舰，4XL超大型光粒炮与内置光粒跟踪电脑；稳定射程160000km，依赖航母机动核心接近目标、重建射界。
+      - 节点单元CVL: 2400m，战列舰吨位的无人航母；超空间准备时间×0.25，战斗机与轰炸机命中侧+4，同行舰队每跳充能消耗-1，最低0。
+      - 网络单元CV: 7800m，超级航母与舰队维护、集体超空间平台；护盾DR55%，借用网络中最稳定个体的超空间条件带领舰队撤离。尚未见完整网络单元重新进入星区。
+  触发区:
+    历史哲学: 集群历史、漂泊集群历史、河外漂流、集群与先驱者战争、集群遗迹
+    舰队技术: 集群舰队、集群战体、光粒、原生传送引擎、节点超空间网络、网络共同超空间
+    舰型参数: 拦截单元、强袭单元、攻击单元、攻坚单元、节点单元、网络单元；完整单位模板见相应ship_def。
+  </大型设定简介>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 5
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 大型设定简介
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 3
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: false
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 101
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 59
+comment: 大型设定简介：漂泊集群
+selective: false
+secondary_keys: []
+position: after_char
