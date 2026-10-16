@@ -139,7 +139,7 @@ replaceString: |2-
             app.innerHTML=`<article class="card">
               <header class="header">
                 <div><div class="kicker">NPC Tactical Contact // 非玩家战术目标</div><h1>${esc(name)}</h1>
-                  <div class="badges"><span class="badge hostile">NPC 舰船</span><span class="badge">${shown(ship["舰船类型"],"未分类")}</span><span class="badge">${shown(ship["吨位"],"未知吨位")}</span><span class="badge">${shown(ship["防御倾向"],"未知防御")}</span><span class="badge">${shown(ship["战术定位"],"未知定位")}</span></div>
+                  <div class="badges"><span class="badge hostile">NPC 舰船</span><span class="badge">${shown(ship["舰船类型"],"未分类")}</span><span class="badge">${shown(ship["吨位"],"未知吨位")}</span><span class="badge">机动 ${shown(ship["机动评级"],"未记录")}</span><span class="badge">装甲 盾${shown(ship["护盾装甲"],"未记录")} / 构${shown(ship["结构装甲"],"未记录")}</span><span class="badge">${shown(ship["防御倾向"],"未知防御")}</span><span class="badge">${shown(ship["战术定位"],"未知定位")}</span></div>
                 </div><div class="sigil">${shown(ship["舰船类型"],"?")}</div>
               </header>
               <main class="content">
@@ -151,7 +151,7 @@ replaceString: |2-
                   <section class="section"><h2 class="section-title">Weapons envelope // 武器包线</h2><div class="stats">
                     ${stat("伤害表示 N×M",ship["伤害表示N×M"]??((ship["单武器伤害"]??"?")+"×"+(ship["武器数量"]??"?")),"hot")}
                     ${stat("单武器伤害",ship["单武器伤害"],"hot")}${stat("武器数量",ship["武器数量"])}
-                    ${stat("有效射程",ship["射程"])}${stat("极限射程",ship["极限射程"],"")}${stat("跟踪",ship["跟踪"])}
+                     ${stat("有效射程",ship["射程"])}${stat("极限射程",ship["极限射程"],"")}${stat("武器命中",ship["武器命中"])}
                   </div></section>
                   <section class="section"><h2 class="section-title">Electronic warfare // 电子战</h2><div class="stats">
                     ${stat("ECM 强度",ship["ECM"],"ecm")}${stat("ECM 射程",ship["ECM射程"],"ecm")}${stat("ECM 目标数",ship["ECM目标数"],"ecm")}

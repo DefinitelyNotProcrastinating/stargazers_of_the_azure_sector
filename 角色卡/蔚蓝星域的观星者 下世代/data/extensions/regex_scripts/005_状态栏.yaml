@@ -1020,6 +1020,24 @@ replaceString: |-
         letter-spacing: 1px;
       }
 
+      .ship-score-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: flex-end;
+        max-width: min(52vw, 420px);
+      }
+
+      .ship-score-group .character-score {
+        flex: 1 1 110px;
+      }
+
+      .ship-score-group .score-value {
+        font-size: 14px;
+        line-height: 1.3;
+        overflow-wrap: anywhere;
+      }
+
       .character-block {
         margin-top: 8px;
       }
@@ -1433,6 +1451,7 @@ replaceString: |-
       @media (max-width: 980px) {
         .ship-layout { grid-template-columns: 1fr; }
         .ship-orbital { min-height: 390px; }
+        .ship-score-group { grid-column: 1 / -1; max-width: none; }
       }
 
 
@@ -3483,6 +3502,7 @@ replaceString: |-
           const installed = JSON.parse(JSON.stringify(item));
           delete installed.堆叠; delete installed._key;
           installed.装配槽位 = [slot.slot];
+           if (isIndustrialFacility(installed)) installed.状态 = '关闭';
           const name = slot.slot + ' ' + itemName;
           if (Object.prototype.hasOwnProperty.call(ship.装备, name)) throw Error('该装备名称已被占用。');
           ship.装备[name] = installed;
@@ -3546,7 +3566,7 @@ replaceString: |-
           });
           committed = true;
           currentStaticData = next.static;
-          renderShips(next.static); renderAssets(next.static); renderHome(next.static, next.time);
+          renderShips(next.static); renderBases(next.static); renderAssets(next.static); renderHome(next.static, next.time);
           $('ships-view').querySelectorAll('.ship-tab').forEach(tab => tab.classList.toggle('active', tab.dataset.shipTab === shipName));
           $('ships-view').querySelectorAll('.ship-panel').forEach(panel => panel.classList.toggle('active', panel.dataset.shipPanel === shipName));
           if (typeof eventEmit === 'function') await eventEmit('REFRESH_SAM_VARIABLES');
@@ -3557,6 +3577,126 @@ replaceString: |-
             try { await setChatMessages([{ message_id: index, message: original }], { refresh: 'none' }); } catch (rollbackError) { console.error(rollbackError); }
           }
           alert((committed ? '装配已保存，界面刷新失败：' : '装配失败：') + error.message);
+          return false;
+        } finally { shipEquipmentBusy = false; }
+      }
+
+      const industrialPairs = value => entries(value || {}).filter(([name, amount]) => name !== '补给' && Number.isFinite(Number(amount)) && Number(amount) > 0);
+      const isIndustrialFacility = value => value && typeof value === 'object' &&
+        (industrialPairs(value.输入).length > 0 || industrialPairs(value.输出).length > 0);
+      function shipIndustrialFacilities(ship) {
+        const facilities = [];
+        entries(ship.装备 || {}).forEach(([name, item]) => {
+          if (isIndustrialFacility(item)) facilities.push({ source: 'equipment', name, item, count: moduleStackCount(item) });
+        });
+        entries(ship.工业设施 || {}).forEach(([name, item]) => {
+          if (isIndustrialFacility(item)) facilities.push({ source: 'builtin', name, item, count: 1 });
+        });
+        if (!facilities.length && isIndustrialFacility(ship)) {
+          facilities.push({ source: 'aggregate', name: '船体工业设施', item: {
+            状态: ship.工业设施状态, 输入: ship.输入, 输出: ship.输出
+          }, count: 1 });
+        }
+        return facilities;
+      }
+      function renderShipIndustrialControls(shipName, ship) {
+        const facilities = shipIndustrialFacilities(ship);
+        if (!facilities.length) return empty('暂无舰载工业设施');
+        const rateText = value => industrialPairs(value).map(([name, amount]) => `${escapeHtml(name)} ${escapeHtml(amount)}`).join(' / ') || '无';
+        return `<div class="equipment-list">
+          ${facilities.map(({ source, name, item, count }) => `<article class="equipment-entry">
+            <div class="equipment-entry-title">${escapeHtml(name)}${count > 1 ? ' ×' + count : ''}</div>
+            <div class="muted">每件每日输入：${rateText(item.输入)}；每件每日输出：${rateText(item.输出)}</div>
+            <label>状态：<select data-ship-industry-source="${source}" data-facility-name="${escapeHtml(name)}">
+              <option value="关闭" ${item.状态 !== '开启' ? 'selected' : ''}>关闭</option>
+              <option value="开启" ${item.状态 === '开启' ? 'selected' : ''}>开启</option>
+            </select></label>
+          </article>`).join('')}
+          <button class="visual-bind-btn" data-save-ship-industry="${escapeHtml(shipName)}">保存工业设施状态</button>
+        </div>`;
+      }
+      async function saveShipIndustrialFacilities(shipName) {
+        if (shipEquipmentBusy) return;
+        shipEquipmentBusy = true;
+        let chat, index, original, updated, written = false, committed = false;
+        try {
+          if (typeof updateVariablesWith !== 'function' || typeof setChatMessages !== 'function') throw Error('缺少变量与聊天保存接口。');
+          const panel = [...$('ships-view').querySelectorAll('.ship-panel')].find(node => node.dataset.shipPanel === shipName);
+          if (!panel) throw Error('舰船面板已不存在。');
+          const choices = [...panel.querySelectorAll('[data-ship-industry-source]')].map(select => ({
+            source: select.dataset.shipIndustrySource, name: select.dataset.facilityName, status: select.value
+          }));
+          if (!choices.length || choices.some(choice => !['开启', '关闭'].includes(choice.status))) throw Error('工业设施状态无效。');
+          const variables = await getVariables();
+          const before = variables.SAM_data;
+          const fingerprint = JSON.stringify(before);
+          const next = JSON.parse(fingerprint);
+          const ship = next?.static?.主角?.舰船?.[shipName];
+          if (!ship) throw Error('舰船已不存在。');
+          const pointer = value => String(value).replace(/~/g, '~0').replace(/\//g, '~1');
+          const shipPath = '/主角/舰船/' + pointer(shipName);
+          const changes = [];
+          for (const choice of choices) {
+            let target, path;
+            if (choice.source === 'equipment') {
+              target = ship.装备?.[choice.name];
+              path = shipPath + '/装备/' + pointer(choice.name) + '/状态';
+            } else if (choice.source === 'builtin') {
+              target = ship.工业设施?.[choice.name];
+              path = shipPath + '/工业设施/' + pointer(choice.name) + '/状态';
+            } else if (choice.source === 'aggregate' && choice.name === '船体工业设施') {
+              target = ship;
+              path = shipPath + '/工业设施状态';
+            } else throw Error('工业设施来源无效。');
+            if (!target || (choice.source !== 'aggregate' && !isIndustrialFacility(target))) throw Error('工业设施已变化，请刷新后重试。');
+            const key = choice.source === 'aggregate' ? '工业设施状态' : '状态';
+            if (target[key] === choice.status) continue;
+            target[key] = choice.status;
+            changes.push({ op: 'forced_set', path, value: choice.status });
+          }
+          if (!changes.length) { alert('工业设施状态没有变化。'); return false; }
+          chat = SillyTavern.getContext().chat;
+          index = chat.length - 1;
+          while (index >= 0 && chat[index].is_user) index--;
+          if (index < 0) throw Error('没有可保存工业设施状态的AI消息。');
+          original = String(chat[index].mes || '');
+          const operations = [];
+          for (const match of original.matchAll(/<JSONPatch>([\s\S]*?)<\/JSONPatch>/g)) {
+            const previous = JSON.parse(match[1]);
+            if (!Array.isArray(previous)) throw Error('现有变量更新块格式无效。');
+            operations.push(...previous);
+          }
+          operations.push(...changes);
+          const clean = original.replace(/(?:<!-- SAM_CHECKPOINT -->\s*)?<SAMCheckpoint>[\s\S]*?<\/SAMCheckpoint>/g, '')
+            .replace(/\${6}data_block\${6}[\s\S]*?\${6}data_block_end\${6}/g, '')
+            .replace(/<UpdateVariables>[\s\S]*?<\/UpdateVariables>/g, '')
+            .replace(/<UpdateVariable>[\s\S]*?<\/UpdateVariable>/g, '')
+            .replace(/<JSONPatch>[\s\S]*?<\/JSONPatch>/g, '').trim();
+          const serialize = value => JSON.stringify(value, null, 2).replace(/[<>$]/g, character => '\\u' + character.charCodeAt(0).toString(16).padStart(4, '0'));
+          const marker = String.fromCharCode(36, 36, 36, 36, 36, 36);
+          updated = clean + '\n\n<UpdateVariables>\n<JSONPatch>\n' + serialize(operations) + '\n</JSONPatch>\n</UpdateVariables>\n\n'
+            + marker + 'data_block' + marker + '\n' + serialize(next) + '\n' + marker + 'data_block_end' + marker;
+          if (SillyTavern.getContext().chat !== chat || chat[index].mes !== original || JSON.stringify((await getVariables()).SAM_data) !== fingerprint) throw Error('聊天或变量已变化，请刷新后重试。');
+          await setChatMessages([{ message_id: index, message: updated }], { refresh: 'none' });
+          written = true;
+          await updateVariablesWith(vars => {
+            if (SillyTavern.getContext().chat !== chat || chat[index].mes !== updated || JSON.stringify(vars.SAM_data) !== fingerprint) throw Error('聊天或变量已变化，取消保存。');
+            vars.SAM_data = next;
+            return vars;
+          });
+          committed = true;
+          currentStaticData = next.static;
+          renderShips(next.static); renderBases(next.static); renderAssets(next.static); renderHome(next.static, next.time);
+          $('ships-view').querySelectorAll('.ship-tab').forEach(tab => tab.classList.toggle('active', tab.dataset.shipTab === shipName));
+          $('ships-view').querySelectorAll('.ship-panel').forEach(node => node.classList.toggle('active', node.dataset.shipPanel === shipName));
+          if (typeof eventEmit === 'function') await eventEmit('REFRESH_SAM_VARIABLES');
+          await setChatMessages([{ message_id: index }], { refresh: 'affected' });
+          return true;
+        } catch (error) {
+          if (written && !committed && SillyTavern.getContext().chat === chat && chat[index].mes === updated) {
+            try { await setChatMessages([{ message_id: index, message: original }], { refresh: 'none' }); } catch (rollbackError) { console.error(rollbackError); }
+          }
+          alert((committed ? '状态已保存，界面刷新失败：' : '工业设施状态保存失败：') + error.message);
           return false;
         } finally { shipEquipmentBusy = false; }
       }
@@ -3617,6 +3757,7 @@ replaceString: |-
           const core = {
             舰船名称: name,
             舰船类型: ship.舰船类型,
+            机动评级: ship.机动评级,
             吨位: ship.吨位,
             每日补给消耗: ship.每日补给消耗,
             制造商: ship.制造商,
@@ -3662,9 +3803,15 @@ replaceString: |-
                       <div class="character-title">${escapeHtml(ship.舰船类型 || "舰船")} ${escapeHtml(name)}</div>
                       <div class="character-subtitle">${escapeHtml(ship.制造商 || "未知制造商")} / ${escapeHtml(ship.吨位 || "未知吨位")}</div>
                     </div>
-                    <div class="character-score">
-                      <div class="score-value">${escapeHtml(ship.超空间充能 !== undefined ? ship.超空间充能 : "—")}</div>
-                      <div class="score-label">超空间充能</div>
+                    <div class="ship-score-group">
+                      <div class="character-score">
+                        <div class="score-value">${escapeHtml(ship.机动评级 !== undefined ? ship.机动评级 : "未记录")}</div>
+                        <div class="score-label">机动评级</div>
+                      </div>
+                      <div class="character-score">
+                        <div class="score-value">${escapeHtml(ship.超空间充能 !== undefined ? ship.超空间充能 : "—")}</div>
+                        <div class="score-label">超空间充能</div>
+                      </div>
                     </div>
                   </div>
 
@@ -3681,6 +3828,11 @@ replaceString: |-
                   <div class="ship-section">
                     <h3 class="ship-section-title">装配资源</h3>
                     <div class="prop-list">${propRows(resources)}</div>
+                  </div>
+
+                  <div class="ship-section">
+                    <h3 class="ship-section-title">舰载工业设施</h3>
+                    ${renderShipIndustrialControls(name, ship)}
                   </div>
 
                   <div class="ship-section">
@@ -3744,6 +3896,9 @@ replaceString: |-
             }
           });
         });
+        $("ships-view").querySelectorAll('[data-save-ship-industry]').forEach(button => {
+          button.addEventListener('click', () => saveShipIndustrialFacilities(button.dataset.saveShipIndustry));
+        });
       }
 
       function shortDescription(item, fallback) {
@@ -3782,12 +3937,21 @@ replaceString: |-
           return pairs.length ? pairs.map(([name, amount]) => `${escapeHtml(name)} ${escapeHtml(finiteRate(amount))}`).join(" / ") : "无";
         };
         const totals = { 输入: {}, 输出: {} };
-        [...buildings, ...ships].forEach(([, asset]) => {
-          ["输入", "输出"].forEach(kind => ratePairs(asset && asset[kind]).forEach(([name, amount]) => {
-            if (asset && asset.状态 && !["运行", "现役", "可用"].includes(asset.状态)) return;
-            if (ships.some(([, ship]) => ship === asset) && name === "补给") return;
+        buildings.forEach(([, building]) => {
+          if (!building || building.状态 !== '运行') return;
+          ["输入", "输出"].forEach(kind => ratePairs(building[kind]).forEach(([name, amount]) => {
             totals[kind][name] = (totals[kind][name] || 0) + finiteRate(amount);
           }));
+        });
+        ships.forEach(([, ship]) => {
+          if (!ship || (ship.状态 && !['运行', '现役', '可用'].includes(ship.状态))) return;
+          shipIndustrialFacilities(ship).forEach(({ item, count }) => {
+            if (item.状态 !== '开启') return;
+            ["输入", "输出"].forEach(kind => ratePairs(item[kind]).forEach(([name, amount]) => {
+              if (name === '补给') return;
+              totals[kind][name] = (totals[kind][name] || 0) + finiteRate(amount) * count;
+            }));
+          });
         });
         const allResources = [...new Set([...Object.keys(totals.输入), ...Object.keys(totals.输出)])].sort();
         const balanceHtml = allResources.length ? allResources.map(name => {
