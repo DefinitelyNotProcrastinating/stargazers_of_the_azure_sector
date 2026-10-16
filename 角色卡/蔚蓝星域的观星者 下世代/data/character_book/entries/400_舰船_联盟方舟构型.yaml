@@ -1,0 +1,59 @@
+keys:
+- 联盟方舟构型
+content: |-
+  <ship_def>
+  级别: 方舟构型
+  文明: 先驱者
+  舰船类型: TT
+  机动评级: "堡垒模式2，航行模式5"
+  长度: 大陆级
+  定位: 联盟摇篮与最后堡垒；容纳大陆级生态系统，保存数百万FTL物种基因样本。
+  能力: 守护者之剑、生命温床与超大型船坞。现存方舟均已损毁并遭结构信息扭曲。
+  变形模式:
+    堡垒模式: 机动评级2；展开守护者之剑与生命温床，优先保护内部生态。
+    航行模式: 机动评级5；收拢外部设施以便变向，不能同时使用堡垒模式的全部设施。
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 216
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: false
+constant: false
+name: null
+priority: null
+id: 10020
+comment: 舰船|联盟方舟构型
+selective: true
+secondary_keys: []
+position: after_char

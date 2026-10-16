@@ -1,0 +1,60 @@
+keys:
+- 联盟拦截者构型
+content: |-
+  <ship_def>
+  级别: 拦截者构型
+  文明: 先驱者
+  舰船类型: DD
+  机动评级: "火力模式95，机动模式110"
+  长度: 150m
+  定位: 高速拦截与远程火力支援；通常由中枢战体挂载并投送。
+  防御: 无护盾，自修复结晶装甲2500。
+  武器: 4门轻型熵分解炮阵列及点防御脉冲波发射器；火力参考800，射程100000km。
+  变形模式:
+    火力模式: 机动评级95；各已安装主炮射速×2，逐发照常使用唯一命中值，不倍增单发伤害。
+    机动模式: 机动评级110；保持常规射速。
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 216
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: false
+constant: false
+name: null
+priority: null
+id: 10016
+comment: 舰船|联盟拦截者构型
+selective: true
+secondary_keys: []
+position: after_char

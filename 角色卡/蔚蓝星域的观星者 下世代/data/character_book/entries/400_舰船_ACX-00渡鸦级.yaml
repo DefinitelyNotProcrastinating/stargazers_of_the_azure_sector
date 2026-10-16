@@ -1,0 +1,62 @@
+keys:
+- ACX-00渡鸦级
+content: |-
+  <ship_def>
+  级别: ACX-00渡鸦级
+  文明: 人类
+  船体型号: ACX-00渡鸦级
+  舰船类型: CA
+  机动评级: "攻击模式75，防御模式75，支援模式75，机动模式85"
+  定位: 双生花项目实验巡洋舰；以先驱者残骸构建，保留原生熵聚焦线路。
+  防御: 装甲16000，护盾19000。
+  武器: 8门中型熵分解炮阵列及无人机发射管；常规射程55000km，攻击模式射程110000km。
+  变形模式:
+    攻击模式: 机动评级75；展开翼片与散热器，主武器射速×2，每次射击独立判定命中。
+    防御模式: 机动评级75；收缩结构，提高抗性和护盾回充，解锁特种隐形装置。
+    支援模式: 机动评级75；展开探测天线，特化电子战、指挥与后勤。
+    机动模式: 机动评级85；能量导入引擎，常规射速。
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 216
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: false
+constant: false
+name: null
+priority: null
+id: 10021
+comment: 舰船|ACX-00渡鸦级
+selective: true
+secondary_keys: []
+position: after_char

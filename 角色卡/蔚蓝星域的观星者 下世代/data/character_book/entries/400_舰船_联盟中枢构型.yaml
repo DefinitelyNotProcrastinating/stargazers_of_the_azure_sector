@@ -1,0 +1,60 @@
+keys:
+- 联盟中枢构型
+content: |-
+  <ship_def>
+  级别: 中枢构型
+  文明: 先驱者
+  舰船类型: CV
+  机动评级: "指挥模式40，机动模式50"
+  长度: 2500m环状直径
+  定位: 移动指挥中心、生产设施与战体投送平台。
+  防御: 无护盾，自修复结晶装甲550000。
+  挂载: 8艘巡航构型或32艘拦截者构型。
+  变形模式:
+    指挥模式: 机动评级40；展开广域指挥脉冲、战体挂载及快速生产设施，保留小型10LY传送通道。
+    机动模式: 机动评级50；收拢生产与投送设施以便变向。
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 216
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: false
+constant: false
+name: null
+priority: null
+id: 10018
+comment: 舰船|联盟中枢构型
+selective: true
+secondary_keys: []
+position: after_char

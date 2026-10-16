@@ -1,0 +1,60 @@
+keys:
+- 联盟巡航构型
+content: |-
+  <ship_def>
+  级别: 巡航构型
+  文明: 先驱者
+  舰船类型: BC
+  机动评级: "攻击模式15，机动模式85"
+  长度: 750m
+  定位: 联盟机动作战中坚。
+  防御: 无护盾，自修复结晶装甲90000。
+  武器: 2组重型与12门中型熵分解炮阵列；射程250000km。
+  变形模式:
+    攻击模式: 机动评级15；火力参考6500，主炮射速×2，每次射击独立判定命中。
+    机动模式: 机动评级85；火力参考4500，主炮恢复常规射速。
+  </ship_def>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 216
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 400
+case_sensitive: null
+use_regex: false
+constant: false
+name: null
+priority: null
+id: 10017
+comment: 舰船|联盟巡航构型
+selective: true
+secondary_keys: []
+position: after_char
