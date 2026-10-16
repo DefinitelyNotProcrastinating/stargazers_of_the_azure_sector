@@ -63,7 +63,7 @@ content: |-
   ## 更新规则
   - 新增角色使用 `insert /主角/可攻略角色/角色名`。
   - 重命名只允许使用 `move`。
-  - 好感度的数值变化使用 `delta`；好感增幅按《观星者品质》即时派生：r=min(max(好感度,0)/2000,1)，稳态与爆发各最多+100%，好感1000/2000时累计额外充能1/2。
+  - 好感度的数值变化使用 `delta`；好感增幅按《观星者品质》即时派生：r=min(max(好感度,0)/2000,1)，稳态最多+100%；基础爆发比低于1.8时，爆发加成最多按原增幅的150%计算且实效比值不超过1.8，其余爆发最多+100%；好感1000/2000时累计额外充能1/2。
   - `稳态增益`、`爆发增益`、`充能数量` 只保存基础值，不因好感改写；渲染值使用“基础A + 好感B = 实效”。好感严格超过100时，渲染描述加“该观星者的性能已经被使用者影响，和同级产品有出入。”一次。
   - `想法` 是动态心理状态，应在角色动机明显变化时更新。
   - 每名观星者都必须同时填写 `品质` 与 `充能数量`。常规默认对应为：标准1、衍生2、精良3、上等4、先进5、高级6。
@@ -81,19 +81,27 @@ content: |-
       const wb_194_rate = Math.min(wb_194_positive / 2000, 1);
       const wb_194_extra = wb_194_positive >= 2000 ? 2 : wb_194_positive >= 1000 ? 1 : 0;
       const wb_194_rounded = wb_194_value => Number(wb_194_value.toFixed(6));
-      const wb_194_metric = wb_194_value => {
+      const wb_194_metric = (wb_194_value, wb_194_multiplier = 1 + wb_194_rate) => {
           let wb_194_raw = String(wb_194_value ?? "");
           const wb_194_match = wb_194_raw.match(/(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?/i);
-          if (!wb_194_match) return { "显示": wb_194_raw || "未记录", "有效值": null };
+          if (!wb_194_match) return { "显示": wb_194_raw || "未记录", "有效值": null, "基础值": null };
           const wb_194_base = Number(wb_194_match[0]);
-          if (!Number.isFinite(wb_194_base)) return { "显示": wb_194_raw, "有效值": null };
+          if (!Number.isFinite(wb_194_base)) return { "显示": wb_194_raw, "有效值": null, "基础值": null };
           if (!/TW\s*\/\s*mV/i.test(wb_194_raw)) wb_194_raw += " TW/mV";
-          const wb_194_bonus = wb_194_rounded(wb_194_base * wb_194_rate);
-          const wb_194_total = wb_194_base * (1 + wb_194_rate);
-          return { "显示": wb_194_raw.replace(wb_194_match[0], `${wb_194_base} + ${wb_194_bonus} = ${wb_194_rounded(wb_194_total)}`), "有效值": wb_194_total };
+          const wb_194_bonus = wb_194_rounded(wb_194_base * (wb_194_multiplier - 1));
+          const wb_194_total = wb_194_base * wb_194_multiplier;
+          return { "显示": wb_194_raw.replace(wb_194_match[0], `${wb_194_base} + ${wb_194_bonus} = ${wb_194_rounded(wb_194_total)}`), "有效值": wb_194_total, "基础值": wb_194_base };
       };
       const wb_194_stable = wb_194_metric(wb_194_character["稳态增益"]);
-      const wb_194_burst = wb_194_metric(wb_194_character["爆发增益"]);
+      const wb_194_burstBase = wb_194_metric(wb_194_character["爆发增益"]);
+      const wb_194_baseRatio = wb_194_stable["基础值"] > 0 && wb_194_burstBase["基础值"] > 0
+          ? wb_194_burstBase["基础值"] / wb_194_stable["基础值"] : null;
+      const wb_194_burstMultiplier = wb_194_baseRatio !== null && wb_194_baseRatio < 1.8
+          ? Math.min(1 + 1.5 * wb_194_rate, 1.8 * wb_194_stable["有效值"] / wb_194_burstBase["基础值"])
+          : 1 + wb_194_rate;
+      const wb_194_burst = wb_194_metric(wb_194_character["爆发增益"], wb_194_burstMultiplier);
+      const wb_194_overloadRatio = wb_194_stable["有效值"] > 0 && wb_194_burst["有效值"] > 0
+          ? wb_194_burst["有效值"] / wb_194_stable["有效值"] : null;
       const wb_194_charge = wb_194_character["充能数量"];
       const wb_194_validCharge = typeof wb_194_charge === "number" && Number.isFinite(wb_194_charge) && wb_194_charge >= 0;
       const wb_194_notice = "该观星者的性能已经被使用者影响，和同级产品有出入。";
@@ -102,9 +110,11 @@ content: |-
           "好感增幅": `+${wb_194_rounded(wb_194_rate * 100)}%`,
           "稳态增益": wb_194_stable["显示"],
           "爆发增益": wb_194_burst["显示"],
+          "超载倍率": wb_194_overloadRatio === null ? "未记录" : `×${Number(wb_194_overloadRatio.toFixed(2))}`,
           "充能数量": wb_194_validCharge ? `${wb_194_charge} + ${wb_194_extra} = ${wb_194_rounded(wb_194_charge + wb_194_extra)}` : "未记录",
           "有效稳态增益": wb_194_stable["有效值"],
           "有效爆发增益": wb_194_burst["有效值"],
+          "有效超载倍率": wb_194_overloadRatio,
           "有效充能数量": wb_194_validCharge ? wb_194_rounded(wb_194_charge + wb_194_extra) : null,
           "描述": wb_194_description + (wb_194_positive > 100 ? (wb_194_description ? "\n" : "") + wb_194_notice : "")
       };
@@ -117,7 +127,7 @@ content: |-
   <effective_stargazer_data>
   <%-JSON.stringify(Object.fromEntries(Object.entries(getvar("SAM_data.static.主角.可攻略角色") || {}).filter(([wb_194_name, wb_194_chara]) => wb_194_chara && wb_194_chara["种族"] === "观星者").map(([wb_194_name, wb_194_chara]) => {
     const wb_194_performance = wb_194_stargazerPerformance(wb_194_chara);
-    return [wb_194_name, Object.fromEntries(["好感增幅", "有效稳态增益", "有效爆发增益", "有效充能数量"].map(wb_194_field => [wb_194_field, wb_194_performance[wb_194_field]]))];
+    return [wb_194_name, Object.fromEntries(["好感增幅", "有效稳态增益", "有效爆发增益", "有效超载倍率", "有效充能数量"].map(wb_194_field => [wb_194_field, wb_194_performance[wb_194_field]]))];
   })), null, 2)%>
   </effective_stargazer_data>
   </chara_management>

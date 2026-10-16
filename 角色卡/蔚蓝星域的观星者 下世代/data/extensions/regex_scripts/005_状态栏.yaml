@@ -2694,19 +2694,27 @@ replaceString: |-
           const rate = Math.min(positive / 2000, 1);
           const extra = positive >= 2000 ? 2 : positive >= 1000 ? 1 : 0;
           const rounded = value => Number(value.toFixed(6));
-          const metric = value => {
+          const metric = (value, multiplier = 1 + rate) => {
               let raw = String(value ?? "");
               const match = raw.match(/(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?/i);
-              if (!match) return { "显示": raw || "未记录", "有效值": null };
+              if (!match) return { "显示": raw || "未记录", "有效值": null, "基础值": null };
               const base = Number(match[0]);
-              if (!Number.isFinite(base)) return { "显示": raw, "有效值": null };
+              if (!Number.isFinite(base)) return { "显示": raw, "有效值": null, "基础值": null };
               if (!/TW\s*\/\s*mV/i.test(raw)) raw += " TW/mV";
-              const bonus = rounded(base * rate);
-              const total = base * (1 + rate);
-              return { "显示": raw.replace(match[0], `${base} + ${bonus} = ${rounded(total)}`), "有效值": total };
+              const bonus = rounded(base * (multiplier - 1));
+              const total = base * multiplier;
+              return { "显示": raw.replace(match[0], `${base} + ${bonus} = ${rounded(total)}`), "有效值": total, "基础值": base };
           };
           const stable = metric(character["稳态增益"]);
-          const burst = metric(character["爆发增益"]);
+          const burstBase = metric(character["爆发增益"]);
+          const baseRatio = stable["基础值"] > 0 && burstBase["基础值"] > 0
+              ? burstBase["基础值"] / stable["基础值"] : null;
+          const burstMultiplier = baseRatio !== null && baseRatio < 1.8
+              ? Math.min(1 + 1.5 * rate, 1.8 * stable["有效值"] / burstBase["基础值"])
+              : 1 + rate;
+          const burst = metric(character["爆发增益"], burstMultiplier);
+          const overloadRatio = stable["有效值"] > 0 && burst["有效值"] > 0
+              ? burst["有效值"] / stable["有效值"] : null;
           const charge = character["充能数量"];
           const validCharge = typeof charge === "number" && Number.isFinite(charge) && charge >= 0;
           const notice = "该观星者的性能已经被使用者影响，和同级产品有出入。";
@@ -2715,9 +2723,11 @@ replaceString: |-
               "好感增幅": `+${rounded(rate * 100)}%`,
               "稳态增益": stable["显示"],
               "爆发增益": burst["显示"],
+              "超载倍率": overloadRatio === null ? "未记录" : `×${Number(overloadRatio.toFixed(2))}`,
               "充能数量": validCharge ? `${charge} + ${extra} = ${rounded(charge + extra)}` : "未记录",
               "有效稳态增益": stable["有效值"],
               "有效爆发增益": burst["有效值"],
+              "有效超载倍率": overloadRatio,
               "有效充能数量": validCharge ? rounded(charge + extra) : null,
               "描述": description + (positive > 100 ? (description ? "\n" : "") + notice : "")
           };
@@ -2781,6 +2791,7 @@ replaceString: |-
             精度: c.精度,
             稳态增益: performance && performance.稳态增益,
             爆发增益: performance && performance.爆发增益,
+            超载倍率: performance && performance.超载倍率,
             特殊效果: c.特殊效果
           };
 
