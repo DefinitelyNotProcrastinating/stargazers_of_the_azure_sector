@@ -283,6 +283,45 @@ replaceString: |2-
           if (!obj || typeof obj !== "object" || !Object.keys(obj).length) return `<div class="empty">暂无扩展记录</div>`;
           return `<div class="kv">${Object.entries(obj).map(([k, v]) => `<div class="kv-item"><strong>${escapeHtml(k)}</strong><br>${formatValue(v)}</div>`).join("")}</div>`;
         }
+        // STARGAZER_PERFORMANCE_BEGIN
+        // Pure derived values. Saved fields always contain factory/modification baselines.
+        function stargazerPerformance(character) {
+            if (!character || character["种族"] !== "观星者") return null;
+            const affection = Number(character["好感度"]);
+            const positive = Number.isFinite(affection) ? Math.max(0, affection) : 0;
+            const rate = Math.min(positive / 2000, 1);
+            const extra = positive >= 2000 ? 2 : positive >= 1000 ? 1 : 0;
+            const rounded = value => Number(value.toFixed(6));
+            const metric = value => {
+                let raw = String(value ?? "");
+                const match = raw.match(/(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?/i);
+                if (!match) return { "显示": raw || "未记录", "有效值": null };
+                const base = Number(match[0]);
+                if (!Number.isFinite(base)) return { "显示": raw, "有效值": null };
+                if (!/TW\s*\/\s*mV/i.test(raw)) raw += " TW/mV";
+                const bonus = rounded(base * rate);
+                const total = base * (1 + rate);
+                return { "显示": raw.replace(match[0], `${base} + ${bonus} = ${rounded(total)}`), "有效值": total };
+            };
+            const stable = metric(character["稳态增益"]);
+            const burst = metric(character["爆发增益"]);
+            const charge = character["充能数量"];
+            const validCharge = typeof charge === "number" && Number.isFinite(charge) && charge >= 0;
+            const notice = "该观星者的性能已经被使用者影响，和同级产品有出入。";
+            const description = String(character["描述"] ?? "").split(notice).join("").trim();
+            return {
+                "好感增幅": `+${rounded(rate * 100)}%`,
+                "稳态增益": stable["显示"],
+                "爆发增益": burst["显示"],
+                "充能数量": validCharge ? `${charge} + ${extra} = ${rounded(charge + extra)}` : "未记录",
+                "有效稳态增益": stable["有效值"],
+                "有效爆发增益": burst["有效值"],
+                "有效充能数量": validCharge ? rounded(charge + extra) : null,
+                "描述": description + (positive > 100 ? (description ? "\n" : "") + notice : "")
+            };
+        }
+        // STARGAZER_PERFORMANCE_END
+
         function init() {
           const raw = document.getElementById("data-source").textContent.trim();
           const app = document.getElementById("app");
@@ -292,11 +331,12 @@ replaceString: |2-
             const chara = name ? data[name] : null;
             if (!name || !chara || typeof chara !== "object") throw new Error("未读取到有效角色对象。");
             const isStargazer = chara["种族"] === "观星者";
+            const performance = stargazerPerformance(chara);
             const coreStats = [
               ["种族", chara["种族"]],
               ["阵营", chara["阵营"]],
               ["身份", chara["身份"]],
-              ...(isStargazer ? [["品质", chara["品质"]], ["充能数量", chara["充能数量"]]] : []),
+              ...(isStargazer ? [["品质", chara["品质"]], ["充能数量", performance["充能数量"]]] : []),
               ["关系状态", chara["关系状态"]],
               ["可互动定位", chara["可互动定位"]],
               ["好感度", chara["好感度"] ?? 0]
@@ -334,6 +374,11 @@ replaceString: |2-
                   ${chara["外貌"] ? `<div class="panel"><h2 class="section-title">外貌记录</h2><div class="value">${formatText(chara["外貌"])}</div></div>` : ""}
                   ${tags.length ? `<div><h2 class="section-title">人物标签</h2><div class="tag-row">${tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div></div>` : ""}
                   ${isStargazer ? `
+                    <div class="panel">
+                      <h2 class="section-title">性能 · 基础 + 好感加成 = 实效</h2>
+                      ${renderStats([["比特率", chara["比特率"]], ["精度", chara["精度"]], ["好感增幅", performance["好感增幅"]], ["稳态增益", performance["稳态增益"]], ["爆发增益", performance["爆发增益"]]])}
+                      ${performance["描述"] ? `<div class="desc">${formatText(performance["描述"])}</div>` : ""}
+                    </div>
                     <div class="two-col">
                       <div class="subpanel">
                         <h2 class="section-title">静态档案</h2>

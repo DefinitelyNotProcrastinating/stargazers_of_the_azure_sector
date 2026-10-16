@@ -1,0 +1,62 @@
+keys:
+- 塔伯里斯女皇国
+- 塔伯里斯帝国
+- 塔伯里斯
+- Tiberis Queendom
+content: |-
+  <国家简介>
+  国家: 塔伯里斯女皇国
+  英文名: The Tiberis Queendom
+  定位: 逃亡观星者与人造人建立的女性主导国家，约99%人口为人造人；国家延续优先，外来观星者不自动取得公民权。
+  政治: 奥蕾莉娅一世统治，宫廷控制资源、培养设施与公民网络；基因贵族辅政，民主改革长期搁置。女皇本人见历史政治条目。
+  社会: 女性观星者 > 男性观星者 > 普通人/普通人造人；血统与公民资格进一步分层，外来“姐妹”可能只是二等公民或研究对象。
+  工业: 核心依赖集群冯诺依曼工厂黑箱，以损伤、供料、等待自我复制后拆件取用；不懂真正操作方式。走私舰体与技术人员补足装配，运输不足使外围低度开发。
+  对外: 密切合作于星火姐妹会，敌视HTC与联邦，宣称代表所有观星者；工业与人口控制、对外渗透服务国家利益。
+  核心: 闪光星云的塔伯里斯星座；核心洁净严密，外围矿点与聚落稀疏。美学为冷白、深海蓝、银灰。
+  舰队: 女皇防卫舰队，以成熟人类技术、走私舰体和标准化装配维持规模，运输与战损仍构成限制。
+  监管: 准入、检查、AIS、声望待遇与执法按《势力声望兑现与通航监管》及当前难度执行。
+  </国家简介>
+extensions:
+  position: 1
+  exclude_recursion: false
+  display_index: 19
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 国家简介
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 98
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 8
+comment: 国家简介：塔伯里斯女皇国
+selective: false
+secondary_keys: []
+position: after_char

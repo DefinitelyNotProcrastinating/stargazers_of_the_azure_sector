@@ -1,0 +1,62 @@
+keys: []
+content: |-
+  <势力声望>
+  R为当地管辖势力声望，整数[-1000,1000]，缺失按0；更新路径/主角/势力声望/势力名，待遇不消耗声望。
+  高声望兑现免费维修、更多客户、供应折扣、特殊购买权与更多委托；维修需要工时。低声望本身非罪。
+  高安规则仅适用于四大国家及塔伯里斯实际管辖、安等≥40地点；其他地区不适用，独立团体与海盗自定。只计实际随行舰船，AIS不改舰级。
+  主力舰=BB/BBV/CVL及同等船体；战略旗舰=TT/DN/CV/CVT、战略武器运载舰。工业旗舰免旗舰许可，仍按主力舰大小计数。
+  R≤50：最多1艘主力舰，超量属重罪；1主力舰+10巡洋+20驱逐等超单舰规模编队可能登船搜查，普通小型编队允许。R>50免数量限制及搜查。
+  旗舰准入须R≥200，或有效本阵营/贵族/盟友身份、明确批准、受当地雇佣执行任务；任务即批准，仅限该阵营及任务航行。无资格入境属重罪。
+  重罪：R>-200则设为-200，否则max(-1000,R-200)。当轮JSONPatch更新当地声望，同一行为只罚一次，之后按新声望处理。
+  监管核验AIS、船体、权属、应答器、航路、遥控和武器保险；不得借检测绕过免搜查待遇。疑点可补证，不自动没收或永久通缉。警力依安等与实际部署。
+  帝国军用观星者私卖属重罪；Σ-7须航路许可；前代遗物首次移动前须完成AIS及船体权属绑定。
+  据点：先锋贸易港开放禁战；警戒堡垒帝国>-20；自由边疆前哨站共和国>-100；地平线研究站联邦>100；资产117辛迪加>-100；碎链者营地姐妹会≥500且获坐标；收费站-阿尔法按铁血盟约规则。
+  <raw_reputation_data>
+  <%-JSON.stringify(getvar("SAM_data.static.主角.势力声望") || {})%>
+  </raw_reputation_data>
+  </势力声望>
+
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 222
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: null
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 118
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 1180
+comment: 势力声望兑现与通航监管
+selective: false
+secondary_keys: []
+position: after_char

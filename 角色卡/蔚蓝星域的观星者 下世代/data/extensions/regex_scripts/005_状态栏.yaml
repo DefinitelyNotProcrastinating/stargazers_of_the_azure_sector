@@ -1999,7 +1999,7 @@ replaceString: |-
           ["canaan","新应许之地","天堂之阶",620,180,"35","共和国 / 帝国","类地行星密集的殖民冲突前线。"],
           ["golden","黄金阶梯","天堂之阶",760,235,"55","猎户座辛迪加","正在建设中的第二贸易枢纽。"],
           ["tranquil","静谧之海","天堂之阶",770,115,"45","天鹅座技术联邦","联邦探索舰队搜寻先驱遗迹的前沿。"],
-          ["taboris","塔伯里斯星座","闪光星云",1050,470,"-1000","塔伯里斯宪制帝国","戴森云笼罩下的合成人文明工业心脏。"],
+          ["taboris","塔伯里斯星座","闪光星云",1050,470,"-1000","塔伯里斯女皇国","女皇统治的合成人国家核心；工业集中，外围运输不足。"],
           ["murky","暗色星座","大荒野",185,685,"-200","塔伯里斯 / 铁血盟约","战略矿产与武装采矿平台密布的争议区。"],
           ["banshee","女妖星旋","大荒野",65,760,"-500","无","双中子星构成的极端引力与辐射航道。"],
           ["w1","W-J0001A 无星之海","未知虫洞星域",1110,505,"N/A","???","绝对黑暗的口袋宇宙，中心悬浮着 1:4:9 方块。",1],
@@ -2685,6 +2685,45 @@ replaceString: |-
         `;
       }
 
+      // STARGAZER_PERFORMANCE_BEGIN
+      // Pure derived values. Saved fields always contain factory/modification baselines.
+      function stargazerPerformance(character) {
+          if (!character || character["种族"] !== "观星者") return null;
+          const affection = Number(character["好感度"]);
+          const positive = Number.isFinite(affection) ? Math.max(0, affection) : 0;
+          const rate = Math.min(positive / 2000, 1);
+          const extra = positive >= 2000 ? 2 : positive >= 1000 ? 1 : 0;
+          const rounded = value => Number(value.toFixed(6));
+          const metric = value => {
+              let raw = String(value ?? "");
+              const match = raw.match(/(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?/i);
+              if (!match) return { "显示": raw || "未记录", "有效值": null };
+              const base = Number(match[0]);
+              if (!Number.isFinite(base)) return { "显示": raw, "有效值": null };
+              if (!/TW\s*\/\s*mV/i.test(raw)) raw += " TW/mV";
+              const bonus = rounded(base * rate);
+              const total = base * (1 + rate);
+              return { "显示": raw.replace(match[0], `${base} + ${bonus} = ${rounded(total)}`), "有效值": total };
+          };
+          const stable = metric(character["稳态增益"]);
+          const burst = metric(character["爆发增益"]);
+          const charge = character["充能数量"];
+          const validCharge = typeof charge === "number" && Number.isFinite(charge) && charge >= 0;
+          const notice = "该观星者的性能已经被使用者影响，和同级产品有出入。";
+          const description = String(character["描述"] ?? "").split(notice).join("").trim();
+          return {
+              "好感增幅": `+${rounded(rate * 100)}%`,
+              "稳态增益": stable["显示"],
+              "爆发增益": burst["显示"],
+              "充能数量": validCharge ? `${charge} + ${extra} = ${rounded(charge + extra)}` : "未记录",
+              "有效稳态增益": stable["有效值"],
+              "有效爆发增益": burst["有效值"],
+              "有效充能数量": validCharge ? rounded(charge + extra) : null,
+              "描述": description + (positive > 100 ? (description ? "\n" : "") + notice : "")
+          };
+      }
+      // STARGAZER_PERFORMANCE_END
+
       function renderCharacters(staticData) {
         const mc = staticData.主角 || {};
         const characters = entries(mc.可攻略角色 || {});
@@ -2705,6 +2744,7 @@ replaceString: |-
 
         const panels = characters.map(([name, c], index) => {
           const isStargazer = c.种族 === "观星者";
+          const performance = stargazerPerformance(c);
 
           const allFields = Object.assign({}, c);
           delete allFields._key;
@@ -2728,18 +2768,19 @@ replaceString: |-
           };
 
           const profile = {
-            描述: c.描述,
+            描述: performance ? performance.描述 : c.描述,
             外貌: c.外貌,
             历史: c.历史
           };
 
           const stargazer = {
             品质: c.品质,
-            充能数量: c.充能数量,
+            好感增幅: performance && performance.好感增幅,
+            充能数量: performance && performance.充能数量,
             比特率: c.比特率,
             精度: c.精度,
-            稳态增益: c.稳态增益,
-            爆发增益: c.爆发增益,
+            稳态增益: performance && performance.稳态增益,
+            爆发增益: performance && performance.爆发增益,
             特殊效果: c.特殊效果
           };
 
@@ -2788,7 +2829,7 @@ replaceString: |-
 
                 ${isStargazer ? `
                   <div class="character-block">
-                    <h3>观星者专属参数</h3>
+                    <h3>观星者专属参数 · 基础 + 好感加成 = 实效</h3>
                     ${detail(stargazer)}
                   </div>
                 ` : ""}
@@ -3191,6 +3232,7 @@ replaceString: |-
               <div class="value">
                 <strong>${escapeHtml(sg.name)}</strong><br>
                 ${escapeHtml(sg.data && (sg.data.型号ID || sg.data.身份) || "未记录型号")} · ${escapeHtml(sg.data && sg.data.种族 || "未记录种族")}
+                ${sg.data && sg.data.种族 === "观星者" ? `<br>${detail(stargazerPerformance(sg.data))}` : ""}
               </div>
             </div>
           </div>
@@ -3944,7 +3986,7 @@ replaceString: |-
       }
 
           const LEGACY_STAR_MAP_DATA = {
-              nodes: [ { id: "sol_ward", name: "太阳禁卫区", x: 400, y: 300, region: "始源之环", sec: "95", owner: "泰拉帝国", desc: "帝国首都“泰拉”（地球）所在地，海军“裁决之手”舰队常驻。宏伟，古典，管制严格。\n<b>本地太空特征:</b> 密集的轨道防御平台，标准化的帝国航道信标，以及一个太阳中心位置的1:4:9完美比例方块。" }, { id: "heart_republic", name: "共和国之心", x: 600, y: 250, region: "始源之环", sec: "88", owner: "自由世界共和国", desc: "共和国心脏，实用主义，商业繁荣，思想自由，情报集散地。\n<b>本地太空特征:</b> 繁忙的商业空间站集群，模块化的殖民地栖息地，以及无处不在的全息广告。" }, { id: "cygnus_cradle", name: "天鹅座摇篮", x: 300, y: 450, region: "始源之环", sec: "92", owner: "天鹅座技术联邦", desc: "联邦科技与工业中心，遍布研究站，工业站与戴森云，监控严格。\n<b>本地太空特征:</b> 包围恒星的巨型戴森云结构，高度自动化的研究前哨，以及严格管制的超空间信道。" }, { id: "trade_winds", name: "贸易风走廊", x: 550, y: 450, region: "始源之环", sec: "73", owner: "猎户座辛迪加", desc: "连接三大帝国的黄金航道，宇宙最繁华的商业中心，财富与罪恶交织。\n<b>本地太空特征:</b> 巨型货运船组成的“钢铁长河”，奢华的私人空间站，以及隐藏在航道阴影中的走私网络。" }, { id: "serpent_maw", name: "巨蛇之喉", x: 300, y: 700, region: "蛮荒边界", sec: "10", owner: "铁血盟约", desc: "混乱小行星带，传感器易失灵，海盗、走私犯与赏金猎人的乐园，最大黑市所在地。\n<b>本地太空特征:</b> 由舰船残骸和掏空小行星构成的海盗都市，混乱的传感器重影。" }, { id: "sanctuary", name: "避难所星团", x: 350, y: 700, region: "蛮荒边界", sec: "5", owner: "星火姐妹会", desc: "脉冲星辐射笼罩，天然超空间干扰，航行危险，是叛逃者的避风港。\n<b>本地太空特征:</b> 强烈的脉冲星辐射形成天然的超空间屏障，数个隐藏在星云深处的秘密基地。" }, { id: "charon", name: "卡戎之渡", x: 300, y: 680, region: "蛮荒边界", sec: "20", owner: "无", desc: "废弃战场与太空坟场，小型掠夺者团体活动区。\n<b>本地太空特征:</b> 漂浮的战舰坟场，周期性出现的幽灵信号，小型拾荒者营地。" }, { id: "veil_ghosts", name: "幽灵之幕", x: 900, y: 750, region: "遗忘之海", sec: "外部-10 / 内部99", owner: "人类技术联合", desc: "广阔寒冷的暗星云，背景辐射干扰强，导航困难，对外仅有一个交易空间站。\n<b>本地太空特征:</b> 能够吸收并扭曲传感器信号的暗物质星云，精确坐标是HTC的最高机密。" }, { id: "forerunners_tomb", name: "先驱者之墓", x: 1050, y: 850, region: "遗忘之海", sec: "-100", owner: "无 (考古禁区)", desc: "大量先驱者遗迹，空间结构极不稳定，时空扭曲。内部星门被扭曲，超空间如同迷魂阵。\n<b>本地太空特征:</b> 时空结构极其脆弱，物理法则不稳定，自动化先驱者防御系统仍在运作。" }, { id: "abyss", name: "阿比斯深渊", x: 1150, y: 950, region: "遗忘之海", sec: "-1000", owner: "无", desc: "超大质量黑洞为中心，引力异常，空间扭曲，传闻有“幽灵船”。\n<b>本地太空特征:</b> 极端引力透镜效应，时间膨胀现象，以及一座在事件视界边缘稳定存在的1:4:9完美比例方块。" }, { id: "new_promised", name: "新应许之地", x: 800, y: 250, region: "天堂之阶", sec: "35", owner: "争议 (帝国/共和国)", desc: "大量类地行星，两大势力殖民冲突区，拓荒者的机遇与混乱之地。\n<b>本地太空特征:</b> 拥有大量富氧行星和液态水行星，两大帝国的勘探舰队和殖民船频繁出没。" }, { id: "golden_steps", name: "黄金阶梯", x: 950, y: 350, region: "天堂之阶", sec: "55", owner: "猎户座辛迪加", desc: "辛迪加的“经济特区”，试图打造第二个“贸易风走廊”。\n<b>本地太空特征:</b> 正在建设中的巨型商业枢纽站，充满了企业勘探队和雇佣兵舰队。" }, { id: "tranquil_sea", name: "静谧之海", x: 1000, y: 150, region: "天堂之阶", sec: "45", owner: "天鹅座联邦", desc: "联邦深空探索舰队活动区，寻找科学现象与先驱者遗迹。\n<b>本地太空特征:</b> 分布着奇异的硅基生态系统和未被激活的先驱者信标。" }, { id: "taboris", name: "塔伯里斯星座", x: 1200, y: 1000, region: "闪光星云", sec: "-1000", owner: "归元共同体", desc: "共同体的首都和克隆中心所在的星座，隐藏在一片被人工戴森云包裹的星系内。\n<b>本地太空特征:</b> 星座中心被巨大的不透明戴森云笼罩，外围星系遍布自动化的资源采集平台和防御哨站。" }, { id: "dark_constellation", name: "暗色星座", x: 100, y: 850, region: "大荒野", sec: "-200", owner: "争议 (共同体/铁血)", desc: "归元共同体的自动化船坞与铁血盟约的秘密矿场在此犬牙交错。\n<b>本地太空特征:</b> 高度放射性的熔岩行星，以及双方势力建造的武装采矿平台。" }, { id: "banshee", name: "女妖星旋", x: -50, y: 950, region: "大荒野", sec: "-500", owner: "无", desc: "两颗中子星相互绕行形成的极端引力与辐射环境，是宇宙中最危险的航道之一。\n<b>本地太空特征:</b> 强大的引力场和X射线暴，任何常规护盾都会被迅速剥离。" }, { id: "cobalt_frontier", name: "钴蓝边境", x: 978, y: 672, region: "天穹王冠", sec: "50", owner: "猎户座辛迪加 / 独立军阀", desc: "传统的“灰色地带”，由各路海盗领主和独立军阀割据。走私、赏金猎杀和非正规采矿是这里的日常。\n<b>本地太空特征:</b> 弥漫着淡蓝色的电离气体云，传感器效率中等。小行星带富含钴与铱。" }, { id: "crimson_constellation", name: "暗红星座", x: 998, y: 750, region: "天穹王冠", sec: "88", owner: "泰拉帝国 (军事管制区)", desc: "帝国的战略要塞区。这里不仅是重要的能源产地，更是通往边缘世界的咽喉。帝国海军在此部署了重兵。\n<b>本地太空特征:</b> 密集分布的老年红巨星使得整个星区沐浴在暗红色的光辉中。" }, { id: "splendor_constellation", name: "璨辉星座", x: 968, y: 700, region: "天穹王冠", sec: "68", owner: "泰拉帝国 / 猎户座辛迪加", desc: "被誉为“王冠上的宝石”。这里既有全银河最奢华的度假行星，也有高效运转的高科技工业世界。帝国与辛迪加在此设立了巨大的自由贸易区。\n<b>本地太空特征:</b> 壮丽的蓝巨星和稳定的主序星交相辉映，风景绝美。" }, { id: "w_no_stars", name: "W-J0001A 无星之海", x: 1300, y: 700, region: "虫洞空间", sec: "N/A", owner: "???", desc: "一个完全虚无的口袋宇宙。\n<b>本地太空特征:</b> 绝对的黑暗，没有任何恒星或背景辐射。空间中心悬浮着一个由未知原理构成的1:4:9完美比例方块。该空间具有重置特性。", isWormhole: true }, { id: "w_reflection", name: "W-B2005C 自我倒影", x: 0, y: 100, region: "虫洞空间", sec: "-2000", owner: "高维回响", desc: "天灾战争时期遗留下来的高维存在残渣所占据的污染空间。\n<b>本地太空特征:</b> 星系间充满着扭曲的、非欧几里得几何结构的空间。长期暴露会导致不可逆转的精神错乱。", isWormhole: true }, { id: "w_shelf", name: "W-C1101B 大陆架", x: 1250, y: 50, region: "虫洞空间", sec: "-300", owner: "无", desc: "通往另一个宇宙的无法回头的门扉。\n<b>本地太空特征:</b> 星系中心是一个巨大的、单向通行的超空间裂隙，不断向外喷射出不属于已知宇宙的奇异物质和能量。", isWormhole: true }, { id: "w_j101134", name: "W-J101134 空房间", x: 600, y: 50, region: "虫洞空间", sec: "-100", owner: "无", desc: "G型主序星，含1:4:9方块。资源贫乏，被探险家们戏称为“空房间”。", isWormhole: true }, { id: "w_j110110", name: "W-J110110", x: 50, y: 400, region: "虫洞空间", sec: "-500", owner: "敌对无人机", desc: "沃尔夫-拉叶星，古代无人机编队。", isWormhole: true }, { id: "w_j142857", name: "W-J142857 循环", x: 1350, y: 250, region: "虫洞空间", sec: "-1000", owner: "时空异常", desc: "每7小时发生一次时空坍缩重置。", isWormhole: true }, { id: "w_j155432", name: "W-J155432 冰壳", x: 1000, y: 1100, region: "虫洞空间", sec: "-200", owner: "无", desc: "红巨星，冰封行星下的巨大空腔与方块。", isWormhole: true }, { id: "w_j160888", name: "W-J160888 双星", x: 1400, y: 900, region: "虫洞空间", sec: "-1000", owner: "无", desc: "双中子星系统，引力透镜效应。", isWormhole: true }, { id: "w_j210956", name: "W-J210956 死寂", x: -100, y: 600, region: "虫洞空间", sec: "-100", owner: "无", desc: "熄灭的恒星，白矮星与小行星带。", isWormhole: true } ],
+              nodes: [ { id: "sol_ward", name: "太阳禁卫区", x: 400, y: 300, region: "始源之环", sec: "95", owner: "泰拉帝国", desc: "帝国首都“泰拉”（地球）所在地，海军“裁决之手”舰队常驻。宏伟，古典，管制严格。\n<b>本地太空特征:</b> 密集的轨道防御平台，标准化的帝国航道信标，以及一个太阳中心位置的1:4:9完美比例方块。" }, { id: "heart_republic", name: "共和国之心", x: 600, y: 250, region: "始源之环", sec: "88", owner: "自由世界共和国", desc: "共和国心脏，实用主义，商业繁荣，思想自由，情报集散地。\n<b>本地太空特征:</b> 繁忙的商业空间站集群，模块化的殖民地栖息地，以及无处不在的全息广告。" }, { id: "cygnus_cradle", name: "天鹅座摇篮", x: 300, y: 450, region: "始源之环", sec: "92", owner: "天鹅座技术联邦", desc: "联邦科技与工业中心，遍布研究站，工业站与戴森云，监控严格。\n<b>本地太空特征:</b> 包围恒星的巨型戴森云结构，高度自动化的研究前哨，以及严格管制的超空间信道。" }, { id: "trade_winds", name: "贸易风走廊", x: 550, y: 450, region: "始源之环", sec: "73", owner: "猎户座辛迪加", desc: "连接三大帝国的黄金航道，宇宙最繁华的商业中心，财富与罪恶交织。\n<b>本地太空特征:</b> 巨型货运船组成的“钢铁长河”，奢华的私人空间站，以及隐藏在航道阴影中的走私网络。" }, { id: "serpent_maw", name: "巨蛇之喉", x: 300, y: 700, region: "蛮荒边界", sec: "10", owner: "铁血盟约", desc: "混乱小行星带，传感器易失灵，海盗、走私犯与赏金猎人的乐园，最大黑市所在地。\n<b>本地太空特征:</b> 由舰船残骸和掏空小行星构成的海盗都市，混乱的传感器重影。" }, { id: "sanctuary", name: "避难所星团", x: 350, y: 700, region: "蛮荒边界", sec: "5", owner: "星火姐妹会", desc: "脉冲星辐射笼罩，天然超空间干扰，航行危险，是叛逃者的避风港。\n<b>本地太空特征:</b> 强烈的脉冲星辐射形成天然的超空间屏障，数个隐藏在星云深处的秘密基地。" }, { id: "charon", name: "卡戎之渡", x: 300, y: 680, region: "蛮荒边界", sec: "20", owner: "无", desc: "废弃战场与太空坟场，小型掠夺者团体活动区。\n<b>本地太空特征:</b> 漂浮的战舰坟场，周期性出现的幽灵信号，小型拾荒者营地。" }, { id: "veil_ghosts", name: "幽灵之幕", x: 900, y: 750, region: "遗忘之海", sec: "外部-10 / 内部99", owner: "人类技术联合", desc: "广阔寒冷的暗星云，背景辐射干扰强，导航困难，对外仅有一个交易空间站。\n<b>本地太空特征:</b> 能够吸收并扭曲传感器信号的暗物质星云，精确坐标是HTC的最高机密。" }, { id: "forerunners_tomb", name: "先驱者之墓", x: 1050, y: 850, region: "遗忘之海", sec: "-100", owner: "无 (考古禁区)", desc: "大量先驱者遗迹，空间结构极不稳定，时空扭曲。内部星门被扭曲，超空间如同迷魂阵。\n<b>本地太空特征:</b> 时空结构极其脆弱，物理法则不稳定，自动化先驱者防御系统仍在运作。" }, { id: "abyss", name: "阿比斯深渊", x: 1150, y: 950, region: "遗忘之海", sec: "-1000", owner: "无", desc: "超大质量黑洞为中心，引力异常，空间扭曲，传闻有“幽灵船”。\n<b>本地太空特征:</b> 极端引力透镜效应，时间膨胀现象，以及一座在事件视界边缘稳定存在的1:4:9完美比例方块。" }, { id: "new_promised", name: "新应许之地", x: 800, y: 250, region: "天堂之阶", sec: "35", owner: "争议 (帝国/共和国)", desc: "大量类地行星，两大势力殖民冲突区，拓荒者的机遇与混乱之地。\n<b>本地太空特征:</b> 拥有大量富氧行星和液态水行星，两大帝国的勘探舰队和殖民船频繁出没。" }, { id: "golden_steps", name: "黄金阶梯", x: 950, y: 350, region: "天堂之阶", sec: "55", owner: "猎户座辛迪加", desc: "辛迪加的“经济特区”，试图打造第二个“贸易风走廊”。\n<b>本地太空特征:</b> 正在建设中的巨型商业枢纽站，充满了企业勘探队和雇佣兵舰队。" }, { id: "tranquil_sea", name: "静谧之海", x: 1000, y: 150, region: "天堂之阶", sec: "45", owner: "天鹅座联邦", desc: "联邦深空探索舰队活动区，寻找科学现象与先驱者遗迹。\n<b>本地太空特征:</b> 分布着奇异的硅基生态系统和未被激活的先驱者信标。" }, { id: "taboris", name: "塔伯里斯星座", x: 1200, y: 1000, region: "闪光星云", sec: "-1000", owner: "塔伯里斯女皇国", desc: "女皇宫廷与培养中心所在的星座；人口和装配设施集中于核心星系，运输舰队不足使外围发展有限。\n<b>本地太空特征:</b> 核心被遗留工厂云与戴森云残存结构遮蔽，其他星系多为稀疏矿点、哨站和简陋聚落。" }, { id: "dark_constellation", name: "暗色星座", x: 100, y: 850, region: "大荒野", sec: "-200", owner: "争议 (塔伯里斯/铁血)", desc: "塔伯里斯的小型矿点、转运锚地与铁血盟约秘密矿场犬牙交错，资源外运受有限运输船班制约。\n<b>本地太空特征:</b> 高度放射性的熔岩行星，以及双方势力建造的武装采矿平台。" }, { id: "banshee", name: "女妖星旋", x: -50, y: 950, region: "大荒野", sec: "-500", owner: "无", desc: "两颗中子星相互绕行形成的极端引力与辐射环境，是宇宙中最危险的航道之一。\n<b>本地太空特征:</b> 强大的引力场和X射线暴，任何常规护盾都会被迅速剥离。" }, { id: "cobalt_frontier", name: "钴蓝边境", x: 978, y: 672, region: "天穹王冠", sec: "50", owner: "猎户座辛迪加 / 独立军阀", desc: "传统的“灰色地带”，由各路海盗领主和独立军阀割据。走私、赏金猎杀和非正规采矿是这里的日常。\n<b>本地太空特征:</b> 弥漫着淡蓝色的电离气体云，传感器效率中等。小行星带富含钴与铱。" }, { id: "crimson_constellation", name: "暗红星座", x: 998, y: 750, region: "天穹王冠", sec: "88", owner: "泰拉帝国 (军事管制区)", desc: "帝国的战略要塞区。这里不仅是重要的能源产地，更是通往边缘世界的咽喉。帝国海军在此部署了重兵。\n<b>本地太空特征:</b> 密集分布的老年红巨星使得整个星区沐浴在暗红色的光辉中。" }, { id: "splendor_constellation", name: "璨辉星座", x: 968, y: 700, region: "天穹王冠", sec: "68", owner: "泰拉帝国 / 猎户座辛迪加", desc: "被誉为“王冠上的宝石”。这里既有全银河最奢华的度假行星，也有高效运转的高科技工业世界。帝国与辛迪加在此设立了巨大的自由贸易区。\n<b>本地太空特征:</b> 壮丽的蓝巨星和稳定的主序星交相辉映，风景绝美。" }, { id: "w_no_stars", name: "W-J0001A 无星之海", x: 1300, y: 700, region: "虫洞空间", sec: "N/A", owner: "???", desc: "一个完全虚无的口袋宇宙。\n<b>本地太空特征:</b> 绝对的黑暗，没有任何恒星或背景辐射。空间中心悬浮着一个由未知原理构成的1:4:9完美比例方块。该空间具有重置特性。", isWormhole: true }, { id: "w_reflection", name: "W-B2005C 自我倒影", x: 0, y: 100, region: "虫洞空间", sec: "-2000", owner: "高维回响", desc: "天灾战争时期遗留下来的高维存在残渣所占据的污染空间。\n<b>本地太空特征:</b> 星系间充满着扭曲的、非欧几里得几何结构的空间。长期暴露会导致不可逆转的精神错乱。", isWormhole: true }, { id: "w_shelf", name: "W-C1101B 大陆架", x: 1250, y: 50, region: "虫洞空间", sec: "-300", owner: "无", desc: "通往另一个宇宙的无法回头的门扉。\n<b>本地太空特征:</b> 星系中心是一个巨大的、单向通行的超空间裂隙，不断向外喷射出不属于已知宇宙的奇异物质和能量。", isWormhole: true }, { id: "w_j101134", name: "W-J101134 空房间", x: 600, y: 50, region: "虫洞空间", sec: "-100", owner: "无", desc: "G型主序星，含1:4:9方块。资源贫乏，被探险家们戏称为“空房间”。", isWormhole: true }, { id: "w_j110110", name: "W-J110110", x: 50, y: 400, region: "虫洞空间", sec: "-500", owner: "敌对无人机", desc: "沃尔夫-拉叶星，古代无人机编队。", isWormhole: true }, { id: "w_j142857", name: "W-J142857 循环", x: 1350, y: 250, region: "虫洞空间", sec: "-1000", owner: "时空异常", desc: "每7小时发生一次时空坍缩重置。", isWormhole: true }, { id: "w_j155432", name: "W-J155432 冰壳", x: 1000, y: 1100, region: "虫洞空间", sec: "-200", owner: "无", desc: "红巨星，冰封行星下的巨大空腔与方块。", isWormhole: true }, { id: "w_j160888", name: "W-J160888 双星", x: 1400, y: 900, region: "虫洞空间", sec: "-1000", owner: "无", desc: "双中子星系统，引力透镜效应。", isWormhole: true }, { id: "w_j210956", name: "W-J210956 死寂", x: -100, y: 600, region: "虫洞空间", sec: "-100", owner: "无", desc: "熄灭的恒星，白矮星与小行星带。", isWormhole: true } ],
               links: [ { s: "sol_ward", t: "trade_winds", type: "jump", jumps: 5 },{ s: "sol_ward", t: "heart_republic", type: "jump", jumps: 7 },{ s: "sol_ward", t: "cygnus_cradle", type: "wormhole_stable", jumps: 1 },{ s: "heart_republic", t: "trade_winds", type: "jump", jumps: 5 },{ s: "cygnus_cradle", t: "trade_winds", type: "jump", jumps: 6 },{ s: "cygnus_cradle", t: "tranquil_sea", type: "pipe", jumps: 1 },{ s: "heart_republic", t: "new_promised", type: "pipe", jumps: 3 },{ s: "heart_republic", t: "charon", type: "pipe", jumps: 3 },{ s: "trade_winds", t: "cobalt_frontier", type: "gate", jumps: 1 },{ s: "sol_ward", t: "crimson_constellation", type: "pipe", jumps: 1 },{ s: "cobalt_frontier", t: "splendor_constellation", type: "jump", jumps: 6 },{ s: "crimson_constellation", t: "splendor_constellation", type: "jump", jumps: 8 },{ s: "crimson_constellation", t: "new_promised", type: "gate", jumps: 1 },{ s: "crimson_constellation", t: "dark_constellation", type: "gate", jumps: 1 },{ s: "charon", t: "serpent_maw", type: "jump", jumps: 8 },{ s: "charon", t: "sanctuary", type: "jump", jumps: 10 },{ s: "serpent_maw", t: "dark_constellation", type: "gate", jumps: 1 },{ s: "dark_constellation", t: "banshee", type: "jump", jumps: 15 },{ s: "new_promised", t: "golden_steps", type: "jump", jumps: 5 },{ s: "new_promised", t: "tranquil_sea", type: "jump", jumps: 6 },{ s: "golden_steps", t: "tranquil_sea", type: "jump", jumps: 7 },{ s: "golden_steps", t: "taboris", type: "gate", jumps: 1 },{ s: "taboris", t: "veil_ghosts", type: "gate", jumps: 1 },{ s: "veil_ghosts", t: "forerunners_tomb", type: "jump", jumps: 12 },{ s: "forerunners_tomb", t: "abyss", type: "jump", jumps: 15 },{ s: "forerunners_tomb", t: "w_no_stars", type: "wormhole_unstable", jumps: 1 },{ s: "tranquil_sea", t: "w_shelf", type: "wormhole_unstable", jumps: 1 },{ s: "serpent_maw", t: "w_reflection", type: "wormhole_unstable", jumps: 1 },{ s: "heart_republic", t: "w_j101134", type: "wormhole_unstable", jumps: 1 }, { s: "sanctuary", t: "w_j110110", type: "wormhole_unstable", jumps: 1 }, { s: "taboris", t: "w_j142857", type: "wormhole_unstable", jumps: 1 },{ s: "abyss", t: "w_j160888", type: "wormhole_unstable", jumps: 1 },{ s: "new_promised", t: "w_j155432", type: "wormhole_unstable", jumps: 1 },{ s: "banshee", t: "w_j210956", type: "wormhole_unstable", jumps: 1 }]
           };
 

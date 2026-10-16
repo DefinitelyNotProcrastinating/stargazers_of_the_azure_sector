@@ -732,6 +732,13 @@ replaceString: |-
                       <textarea id="captain-background" class="w-full mt-1" maxlength="1200" rows="6" placeholder="写下主角已经真实拥有的职业、训练、长期经历、人际关系或重要往事。明确写出的经历会在相关行动中成为叙事优势；无需填写技能等级。"></textarea>
                       <div class="text-[11px] text-[var(--text-muted)] mt-2">建议保持在 100–300 字。档案会被永久提供给叙事 AI，因此只写值得长期记住的内容。</div>
                   </div>
+                  <div class="md:col-span-2">
+                      <label for="welcome-difficulty-select">难度</label>
+                      <select id="welcome-difficulty-select" class="w-full mt-1" data-difficulty><option>正常难度</option><option>高难度</option><option>天灾难度</option></select>
+                      <p id="welcome-difficulty-hint" class="text-sm text-[var(--text-muted)] mt-2"></p>
+                      <button id="welcome-difficulty-confirm" class="btn px-4 py-2 mt-3" data-action="confirm-difficulty">确认难度</button>
+                      <p id="welcome-difficulty-status" class="text-sm text-[var(--text-muted)] mt-2" role="status" aria-live="polite">选择后确认，立即应用难度。</p>
+                  </div>
               </div>
               <button class="btn px-8 py-3 text-xl tracking-widest mt-8" id="btn-start" data-action="start-game">建立连接 [CONNECT]</button>
           </div>
@@ -752,6 +759,7 @@ replaceString: |-
                   <div><label for="setup-preset-name">预选名称</label><input id="setup-preset-name" placeholder="例如：远征舰长 / 采矿队"></div>
                   <button class="btn px-4 py-2" data-action="save-opening-preset" data-prefix="setup">保存 / 覆盖当前设置</button>
               </div><p id="setup-preset-status" class="text-sm text-[var(--text-muted)] mt-3" role="status" aria-live="polite">预选会保存全部开局设置，读取后仍可继续编辑。</p></details>
+          <div class="panel p-4 mb-4"><label for="setup-difficulty-select">难度</label><select id="setup-difficulty-select" class="w-full mt-1" data-difficulty><option>正常难度</option><option>高难度</option><option>天灾难度</option></select><p id="setup-difficulty-hint" class="text-sm text-[var(--text-muted)] mt-2"></p><button id="setup-difficulty-confirm" class="btn px-4 py-2 mt-3" data-action="confirm-difficulty">确认难度</button><p id="setup-difficulty-status" class="text-sm text-[var(--text-muted)] mt-2" role="status" aria-live="polite">选择后确认，立即应用难度。</p></div>
           <div class="flex gap-2 mb-4">
               <div class="step-dot" id="dot-1"></div>
               <div class="step-dot" id="dot-2"></div>
@@ -856,6 +864,7 @@ replaceString: |-
           };
           var fittingCatalog = { weaponsByMount: { S: [], M: [], L: [], XL: [], C: [], T: [] }, modulesBySlot: { H: [], L: [] } };
           var state = {
+              difficulty: "正常难度",
               captain: { name: "{{user}}", appearance: "", background: "" },
               selections: { ships: [], items: [], init_stories: [] },
               fitting: { weapons: {}, modules: {}, stargazer: null },
@@ -877,8 +886,86 @@ replaceString: |-
           var presetBusy = false;
           var openingDataPromise = null;
           var itemFilters = { query: "", tags: [] };
+          var difficultyBusy = false;
+          var difficultyConfirmed = "";
+          var difficultyFeedback = "";
 
           function copyOpening(value) { return JSON.parse(JSON.stringify(value)); }
+          function normalizeDifficulty(value) { return ["正常难度", "高难度", "天灾难度"].includes(value) ? value : "正常难度"; }
+          function getDifficultyEntries(worldbook) {
+              return ["正常难度", "高难度", "天灾难度"].map(function(mode) {
+                  var name = "难度设置：" + mode;
+                  var matches = worldbook.filter(function(entry) { return entry.name === name; });
+                  if (matches.length !== 1) throw new Error("世界书必须且只能有一个「" + name + "」条目。");
+                  return matches[0];
+              });
+          }
+          async function applyDifficultySettings() {
+              var previous;
+              var selected = "难度设置：" + normalizeDifficulty(state.difficulty);
+              await updateWorldbookWith(openingWorldbookName, function(worldbook) {
+                  var entries = getDifficultyEntries(worldbook);
+                  previous = entries.map(function(entry) { return { uid: entry.uid, enabled: entry.enabled }; });
+                  return worldbook.map(function(entry) {
+                      return entries.includes(entry) ? Object.assign({}, entry, { enabled: entry.name === selected }) : entry;
+                  });
+              }, { render: 'immediate' });
+              return previous;
+          }
+          async function restoreDifficultySettings(previous) {
+              await updateWorldbookWith(openingWorldbookName, function(worldbook) {
+                  return worldbook.map(function(entry) {
+                      var saved = previous.find(function(item) { return item.uid === entry.uid; });
+                      return saved ? Object.assign({}, entry, { enabled: saved.enabled }) : entry;
+                  });
+              }, { render: 'immediate' });
+          }
+          async function confirmDifficultySettings() {
+              if (difficultyBusy || openingBusy || openingDone) return false;
+              difficultyBusy = true;
+              difficultyFeedback = "";
+              renderDifficultySettings();
+              try {
+                  await applyDifficultySettings();
+                  difficultyConfirmed = normalizeDifficulty(state.difficulty);
+                  return true;
+              } catch (error) {
+                  console.error(error);
+                  difficultyFeedback = "难度应用失败：" + (error && error.message ? error.message : error);
+                  return false;
+              } finally {
+                  difficultyBusy = false;
+                  renderDifficultySettings();
+              }
+          }
+          function renderDifficultySettings() {
+              state.difficulty = normalizeDifficulty(state.difficulty);
+              var connect = document.getElementById('btn-start');
+              if (connect) connect.disabled = difficultyBusy || openingBusy || openingDone;
+              var hints = {
+                  "正常难度": "任务声望 +5～+10；守法中立者可安心持有遗物，受欢迎者免于内部暗害；常见探索任务大多安全。",
+                  "高难度": "任务声望最多 +5；奖励克扣、夺宝、内部暗害与敌对势力猎杀持续存在；小舰队尤其危险。",
+                  "天灾难度": "继承高难度；半主动集群芯片预警识海终末最迟100年后回归，随后自毁。回归只可提前。"
+              };
+              ["welcome", "setup"].forEach(function(place) {
+                  var select = document.getElementById(place + '-difficulty-select');
+                  var hint = document.getElementById(place + '-difficulty-hint');
+                  var button = document.getElementById(place + '-difficulty-confirm');
+                  var status = document.getElementById(place + '-difficulty-status');
+                  var disabled = difficultyBusy || openingBusy || openingDone;
+                  if (select) { select.value = state.difficulty; select.disabled = disabled; }
+                  if (button) button.disabled = disabled;
+                  if (hint) hint.textContent = hints[state.difficulty];
+                  if (status) status.textContent = difficultyBusy ? "正在应用难度……" : (difficultyFeedback || (difficultyConfirmed === state.difficulty ? "已生效：" + state.difficulty + "，其余难度已关闭。" : "选择后点击确认难度，立即生效。"));
+              });
+          }
+          function buildCatastropheWarning(time) {
+              var learned = new Date(time), deadline = new Date(time), month = learned.getUTCMonth();
+              if (!Number.isFinite(learned.getTime())) throw new Error("天灾预警需要有效的开局时间。");
+              deadline.setUTCFullYear(deadline.getUTCFullYear() + 100);
+              if (deadline.getUTCMonth() !== month) deadline.setUTCDate(0);
+              return { "获知时间": learned.toISOString(), "最迟回归时间": deadline.toISOString(), "芯片状态": "已自毁" };
+          }
           function openingObject(value) { return !!value && typeof value === 'object' && !Array.isArray(value); }
           function findOpeningEntry(worldbook) {
               return worldbook.find(function(entry) { return entry.comment === '__INIT_DATA__' || entry.name === '__INIT_DATA__'; });
@@ -929,6 +1016,7 @@ replaceString: |-
           }
           function captureOpeningPreset() {
               validateItemQuantities();
+              state.difficulty = normalizeDifficulty(state.difficulty);
               ['name', 'appearance', 'background'].forEach(function(field) {
                   var input = document.getElementById('captain-' + field);
                   if (input) state.captain[field] = input.value;
@@ -944,7 +1032,9 @@ replaceString: |-
           function validateOpeningPreset(preset) {
               if (!openingObject(preset) || preset.version !== 1 || !openingObject(preset.state) || !openingObject(preset.catalogs)) throw new Error('无法识别此预选格式。');
               var restored = preset.state;
+              if (restored.difficulty !== undefined && !["正常难度", "高难度", "天灾难度"].includes(restored.difficulty)) throw new Error('难度必须是正常难度、高难度或天灾难度。');
               if (!openingObject(restored.captain) || !openingObject(restored.selections) || !openingObject(restored.fitting) || !Array.isArray(restored.industries) || !openingObject(restored.reputations)) throw new Error('预选缺少完整开局设置。');
+              if (Object.values(restored.reputations).some(function(value) { return !Number.isInteger(value) || value < -1000 || value > 1000; })) throw new Error('势力声望必须是 -1000 至 1000 的整数。');
               ['ships', 'items', 'init_stories'].forEach(function(key) {
                   if (!Array.isArray(restored.selections[key]) || restored.selections[key].some(function(item) { return !openingObject(item) || typeof item._key !== 'string' || !item._key.trim(); })) throw new Error('预选中的选择列表无效。');
               });
@@ -984,7 +1074,7 @@ replaceString: |-
               finally { presetBusy = false; }
           }
           async function loadOpeningPreset(prefix) {
-              if (presetBusy || openingBusy || openingDone) return;
+              if (presetBusy || openingBusy || openingDone || difficultyBusy) return;
               var name = document.getElementById(prefix + '-preset-select').value;
               if (!name) { presetStatus('请先选择一个预选。', true); return; }
               presetBusy = true;
@@ -998,6 +1088,8 @@ replaceString: |-
                   restoredData.fittingCatalog = buildFittingCatalog(restoredData);
                   gameData = restoredData;
                   state = copyOpening(preset.state);
+                  difficultyFeedback = "";
+                  renderDifficultySettings();
                   gachaSessionCards = Array.isArray(preset.gachaCards) ? copyOpening(preset.gachaCards) : [];
                   selectedGachaIndex = Number.isInteger(preset.gachaSelectedIndex) ? preset.gachaSelectedIndex : -1;
                   itemFilters = openingObject(preset.itemFilters) && Array.isArray(preset.itemFilters.tags) ? copyOpening(preset.itemFilters) : { query: '', tags: [] };
@@ -1079,7 +1171,7 @@ replaceString: |-
               var text = String(value === undefined || value === null ? '' : value);
               return !text || text.endsWith(suffix) ? text : text + suffix;
           }
-          document.addEventListener('DOMContentLoaded', function() { reloadOpeningPresets(); });
+          document.addEventListener('DOMContentLoaded', function() { renderDifficultySettings(); reloadOpeningPresets(); });
 
           async function fetchGameData() {
               var wb = await getWorldbook("蔚蓝星域的观星者 下世代");
@@ -1250,6 +1342,8 @@ replaceString: |-
           }
 
           async function startGame() {
+              if (!(await confirmDifficultySettings())) return;
+              renderDifficultySettings();
               state.captain.name = document.getElementById('captain-name').value.replace(/^\s+|\s+$/g, "") || "{{user}}";
               state.captain.appearance = document.getElementById('captain-appearance').value.replace(/^\s+|\s+$/g, "");
               state.captain.background = document.getElementById('captain-background').value.replace(/^\s+|\s+$/g, "");
@@ -1304,6 +1398,7 @@ replaceString: |-
               var ship = getSelectedShipName() || "未选";
               var fitCount = countKeys(state.fitting.weapons) + countKeys(state.fitting.modules);
               var summary = [];
+              summary.push("难度: " + normalizeDifficulty(state.difficulty));
               summary.push("舰船: " + ship);
               summary.push("装配模块: " + fitCount);
               summary.push("观星者: " + (state.fitting.stargazer ? state.fitting.stargazer._key : "未装配"));
@@ -1420,10 +1515,10 @@ replaceString: |-
               state.reputations["海盗势力"] = -50;
               for (name in state.reputations) if (Object.prototype.hasOwnProperty.call(state.reputations, name)) {
                   locked = name === "铁血盟约" || name === "海盗势力";
-                  html.push('<label class="panel p-4"><div class="flex justify-between gap-3"><strong>' + escapeHtml(name) + '</strong><span class="font-mono">' + escapeHtml(state.reputations[name]) + '</span></div><input class="w-full mt-3" type="number" min="-100" max="100" step="1" data-reputation="' + escapeHtml(name) + '" value="' + escapeHtml(state.reputations[name]) + '" ' + (locked ? 'disabled' : '') + '></label>');
+                  html.push('<label class="panel p-4"><div class="flex justify-between gap-3"><strong>' + escapeHtml(name) + '</strong><span class="font-mono">' + escapeHtml(state.reputations[name]) + '</span></div><input class="w-full mt-3" type="number" min="-1000" max="1000" step="1" data-reputation="' + escapeHtml(name) + '" value="' + escapeHtml(state.reputations[name]) + '" ' + (locked ? 'disabled' : '') + '></label>');
               }
               grid.className = "grid-container flex-1";
-              grid.innerHTML = '<div class="panel p-4" style="grid-column:1/-1;"><strong>初始势力声望</strong><div class="text-sm text-[var(--text-muted)] mt-2">范围 -100 至 100。海盗势力与铁血盟约固定为 -50。</div></div>' + html.join('');
+              grid.innerHTML = '<div class="panel p-4" style="grid-column:1/-1;"><strong>初始势力声望</strong><div class="text-sm text-[var(--text-muted)] mt-2">范围 -1000 至 1000。大于50免高安编队搜查，达到200可获旗舰准入。海盗势力与铁血盟约固定为 -50。</div></div>' + html.join('');
           }
 
           function renderPhase() {
@@ -1601,6 +1696,7 @@ replaceString: |-
                   "型号ID": src["型号ID"] || key || "",
                   "制造商": firstNonEmpty([src["制造商"], profile["制造商"]]),
                   "品质": src["品质"] === undefined ? "" : src["品质"],
+                  "充能数量": src["充能数量"],
                   "描述": firstNonEmpty([src["描述"], profile["描述"], src["备注"]]),
                   "外貌": firstNonEmpty([src["外貌"], profile["外貌"]]),
                   "身份标识": firstNonEmpty([src["身份标识"], (profile["身份标识"] || {})["类型"] ? ((profile["身份标识"] || {})["类型"] + " / " + ((profile["身份标识"] || {})["位置"] || "未记录位置")) : ""]),
@@ -1632,11 +1728,55 @@ replaceString: |-
               return ship ? (ship["观星者装配要求"] || ship["观星者需求"] || ship["接口需求"] || null) : null;
           }
 
+          // STARGAZER_PERFORMANCE_BEGIN
+          // Pure derived values. Saved fields always contain factory/modification baselines.
+          function stargazerPerformance(character) {
+              if (!character || character["种族"] !== "观星者") return null;
+              const affection = Number(character["好感度"]);
+              const positive = Number.isFinite(affection) ? Math.max(0, affection) : 0;
+              const rate = Math.min(positive / 2000, 1);
+              const extra = positive >= 2000 ? 2 : positive >= 1000 ? 1 : 0;
+              const rounded = value => Number(value.toFixed(6));
+              const metric = value => {
+                  let raw = String(value ?? "");
+                  const match = raw.match(/(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?/i);
+                  if (!match) return { "显示": raw || "未记录", "有效值": null };
+                  const base = Number(match[0]);
+                  if (!Number.isFinite(base)) return { "显示": raw, "有效值": null };
+                  if (!/TW\s*\/\s*mV/i.test(raw)) raw += " TW/mV";
+                  const bonus = rounded(base * rate);
+                  const total = base * (1 + rate);
+                  return { "显示": raw.replace(match[0], `${base} + ${bonus} = ${rounded(total)}`), "有效值": total };
+              };
+              const stable = metric(character["稳态增益"]);
+              const burst = metric(character["爆发增益"]);
+              const charge = character["充能数量"];
+              const validCharge = typeof charge === "number" && Number.isFinite(charge) && charge >= 0;
+              const notice = "该观星者的性能已经被使用者影响，和同级产品有出入。";
+              const description = String(character["描述"] ?? "").split(notice).join("").trim();
+              return {
+                  "好感增幅": `+${rounded(rate * 100)}%`,
+                  "稳态增益": stable["显示"],
+                  "爆发增益": burst["显示"],
+                  "充能数量": validCharge ? `${charge} + ${extra} = ${rounded(charge + extra)}` : "未记录",
+                  "有效稳态增益": stable["有效值"],
+                  "有效爆发增益": burst["有效值"],
+                  "有效充能数量": validCharge ? rounded(charge + extra) : null,
+                  "描述": description + (positive > 100 ? (description ? "\n" : "") + notice : "")
+              };
+          }
+          // STARGAZER_PERFORMANCE_END
+
           function getStargazerMetrics(stargazer) {
               var perf = (((stargazer || {})["静态档案"] || {})["性能参数"]) || {};
+              var effective = stargazerPerformance(Object.assign({}, stargazer, {
+                  "种族": "观星者",
+                  "稳态增益": firstNonEmpty([(stargazer || {})["稳态增益"], perf["稳态增益"]]),
+                  "爆发增益": firstNonEmpty([(stargazer || {})["爆发增益"], perf["爆发增益"]])
+              }));
               return {
-                  stable: parsePlainNumber(firstNonEmpty([(stargazer || {})["稳态增益"], perf["稳态增益"]])),
-                  burst: parsePlainNumber(firstNonEmpty([(stargazer || {})["爆发增益"], perf["爆发增益"]])),
+                  stable: effective["有效稳态增益"] || 0,
+                  burst: effective["有效爆发增益"] || 0,
                   bitrate: parseBitrate(firstNonEmpty([(stargazer || {})["比特率"], perf["比特率"]])),
                   error: parsePlainNumber(firstNonEmpty([(stargazer || {})["精度"], perf["精度"]]))
               };
@@ -1895,7 +2035,8 @@ replaceString: |-
 
           function buildStargazerMeta(candidate) {
               var m = getStargazerMetrics(candidate);
-              return '稳态 ' + m.stable + ' TW/mV | 爆发 ' + m.burst + ' TW/mV | 比特率 ' + m.bitrate + ' TB/s | 误差 ' + m.error;
+              var p = stargazerPerformance(candidate);
+              return '稳态 ' + (p ? p["稳态增益"] : m.stable) + ' | 爆发 ' + (p ? p["爆发增益"] : m.burst) + ' | 充能 ' + (p ? p["充能数量"] : '未记录') + ' | 比特率 ' + m.bitrate + ' TB/s | 误差 ' + m.error;
           }
 
           function previewStargazer(candidate) {
@@ -2013,6 +2154,7 @@ replaceString: |-
               if (action === 'clear-item-tags') { itemFilters.tags = []; renderItems(); return; }
               if (action === 'toggle-item-tag') { var tag = decodeURIComponent(el.getAttribute('data-tag')), tagIndex = itemFilters.tags.indexOf(tag); if (tagIndex < 0) itemFilters.tags.push(tag); else itemFilters.tags.splice(tagIndex, 1); renderItems(); return; }
               if (action === 'start-game') { startGame(); return; }
+              if (action === 'confirm-difficulty') { confirmDifficultySettings(); return; }
               if (action === 'prev-phase') { prevPhase(); return; }
               if (action === 'next-phase') { nextPhase(); return; }
               if (action === 'add-industry') { addIndustryPreset(decodeURIComponent(el.getAttribute('data-preset') || "")); return; }
@@ -2374,6 +2516,14 @@ replaceString: |-
           });
           document.addEventListener('input', function(event) {
               var target = event.target, index, field, value;
+              if (target && target.hasAttribute('data-difficulty')) {
+                  if (difficultyBusy || openingBusy || openingDone) { renderDifficultySettings(); return; }
+                  state.difficulty = normalizeDifficulty(target.value);
+                  difficultyFeedback = "";
+                  renderDifficultySettings();
+                  renderSummary();
+                  return;
+              }
               if (target && target.id === 'item-search') { itemFilters.query = target.value; renderItemChoices(); return; }
               if (target && target.hasAttribute('data-item-index')) {
                   index = parseInt(target.getAttribute('data-item-index'), 10); value = Number(target.value);
@@ -2390,7 +2540,7 @@ replaceString: |-
               }
               if (target && target.hasAttribute('data-reputation')) {
                   field = target.getAttribute('data-reputation');
-                  state.reputations[field] = Math.max(-100, Math.min(100, parseInt(target.value || '0', 10) || 0));
+                  state.reputations[field] = Math.max(-1000, Math.min(1000, parseInt(target.value || '0', 10) || 0));
               }
           });
 
@@ -2403,6 +2553,8 @@ replaceString: |-
                   "好感度": 0,
                   "想法": "等待与舰长建立同步。",
                   "型号ID": "CUSTOM-SG-001",
+                  "品质": "精良",
+                  "充能数量": 3,
                   "制造商": "玩家自定义",
                   "描述": "填写观星者的设计理念、人格轮廓与接口特性。",
                   "外貌": "填写外貌、常服、发色、眼睛颜色、肤色与身材记录。",
@@ -2504,8 +2656,9 @@ replaceString: |-
           function generateGachaStargazer(index) {
               var def = getGachaDefinition();
               var qualityPool = getPoolArray(def, "品质池");
-              var q = choiceFromPool(qualityPool, { "品质": 1, "比特率基准": "150TB/s", "精度基准": 3.0, "稳态增益基准": 2.0, "爆发增益基准": 5.0 });
-              var quality = parseInt(q["品质"] || 1, 10);
+              var q = choiceFromPool(qualityPool, { "品质": "标准", "充能数量": 1, "比特率基准": "150TB/s", "精度基准": 3.0, "稳态增益基准": 2.0, "爆发增益基准": 5.0 });
+              var quality = q["品质"];
+              var rank = ["标准", "衍生", "精良", "上等", "先进", "高级"].indexOf(quality) + 1;
               var source = pickText(def, "设计来源", "未知设计局");
               var body = choiceFromPool(getPoolArray(def, "身材池"), { bwh: "未记录", "身高": "未记录" }) || {};
               var skin = pickText(def, "皮肤池", "白皙");
@@ -2517,7 +2670,7 @@ replaceString: |-
               var outfitSub2 = pickText(def, "常服副元素2", "发光参数电子项圈");
               var bitrateTB = parseBitrate(q["比特率基准"] || "150TB/s");
               var bitrate = formatBitrateTB(randomAround(bitrateTB, 0.13, 1, 0));
-              var precision = randomAround(q["精度基准"], 0.20, 0.001, quality >= 5 ? 3 : 2);
+              var precision = randomAround(q["精度基准"], 0.20, 0.001, rank >= 5 ? 3 : 2);
               var stable = randomAround(q["稳态增益基准"], 0.14, 0.1, 2);
               var burst = randomAround(q["爆发增益基准"], 0.16, 0.1, 2);
               var traits = pickMany(def, "额外特性池", 2);
@@ -2532,6 +2685,7 @@ replaceString: |-
                   "型号ID": "Q" + quality + "-" + Math.floor(10000 + Math.random() * 90000),
                   "制造商": source,
                   "品质": quality,
+                  "充能数量": q["充能数量"],
                   "描述":  (traits.length ? " 特性：" + traits.join("、") + "。" : ""),
                   "外貌": asText(body.bwh, "未记录") + " / " + asText(body["身高"], "未记录") + "，" + skin + "肤色，" + hair + "发，" + eyes + "眼。常服为" + outfitColor + "系" + outfitMain + "，附带" + outfitSub1 + "与" + outfitSub2 + "。",
                   "身份标识": "臀部条形码纹身",
@@ -2679,6 +2833,8 @@ replaceString: |-
               sg["身份"] = sg["身份"] || "舰载观测接口人格";
               sg["型号ID"] = sg["型号ID"] || baseName || "CUSTOM-SG";
               sg["制造商"] = sg["制造商"] || "玩家自定义";
+              sg["品质"] = sg["品质"] || "精良";
+              if (sg["充能数量"] === undefined && sg["品质"] !== "唯一") sg["充能数量"] = ["标准", "衍生", "精良", "上等", "先进", "高级"].indexOf(sg["品质"]) + 1;
               sg["描述"] = sg["描述"] || "玩家自定义观星者。";
               sg["身份标识"] = sg["身份标识"] || "粉色爱心卡面 / 自定义观星者";
               sg["比特率"] = sg["比特率"] || "450TB/s";
@@ -2691,6 +2847,8 @@ replaceString: |-
 
           function validateCustomStargazer(sg) {
               if (!sg || typeof sg !== "object" || Array.isArray(sg)) return "观星者内容必须是对象。";
+              if (["标准", "衍生", "精良", "上等", "先进", "高级", "唯一"].indexOf(sg["品质"]) < 0) return "品质必须是标准、衍生、精良、上等、先进、高级或唯一。";
+              if (typeof sg["充能数量"] !== "number" || !Number.isFinite(sg["充能数量"]) || sg["充能数量"] < 0) return "基础充能数量必须是大于或等于0的有限数值；唯一品质也必须填写。";
               if (!sg["比特率"] || parseBitrate(sg["比特率"]) <= 0) return "比特率必须填写，例如：450TB/s 或 1.2PB/s。";
               if (parsePlainNumber(sg["精度"]) < 0) return "精度不能为负数。";
               if (parsePlainNumber(sg["稳态增益"]) <= 0) return "稳态增益必须大于 0。";
@@ -2825,6 +2983,8 @@ replaceString: |-
               hero["姓名"] = state.captain.name;
               hero["外貌"] = state.captain.appearance;
               hero["背景故事"] = state.captain.background;
+              if (normalizeDifficulty(state.difficulty) === "天灾难度") hero["天灾预警"] = buildCatastropheWarning(story["时间"]);
+              else delete hero["天灾预警"];
               hero["位置"] = story["地点"] || "";
               hero["舰船"] = selectedShips;
               hero["可攻略角色"] = selectedStargazers;
@@ -2843,9 +3003,10 @@ replaceString: |-
 
           function openingDraft() {
               var story = getSelectedStory();
-              if (story && story['开局行动']) return state.captain.background + '\n\n开局行动：\n' + story['开局行动'];
+              var draft = story && story['开局行动'] ? state.captain.background + '\n\n开局行动：\n' + story['开局行动'] : state.captain.background;
+              if (normalizeDifficulty(state.difficulty) === "天灾难度") draft += '\n\n天灾情报：开局初期，一个半主动集群芯片预警识海终末最迟将在100年后返回并入侵银河系，两大超级文明已经消逝；芯片随即自毁。此情报只演出一次，最迟回归日期以天灾预警记录为准，只能提前。';
               // 开局数值只保存在 SAM；普通开局保留玩家原样填写的背景故事。
-              return state.captain.background;
+              return draft;
           }
 
           function serializeOpeningState(value) {
@@ -2856,11 +3017,12 @@ replaceString: |-
           }
 
           async function exportData() {
-              if (openingBusy || openingDone) return;
+              if (openingBusy || openingDone || difficultyBusy) return;
               try { validateItemQuantities(); } catch (error) { alert(error.message); return; }
               var button = document.getElementById('btn-next');
-              var written = false, committed = false, original, updated, chat;
+              var written = false, committed = false, original, updated, chat, difficultyPrevious;
               openingBusy = true;
+              renderDifficultySettings();
               button.disabled = true;
               button.textContent = "正在写入开局……";
               try {
@@ -2901,11 +3063,14 @@ replaceString: |-
                       + marker + 'data_block' + marker + '\n' + serializeOpeningState(initialized)
                       + '\n' + marker + 'data_block_end' + marker;
                   if (SillyTavern.getContext().chat !== chat || chat.length !== 1 || chat[0].mes !== original) throw new Error("聊天已变化，停止开局写入。");
+                  difficultyPrevious = await applyDifficultySettings();
+                  if (SillyTavern.getContext().chat !== chat || chat.length !== 1 || chat[0].mes !== original) throw new Error("聊天已变化，停止开局写入。");
                   await setChatMessages([{ message_id: 0, message: updated }], { refresh: 'none' });
                   written = true;
                   if (SillyTavern.getContext().chat !== chat || chat.length !== 1 || chat[0].mes !== updated) throw new Error("聊天已变化，停止变量写入。");
-                  await updateVariablesWith(function(vars) { vars.SAM_data = initialized; return vars; });
+                  await updateVariablesWith(function(vars) { vars.SAM_data = initialized; return vars; }, { type: 'chat' });
                   committed = true;
+                  difficultyConfirmed = normalizeDifficulty(state.difficulty);
                   openingDone = true;
                   if (SillyTavern.getContext().chat !== chat) throw new Error("聊天已切换；开局已保存到原聊天，请返回原聊天继续。");
                   if (input.value.trim()) throw new Error("聊天框在写入期间出现新内容，未覆盖；请手动输入开场请求。");
@@ -2916,6 +3081,10 @@ replaceString: |-
                   await setChatMessages([{ message_id: 0 }], { refresh: 'affected' });
               } catch (e) {
                   console.error(e);
+                  if (difficultyPrevious && !committed) {
+                      try { await restoreDifficultySettings(difficultyPrevious); }
+                      catch (difficultyError) { console.error(difficultyError); e = new Error(e.message + "\n难度开关恢复失败：" + difficultyError.message); }
+                  }
                   if (written && !committed && SillyTavern.getContext().chat === chat && chat.length === 1 && chat[0].mes === updated) {
                       try { await setChatMessages([{ message_id: 0, message: original }], { refresh: 'none' }); }
                       catch (rollbackError) { console.error("开局首楼恢复失败", rollbackError); }
@@ -2923,6 +3092,7 @@ replaceString: |-
                   alert((committed ? "开局数值已写入，但界面刷新失败，请刷新聊天。\n" : "开局写入失败：") + (e && e.message ? e.message : e));
               } finally {
                   openingBusy = false;
+                  renderDifficultySettings();
                   button.disabled = openingDone;
                   button.textContent = openingDone ? (openingDraft() ? "开局已写入，开场内容已填入聊天框" : "开局已写入，请自行输入开场内容") : "确认并开始游戏 >>>";
               }

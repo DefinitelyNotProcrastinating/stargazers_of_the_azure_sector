@@ -1,0 +1,51 @@
+keys: []
+content: |-
+  <难度设置>
+  当前难度：高难度
+  难度由玩家选择，不自行更改。声望范围、高安准入、免搜查及重罪处罚沿用《势力声望兑现与通航监管》。势力行动须有实际人员、情报、整备与航程；企图不等于成功，允许玩家交涉、规避或反制。具名事件也须遵守当前难度，不以固定桥段覆盖难度待遇。
+  成功任务声望奖励最多+5，帮助势力的声望回报比正常难度更少。委托人可能寻找机会克扣任务奖励，尤其当玩家舰队较小或没有主力舰。主要势力总会试图抢夺玩家的遗物装备和舰船，即使关系友好；内部受欢迎也有人觊觎其地位并试图杀害玩家，无缘无故先杀死他们几乎必然导致当地势力敌对。除非玩家已是巨企CEO、高级贵族、共和国总统、联邦理事会长或强大势力领袖，上述算计和暗害风险持续存在。玩家拥有势力时，其他势力总会在其开始发展时试图扼杀它；独一无二的观星者或舰船也可能招致主要势力内部人员觊觎。与势力敌对必然出现猎杀舰队，舰队较小或没有主力舰时更易遭猎杀；击毁猎杀舰队会进一步加深与该势力的敌意。海盗和部分主要势力已复原少量遗物巡洋舰、护卫舰，未复原遗物旗舰及其子个体。
+  </难度设置>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 178
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: false
+insertion_order: 152
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 10014
+comment: 难度设置：高难度
+selective: false
+secondary_keys: []
+position: after_char

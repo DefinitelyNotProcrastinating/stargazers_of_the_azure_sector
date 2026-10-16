@@ -48,7 +48,7 @@ content: |-
   - 自动结算只处理 `状态=运行` 的建筑；停机、封存、受损或尚未部署的建筑不结算。
 
   <raw_building_data>
-  <%-JSON.stringify(getvar("SAM_data.static.主角.工业资产简表") || {}, null, 2)%>
+  <%-JSON.stringify(Object.fromEntries(Object.entries(getvar("SAM_data.static.主角.建筑") || {}).filter(([wb_193_name, wb_193_building]) => wb_193_building && typeof wb_193_building === "object" && !Array.isArray(wb_193_building)).map(([wb_193_name, wb_193_building]) => [wb_193_name, {"类型": wb_193_building["类型"] || "建筑", "位置": wb_193_building["位置"] || "", "状态": wb_193_building["状态"] || "", "描述": wb_193_building["描述"] || ""}])), null, 2)%>
   </raw_building_data>
   </building_management>
 extensions:

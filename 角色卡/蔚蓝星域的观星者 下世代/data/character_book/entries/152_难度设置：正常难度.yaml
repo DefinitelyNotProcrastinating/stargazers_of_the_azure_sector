@@ -1,0 +1,51 @@
+keys: []
+content: |-
+  <难度设置>
+  当前难度：正常难度
+  难度由玩家选择，不自行更改。声望范围、高安准入、免搜查及重罪处罚沿用《势力声望兑现与通航监管》。势力行动须有实际人员、情报、整备与航程；企图不等于成功，允许玩家交涉、规避或反制。具名事件也须遵守当前难度，不以固定桥段覆盖难度待遇。
+  成功完成任务给予当地势力声望+5至+10；帮助势力的实际贡献给予更多声望。势力不会无故敌对。守法且当地声望至少中立（R>=0）时，主要势力对遗物装备、舰船可以好奇、鉴定或增加手续，但不会抢夺。受欢迎（R>50）时，主要势力内部也不会无端针对、暗害玩家；打压受欢迎的外部人才有损其名声和吸纳人才的能力。主要势力经常发布前往无人星系、边境星区并提交扫描数据的探索任务，大多数安全，不把每次探索都变成埋伏。真实违法、主动挑衅与海盗行为仍按事实处理。
+  </难度设置>
+extensions:
+  position: 1
+  exclude_recursion: true
+  display_index: 178
+  probability: 100
+  useProbability: true
+  depth: 4
+  selectiveLogic: 0
+  outlet_name: ''
+  group: ''
+  group_override: false
+  group_weight: 100
+  prevent_recursion: true
+  delay_until_recursion: false
+  scan_depth: 5
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 152
+case_sensitive: null
+use_regex: true
+constant: true
+name: null
+priority: null
+id: 9531
+comment: 难度设置：正常难度
+selective: false
+secondary_keys: []
+position: after_char

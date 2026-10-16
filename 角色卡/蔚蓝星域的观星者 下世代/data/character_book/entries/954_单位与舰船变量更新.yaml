@@ -116,8 +116,9 @@ content: |-
 
   ## 当前数据
   <raw_ship_data>
-  舰船工业输入输出由UI与SAM读取；叙事模型只接收已裁剪掉输入输出的舰船状态。
+  <%-JSON.stringify(getvar("SAM_data.static.主角.舰船") || {}, (wb_192_key, wb_192_value) => wb_192_key.startsWith("_") ? undefined : wb_192_value, 2)%>
   </raw_ship_data>
+  - 工业设备按每件参数乘实际堆叠数计量；舰船每日输入/输出是全舰汇总值，不再乘设备件数。周期产耗由SAM结算，同一笔产耗只记账一次。
   </unit_and_ship_management>
 extensions:
   position: 4

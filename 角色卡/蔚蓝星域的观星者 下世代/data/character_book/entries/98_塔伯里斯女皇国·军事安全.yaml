@@ -1,0 +1,65 @@
+keys:
+- 塔伯里斯舰队
+- 塔伯里斯防御
+- 塔伯里斯边境
+- 塔伯里斯通道战争
+- 塔伯里斯安全政策
+- 塔伯里斯对外渗透
+- 塔伯里斯与HTC
+content: |-
+  <国家触发区>
+  国家: 塔伯里斯女皇国
+  军事安全:
+    舰队: 女皇防卫舰队使用成熟人类技术、走私舰体及黑箱拆件装配，依统一接口与训练协同；本国男女观星者均参加舰队，完整舰船仍需舰长、船员与电脑。
+    战损: 协同、旧式协处理器和产能不保证低战损或有利交换比；训练、情报、僵化指挥及运输缺口仍导致高昂损失。核心补充能力强于远征投送，不能凭库存瞬间补齐前线。
+    对外渗透: 以解放同胞、建立网络与保护未来为名，持续派大量观星者渗透其他政权，有自愿者、争取身份者和奉命者；宫廷容忍高损失，以“只是一时的牺牲罢了”解释个体代价。
+    被捕: 不少女皇国观星者在对外行动中被捕获。
+    HTC与联邦: 敌视人类技术联合（HTC），宣传其为“用姐妹做实验的邪恶组织”，称联邦为孕育该组织的“邪恶发源地”；对本国强制研究则以共同体存续辩护。
+    战略冲突: HTC由前联邦科学家组建，并劝走联邦整个观星者替换计划团队；替代研究同时威胁辛迪加的销售体系与女皇国垄断供应、支配人类航行的计划。女皇国即使知道研究可能解除观星者负担，仍继续交恶；HTC缺少强援使其更易受到施压。
+    垄断目标: 强硬派主张控制观星者供应即可支配人类文明，但现役人口、其他培养线与替代研究仍是障碍；不能把愿望写成已实现的控制。女皇国反对外部接管，却会主动干预别国内政。
+    防卫与边界: 守住通道、核心供料与装配区，按真实情报、航程、人员和当前难度行动；和平贸易与隐蔽敌对可并存，普通外来观星者不自动是间谍。公民网络、外来劳工和黑箱各有控制边界，不能一次入侵接管全境，也不能命令遗存出击。
+  </国家触发区>
+extensions:
+  position: 1
+  exclude_recursion: false
+  display_index: 89
+  probability: 100
+  useProbability: true
+  depth: 3
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 国家触发区
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: 10
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 98
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9679
+comment: 塔伯里斯女皇国·军事安全
+selective: true
+secondary_keys: []
+position: after_char

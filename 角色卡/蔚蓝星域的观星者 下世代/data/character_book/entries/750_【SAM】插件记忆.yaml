@@ -1,18 +1,11 @@
 keys: []
 content: |-
   <MEMORY_TRACKER>
-  在<MEMORY>中详细地记载了过去发生的事件，请以MEMORY中的内容为准。
-  在<DB>中解释了一些过去事件中出现的新设定的内容，请以这个定义为准。
+  <MEMORY>只记载过去发生的经历。当前变量以各分项条目中的实时数据为准，历史摘要中的旧数值不得覆盖当前状态。
 
   <MEMORY>
   {{SAM_serialized_memory}}
   </MEMORY>
-
-
-  <DB>
-  {{SAM_serialized_db}}
-  </DB>
-
   </MEMORY_TRACKER>
 extensions:
   position: 4

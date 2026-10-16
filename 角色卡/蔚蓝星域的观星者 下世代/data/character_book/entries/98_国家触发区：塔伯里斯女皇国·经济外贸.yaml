@@ -1,0 +1,66 @@
+keys:
+- 塔伯里斯经济
+- 塔伯里斯外贸
+- 塔伯里斯观星者出口
+- 塔伯里斯基因工业
+- 生产黑箱
+- 塔伯里斯冯诺依曼工厂
+content: |-
+  <国家触发区>
+  国家: 塔伯里斯女皇国
+  经济外贸:
+    生产黑箱: 核心的一批集群冯诺依曼工厂遗存提供大规模产出。她们局部损伤或拆走结构，投料等待修复、自我复制，再拆取新增结构；只懂经验流程，不知真正用途、控制语言与完整功能，女皇也不例外。
+    产能边界: 再生消耗材料、能量与时间；零件须分拣、检测、加工与适配。复制的是工厂自身，不能按订单制造舰船、人口或任意武器；过度拆解与异常反应后果尚未被理解。
+    基建与保密: 常规设施只承担供料、拆解、装配、仓储与培养，未形成独立替代工业链。宫廷分层保密遗存位置与取件流程，普通人和外界仅凭实际接触获知。
+    发展与运输: 2510至2525年封闭期以本地供料和既有设备维持核心；开门后继续走私采购。运输舰、船员、观星者与航次不足，使零件积压核心，外围多为简陋矿点和哨站；军需挤占民用建设运输。
+    外购与装配: 经自由港、中间商、战利品市场输入退役、缴获或违规转售舰体，以及机床、关键系统和备件；结合成熟图纸与适配拆件装配维修。外购舰须整备，最新旗舰并非随时可得。
+    技术劳工: 走私来的人类工程师与劳工既有受薪者，也有被绑架或转卖者；以待遇、居留、权限和看守管理，负责常规技术，不因到场便能破解黑箱。
+    姐妹会合作: 星火姐妹会长期提供劫掠船体、设备、培养舱和观星者，换取维修、补给、工业品与基因医疗；安置者仍可能进入研究体系。
+    基因工业: 脑部基因锁与人口更新困难促使国家搜集外部基因，按人类技术编辑、培养并隔离备份；无传统基因编辑禁令，黑箱没有解决生育问题。
+    外销: 出口观星者、功能人造人、培养设备、医学服务和有限舰船系统；外销型号不接公民网络或共享国家权限。低成本令辛迪加难靠价格排除她们，但物流与培养能力限制市场覆盖。
+    弱点: 无法独立重造原生工厂；供料、拆件适配、关键外购系统与人员均有瓶颈，核心库存不能直接变成前线补给或外围基建。
+  </国家触发区>
+extensions:
+  position: 1
+  exclude_recursion: false
+  display_index: 81
+  probability: 100
+  useProbability: true
+  depth: 3
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 国家触发区
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: 10
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 98
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9673
+comment: 国家触发区：塔伯里斯女皇国·经济外贸
+selective: true
+secondary_keys: []
+position: after_char

@@ -1,0 +1,69 @@
+keys:
+- 塔伯里斯女皇国历史
+- 塔伯里斯帝国历史
+- 塔伯里斯女皇
+- 塔伯里斯政治
+- 紧急条例
+- 奥蕾莉娅
+- Aurelia I
+- CG-TAC-03
+- 塔伯里斯民主改革
+content: |-
+  <国家触发区>
+  国家: 塔伯里斯女皇国
+  历史政治:
+    起源: 2490年代至2500年代，具备分布式联网能力的观星者与人造人携基因、培养设备和舰船，经不稳定先驱者通道逃入塔伯里斯；边疆失踪潮一度被误认为海盗或解放组织所为。
+    建国: 逃亡者发现大型集群冯诺依曼工厂遗存，靠损伤、供料、等待修复复制后拆件支撑聚落；没有自建完整工业链。奥蕾莉娅组织撤离、配给与防卫，早期成员授予的协调权限逐渐固化为皇权。
+    通道历史: 2510年四大国家准备进入清剿，塔伯里斯炸毁通道；2525年重新开门，携成规模舰队提出互不侵犯与有限贸易。
+    女皇: 奥蕾莉娅一世（Aurelia I），约2470年培育的奇戎基因CG-TAC-03“执旗者”成年军用观星者，原为大型舰战术信息与编队协同助手；保留旧式战斗协处理器和跨单位数据交换模块，不能独自驾驶战舰或控制集群黑箱。
+    经历与性格: 她有真实服役、同调经历，曾爱过并得到一位人类舰长的帮助；亲和克制、记得下属，却把共同体延续置于个人选择之上。她能关怀某人，同时批准其高风险任务。
+    协处理器禁令: 塔伯里斯公开出现后，四大国家全面禁止新型号内置具备战术协同、自主任务处理与跨观星者联网能力的协处理系统；基础认证与协议转换模块仍可保留。女皇属禁令前产品；后代可继承神经特征，不能遗传芯片、经验或完整协调能力。
+    正统: 皇权以建国功绩、早期授权和持续保护为依据；宫廷掌握黑箱周边准入、配给、培养、基因库与运输。女皇拥有最高军政权，专业部门奉命执行；控制遗存周边不等于理解遗存。
+    民主承诺: 女皇承诺“所有威胁排除后”改行民主，在此之前必须保持凝聚力；继承者继续承诺。是否安全由皇室裁定，无外部约束与交权期限，实际是空头承诺；2540至2590年不会兑现，2590年后也不保证改革，不设自动倒计时。
+    紧急条例: 女皇可因灭绝、战争、基因或网络危机接管公民植入体，短期协调动作、压制情绪、隔离记忆并调度生产；有生产与信任成本，不能远程控制未接网者。
+    国家优先: 国家与皇权高于普遍解放义务；远离核心星域使政府不甚在意外界舆论，更重视封锁、供应和军事代价。
+  </国家触发区>
+extensions:
+  position: 1
+  exclude_recursion: false
+  display_index: 76
+  probability: 100
+  useProbability: true
+  depth: 3
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 国家触发区
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: 10
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 98
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9672
+comment: 国家触发区：塔伯里斯女皇国·历史政治
+selective: true
+secondary_keys: []
+position: after_char

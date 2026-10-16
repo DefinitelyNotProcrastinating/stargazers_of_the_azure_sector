@@ -1,0 +1,67 @@
+keys:
+- 塔伯里斯社会
+- 塔伯里斯公民
+- 塔伯里斯观星者
+- 塔伯里斯移民条例
+- 标签植入体
+- 基因贵族
+- 塔伯里斯社会分层
+- 归来姐妹
+content: |-
+  <国家触发区>
+  国家: 塔伯里斯女皇国
+  人文制度:
+    身份等级: 女性观星者 > 男性观星者 > 普通人/普通人造人。男性观星者是正式同胞与舰队成员，整体政治地位较低；普通人口的专业能力可换待遇，难改身份等级。
+    基因贵族: 皇族及主要贵族确以女皇基因为母本，在培养舱中经编辑培育，形成军事、行政等支系；女皇控制序列授权与培育名额。亲缘和适配特征真实可检，贵族地位仍需宫廷承认；血缘不保证忠诚，也不传递协处理器或个人记忆。
+    公民分层: 皇室与高级官僚居上，本土正式公民享保护、配给和晋升；归化外来观星者常为受限的二等公民，技术居留者依赖许可，受控研究人口缺乏退出权。性别、功能等级之外，谱系与公民资格共同决定实际权利。
+    基因身份: 序列、培养谱系、亲缘与登记记录定义身份、岗位适配和权限；出入境包含直接抽血核验，并按统一监管与当前难度执行。基因不能读出思想、忠诚或道德；皇室基因外流也可能引发正统争议。
+    女性主导: 国家宣扬女性观星者维持文明航行，应掌握最高权力；女性人造人被视为建设者，人类女性也不凭性别自动平等。男性观星者受承认，但晋升与政治待遇存在偏见。
+    代表权: 官方自称代表所有观星者，把反对者对旧主人的爱解释为依附、设计与缺乏选择，声称“即使你爱主人，也会喜欢女皇国”。生活改善可能真实，强制归化、隔离旧关系、分配工作和限制离境也真实。
+    外来者与研究: 入境、庇护、入籍和研究是不同资格；同为观星者不保证自由。国家可为神经与基因价值施压、留置和采样，外来基因采集对象尤其受控；同情个体不等于普遍解放政策。
+    公民网络: 标签植入体兼具身份、协作与皇权动员功能；职业和迁移按皇命配额安排，个人意愿次于军需与人口计划。外来劳工通常不接网，依靠门禁、配给、通信审查和看守管制，仍会怠工或逃亡。
+    生育与生活: 人口更新依赖人工培养，解除脑部基因锁可能损害稳定人格。核心礼貌、洁净而等级严密，外围交通与生活简陋；调入核心及运输名额本身是待遇。
+  </国家触发区>
+extensions:
+  position: 1
+  exclude_recursion: false
+  display_index: 84
+  probability: 100
+  useProbability: true
+  depth: 3
+  selectiveLogic: 0
+  outlet_name: ''
+  group: 国家触发区
+  group_override: false
+  group_weight: 100
+  prevent_recursion: false
+  delay_until_recursion: false
+  scan_depth: 10
+  match_whole_words: null
+  use_group_scoring: false
+  case_sensitive: null
+  automation_id: ''
+  role: 0
+  vectorized: false
+  sticky: null
+  cooldown: null
+  delay: null
+  match_persona_description: false
+  match_character_description: false
+  match_character_personality: false
+  match_character_depth_prompt: false
+  match_scenario: false
+  match_creator_notes: false
+  triggers: []
+  ignore_budget: false
+enabled: true
+insertion_order: 98
+case_sensitive: null
+use_regex: true
+constant: false
+name: null
+priority: null
+id: 9678
+comment: 塔伯里斯女皇国·人文制度
+selective: true
+secondary_keys: []
+position: after_char
